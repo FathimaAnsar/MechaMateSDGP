@@ -14,7 +14,7 @@
 	<name>MechaMate</name>
 	<description>MechaMate - Predictive Maintenance Application</description>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
