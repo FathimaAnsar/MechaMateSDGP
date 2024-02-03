@@ -1,4 +1,4 @@
-package com.mechamate.MechaMate.repo;
+package com.mechamate.repo;
 
 import java.io.FileWriter;
 import java.io.IOException;

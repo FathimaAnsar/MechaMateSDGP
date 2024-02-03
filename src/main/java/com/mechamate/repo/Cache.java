@@ -1,4 +1,4 @@
-package com.mechamate.MechaMate.repo;
+package com.mechamate.repo;
 
 
 import com.mechamate.MechaMate.entity.UserProfile;

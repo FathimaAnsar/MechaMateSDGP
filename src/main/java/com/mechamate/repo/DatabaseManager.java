@@ -1,4 +1,4 @@
-package com.mechamate.MechaMate.repo;
+package com.mechamate.repo;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
