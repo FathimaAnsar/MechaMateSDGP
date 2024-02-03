@@ -1,6 +1,6 @@
 package com.mechamate.service;
 
-import com.mechamate.entity.UserProfile;
+import com.mechamate.service.UserProfile;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoCredential;
 import com.mongodb.MongoWriteException;
@@ -141,9 +141,9 @@ public class DatabaseManager {
             if (userProfile.getUsername() == null || userProfile.getUsername().isEmpty()) {
                 throw new IllegalArgumentException("Username cannot be null or empty");
             }
-            if (userProfile.getPassword() == null || userProfile.getPassword().isEmpty()) {
-                throw new IllegalArgumentException("Password cannot be null or empty");
-            }
+          //  if (userProfile.getPassword() == null || userProfile.getPassword().isEmpty()) {
+          //      throw new IllegalArgumentException("Password cannot be null or empty");
+          //  }
 
             MongoDatabase db = getDatabase();
 
@@ -161,9 +161,9 @@ public class DatabaseManager {
 //                log.log(Log.LogLevelEnum.LogDebug, source, "Index on 'username' created");
             }
 
-            Document newUserProfile = new Document("username", userProfile.getUsername())
-                    .append("password", userProfile.getPassword());
-            db.getCollection("userProfiles").insertOne(newUserProfile);
+           // Document newUserProfile = new Document("username", userProfile.getUsername())
+           //         .append("password", userProfile.getPassword());
+          //  db.getCollection("userProfiles").insertOne(newUserProfile);
             log.log(Log.LogLevelEnum.LogDebug, source, "New user profile added");
 
         } catch (IllegalArgumentException e) {
