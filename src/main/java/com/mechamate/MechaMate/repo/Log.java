@@ -6,8 +6,6 @@ import java.io.PrintWriter;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
-
-
 public class Log {
     // Log levels
     public static enum LogLevelEnum {
@@ -76,7 +74,6 @@ public class Log {
             // Write the message to the file and flush for immediate output
             fileHandle.write(formattedMessage + "\n");
             fileHandle.flush();
-
             // Call the optional callback function if needed
             if (callback != null) {
                 callback.logCallback(formattedMessage);
@@ -101,7 +98,7 @@ public class Log {
     public interface LogCallback {
         void logCallback(String message);
     }
-
+/*
     public static void main(String[] args) {
         // Example usage
         Log log = new Log(true, "src/test/log_records.txt", message -> {
@@ -113,5 +110,7 @@ public class Log {
         log.enableLogging(false);
         log.log(LogLevelEnum.LogCritical, "App", "This is a critical message (not logged)");
     }
+
+ */
 }
 
