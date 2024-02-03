@@ -1,7 +1,13 @@
 package com.mechamate.repo;
 
+import com.mongodb.MongoClientSettings;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
+
+import java.util.Collections;
 
 public class DatabaseManager {
 
@@ -57,6 +63,39 @@ public class DatabaseManager {
         } catch (Exception e) {
             log.log(Log.LogLevelEnum.LogError, source, "Failed to initialize Cache: " + e.getMessage());
             throw new IllegalStateException("Failed to initialize Cache", e);
+        }
+    }
+    public boolean connectToDb() {
+        String source = this.getClass().getSimpleName() + "::connectToDb";
+        try {
+            MongoCredential credential = MongoCredential.createCredential(username, dbName, password.toCharArray());
+            MongoClientSettings settings = MongoClientSettings.builder()
+                    .applyToClusterSettings(builder -> builder.hosts(Collections.singletonList(new ServerAddress(hostName))))
+                    .credential(credential)
+                    .build();
+            mongoClient = MongoClients.create(settings);
+            database = mongoClient.getDatabase(dbName);
+            log.log(Log.LogLevelEnum.LogDebug, source, "DatabaseManager connected successfully");
+            return true;
+        } catch (Exception e) {
+            log.log(Log.LogLevelEnum.LogError, source, "Could not connect to the database: " + e.getMessage());
+            return false;
+        }
+    }
+    public boolean disconnectFromDb() {
+        String source = this.getClass().getSimpleName() + "::disconnectFromDb";
+        if (mongoClient != null) {
+            try {
+                mongoClient.close();
+                log.log(Log.LogLevelEnum.LogDebug, source, "Disconnected from the database successfully");
+                return true;
+            } catch (Exception e) {
+                log.log(Log.LogLevelEnum.LogError, source, "Error occurred while disconnecting the database: " + e.getMessage());
+                return false;
+            }
+        } else {
+            log.log(Log.LogLevelEnum.LogCritical, source, "No database connection was established");
+            return true; // No database to disconnect from
         }
     }
 }
