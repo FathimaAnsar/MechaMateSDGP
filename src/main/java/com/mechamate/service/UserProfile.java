@@ -1,4 +1,4 @@
-package com.mechamate.entity;
+package com.mechamate.service;
 
 public class UserProfile {
     private String username;

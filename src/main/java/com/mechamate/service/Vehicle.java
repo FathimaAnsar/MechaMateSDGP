@@ -1,6 +1,4 @@
-package com.mechamate.entity;
-
-import com.mechamate.repo.Log;
+package com.mechamate.service;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.mechamate.repo;
+package com.mechamate.service;
 
 import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoCredential;
