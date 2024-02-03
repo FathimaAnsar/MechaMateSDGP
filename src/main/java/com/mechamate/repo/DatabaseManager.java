@@ -1,13 +1,17 @@
 package com.mechamate.repo;
 
+import com.mechamate.entity.UserProfile;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoCredential;
+import com.mongodb.MongoWriteException;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 import io.github.cdimascio.dotenv.Dotenv;
+import org.bson.Document;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 public class DatabaseManager {
@@ -120,4 +124,56 @@ public class DatabaseManager {
             System.out.println("env variables are not set.");
         }
     }
+    //this method for ensure that database manager instance is ready to use
+    private MongoDatabase getDatabase() {
+        if (database == null && mongoClient != null) {
+            database = mongoClient.getDatabase(dbName);
+        }
+        return database;
+    }
+
+    //user profiles
+
+    public void addUserProfileToDb(UserProfile userProfile) {
+        String source = this.getClass().getSimpleName() + "::addUserProfileToDb";
+        try {
+            // data validation part
+            if (userProfile.getUsername() == null || userProfile.getUsername().isEmpty()) {
+                throw new IllegalArgumentException("Username cannot be null or empty");
+            }
+            if (userProfile.getPassword() == null || userProfile.getPassword().isEmpty()) {
+                throw new IllegalArgumentException("Password cannot be null or empty");
+            }
+
+            MongoDatabase db = getDatabase();
+
+            // check if userProfiles collection exists
+            boolean collectionExists = db.listCollectionNames()
+                    .into(new ArrayList<>())
+                    .contains("userProfiles");
+
+            if (!collectionExists) {
+                db.createCollection("userProfiles");
+                log.log(Log.LogLevelEnum.LogDebug, source, "userProfiles collection created");
+
+                // Create an index on the username field
+//                db.getCollection("userProfiles").createIndex(new Document("username", 1));
+//                log.log(Log.LogLevelEnum.LogDebug, source, "Index on 'username' created");
+            }
+
+            Document newUserProfile = new Document("username", userProfile.getUsername())
+                    .append("password", userProfile.getPassword());
+            db.getCollection("userProfiles").insertOne(newUserProfile);
+            log.log(Log.LogLevelEnum.LogDebug, source, "New user profile added");
+
+        } catch (IllegalArgumentException e) {
+            log.log(Log.LogLevelEnum.LogError, source, "Validation error: " + e.getMessage());
+        } catch (MongoWriteException e) {
+            log.log(Log.LogLevelEnum.LogError, source, "Error writing to the database: " + e.getMessage());
+        } catch (Exception e) {
+            log.log(Log.LogLevelEnum.LogError, source, "An unexpected error occurred: " + e.getMessage());
+        }
+    }
+
+
 }
