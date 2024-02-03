@@ -38,11 +38,15 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+
+
 		<dependency>
-			<groupId>com.sun.mail</groupId>
-			<artifactId>javax.mail</artifactId>
-			<version>1.6.2</version> <!-- Or the latest version -->
+			<groupId>javax.mail</groupId>
+			<artifactId>javax.mail-api</artifactId>
+			<version>1.6.2</version> <!-- or the latest version available -->
 		</dependency>
+
+
 		<dependency>
 			<groupId>org.mongodb</groupId>
 			<artifactId>mongodb-driver-sync</artifactId>
