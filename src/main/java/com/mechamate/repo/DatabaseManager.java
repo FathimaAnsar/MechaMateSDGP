@@ -6,6 +6,7 @@ import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
+import io.github.cdimascio.dotenv.Dotenv;
 
 import java.util.Collections;
 
@@ -98,4 +99,24 @@ public class DatabaseManager {
             return true; // No database to disconnect from
         }
     }
+    public static void main(String[] args) {
+        Dotenv dotenv = Dotenv.load();
+        String hostName = dotenv.get("DB_HOSTNAME");
+        String dbName = dotenv.get("DB_NAME");
+        String username = dotenv.get("DB_USERNAME");
+        String password = dotenv.get("DB_PASSWORD");
+        Log log = new Log(true, "src/test/log_records.txt", message -> {
+            System.out.println("Callback: " + message);
+        });
+
+        if (hostName != null && dbName != null && username != null && password != null) {
+            DatabaseManager dbManager = new DatabaseManager(hostName, dbName, username, password, log);
+            if (dbManager.connectToDb()) {
+                dbManager.disconnectFromDb();
+            }
+        } else {
+            System.out.println("env variables are not set.");
+        }
+    }
+
 }
