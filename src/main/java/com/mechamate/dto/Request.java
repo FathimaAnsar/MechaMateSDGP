@@ -1,4 +1,4 @@
-package com.mechamate.MechaMate.dto;
+package com.mechamate.dto;
 
 public class Request {
 }

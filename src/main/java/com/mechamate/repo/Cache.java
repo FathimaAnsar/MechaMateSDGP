@@ -1,8 +1,8 @@
-package com.mechamate.MechaMate.repo;
+package com.mechamate.repo;
 
 
-import com.mechamate.MechaMate.entity.UserProfile;
-import com.mechamate.MechaMate.service.Session;
+import com.mechamate.entity.UserProfile;
+import com.mechamate.service.Session;
 
 import java.util.HashMap;
 import java.util.Map;
