@@ -41,9 +41,20 @@
 
 
 		<dependency>
+<<<<<<< HEAD
 			<groupId>javax.mail</groupId>
 			<artifactId>javax.mail-api</artifactId>
 			<version>1.6.2</version> <!-- or the latest version available -->
+=======
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.6.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+>>>>>>> 59d865c69d5330e701cb8798bc778188bac03e58
 		</dependency>
 
 
