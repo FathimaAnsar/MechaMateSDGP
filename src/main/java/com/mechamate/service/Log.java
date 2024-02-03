@@ -102,7 +102,7 @@ public class Log {
          */
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String timestamp = dateFormat.format(new Date());
-        return String.format("%s\t[%s] [%s] %s", timestamp, logLevel, source, message);
+        return String.format("%s\t\t[%s] \t\t\t[%s] \t\t%s", timestamp, logLevel, source, message);
     }
 
     // Callback interface for optional function to be called
@@ -110,14 +110,14 @@ public class Log {
         void logCallback(String message);
     }
     public static void main(String[] args) {
-        // Example usage
-//        Log log = new Log(true, "src/test/log_records.txt", message -> {
-//            System.out.println("Callback: " + message);
-//        });
+//         Example usage
+        Log log = new Log(true, "src/test/log_records.txt", message -> {
+            System.out.println("Callback: " + message);
+        });
 
-//        log.log(LogLevelEnum.LogDebug, "source", "This is a debug message");
-//        log.log(LogLevelEnum.LogWarning, "source", "This is a warning message");
-//        log.log(LogLevelEnum.LogError, "source", "This is an error message");
+        log.log(LogLevelEnum.LogDebug, "source", "This is a debug message");
+        log.log(LogLevelEnum.LogWarning, "source", "This is a warning message");
+        log.log(LogLevelEnum.LogError, "source", "This is an error message");
     }
 
 

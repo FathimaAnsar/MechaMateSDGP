@@ -10,3 +10,23 @@
 2024-02-03 14:15:57	[LogDebug] [App] This is a debug message
 2024-02-03 14:15:57	[LogWarning] [App] This is a warning message
 2024-02-03 14:15:57	[LogError] [App] This is an error message
+
+2024-02-03 21:38:14		[LogDebug] 		[source] 		This is a debug message
+2024-02-03 21:38:14		[LogWarning] 		[source] 		This is a warning message
+2024-02-03 21:38:14		[LogError] 		[source] 		This is an error message
+
+2024-02-03 21:39:07		[LogDebug] 		[source] 			This is a debug message
+2024-02-03 21:39:07		[LogWarning] 		[source] 			This is a warning message
+2024-02-03 21:39:07		[LogError] 		[source] 			This is an error message
+
+2024-02-03 21:39:39		[LogDebug] 			[source] 		This is a debug message
+2024-02-03 21:39:39		[LogWarning] 			[source] 		This is a warning message
+2024-02-03 21:39:39		[LogError] 			[source] 		This is an error message
+
+2024-02-03 21:40:14		[LogDebug] 	[source] 		This is a debug message
+2024-02-03 21:40:14		[LogWarning] 	[source] 		This is a warning message
+2024-02-03 21:40:14		[LogError] 	[source] 		This is an error message
+
+2024-02-03 21:40:27		[LogDebug] 			[source] 		This is a debug message
+2024-02-03 21:40:27		[LogWarning] 			[source] 		This is a warning message
+2024-02-03 21:40:27		[LogError] 			[source] 		This is an error message

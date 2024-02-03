@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotBlank;
@@ -14,10 +15,11 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @Data
 @Document(collection = "maintenances")
+
 public class Maintenance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @NotBlank(message = "Name is mandatory")
     @Size(min = 1, max = 100, message = "Name length must be between 1 - 100")

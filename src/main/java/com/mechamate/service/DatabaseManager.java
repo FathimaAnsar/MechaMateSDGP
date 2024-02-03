@@ -137,13 +137,13 @@ public class DatabaseManager {
     public void addUserProfileToDb(UserProfile userProfile) {
         String source = this.getClass().getSimpleName() + "::addUserProfileToDb";
         try {
-            // data validation part
-            if (userProfile.getUsername() == null || userProfile.getUsername().isEmpty()) {
-                throw new IllegalArgumentException("Username cannot be null or empty");
-            }
-          //  if (userProfile.getPassword() == null || userProfile.getPassword().isEmpty()) {
-          //      throw new IllegalArgumentException("Password cannot be null or empty");
-          //  }
+//            // data validation part
+//            if (userProfile.getUsername() == null || userProfile.getUsername().isEmpty()) {
+//                throw new IllegalArgumentException("Username cannot be null or empty");
+//            }
+//            if (userProfile.getPassword() == null || userProfile.getPassword().isEmpty()) {
+//                throw new IllegalArgumentException("Password cannot be null or empty");
+//            }
 
             MongoDatabase db = getDatabase();
 
@@ -161,10 +161,10 @@ public class DatabaseManager {
 //                log.log(Log.LogLevelEnum.LogDebug, source, "Index on 'username' created");
             }
 
-           // Document newUserProfile = new Document("username", userProfile.getUsername())
-           //         .append("password", userProfile.getPassword());
-          //  db.getCollection("userProfiles").insertOne(newUserProfile);
-            log.log(Log.LogLevelEnum.LogDebug, source, "New user profile added");
+//            Document newUserProfile = new Document("username", userProfile.getUsername())
+//                    .append("password", userProfile.getPassword());
+//            db.getCollection("userProfiles").insertOne(newUserProfile);
+//            log.log(Log.LogLevelEnum.LogDebug, source, "New user profile added");
 
         } catch (IllegalArgumentException e) {
             log.log(Log.LogLevelEnum.LogError, source, "Validation error: " + e.getMessage());
