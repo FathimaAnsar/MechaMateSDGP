@@ -1,4 +1,4 @@
-package com.mechamate.MechaMate.repo;
+package com.mechamate.repo;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -32,6 +32,16 @@ public class Log {
         this.logFile = filePath;
         this.callback = callback;
         this.enableLogging(enable);
+    }
+
+    public Log(boolean enable, String filePath) {
+        /**
+         * Constructor with a default callback of null.
+         *
+         * @param enable   True to enable logging, False to disable logging.
+         * @param filePath Path to the Log file.
+         */
+        this(enable, filePath, null);
     }
 
     public void enableLogging(boolean enable) {
@@ -95,22 +105,21 @@ public class Log {
         return String.format("%s\t[%s] [%s] %s", timestamp, logLevel, source, message);
     }
 
+    // Callback interface for optional function to be called
     public interface LogCallback {
         void logCallback(String message);
     }
-/*
     public static void main(String[] args) {
         // Example usage
-        Log log = new Log(true, "src/test/log_records.txt", message -> {
-            System.out.println("Callback: " + message);
-        });
-        log.log(LogLevelEnum.LogDebug, "App", "This is a debug message");
-        log.log(LogLevelEnum.LogWarning, "App", "This is a warning message");
-        log.log(LogLevelEnum.LogError, "App", "This is an error message");
-        log.enableLogging(false);
-        log.log(LogLevelEnum.LogCritical, "App", "This is a critical message (not logged)");
+//        Log log = new Log(true, "src/test/log_records.txt", message -> {
+//            System.out.println("Callback: " + message);
+//        });
+
+//        log.log(LogLevelEnum.LogDebug, "source", "This is a debug message");
+//        log.log(LogLevelEnum.LogWarning, "source", "This is a warning message");
+//        log.log(LogLevelEnum.LogError, "source", "This is an error message");
     }
 
- */
+
 }
 
