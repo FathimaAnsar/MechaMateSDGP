@@ -1,4 +1,4 @@
-package com.mechamate.MechaMate;
+package com.mechamate.MechaMate.service;
 
 import java.util.Properties;
 import javax.mail.*;

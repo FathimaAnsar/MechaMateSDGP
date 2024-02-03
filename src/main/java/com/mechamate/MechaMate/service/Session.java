@@ -1,4 +1,4 @@
-package com.mechamate.MechaMate;
+package com.mechamate.MechaMate.service;
 
 public class Session {
 
