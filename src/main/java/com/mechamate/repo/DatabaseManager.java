@@ -24,6 +24,7 @@ public class DatabaseManager {
 
     public DatabaseManager(String hostName, String dbName, String username, String password, Log log) {
         String source = this.getClass().getSimpleName() + "::DatabaseManager";
+        this.isReady = false;
 
         if (log == null) {
             throw new IllegalArgumentException("Log cannot be null");
@@ -32,29 +33,23 @@ public class DatabaseManager {
 
         if (hostName == null || hostName.trim().isEmpty()) {
             log.log(Log.LogLevelEnum.LogError, source, "Host name is null or empty");
-            throw new IllegalArgumentException("Host name cannot be null or empty");
         }
         this.hostName = hostName;
 
         if (dbName == null || dbName.trim().isEmpty()) {
             log.log(Log.LogLevelEnum.LogError, source, "Database name is null or empty");
-            throw new IllegalArgumentException("Database name cannot be null or empty");
         }
         this.dbName = dbName;
 
         if (username == null || username.trim().isEmpty()) {
             log.log(Log.LogLevelEnum.LogError, source, "Username is null or empty");
-            throw new IllegalArgumentException("Username cannot be null or empty");
         }
         this.username = username;
 
         if (password == null || password.trim().isEmpty()) {
             log.log(Log.LogLevelEnum.LogError, source, "Password is null or empty");
-            throw new IllegalArgumentException("Password cannot be null or empty");
         }
         this.password = password;
-
-        this.isReady = false;
 
         try {
             // initialize cache instance
@@ -68,18 +63,25 @@ public class DatabaseManager {
     }
     public boolean connectToDb() {
         String source = this.getClass().getSimpleName() + "::connectToDb";
-        try {
-            MongoCredential credential = MongoCredential.createCredential(username, dbName, password.toCharArray());
-            MongoClientSettings settings = MongoClientSettings.builder()
-                    .applyToClusterSettings(builder -> builder.hosts(Collections.singletonList(new ServerAddress(hostName))))
-                    .credential(credential)
-                    .build();
-            mongoClient = MongoClients.create(settings);
-            database = mongoClient.getDatabase(dbName);
-            log.log(Log.LogLevelEnum.LogDebug, source, "DatabaseManager connected successfully");
-            return true;
-        } catch (Exception e) {
-            log.log(Log.LogLevelEnum.LogError, source, "Could not connect to the database: " + e.getMessage());
+
+        if (isReady){
+            log.log(Log.LogLevelEnum.LogDebug, source, "DatabaseManager is ready");
+            try {
+                MongoCredential credential = MongoCredential.createCredential(username, dbName, password.toCharArray());
+                MongoClientSettings settings = MongoClientSettings.builder()
+                        .applyToClusterSettings(builder -> builder.hosts(Collections.singletonList(new ServerAddress(hostName))))
+                        .credential(credential)
+                        .build();
+                mongoClient = MongoClients.create(settings);
+                database = mongoClient.getDatabase(dbName);
+                log.log(Log.LogLevelEnum.LogDebug, source, "DatabaseManager connected successfully");
+                return true;
+            } catch (Exception e) {
+                log.log(Log.LogLevelEnum.LogError, source, "Could not connect to the database: " + e.getMessage());
+                return false;
+            }
+        } else {
+            log.log(Log.LogLevelEnum.LogCritical, source, "DatabaseManager is not ready");
             return false;
         }
     }
@@ -118,5 +120,4 @@ public class DatabaseManager {
             System.out.println("env variables are not set.");
         }
     }
-
 }
