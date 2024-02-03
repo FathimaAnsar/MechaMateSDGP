@@ -3,7 +3,7 @@ package com.mechamate.MechaMate.service;
 import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
-
+/*
 public class NotificationManager {
     private final String username;
     private final String password;
@@ -67,3 +67,4 @@ public class NotificationManager {
         notificationManager.sendEmailVerification("mechamateproject@gmail.com", "https://www.google.com");
     }
 }
+*/
