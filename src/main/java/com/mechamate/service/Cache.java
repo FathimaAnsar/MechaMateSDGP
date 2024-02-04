@@ -1,6 +1,23 @@
 package com.mechamate.service;
 
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
 
+@Service
+public class MyCacheService {
+
+    @Cacheable(value = "myCache", key = "#key")
+    public String getCachedData(String key) {
+        // Simulate fetching data from database or external service
+        // This method will only be executed if the data is not present in the cache
+        System.out.println("Fetching data for key: " + key);
+        return "Cached data for key: " + key;
+    }
+
+    // Add more cacheable methods as needed
+}
+
+/*
 import java.util.HashMap;
 import java.util.Map;
 
@@ -84,7 +101,7 @@ public class Cache {
 
 }
 
-
+*/
 
 
 
