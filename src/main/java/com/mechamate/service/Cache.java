@@ -1,21 +1,56 @@
 package com.mechamate.service;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MyCacheService {
+public class CacheService {
 
-    @Cacheable(value = "myCache", key = "#key")
-    public String getCachedData(String key) {
-        // Simulate fetching data from database or external service
-        // This method will only be executed if the data is not present in the cache
-        System.out.println("Fetching data for key: " + key);
-        return "Cached data for key: " + key;
+    @CachePut(value = "userProfiles", key = "#userProfile.username")
+    public UserProfile addUserProfile(UserProfile userProfile) {
+        return userProfile;
     }
 
-    // Add more cacheable methods as needed
+    @CachePut(value = "sessions", key = "#session.sessionKey")
+    public Session addSession(Session session) {
+        return session;
+    }
+
+    @Cacheable(value = "userProfiles", key = "#username")
+    public UserProfile getUserProfile(String username) {
+        return null; // This method will only be executed if the data is not present in the cache
+    }
+
+    @Cacheable(value = "sessions", key = "#sessionKey")
+    public Session getSession(String sessionKey) {
+        return null; // This method will only be executed if the data is not present in the cache
+    }
+
+    @CacheEvict(value = "userProfiles", key = "#username")
+    public void removeUserProfile(String username) {
+        // This method will remove the entry from the cache
+    }
+
+    @CacheEvict(value = "sessions", key = "#sessionKey")
+    public void removeSession(String sessionKey) {
+        // This method will remove the entry from the cache
+    }
+
+    @CachePut(value = "userProfiles", key = "#userProfile.username")
+    public UserProfile updateUserProfile(UserProfile userProfile) {
+        return userProfile;
+    }
+
+    @CachePut(value = "sessions", key = "#session.sessionKey")
+    public Session updateSession(Session session) {
+        return session;
+    }
+
+
 }
+
 
 /*
 import java.util.HashMap;
