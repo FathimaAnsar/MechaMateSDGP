@@ -1,4 +1,4 @@
-package com.mechamate.MechaMate;
+package com.mechamate.service;
 
 import java.util.ArrayList;
 
