@@ -6,7 +6,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CacheService {
+public class Cache {
 
     @CachePut(value = "userProfiles", key = "#userProfile.username")
     public UserProfile addUserProfile(UserProfile userProfile) {
