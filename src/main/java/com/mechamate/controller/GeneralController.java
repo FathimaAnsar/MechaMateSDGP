@@ -40,7 +40,7 @@ public class GeneralController {
 
 
         vehicleRepository.save(vehicle);
-        return ResponseEntity.ok("DoneVehicle");
+        return ResponseEntity.ok("Done Vehicle");
     }
 
     @PostMapping

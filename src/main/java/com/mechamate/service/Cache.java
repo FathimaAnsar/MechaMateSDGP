@@ -1,5 +1,6 @@
 package com.mechamate.service;
 
+import com.mechamate.entity.UserProfile;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;

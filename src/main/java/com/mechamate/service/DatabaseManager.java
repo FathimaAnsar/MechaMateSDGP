@@ -1,6 +1,6 @@
 package com.mechamate.service;
 
-import com.mechamate.service.UserProfile;
+import com.mechamate.entity.UserProfile;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoCredential;
 import com.mongodb.MongoWriteException;
@@ -9,13 +9,11 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 import io.github.cdimascio.dotenv.Dotenv;
-import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class DatabaseManager {
-
     private MongoClient mongoClient;
     private MongoDatabase database;
     private String hostName;
