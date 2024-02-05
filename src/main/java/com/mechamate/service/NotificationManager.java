@@ -1,5 +1,10 @@
 package com.mechamate.service;
 
+
+
+
+
+
 import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
