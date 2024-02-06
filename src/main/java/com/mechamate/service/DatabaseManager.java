@@ -1,7 +1,9 @@
 package com.mechamate.service;
 
 import com.mechamate.entity.UserProfile;
+import com.mechamate.entity.Vehicle;
 import com.mechamate.repo.UserProfileRepository;
+import com.mechamate.repo.VehicleRepository;
 import com.mechamate.service.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ public class DatabaseManager {
     private Log log;
 
     private UserProfileRepository userProfileRepository;
+    private VehicleRepository vehicleRepository;
 
     @Autowired
     public DatabaseManager(
@@ -173,4 +176,27 @@ public class DatabaseManager {
             return Collections.emptyList();
         }
     }
+    public boolean addVehicle(Vehicle vehicle) {
+        String source = this.getClass().getSimpleName() + "::addVehicle";
+
+        if (vehicle == null) {
+            log.log(Log.LogLevelEnum.LogError, source, "Vehicle cannot be null");
+            return false;
+        }
+
+        if (vehicleRepository.findById(vehicle.getVehicleId()).isPresent()) {
+            log.log(Log.LogLevelEnum.LogError, source, "Vehicle ID already exists");
+            return false;
+        }
+
+        try {
+            vehicleRepository.save(vehicle);
+            log.log(Log.LogLevelEnum.LogDebug, source, "Vehicle added successfully: " + vehicle.getVehicleId());
+            return true;
+        } catch (Exception e) {
+            log.log(Log.LogLevelEnum.LogError, source, "Error adding Vehicle: " + e.getMessage());
+            return false;
+        }
+    }
+
 }
