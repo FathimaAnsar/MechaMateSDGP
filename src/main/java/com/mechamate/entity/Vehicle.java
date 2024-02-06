@@ -30,7 +30,6 @@ public class Vehicle {
 
     @Id
     private String vehicleId;
-
     private String vehicleRegNo;
     private VehicleType vehicleType;
     private String description;
@@ -54,4 +53,5 @@ public class Vehicle {
     public void addMaintenance(Maintenance maintenance){
         maintenanceList.add(maintenance);
     }
+
 }

@@ -184,7 +184,8 @@ public class DatabaseManager {
 
         try {
             vehicle.setOwner(userProfile);
-            userProfile.linkVehicleToUserProfile(vehicle);
+            vehicle.linkVehicleToUserProfile(userProfile);
+
             userProfileRepository.save(userProfile);
             vehicleRepository.save(vehicle);
             log.log(Log.LogLevelEnum.LogDebug, source, "Vehicle added successfully: " + vehicle.getVehicleId());

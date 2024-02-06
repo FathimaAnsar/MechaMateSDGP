@@ -22,6 +22,7 @@ import java.util.List;
 /**
  * Entity class representing user profiles stored in MongoDB.
  */
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "UserProfile")
@@ -46,9 +47,6 @@ public class UserProfile {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private String userProfileId;
-
     @NotBlank(message = "Username is mandatory")
     private String username;
 
@@ -83,12 +81,11 @@ public class UserProfile {
     @DBRef
     private Language language;
 
-    public UserProfile(String userProfileId) {
+    public UserProfile(String userName) {
         /**
             Test constructor for userprofile class
         */
-        this.userProfileId = userProfileId;
-        this.username = "username";
+        this.username = userName;
         this.password = "password";
         this.status = Status.ACTIVE;
         this.firstName = "firstName";
@@ -98,87 +95,12 @@ public class UserProfile {
         this.otherSessions = new ArrayList<>();
     }
 
-    public String getUsername() {
-        return username;
+    public void addVehicle(Vehicle vehicle){
+        this.vehicles.add(vehicle);
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void removeVehicle(int index){
+        this.vehicles.remove(index);
     }
 
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public List<Vehicle> getVehicles() {
-        return vehicles;
-    }
-
-    public void setVehicles(List<Vehicle> vehicles) {
-        this.vehicles = vehicles;
-    }
-
-    public Session getCurrentSession() {
-        return currentSession;
-    }
-
-    public void setCurrentSession(Session currentSession) {
-        this.currentSession = currentSession;
-    }
-
-    public ArrayList<Session> getOtherSessions() {
-        return otherSessions;
-    }
-
-    public void setOtherSessions(ArrayList<Session> otherSessions) {
-        this.otherSessions = otherSessions;
-    }
-
-    public void linkVehicleToUserProfile(Vehicle vehicle){
-        vehicles.add(vehicle);
-    }
-
-    public Theme getTheme() {
-        return theme;
-    }
-
-    public void setTheme(Theme theme) {
-        this.theme = theme;
-    }
-
-    public SubscriptionType getSubscriptionType() {
-        return subscriptionType;
-    }
-
-    public void setSubscriptionType(SubscriptionType subscriptionType) {
-        this.subscriptionType = subscriptionType;
-    }
-
-    public Language getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(Language language) {
-        this.language = language;
-    }
 }
