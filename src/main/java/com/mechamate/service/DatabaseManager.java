@@ -176,7 +176,7 @@ public class DatabaseManager {
             return Collections.emptyList();
         }
     }
-    public boolean addVehicle(Vehicle vehicle) {
+    public boolean addVehicle(UserProfile userProfile,Vehicle vehicle) {
         String source = this.getClass().getSimpleName() + "::addVehicle";
 
         if (vehicle == null) {
@@ -190,6 +190,9 @@ public class DatabaseManager {
         }
 
         try {
+            vehicle.setOwner(userProfile);
+            userProfile.linkVehicleToUserProfile(vehicle);
+            userProfileRepository.save(userProfile);
             vehicleRepository.save(vehicle);
             log.log(Log.LogLevelEnum.LogDebug, source, "Vehicle added successfully: " + vehicle.getVehicleId());
             return true;
@@ -198,5 +201,10 @@ public class DatabaseManager {
             return false;
         }
     }
+    public boolean setOwner(UserProfile userProfile ){
+        String source = this.getClass().getSimpleName() + "::setOwner";
+        return  true;
+    }
+
 
 }
