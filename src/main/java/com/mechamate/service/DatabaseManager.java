@@ -1,4 +1,4 @@
-package com.mechamate.service;
+/*package com.mechamate.service;
 
 import com.mechamate.service.UserProfile;
 import com.mongodb.MongoClientSettings;
@@ -177,3 +177,4 @@ public class DatabaseManager {
 
 
 }
+*/

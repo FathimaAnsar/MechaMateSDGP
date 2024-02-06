@@ -20,12 +20,12 @@ public class Cache {
 
     @Cacheable(value = "userProfiles", key = "#username")
     public UserProfile getUserProfile(String username) {
-        return null; // This method will only be executed if the data is not present in the cache
+        return null;
     }
 
     @Cacheable(value = "sessions", key = "#sessionKey")
     public Session getSession(String sessionKey) {
-        return null; // This method will only be executed if the data is not present in the cache
+        return null;
     }
 
     @CacheEvict(value = "userProfiles", key = "#username")
