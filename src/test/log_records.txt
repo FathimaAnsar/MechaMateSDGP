@@ -30,3 +30,155 @@
 2024-02-03 21:40:27		[LogDebug] 			[source] 		This is a debug message
 2024-02-03 21:40:27		[LogWarning] 			[source] 		This is a warning message
 2024-02-03 21:40:27		[LogError] 			[source] 		This is an error message
+
+2024-02-06 14:57:08		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 14:57:08		[LogCritical] 			[DatabaseManager::DataBaseManager] 		userProfile Repository is null in DatabaseManager constructor
+2024-02-06 14:57:08		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 14:57:10		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 14:57:10		[LogCritical] 			[DatabaseManager::DataBaseManager] 		userProfile Repository is null in DatabaseManager constructor
+2024-02-06 14:57:10		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 14:58:15		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 14:58:15		[LogCritical] 			[DatabaseManager::DataBaseManager] 		userProfile Repository is null in DatabaseManager constructor
+2024-02-06 14:58:15		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 14:58:16		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 14:58:16		[LogCritical] 			[DatabaseManager::DataBaseManager] 		userProfile Repository is null in DatabaseManager constructor
+2024-02-06 14:58:16		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 15:00:32		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 15:00:32		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 15:00:33		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 15:00:33		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+2024-02-06 15:00:34		[LogError] 			[DatabaseManager::addUserProfile] 		error adding user profile: No id property found on class class com.mechamate.service.Session
+
+2024-02-06 15:07:18		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 15:07:18		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 15:07:19		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 15:07:19		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+2024-02-06 15:07:20		[LogDebug] 			[DatabaseManager::addUserProfile] 		user profile added successfully: username with test 
+
+2024-02-06 16:23:02		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 16:23:02		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 16:30:35		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 16:30:35		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 16:37:31		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 16:37:31		[LogCritical] 			[DatabaseManager::DataBaseManager] 		userProfile Repository is null in DatabaseManager constructor
+2024-02-06 16:37:31		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 16:37:31		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 16:37:31		[LogCritical] 			[DatabaseManager::DataBaseManager] 		userProfile Repository is null in DatabaseManager constructor
+2024-02-06 16:37:31		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 16:44:16		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 16:44:16		[LogCritical] 			[DatabaseManager::DataBaseManager] 		userProfile Repository is null in DatabaseManager constructor
+2024-02-06 16:44:16		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 16:44:17		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 16:44:17		[LogCritical] 			[DatabaseManager::DataBaseManager] 		userProfile Repository is null in DatabaseManager constructor
+2024-02-06 16:44:17		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 16:48:24		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 16:48:24		[LogCritical] 			[DatabaseManager::DataBaseManager] 		userProfile Repository is null in DatabaseManager constructor
+2024-02-06 16:48:24		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 16:48:24		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 16:48:24		[LogCritical] 			[DatabaseManager::DataBaseManager] 		userProfile Repository is null in DatabaseManager constructor
+2024-02-06 16:48:24		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 17:03:10		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:03:10		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 17:03:10		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:03:10		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 17:07:41		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:07:41		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 17:07:41		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:07:41		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 17:11:14		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:11:14		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 17:11:14		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:11:14		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 17:14:33		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:14:33		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 17:14:33		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:14:33		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 17:24:29		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:24:29		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 17:24:29		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:24:29		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 17:28:28		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:28:28		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 17:28:28		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:28:28		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 17:28:29		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:28:29		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+2024-02-06 17:28:30		[LogDebug] 			[DatabaseManager::addUserProfile] 		user profile added successfully: username with test 
+
+2024-02-06 17:32:02		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:32:02		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 17:32:02		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:32:02		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 17:34:07		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:34:07		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 17:34:07		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:34:07		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 17:35:54		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:35:54		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 17:35:54		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:35:54		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 17:43:55		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:43:55		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 17:43:55		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:43:55		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 17:43:56		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:43:56		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+2024-02-06 17:43:57		[LogDebug] 			[DatabaseManager::addUserProfile] 		user profile added successfully: username with gg 
+
+2024-02-06 17:48:54		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:48:54		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 17:48:54		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:48:54		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 17:48:55		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:48:55		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 17:49:53		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:49:53		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 17:49:53		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:49:53		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 17:49:55		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:49:55		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 17:55:01		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:55:01		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully
+
+2024-02-06 17:55:04		[LogDebug] 			[DatabaseManager::DataBaseManager] 		initializing DatabaseManager with repositories.
+2024-02-06 17:55:04		[LogDebug] 			[DatabaseManager::DataBaseManager] 		DatabaseManager initialized successfully

@@ -6,11 +6,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import jdk.jshell.JShell;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -22,7 +22,6 @@ import java.util.List;
 /**
  * Entity class representing user profiles stored in MongoDB.
  */
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "UserProfile")
@@ -37,9 +36,18 @@ public class UserProfile {
         PENDING
     }
 
+    public enum SubscriptionType {
+        BASIC,
+        STANDARD,
+        PREMIUM,
+        ENTERPRISE,
+        CUSTOM
+    }
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private String userProfileId;
 
     @NotBlank(message = "Username is mandatory")
     private String username;
@@ -66,11 +74,20 @@ public class UserProfile {
     @DBRef
     private ArrayList<Session> otherSessions;
 
-    public UserProfile(String id) {
+    @DBRef
+    private Theme theme;
+
+    @DBRef
+    private SubscriptionType subscriptionType;
+
+    @DBRef
+    private Language language;
+
+    public UserProfile(String userProfileId) {
         /**
             Test constructor for userprofile class
         */
-        this.id = id;
+        this.userProfileId = userProfileId;
         this.username = "username";
         this.password = "password";
         this.status = Status.ACTIVE;
@@ -79,5 +96,89 @@ public class UserProfile {
         this.vehicles = new ArrayList<>();
         this.currentSession = new Session();
         this.otherSessions = new ArrayList<>();
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public List<Vehicle> getVehicles() {
+        return vehicles;
+    }
+
+    public void setVehicles(List<Vehicle> vehicles) {
+        this.vehicles = vehicles;
+    }
+
+    public Session getCurrentSession() {
+        return currentSession;
+    }
+
+    public void setCurrentSession(Session currentSession) {
+        this.currentSession = currentSession;
+    }
+
+    public ArrayList<Session> getOtherSessions() {
+        return otherSessions;
+    }
+
+    public void setOtherSessions(ArrayList<Session> otherSessions) {
+        this.otherSessions = otherSessions;
+    }
+
+    public void linkVehicleToUserProfile(Vehicle vehicle){
+        vehicles.add(vehicle);
+    }
+
+    public Theme getTheme() {
+        return theme;
+    }
+
+    public void setTheme(Theme theme) {
+        this.theme = theme;
+    }
+
+    public SubscriptionType getSubscriptionType() {
+        return subscriptionType;
+    }
+
+    public void setSubscriptionType(SubscriptionType subscriptionType) {
+        this.subscriptionType = subscriptionType;
+    }
+
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
     }
 }

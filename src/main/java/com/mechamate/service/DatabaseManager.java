@@ -15,13 +15,17 @@ import java.util.Optional;
 @Service
 public class DatabaseManager {
     private Log log;
-@Autowired
-private UserProfileRepository userProfileRepository;
+    @Autowired
+    private UserProfileRepository userProfileRepository;
 
     @Autowired
-    public DatabaseManager(Log log){
+    private VehicleRepository vehicleRepository;
+
+    public DatabaseManager(){
         String source = this.getClass().getSimpleName() + "::DataBaseManager";
 
+
+        this.log = new Log(true, "src/test/log_records.txt");
         if (log == null) {
             throw new IllegalArgumentException("Log cannot be null");
         }

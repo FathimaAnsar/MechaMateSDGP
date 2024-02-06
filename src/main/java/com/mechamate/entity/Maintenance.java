@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -27,5 +28,16 @@ public class Maintenance {
     @NotBlank(message = "Maintenance description is mandatory")
     @Size(min = 1, max = 255, message = "Description cannot exceed 255 characters")
     private String maintenanceDescription;
+
+    private List<TrainedModel> trainedModels;
+
+
+    public void addTrainedModel(TrainedModel newModel){
+        trainedModels.add(newModel);
+    }
+
+    public void removeTrainedModel(TrainedModel newModel){
+        trainedModels.remove(newModel);
+    }
 
 }
