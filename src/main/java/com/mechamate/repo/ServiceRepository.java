@@ -1,4 +1,7 @@
 package com.mechamate.repo;
 
-public interface ServiceRepository {
+import com.mechamate.entity.Service;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+public interface ServiceRepository extends MongoRepository<Service,String> {
 }

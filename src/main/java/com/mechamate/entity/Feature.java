@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "Feature")
-public class Feature {
+public abstract class Feature {
     @Id
     private String featureId;
 
