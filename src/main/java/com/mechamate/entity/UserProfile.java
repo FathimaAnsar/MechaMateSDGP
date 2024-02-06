@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -21,7 +22,7 @@ import java.util.List;
 /**
  * Entity class representing user profiles stored in MongoDB.
  */
-@Data       //  Lombok annotation for getters and setters
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "UserProfile")
@@ -79,5 +80,4 @@ public class UserProfile {
         this.currentSession = new Session();
         this.otherSessions = new ArrayList<>();
     }
-
 }
