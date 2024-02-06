@@ -15,29 +15,18 @@ import java.util.Optional;
 @Service
 public class DatabaseManager {
     private Log log;
-
-    private UserProfileRepository userProfileRepository;
-    private VehicleRepository vehicleRepository;
+@Autowired
+private UserProfileRepository userProfileRepository;
 
     @Autowired
-    public DatabaseManager(
-            Log log,
-            UserProfileRepository userProfileRepository) {
+    public DatabaseManager(Log log){
         String source = this.getClass().getSimpleName() + "::DataBaseManager";
 
         if (log == null) {
             throw new IllegalArgumentException("Log cannot be null");
         }
-
         this.log = log;
-
         log.log(Log.LogLevelEnum.LogDebug, source, "initializing DatabaseManager with repositories.");
-
-        if (userProfileRepository == null) {
-            log.log(Log.LogLevelEnum.LogCritical, source, "userProfile Repository is null in DatabaseManager constructor");
-        }
-
-        this.userProfileRepository = userProfileRepository;
         log.log(Log.LogLevelEnum.LogDebug, source, "DatabaseManager initialized successfully");
     }
 
