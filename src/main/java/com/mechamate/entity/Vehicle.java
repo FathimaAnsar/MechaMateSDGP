@@ -1,8 +1,5 @@
 package com.mechamate.entity;
 
-import jakarta.persistence.Entity;
-
-import com.mechamate.entity.UserProfile;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,48 +7,37 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.util.ArrayList;
 
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Document(collection = "Vehicle")
 public class Vehicle {
+
     public enum VehicleType {
-        SEDAN,
-        SUV,
-        TRUCK,
-        VAN,
-        HATCHBACK,
-        CONVERTIBLE,
-        COUPE,
-        OTHER
+        VTypeCar,
+        VTypeVan,
+        VTypeLorry,
+        VTypeBicycle
     }
 
     @Id
-    private String vehicleId;
-    private String vehicleRegNo;
+    @NotBlank(message = "id is mandatory")
+    private Long id;
+
+    @NotBlank(message = "reg no is mandatory")
+    private String regNo;
+
+    @NotBlank(message = "vehicleType is mandatory")
     private VehicleType vehicleType;
-    private String description;
+
     @DBRef
+    @NotBlank(message = "owner is mandatory")
     private UserProfile owner;
 
-    private String manufacturer;
-
-    private String model;
-
-    private int mileageKMs;
-
-    private List<Maintenance> maintenanceList;
-
-    private List<ServiceRecord> serviceRecords;
-
-    public void addServiceRecord(ServiceRecord serviceRecord){
-        serviceRecords.add(serviceRecord);
-    }
-
-    public void addMaintenance(Maintenance maintenance){
-        maintenanceList.add(maintenance);
-    }
 
 }
