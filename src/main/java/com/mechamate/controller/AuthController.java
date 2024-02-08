@@ -1,6 +1,10 @@
 package com.mechamate.controller;
 
+import com.mechamate.entity.Request;
+import com.mechamate.entity.Response;
 import com.mechamate.entity.Session;
+import com.mechamate.service.DatabaseHandler;
+import com.mechamate.service.ProfileManager;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

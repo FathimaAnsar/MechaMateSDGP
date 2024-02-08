@@ -1,5 +1,9 @@
 package com.mechamate.service;
 
+import com.mechamate.entity.Request;
+import com.mechamate.entity.Response;
+import com.mechamate.entity.UserProfile;
+import com.mechamate.entity.Session;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.codec.digest.DigestUtils;
