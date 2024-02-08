@@ -5,62 +5,78 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import javax.validation.constraints.NotBlank;
+import java.time.Instant;
+
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "Session")
 public class Session {
+
     public enum SessionStatus {
-        ACTIVE,
-        INACTIVE,
-        EXPIRED,
-        LOGGED_OUT,
-        LOCKED_OUT,
-        SUSPENDED,
-        TERMINATED
+        SessionActive,
+        SessionInactive,
+        SessionExpired,
+        SessionSuspended
     }
 
     @Id
-    private long sessionId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private ObjectId id;
 
-    private UserProfile userProfile;
 
-    private Device device;
-
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotBlank(message = "sessionKey is mandatory")
     private String sessionKey;
 
-    private SessionStatus sessionStatus;
+    @NotBlank(message = "sessionKey is mandatory")
+    private SessionStatus status;
 
-    private SimpleDateFormat createdOn;
+    @NotBlank(message = "expireDate is mandatory")
+    private long expireDate;
 
-    private SimpleDateFormat expireOn;
+    @DBRef
+    private UserProfile userProfile;
 
-    private boolean isValid;
 
-    private Language language;
 
-    private Theme theme;
+    public Session() {
+         sessionKey =  DigestUtils.sha256Hex(String.valueOf(Instant.now().getEpochSecond()));
+   }
 
-    private int loginAttempts;
 
-    public Session(UserProfile userProfile) {
-        this.sessionId = sessionId;
+    public String getSessionKey() {
+        return  sessionKey;
+    }
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public boolean isExpired() {
+        long curDate = System.currentTimeMillis();
+        return (expireDate - curDate) > 0;
+    }
+
+    public long getExpireDate() {
+        return expireDate;
+    }
+
+    public void setExpireDate() {
+        this.expireDate = System.currentTimeMillis();
+    }
+
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(UserProfile userProfile) {
         this.userProfile = userProfile;
-        this.device = device;
-        this.sessionKey = sessionKey;
-        this.sessionStatus = sessionStatus;
-        this.createdOn = createdOn;
-        this.expireOn = expireOn;
-        this.isValid = isValid;
-        this.language = userProfile.getLanguage();
-        this.theme = userProfile.getTheme();
-        this.loginAttempts = loginAttempts;
+       sessionKey =  DigestUtils.sha256Hex(userProfile.getUsername() + userProfile.getEmail() + String.valueOf(Instant.now().getEpochSecond()));
     }
 }
