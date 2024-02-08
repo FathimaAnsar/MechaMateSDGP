@@ -58,7 +58,4 @@ public class Response {
     public void setResponseStatus(ResponseStatus status) {
         this.status = status;
     }
-
-
-
 }
