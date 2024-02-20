@@ -1,7 +1,7 @@
 package com.mechamate.service;
 
 import com.mechamate.MechaMate;
-//import com.mechamate.common.Common;
+import com.mechamate.common.Common;
 import com.mechamate.dto.ErrorDTO;
 import com.mechamate.entity.UserProfile;
 import com.mechamate.entity.Session;
@@ -24,7 +24,7 @@ public class SessionManager {
     private DatabaseAbstractLayer databaseAbstractLayer;
 
     @Autowired
-//    private LanguageManager lang;
+    private LanguageManager lang;
 
     public Session getSession(HttpServletRequest request, HttpServletResponse response) {
         try {
