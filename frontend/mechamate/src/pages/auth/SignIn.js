@@ -8,48 +8,24 @@ import CheckBox from '../../components/elements/CheckBox';
 import ConnectionManager from "../../services/ConnectionManager";
 
 function SignIn() {
+    const [recall, setRecall] = useState(false);
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
     const connection = new ConnectionManager();
 
-    const handleSignIn = async () => {
-        try {
-            // Call the login method of ConnectionManager
-            const response = await connection.login(username, password, rememberMe);
-            if (response && response.success) {
-                // Login successful, redirect the user to the home page
-                alert(response.message);
-                window.location.href = "/home";
-            } else {
-                // Login failed, display an error message
-                alert(response.error || 'An error occurred during login');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('An error occurred during login');
-        }
-    }
+    const usernamChanged = (e) => {setUsername(e.target.value)};
+    const passwordChanged = (e) => {setPassword(e.target.value)};
+    const rememberMeChanged = (e) => {setRememberMe(e.target.value)};
 
     return (
         <>
             <Header />
-            <TextBox
-                placeholder="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-            />
-            <PasswordBox
-                placeholder="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <CheckBox
-                caption='Keep me signed in'
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-            />
-            <Button onClick={handleSignIn} caption="Sign in" />
+            <TextBox placeholder="username" onchange={usernamChanged} />
+            <PasswordBox placeholder="password" onchange={passwordChanged} />
+            <CheckBox caption='Keep me signed in' onchange={rememberMeChanged} />
+            <Button onclick={() => {if(recall) {connection.login(username, password, rememberMe); }} } caption="Sign in" />
         </>
     );
 }
