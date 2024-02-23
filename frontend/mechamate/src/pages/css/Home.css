@@ -1,0 +1,13 @@
+.cards-container{
+    margin-top: 20px;
+}
+.cards{
+    margin: 5px;
+}
+img{
+    width: 8rem;
+    height: 8rem;
+}
+.mb-2.text-muted {
+    font-size: 14px; 
+  }
