@@ -1,0 +1,3 @@
+2024-02-21 00:37:57.724 	INFO  	[main] com.mechamate.MechaMate - Starting MechaMate using Java 21 with PID 10476 (E:\SDGP\MechaMateSDGP\backend\target\classes started by Developer in E:\SDGP\MechaMateSDGP\backend)
+2024-02-21 00:37:57.728 	INFO  	[main] com.mechamate.MechaMate - No active profile set, falling back to 1 default profile: "default"
+2024-02-21 00:38:03.096 	INFO  	[main] com.mechamate.MechaMate - Started MechaMate in 6.327 seconds (process running for 7.042)

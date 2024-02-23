@@ -169,7 +169,7 @@ public class AuthController {
 
 
     @RequestMapping("/signout")
-    public ResponseEntity<?> signin(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<?> singout(HttpServletRequest request, HttpServletResponse response) {
 
         Session session = sessionManager.getSession(request, response);
         ResponseEntity<ErrorDTO> resp = Validation.notSignedIn(session, lang, request.getSession());
