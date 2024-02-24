@@ -1,10 +1,8 @@
-/* Login.css */
 
 .body{
   background-color: #084f8c;
   
 }
-
 
 .login-container {
     /* border:#333 1px solid; */
@@ -18,6 +16,8 @@
   }
 
   .error-message {
+    position: fixed;
+    top: 0;
     display:none;
     font-weight: 600;
     font-size: 10pt;
@@ -34,10 +34,10 @@
 
   }
 
-  .logo {
+  .sign-up-screen-logo{
     width: 50%;
+    height: auto;
     margin: 30px 0 50px 0;
-    flood-color: #0750be;
   }
   
   .login-container h2 {
@@ -52,13 +52,33 @@
     width: 90%;
   }
   
-  .login-container input {
+  .login-container input[type="text"],
+  .login-container input[type="password"]  {
     margin: 8px 0;
     width: 100%;
     padding: 10px;
     border-radius: 10px;
     border: 1px solid #ccc;
     font-size: 10pt;
+  }
+
+  .login-container input[type="checkbox"]  {
+    margin-right: 10px;
+  }
+
+
+  .login-container label{
+    margin: px;
+      font-size: 10pt;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* border: 1px solid black; */
+  }
+
+  .login-container input:focus{
+    outline: none;
+    /* outline: #085ad4 1px solid; */
   }
 
   .invalid {
@@ -71,7 +91,7 @@
     border: none;
     margin: 10px 0 5px 0;
     border-radius: 30px;
-    padding: 10px;
+    padding: 6px;
     cursor: pointer;
     font-weight: 800;
     font-size: 13pt;
@@ -85,15 +105,17 @@
 
   .forget-password a{
     text-decoration: none;
+    font-weight: 600;
     color: #085bd4;
   }
+
   .login-container button:hover {
     background-color: #0750be;
   }
 
   .sign-up{
     font-size: 10pt;
-    color: #333;
+    color: hsl(0, 0%, 20%);
   }
   
   .sign-up a{
@@ -101,6 +123,7 @@
     color: #085bd4;
     font-weight: 700;
   }
+    
 
   .login-footer{
     /* border: #000000 1px solid; */
@@ -120,6 +143,7 @@
 
   .languages button {
     font-size: 10pt;
+    background-color: #fff;
     color: #085bd4;
     background: none;
     border: none;
@@ -127,10 +151,16 @@
     cursor: pointer;
     outline: inherit;
   }
+
+  .languages button:hover{
+    color: #0750be;
+    background-color: #fff;
+  }
   
-  .active {
-    color: #7a7a7a;
+  .active-lan-button {
+    color: #fff;
     font-weight: bold;
+    background-color: white;
   }
   
   .login-footer .copyright{
