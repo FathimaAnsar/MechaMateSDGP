@@ -1,10 +1,13 @@
 package com.mechamate.service;
 
+import com.mechamate.MechaMate;
 import com.mechamate.dto.*;
 import com.mechamate.entity.*;
 import com.mechamate.repo.*;
 import org.bson.types.ObjectId;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 public class DatabaseAbstractLayer {
+    private static final Logger logger = LoggerFactory.getLogger(MechaMate.class);
+
+    @Autowired
+    private  CacheManager cacheManager;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -66,60 +74,162 @@ public class DatabaseAbstractLayer {
 //    }
 
 
-// user profles
+// user profiles
 
     public boolean addUserProfile(UserProfile userProfile) {
         try {
-            if(userProfile == null) return false;
-            if(isUserExists(userProfile.getUsername())) return false;
+            if (userProfile == null) {
+                logger.warn("Attempted to add a null UserProfile.");
+                return false;
+            }
+            if (isUserExists(userProfile.getUsername())) {
+                logger.info("Attempted to add a UserProfile for an existing user: {}. Operation aborted.", userProfile.getUsername());
+                return false;
+            }
             userProfileRepo.save(userProfile);
+            // Optionally, add the user profile to cache if you expect immediate reads following creation
+            cacheManager.putInUserProfileCache(userProfile.getUsername(), userProfile);
+            logger.info("UserProfile added for user: {} and added to cache.", userProfile.getUsername());
             return true;
-        } catch (Exception e) {}
-        return false;
+        } catch (Exception e) {
+            logger.error("Error adding UserProfile for user: {}", userProfile.getUsername(), e);
+            return false;
+        }
     }
 
     public UserProfile getUserProfile(String username) {
+
+        if (username == null || username.isEmpty()) {
+            logger.warn("getUserProfile called with null or empty username");
+            return null;
+        }
+
         try {
-            Optional<UserProfile> userProfile = userProfileRepo.findByUsername(username);
-            return userProfile.orElse(null);
-        } catch (Exception e) {}
-        return null;
+            UserProfile cachedProfile = cacheManager.getFromUserProfileCache(username);
+            if (cachedProfile != null) {
+                logger.info("Retrieved UserProfile from cache for username: {}", username);
+                return cachedProfile;
+            }
+
+            Optional<UserProfile> userProfileOptional = userProfileRepo.findByUsername(username);
+            if (userProfileOptional.isPresent()) {
+                UserProfile userProfile = userProfileOptional.get();
+                cacheManager.putInUserProfileCache(username, userProfile);
+                logger.info("Retrieved UserProfile from database and add to the cache by username: {}", username);
+                return userProfile;
+            } else {
+                logger.info("UserProfile not found for username: {}", username);
+                return null;
+            }
+        } catch (Exception e) {
+            logger.error("exception occurred while retrieving UserProfile for username: {}. Exception: {}", username, e.toString());
+            return null;
+        }
     }
 
-    public UserProfile getUserProfileByEmail(String email) {
-        try {
-            Optional<UserProfile> userProfile = userProfileRepo.findByEmail(email);
-            return userProfile.orElse(null);
-        } catch (Exception e) {}
-        return null;
-    }
+//    public UserProfile getUserProfileByEmail(String email) {
+//        if (email == null || email.isEmpty()) {
+//            logger.warn("getUserProfileByEmail called with null or empty email");
+//            return null;
+//        }
+//
+//        try {
+//            // Attempt to retrieve the UserProfile from cache
+//            UserProfile cachedProfile = cacheManager.getFromCache(email, UserProfile.class);
+//            if (cachedProfile != null) {
+//                logger.info("Retrieved UserProfile from cache for email: {}", email);
+//                return cachedProfile;
+//            }
+//
+//            // If not in cache, retrieve from database
+//            Optional<UserProfile> userProfileOptional = userProfileRepo.findByEmail(email);
+//            if (userProfileOptional.isPresent()) {
+//                UserProfile userProfile = userProfileOptional.get();
+//                // Cache the retrieved profile
+//                cacheManager.putInCache(email, userProfile);
+//                logger.info("Retrieved UserProfile from database and cached for email: {}", email);
+//                return userProfile;
+//            } else {
+//                logger.info("UserProfile not found for email: {}", email);
+//                return null;
+//            }
+//        } catch (Exception e) {
+//            logger.error("Error retrieving UserProfile for email: {}", email, e);
+//            return null;
+//        }
+//    }
 
-    public UserProfile getUserProfileByRecoveryKey(String key) {
-        try {
-            Optional<UserProfile> userProfile = userProfileRepo.findByRecoveryKey(key);
-            return userProfile.orElse(null);
-        } catch (Exception e) {}
-        return null;
-    }
+//    public UserProfile getUserProfileByRecoveryKey(String key) {
+//        if (key == null || key.trim().isEmpty()) {
+//            logger.warn("getUserProfileByRecoveryKey called with null or empty key");
+//            return null;
+//        }
+//
+//        // Attempt to retrieve the UserProfile from cache
+//        String cacheKey = "recoveryKey:" + key; // Ensure unique cache keys, especially if combining different caches
+//        UserProfile cachedProfile = cacheManager.getFromCache(cacheKey, UserProfile.class);
+//        if (cachedProfile != null) {
+//            logger.info("Retrieved UserProfile from cache for recovery key: {}", key);
+//            return cachedProfile;
+//        }
+//
+//        try {
+//            Optional<UserProfile> userProfileOptional = userProfileRepo.findByRecoveryKey(key);
+//            if (userProfileOptional.isPresent()) {
+//                UserProfile userProfile = userProfileOptional.get();
+//                cacheManager.putInCache(cacheKey, userProfile); // Cache the retrieved profile
+//                logger.info("Retrieved UserProfile from database and cached for recovery key: {}", key);
+//                return userProfile;
+//            } else {
+//                logger.info("UserProfile not found for recovery key: {}", key);
+//                return null;
+//            }
+//        } catch (Exception e) {
+//            logger.error("Error retrieving UserProfile for recovery key: {}", key, e);
+//            return null;
+//        }
+//    }
 
     public boolean updateUserProfile(UserProfile userProfile) {
+        if (userProfile == null) {
+            return false;
+        }
+        if (!isUserExists(userProfile.getUsername())) {
+            return false;
+        }
         try {
-            if(userProfile == null) return false;
-            if(!isUserExists(userProfile.getUsername())) return false;
             userProfileRepo.save(userProfile);
+
+            String cacheKey = "userProfile:" + userProfile.getUsername();
+            cacheManager.putInUserProfileCache(cacheKey, userProfile);
+
+            logger.info("Updated UserProfile in database and cache for username: {}", userProfile.getUsername());
             return true;
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            logger.error("Error updating UserProfile for username: {}", userProfile.getUsername(), e);
+        }
         return false;
     }
+
 
     public boolean deleteUserProfile(UserProfile userProfile) {
         try {
-            if(userProfile == null) return false;
-            if(!isUserExists(userProfile.getUsername())) return true;
+            if (userProfile == null) {
+                logger.warn("Attempted to delete a null UserProfile.");
+                return false;
+            }
+            if (!isUserExists(userProfile.getUsername())) {
+                logger.info("Attempted to delete a UserProfile for a non-existing user: {}. No action needed.", userProfile.getUsername());
+                return true;
+            }
             userProfileRepo.delete(userProfile);
+            cacheManager.deleteFromUserProfileCache(userProfile.getUsername());
+            logger.info("UserProfile deleted and cache invalidated for user: {}", userProfile.getUsername());
             return true;
-        } catch (Exception e) {}
-        return false;
+        } catch (Exception e) {
+            logger.error("error deleting UserProfile for user: {}", userProfile.getUsername(), e);
+            return false;
+        }
     }
 
 //sessions
