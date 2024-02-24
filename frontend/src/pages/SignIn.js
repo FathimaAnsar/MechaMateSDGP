@@ -35,7 +35,7 @@ const handleLogin = async (e) => {
                     {languages.loginError} <a href='/signup'>{languages.signUpForNewAccount}</a>
                 </div>
                 <img src={logo} className="sign-up-screen-logo" alt="logo"></img>
-                <Form id='loginForm' onSubmit={handleLogin}>
+                <Form id='loginForm' className='signin-form'onSubmit={handleLogin}>
                     <Form.Group controlId='username'>
                         <Form.Control
                             type='text'
