@@ -200,8 +200,7 @@ public class DatabaseAbstractLayer {
         try {
             userProfileRepo.save(userProfile);
 
-            String cacheKey = "userProfile:" + userProfile.getUsername();
-            cacheManager.putInUserProfileCache(cacheKey, userProfile);
+            cacheManager.putInUserProfileCache(userProfile.getUsername(), userProfile);
 
             logger.info("Updated UserProfile in database and cache for username: {}", userProfile.getUsername());
             return true;
