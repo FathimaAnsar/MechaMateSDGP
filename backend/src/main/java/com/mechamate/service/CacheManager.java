@@ -282,7 +282,7 @@ public class CacheManager {
     }
 
 
-    public void putInVehicleCache(String key, ServiceRecord serviceRecord) {
+    public void putInServiceRecordCache(String key, ServiceRecord serviceRecord) {
         if (key == null || serviceRecord == null) {
             logger.warn("attempt to put a null key or serviceRecord into the cache. Key: {}, Vehicle: {}", key, serviceRecord);
             return;
@@ -290,7 +290,7 @@ public class CacheManager {
 
         try {
             serviceRecordCache.put(key, serviceRecord);
-            logger.info("vehicle put into cache under key: {}", key);
+            logger.info("serviceRecord put into cache under key: {}", key);
         } catch (Exception e) {
             logger.error("exception happens while putting serviceRecord into cache. Key: {}, Exception: {}", key, e.toString());
         }
@@ -302,7 +302,6 @@ public class CacheManager {
             logger.warn("attempt to delete serviceRecord from cache with null key.");
             return;
         }
-
         try {
             if (!serviceRecordCache.containsKey(key)) {
                 logger.info("attempt to delete a non serviceRecord key from cache: {}", key);
@@ -313,6 +312,79 @@ public class CacheManager {
 
         } catch (Exception e) {
             logger.error("exception occurred while deleting serviceRecord from cache. Key: {}, Exception: {}", key, e.toString());
+        }
+    }
+    //************************************* maintenance ************************************************
+
+    public boolean isMaintenanceExistInCache (String key){
+        boolean isExist = false;
+        if (key == null) {
+            logger.warn("attempt to get a maintenance with a null key.");
+        }
+        try {
+            isExist = maintenanceCache.containsKey(key);
+            logger.info("found maintenance for key: {}", key);
+
+        }catch (Exception e){
+            logger.error("exception happened while retrieving maintenance from cache for key: {}. Exception: {}", key, e.toString());
+        }
+        return isExist;
+    }
+
+    public Maintenance getFromMaintenanceCache(String key) {
+
+        if (key == null) {
+            logger.warn("attempt to get a Maintenance with a null key.");
+            return null;
+        }
+        try {
+            Maintenance maintenance = maintenanceCache.get(key);
+
+            if (maintenance == null) {
+                logger.info("cache miss for Maintenance key: {}", key);
+                return null;
+            } else {
+                logger.info("found Maintenance for key: {}", key);
+                return maintenance;
+            }
+        } catch (Exception e) {
+            logger.error("exception happened while retrieving Maintenance from cache for key: {}. Exception: {}", key, e.toString());
+            return null;
+        }
+    }
+
+
+    public void putInMaintenanceCache(String key, Maintenance maintenance) {
+        if (key == null || maintenance == null) {
+            logger.warn("attempt to put a null key or Maintenance into the cache. Key: {}, Vehicle: {}", key, maintenance);
+            return;
+        }
+
+        try {
+            maintenanceCache.put(key, maintenance);
+            logger.info("maintenance put into cache under key: {}", key);
+        } catch (Exception e) {
+            logger.error("exception happens while putting serviceRecord into cache. Key: {}, Exception: {}", key, e.toString());
+        }
+    }
+
+
+    public void deleteFromMaintenanceCache(String key) {
+        if (key == null) {
+            logger.warn("attempt to delete maintenance from cache with null key.");
+            return;
+        }
+
+        try {
+            if (!maintenanceCache.containsKey(key)) {
+                logger.info("attempt to delete a non maintenance key from cache: {}", key);
+                return;
+            }
+            maintenanceCache.remove(key);
+            logger.info("Maintenance removed from cache for key: {}", key);
+
+        } catch (Exception e) {
+            logger.error("exception occurred while deleting maintenance from cache. Key: {}, Exception: {}", key, e.toString());
         }
     }
 }
