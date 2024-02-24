@@ -13,7 +13,7 @@ function Home() {
         <Container className="cards-container">
         <Row>
         <Col>
-        <Card style={{ width: '20rem', height: '20rem' }}  bg={'Secondary'}  border="primary" className="cards">
+        <Card style={{ width: '12rem', height: '12rem' }}  bg={'Secondary'}  border="primary" className="cards">
         <Card.Body>
             <Card.Title>Vehicles</Card.Title>
             <Card.Subtitle className="mb-2 text-muted">View Your Vehicle Documents</Card.Subtitle>
@@ -23,19 +23,16 @@ function Home() {
         </Col>
         
         <Col sm>
-        <Card style={{ width: '20rem', height: '20rem' }} bg={'primary'} className="cards">
+        <Card style={{ width: '12rem', height: '12rem' }} bg={'primary'} className="cards">
         <Card.Body>
-            <Card.Title>Accident assisatance</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">Accident Assistance</Card.Subtitle>
+            <Card.Title>Acc Assistant</Card.Title>
+            <Card.Subtitle className="mb-2 text-muted">Accident Assistance services</Card.Subtitle>
             <Card.Link href="/accidentassistance"><Image src={require('../images/tow-truck.png')} thumbnail /></Card.Link>
         </Card.Body>
         </Card>
         </Col>
-       
-      </Row>
-      <Row>
-      <Col sm>
-        <Card style={{ width: '20rem', height: '20rem' }} bg={'primary'} className="cards">
+        <Col sm>
+        <Card style={{ width: '12rem', height: '12rem' }} bg={'primary'} className="cards">
         <Card.Body>
             <Card.Title>Service Records</Card.Title>
             <Card.Subtitle className="mb-2 text-muted">Add New Vehicle Service Records</Card.Subtitle>
@@ -45,7 +42,7 @@ function Home() {
         </Col>
        
         <Col sm>
-        <Card style={{ width: '20rem', height: '20rem' }} bg={'primary'} className="cards">
+        <Card style={{ width: '12rem', height: '12rem' }} bg={'primary'} className="cards">
         <Card.Body>
             <Card.Title>Spare Parts</Card.Title>
             <Card.Subtitle className="mb-2 text-muted">Find Car Spare Parts</Card.Subtitle>
@@ -54,7 +51,7 @@ function Home() {
         </Card>
         </Col>
         <Col sm>
-            <Card style={{ width: '20rem', height: '20rem' }} bg={'primary'} className="cards">
+            <Card style={{ width: '12rem', height: '12rem' }} bg={'primary'} className="cards">
             <Card.Body>
             <Card.Title> Find Mechanic</Card.Title>
             <Card.Subtitle className="mb-2 text-muted">Find Car Mechanic</Card.Subtitle>
@@ -62,7 +59,9 @@ function Home() {
         </Card.Body>
         </Card>
         </Col>
+       
       </Row>
+    
     </Container>
 
         </div>
