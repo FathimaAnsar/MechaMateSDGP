@@ -18,6 +18,20 @@ public class CacheManager {
     private final ConcurrentHashMap<String, Maintenance> MaintenanceCache = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, ServiceRecord> PredictionModelCache = new ConcurrentHashMap<>();
 
+    public boolean isUserExistInCache (String key){
+        boolean isExist = false;
+        if (key == null) {
+            logger.warn("attempt to get a UserProfile with a null key.");
+        }
+        try {
+            isExist = userProfileCache.containsKey(key);
+            logger.info("found UserProfile for key: {}", key);
+
+        }catch (Exception e){
+            logger.error("exception happened while retrieving UserProfile from cache for key: {}. Exception: {}", key, e.toString());
+        }
+        return isExist;
+    }
 
     public UserProfile getFromUserProfileCache(String key) {
 
