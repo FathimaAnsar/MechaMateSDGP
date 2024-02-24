@@ -87,7 +87,6 @@ public class DatabaseAbstractLayer {
                 return false;
             }
             userProfileRepo.save(userProfile);
-            // Optionally, add the user profile to cache if you expect immediate reads following creation
             cacheManager.putInUserProfileCache(userProfile.getUsername(), userProfile);
             logger.info("UserProfile added for user: {} and added to cache.", userProfile.getUsername());
             return true;
@@ -127,68 +126,50 @@ public class DatabaseAbstractLayer {
         }
     }
 
-//    public UserProfile getUserProfileByEmail(String email) {
-//        if (email == null || email.isEmpty()) {
-//            logger.warn("getUserProfileByEmail called with null or empty email");
-//            return null;
-//        }
-//
-//        try {
-//            // Attempt to retrieve the UserProfile from cache
-//            UserProfile cachedProfile = cacheManager.getFromCache(email, UserProfile.class);
-//            if (cachedProfile != null) {
-//                logger.info("Retrieved UserProfile from cache for email: {}", email);
-//                return cachedProfile;
-//            }
-//
-//            // If not in cache, retrieve from database
-//            Optional<UserProfile> userProfileOptional = userProfileRepo.findByEmail(email);
-//            if (userProfileOptional.isPresent()) {
-//                UserProfile userProfile = userProfileOptional.get();
-//                // Cache the retrieved profile
-//                cacheManager.putInCache(email, userProfile);
-//                logger.info("Retrieved UserProfile from database and cached for email: {}", email);
-//                return userProfile;
-//            } else {
-//                logger.info("UserProfile not found for email: {}", email);
-//                return null;
-//            }
-//        } catch (Exception e) {
-//            logger.error("Error retrieving UserProfile for email: {}", email, e);
-//            return null;
-//        }
-//    }
+    public UserProfile getUserProfileByEmail(String email) {
+        if (email == null || email.isEmpty()) {
+            logger.warn("getUserProfileByEmail called with null or empty email");
+            return null;
+        }
 
-//    public UserProfile getUserProfileByRecoveryKey(String key) {
-//        if (key == null || key.trim().isEmpty()) {
-//            logger.warn("getUserProfileByRecoveryKey called with null or empty key");
-//            return null;
-//        }
-//
-//        // Attempt to retrieve the UserProfile from cache
-//        String cacheKey = "recoveryKey:" + key; // Ensure unique cache keys, especially if combining different caches
-//        UserProfile cachedProfile = cacheManager.getFromCache(cacheKey, UserProfile.class);
-//        if (cachedProfile != null) {
-//            logger.info("Retrieved UserProfile from cache for recovery key: {}", key);
-//            return cachedProfile;
-//        }
-//
-//        try {
-//            Optional<UserProfile> userProfileOptional = userProfileRepo.findByRecoveryKey(key);
-//            if (userProfileOptional.isPresent()) {
-//                UserProfile userProfile = userProfileOptional.get();
-//                cacheManager.putInCache(cacheKey, userProfile); // Cache the retrieved profile
-//                logger.info("Retrieved UserProfile from database and cached for recovery key: {}", key);
-//                return userProfile;
-//            } else {
-//                logger.info("UserProfile not found for recovery key: {}", key);
-//                return null;
-//            }
-//        } catch (Exception e) {
-//            logger.error("Error retrieving UserProfile for recovery key: {}", key, e);
-//            return null;
-//        }
-//    }
+        try {
+            Optional<UserProfile> userProfileOptional = userProfileRepo.findByEmail(email);
+            if (userProfileOptional.isPresent()) {
+                UserProfile userProfile = userProfileOptional.get();
+                logger.info("retrieved UserProfile from database for email: {}", email);
+                return userProfile;
+            } else {
+                logger.info("userProfile not found for email: {}", email);
+                return null;
+            }
+        } catch (Exception e) {
+            logger.error("error retrieving UserProfile for email: {}", email, e);
+            return null;
+        }
+    }
+
+    public UserProfile getUserProfileByRecoveryKey(String key) {
+        if (key == null || key.trim().isEmpty()) {
+            logger.warn("getUserProfileByRecoveryKey called with null or empty key");
+            return null;
+        }
+
+
+        try {
+            Optional<UserProfile> userProfileOptional = userProfileRepo.findByRecoveryKey(key);
+            if (userProfileOptional.isPresent()) {
+                UserProfile userProfile = userProfileOptional.get();
+                logger.info("retrieved UserProfile from database for recovery key: {}", key);
+                return userProfile;
+            } else {
+                logger.info("userProfile not found for recovery key: {}", key);
+                return null;
+            }
+        } catch (Exception e) {
+            logger.error("error retrieving UserProfile for recovery key: {}", key, e);
+            return null;
+        }
+    }
 
     public boolean updateUserProfile(UserProfile userProfile) {
         if (userProfile == null) {
