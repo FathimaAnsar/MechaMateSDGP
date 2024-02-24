@@ -13,7 +13,7 @@ public class CacheManager {
     private static final Logger logger = LoggerFactory.getLogger(MechaMate.class);
     private final ConcurrentHashMap<String, UserProfile> userProfileCache = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, Session> sessionCache = new ConcurrentHashMap<>();
-    private final ConcurrentHashMap<String, Vehicle> VehicleCache = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, Vehicle> vehicleCache = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, ServiceRecord> ServiceRecordCache = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, Maintenance> MaintenanceCache = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, ServiceRecord> PredictionModelCache = new ConcurrentHashMap<>();
@@ -136,7 +136,7 @@ public class CacheManager {
 
     public void putInSessionCache(String key, Session session) {
         if (key == null || session == null) {
-            logger.warn("attempt to put a null key or session into the cache. Key: {}, UserProfile: {}", key, session);
+            logger.warn("attempt to put a null key or session into the cache. Key: {}, Session: {}", key, session);
             return;
         }
 
@@ -165,6 +165,80 @@ public class CacheManager {
 
         } catch (Exception e) {
             logger.error("exception occurred while deleting session from cache. Key: {}, Exception: {}", key, e.toString());
+        }
+    }
+    //************************************* Vehicle ************************************************
+
+    public boolean isVehicleExistInCache (String key){
+        boolean isExist = false;
+        if (key == null) {
+            logger.warn("attempt to get a vehicle with a null key.");
+        }
+        try {
+            isExist = vehicleCache.containsKey(key);
+            logger.info("found vehicle for key: {}", key);
+
+        }catch (Exception e){
+            logger.error("exception happened while retrieving vehicle from cache for key: {}. Exception: {}", key, e.toString());
+        }
+        return isExist;
+    }
+
+    public Vehicle getFromVehicleCache(String key) {
+
+        if (key == null) {
+            logger.warn("attempt to get a vehicle with a null key.");
+            return null;
+        }
+
+        try {
+            Vehicle vehicle = vehicleCache.get(key);
+
+            if (vehicle == null) {
+                logger.info("cache miss for vehicle key: {}", key);
+                return null;
+            } else {
+                logger.info("found vehicle for key: {}", key);
+                return vehicle;
+            }
+        } catch (Exception e) {
+            logger.error("exception happened while retrieving vehicle from cache for key: {}. Exception: {}", key, e.toString());
+            return null;
+        }
+    }
+
+
+    public void putInVehicleCache(String key, Vehicle vehicle) {
+        if (key == null || vehicle == null) {
+            logger.warn("attempt to put a null key or vehicle into the cache. Key: {}, Vehicle: {}", key, vehicle);
+            return;
+        }
+
+        try {
+            vehicleCache.put(key, vehicle);
+            logger.info("vehicle put into cache under key: {}", key);
+        } catch (Exception e) {
+            logger.error("exception happens while putting vehicle into cache. Key: {}, Exception: {}", key, e.toString());
+        }
+    }
+
+
+    public void deleteFromVehicleCache(String key) {
+        if (key == null) {
+            logger.warn("attempt to delete vehicle from cache with null key.");
+            return;
+        }
+
+        try {
+            if (!vehicleCache.containsKey(key)) {
+                logger.info("attempt to delete a non vehicle key from cache: {}", key);
+                return;
+            }
+            vehicleCache.remove(key);
+            logger.info("vehicle removed from cache for key: {}", key);
+
+        } catch (Exception e) {
+            logger.error("exception occurred while deleting vehicle from cache. Key: {}, Exception: {}", key, e.toString());
         }
     }
 }
