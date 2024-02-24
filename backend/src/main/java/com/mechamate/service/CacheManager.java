@@ -14,9 +14,9 @@ public class CacheManager {
     private final ConcurrentHashMap<String, UserProfile> userProfileCache = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, Session> sessionCache = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, Vehicle> vehicleCache = new ConcurrentHashMap<>();
-    private final ConcurrentHashMap<String, ServiceRecord> ServiceRecordCache = new ConcurrentHashMap<>();
-    private final ConcurrentHashMap<String, Maintenance> MaintenanceCache = new ConcurrentHashMap<>();
-    private final ConcurrentHashMap<String, ServiceRecord> PredictionModelCache = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, ServiceRecord> serviceRecordCache = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, Maintenance> maintenanceCache = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, ServiceRecord> predictionModelCache = new ConcurrentHashMap<>();
 
     //********************************** user profiles ************************************************
     public boolean isUserExistInCache (String key){
@@ -239,6 +239,80 @@ public class CacheManager {
 
         } catch (Exception e) {
             logger.error("exception occurred while deleting vehicle from cache. Key: {}, Exception: {}", key, e.toString());
+        }
+    }
+    //************************************* ServiceRecord ************************************************
+
+    public boolean isServiceRecordExistInCache (String key){
+        boolean isExist = false;
+        if (key == null) {
+            logger.warn("attempt to get a ServiceRecord with a null key.");
+        }
+        try {
+            isExist = serviceRecordCache.containsKey(key);
+            logger.info("found ServiceRecord for key: {}", key);
+
+        }catch (Exception e){
+            logger.error("exception happened while retrieving ServiceRecord from cache for key: {}. Exception: {}", key, e.toString());
+        }
+        return isExist;
+    }
+
+    public ServiceRecord getFromServiceRecordCache(String key) {
+
+        if (key == null) {
+            logger.warn("attempt to get a ServiceRecord with a null key.");
+            return null;
+        }
+
+        try {
+            ServiceRecord serviceRecord = serviceRecordCache.get(key);
+
+            if (serviceRecord == null) {
+                logger.info("cache miss for serviceRecord key: {}", key);
+                return null;
+            } else {
+                logger.info("found serviceRecord for key: {}", key);
+                return serviceRecord;
+            }
+        } catch (Exception e) {
+            logger.error("exception happened while retrieving serviceRecord from cache for key: {}. Exception: {}", key, e.toString());
+            return null;
+        }
+    }
+
+
+    public void putInVehicleCache(String key, ServiceRecord serviceRecord) {
+        if (key == null || serviceRecord == null) {
+            logger.warn("attempt to put a null key or serviceRecord into the cache. Key: {}, Vehicle: {}", key, serviceRecord);
+            return;
+        }
+
+        try {
+            serviceRecordCache.put(key, serviceRecord);
+            logger.info("vehicle put into cache under key: {}", key);
+        } catch (Exception e) {
+            logger.error("exception happens while putting serviceRecord into cache. Key: {}, Exception: {}", key, e.toString());
+        }
+    }
+
+
+    public void deleteFromServiceRecordCache(String key) {
+        if (key == null) {
+            logger.warn("attempt to delete serviceRecord from cache with null key.");
+            return;
+        }
+
+        try {
+            if (!serviceRecordCache.containsKey(key)) {
+                logger.info("attempt to delete a non serviceRecord key from cache: {}", key);
+                return;
+            }
+            serviceRecordCache.remove(key);
+            logger.info("serviceRecord removed from cache for key: {}", key);
+
+        } catch (Exception e) {
+            logger.error("exception occurred while deleting serviceRecord from cache. Key: {}, Exception: {}", key, e.toString());
         }
     }
 }
