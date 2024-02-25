@@ -1,8 +1,9 @@
+<<<<<<< HEAD
+//import SignIn from './pages/auth/SignIn';
+=======
 import React, {useContext, useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
-import Login from './pages/Login';
-import SignIn from './pages/SignIn';
 import NoPage from './pages/NoPage';
 import Documents from './pages/Documents';
 import Contact from './pages/Contact';
@@ -10,20 +11,28 @@ import Vehicles from './pages/Vehicles';
 import AddVehicle from './pages/AddVehicle';
 import AddServiceRecord from './pages/AddServiceRecord';
 import ServiceRecords from './pages/ServiceRecords';
-import { CircleLoader, MoonLoader } from 'react-spinners';
+import { CircleLoader } from 'react-spinners';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ThemeContext from './components/ThemeContext';
+>>>>>>> 144aaac1739a099bc9e63eead86f9d48c3ec47ed
 import './styles/App.css';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
+
+
 
 
 function App() {
+<<<<<<< HEAD
+  
+=======
   const { theme } = useContext(ThemeContext);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 2000); // Adjust the duration as needed
+    }, 1500); // Adjust the duration as needed
   }, []);
 
   return (
@@ -40,10 +49,14 @@ function App() {
         <BrowserRouter>
           <Routes>
             {/*default login page opens*/}
-            <Route index element={<Login />} />
+            <Route index element={<SignIn />} /> 
+
+            {/* if a session is avalable we need to redirect user to home page
+            else to signup page */}
+
             <Route path="/home" element={<Home />} />
             <Route path="/signin" element={<SignIn />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
             <Route path="/documents" element={<Documents />} />
             <Route path="*" element={<NoPage />} />
             <Route path="/contact" element={<Contact />} />
@@ -57,6 +70,7 @@ function App() {
       )}
     </div>
    
+>>>>>>> 144aaac1739a099bc9e63eead86f9d48c3ec47ed
   );
 }
 
