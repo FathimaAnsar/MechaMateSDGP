@@ -1,37 +1,29 @@
-import React from 'react'
-import React, { useRef, useEffect } from 'react';
-import QRCode from 'qrcode';
+import React from 'react';
+import QRCode from 'react-qr-code';
+import Button from 'react-bootstrap/Button';
 
-function QrCodeGenerator() {
-	const [url, setUrl] = useState('')
-	const [qr, setQr] = useState('')
 
-	const GenerateQRCode = () => {
-		QRCode.toDataURL(url, {
-			width: 800,
-			margin: 2,
-			color: {
-				dark: '#335383FF',
-				light: '#EEEEEEFF'
-			}
-		}, (err, url) => {
-			if (err) return console.error(err)
+function AddRecord({ url }) {
+    return (
+        
+            
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+            <div>
+            
+            <Button variant="primary" onClick={() => window.open(url, '_blank')}>Add manually</Button>
 
-			console.log(url)
-			setQr(url)
-		})
-	}
+            </div>
 
-  return (
-	<div>
-	<h1>Scan QR code</h1>
+            <div>
+                <h1>Scan QR Code</h1>
+                <QRCode value={ url } />
+            </div>
+        </div>
+    );
 
-	
-	</div>
-  )
 }
 
-export default QrCodeGenerator
+export default AddRecord;
 
 
 
