@@ -1,3 +1,18 @@
 2024-02-21 00:37:57.724 	INFO  	[main] com.mechamate.MechaMate - Starting MechaMate using Java 21 with PID 10476 (E:\SDGP\MechaMateSDGP\backend\target\classes started by Developer in E:\SDGP\MechaMateSDGP\backend)
 2024-02-21 00:37:57.728 	INFO  	[main] com.mechamate.MechaMate - No active profile set, falling back to 1 default profile: "default"
 2024-02-21 00:38:03.096 	INFO  	[main] com.mechamate.MechaMate - Started MechaMate in 6.327 seconds (process running for 7.042)
+2024-02-24 13:07:05.192 	INFO  	[main] com.mechamate.MechaMate - Starting MechaMate using Java 21.0.2 with PID 72237 (/Users/Gihan/Desktop//SDGP/MechaMateSDGP/backend/target/classes started by Gihan in /Users/Gihan/Desktop//SDGP/MechaMateSDGP/backend)
+2024-02-24 13:07:05.197 	INFO  	[main] com.mechamate.MechaMate - No active profile set, falling back to 1 default profile: "default"
+2024-02-24 13:07:13.857 	INFO  	[main] com.mechamate.MechaMate - Started MechaMate in 11.406 seconds (process running for 13.511)
+2024-02-24 13:30:51.945 	INFO  	[main] com.mechamate.MechaMate - Starting MechaMate using Java 21.0.2 with PID 75436 (/Users/Gihan/Desktop//SDGP/MechaMateSDGP/backend/target/classes started by Gihan in /Users/Gihan/Desktop//SDGP/MechaMateSDGP/backend)
+2024-02-24 13:30:52.015 	INFO  	[main] com.mechamate.MechaMate - No active profile set, falling back to 1 default profile: "default"
+2024-02-24 13:30:58.610 	INFO  	[main] com.mechamate.MechaMate - Started MechaMate in 8.288 seconds (process running for 10.671)
+2024-02-24 13:35:39.753 	INFO  	[main] com.mechamate.MechaMate - Starting MechaMate using Java 21.0.2 with PID 76083 (/Users/Gihan/Desktop//SDGP/MechaMateSDGP/backend/target/classes started by Gihan in /Users/Gihan/Desktop//SDGP/MechaMateSDGP/backend)
+2024-02-24 13:35:39.761 	INFO  	[main] com.mechamate.MechaMate - No active profile set, falling back to 1 default profile: "default"
+2024-02-24 13:35:50.355 	INFO  	[main] com.mechamate.MechaMate - Started MechaMate in 12.046 seconds (process running for 14.953)
+2024-02-24 13:38:23.292 	INFO  	[main] com.mechamate.MechaMate - Starting MechaMate using Java 21.0.2 with PID 76433 (/Users/Gihan/Desktop//SDGP/MechaMateSDGP/backend/target/classes started by Gihan in /Users/Gihan/Desktop//SDGP/MechaMateSDGP/backend)
+2024-02-24 13:38:23.297 	INFO  	[main] com.mechamate.MechaMate - No active profile set, falling back to 1 default profile: "default"
+2024-02-24 13:38:31.732 	INFO  	[main] com.mechamate.MechaMate - Started MechaMate in 9.935 seconds (process running for 11.572)
+2024-02-24 13:38:56.669 	INFO  	[main] com.mechamate.MechaMate - Starting MechaMate using Java 21.0.2 with PID 76520 (/Users/Gihan/Desktop//SDGP/MechaMateSDGP/backend/target/classes started by Gihan in /Users/Gihan/Desktop//SDGP/MechaMateSDGP/backend)
+2024-02-24 13:38:56.673 	INFO  	[main] com.mechamate.MechaMate - No active profile set, falling back to 1 default profile: "default"
+2024-02-24 13:39:05.176 	INFO  	[main] com.mechamate.MechaMate - Started MechaMate in 10.37 seconds (process running for 13.005)

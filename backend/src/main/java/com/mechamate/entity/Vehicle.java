@@ -22,7 +22,7 @@ public class Vehicle {
 
     public enum FuelType {
         Unknown,
-        Patrol,
+        Petrol,
         Diesel,
         LPGas,
         Electric
