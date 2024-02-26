@@ -365,7 +365,9 @@ public class NotificationManager {
             email.setText(emailTemplate, true);
             mailClient.send(mimeMessage);
             return true;
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         return false;
     }
 

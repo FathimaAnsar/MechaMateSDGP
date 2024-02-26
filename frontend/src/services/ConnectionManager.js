@@ -29,10 +29,12 @@ class ConnectionManager {
                 // Login successful, redirect the user to the home page
                 window.location.href = "/home";
             } else if (response.status === 400){
-                // Login failed, handle the error (e.g., display an error message)
+                // Login failed, handle the error 
                 errorMessage.style.display = "block";
                 console.error('Login failed:', response.statusText);
             }
+            
+
         } catch (error) {
             errorMessage.style.display = "block";
             console.error('Error:', error);
@@ -49,20 +51,42 @@ class ConnectionManager {
                     // Serialize the data to x-www-form-urlencoded format
                     const params = new URLSearchParams();
                     for (const key in data) {
-                            params.append(key, data[key]);
+                        params.append(key, data[key]);
                     }
                     return params.toString();
                 }]
             });
-            
+            alert("done")
+
             if (response.status === 200) {
-                // Sign up successful, handle success (e.g., redirect the user)
+                // Sign up successful, handle success 
                 window.location.href = "/home";
+            } else {
+                // Handle other status codes
+                if (response.status === 401) {
+                    // Unauthorized, handle accordingly 
+                    alert("Unauthorized. Please check your credentials.");
+                    // Redirect to login page
+                    window.location.href = "/login";
+                } else {
+                    // Handle other status codes
+                    console.error('Error:', response.status);
+                    // Display a generic error message
+                    alert("An error occurred. Please try again later.");
+                }
             }
         } catch (error) {
-            console.error('Error signing up:', error);
+            if (error.response.status === 500) {
+                // for testing purposes
+                window.location.href = "/home";
+                // alert(error.response.data.message)
+            }
+            
+
         }
+
     }
+    
 }
 
 export default ConnectionManager;

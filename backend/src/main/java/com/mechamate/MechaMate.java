@@ -10,15 +10,15 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
-@Configuration
+//@Configuration
 public class MechaMate implements WebMvcConfigurer {
-	@Override
-	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/api/**")
-				.allowedOrigins("*")
-				.allowedMethods("GET", "POST")
-				.allowedHeaders("*");
-	}
+//	@Override
+//	public void addCorsMappings(CorsRegistry registry) {
+//		registry.addMapping("/api/**")
+//				.allowedOrigins("*")
+//				.allowedMethods("GET", "POST")
+//				.allowedHeaders("*");
+//	}
 
 	private static final Logger logger = LoggerFactory.getLogger(MechaMate.class);
 
