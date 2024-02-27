@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+// const domain = "https://mechamate-backend.el.r.appspot.com/";
+
 class ConnectionManager {
     constructor() {}
 
@@ -7,7 +9,7 @@ class ConnectionManager {
         const errorMessage = document.getElementById("login-error");
 
         try {
-            const response = await axios.post('http://localhost:8080/api/v1/auth/signin', {
+            const response = await axios.post('https://mechamate-backend.el.r.appspot.com/api/v1/auth/signin', {
                 username: userName,
                 password: passWord,
                 keepMeSignedIn: rememberMe
@@ -43,7 +45,7 @@ class ConnectionManager {
 
     async signUp(formData) {
         try {
-            const response = await axios.post('http://localhost:8080/api/v1/auth/signup', formData, {
+            const response = await axios.post('https://mechamate-backend.el.r.appspot.com/api/v1/auth/signup', formData, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
@@ -76,17 +78,13 @@ class ConnectionManager {
                 }
             }
         } catch (error) {
-            if (error.response.status === 500) {
-                // for testing purposes
-                window.location.href = "/home";
-                // alert(error.response.data.message)
-            }
-            
-
+            // for testing purposes
+            alert(error.response.data.message)
         }
 
     }
     
 }
+
 
 export default ConnectionManager;
