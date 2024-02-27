@@ -8,7 +8,7 @@ function ServiceRecords() {
     <div>
         <Header/>
         <h1>Service Records</h1>
-        <Button variant="primary" href='/addServiceRecord'>Add Service Records</Button>{}
+        <Button variant="primary" href='/AddRecord'>Add Service Records</Button>{}
 
       
     </div>

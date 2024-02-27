@@ -6,7 +6,7 @@ import Documents from './pages/Documents';
 import Contact from './pages/Contact';
 import Vehicles from './pages/Vehicles';
 import AddVehicle from './pages/AddVehicle';
-import AddServiceRecord from './pages/AddServiceRecord';
+import AddRecord from './pages/AddRecord';
 import ServiceRecords from './pages/ServiceRecords';
 import { CircleLoader } from 'react-spinners';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -29,6 +29,8 @@ function App() {
     }, 1500); // Adjust the duration as needed
   }, []);
 
+  const qrCodeUrl = "google.com"; //link of the QR code
+
   return (
     
     <div className={`App ${theme}`}>
@@ -43,7 +45,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             {/*default login page opens*/}
-            <Route index element={<SignIn />} /> 
+           {/* { <Route index element={<SignIn />} />  } */}
 
             {/* if a session is avalable we need to redirect user to home page
             else to signup page */}
@@ -57,7 +59,7 @@ function App() {
             <Route path="/vehicles" element={<Vehicles />} />
             <Route path="/addVehicle" element={<AddVehicle />} />
             <Route path="/serviceRecords" element={<ServiceRecords />} />
-            <Route path="/addServiceRecord" element={<AddServiceRecord />} />
+            <Route path="/AddRecord" element={<AddRecord url={qrCodeUrl} />} />
 
           </Routes>
         </BrowserRouter>
