@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-//import SignIn from './pages/auth/SignIn';
-=======
 import React, {useContext, useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
@@ -14,7 +11,6 @@ import ServiceRecords from './pages/ServiceRecords';
 import { CircleLoader } from 'react-spinners';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ThemeContext from './components/ThemeContext';
->>>>>>> 144aaac1739a099bc9e63eead86f9d48c3ec47ed
 import './styles/App.css';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
@@ -23,9 +19,7 @@ import SignUp from './pages/SignUp';
 
 
 function App() {
-<<<<<<< HEAD
   
-=======
   const { theme } = useContext(ThemeContext);
   const [loading, setLoading] = useState(true);
 
@@ -70,7 +64,6 @@ function App() {
       )}
     </div>
    
->>>>>>> 144aaac1739a099bc9e63eead86f9d48c3ec47ed
   );
 }
 

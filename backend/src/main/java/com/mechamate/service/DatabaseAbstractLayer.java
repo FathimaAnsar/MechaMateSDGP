@@ -319,7 +319,7 @@ public class DatabaseAbstractLayer {
         try {
             if(vehicles == null || vehicles.isEmpty()) return vehicleDTOS;
             for(Vehicle v: vehicles) {
-                VehicleDTO vDTO = new VehicleDTO(v.getRegNo(), v.getModel(), v.getFuelType(), new ArrayList<>());
+                VehicleDTO vDTO = new VehicleDTO(v.getRegNo(), v.getVehicleType(), v.getFuelType(), v.getVehicleMake(),v.getVehicleModel(),v.getInsNo(),v.getInsExpDate(),v.getRegExpDate(), new ArrayList<>());
                 vehicleDTOS.add(vDTO);
             }
         } catch (Exception e) {}

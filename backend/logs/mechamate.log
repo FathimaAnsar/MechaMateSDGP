@@ -1,18 +1,219 @@
-2024-02-21 00:37:57.724 	INFO  	[main] com.mechamate.MechaMate - Starting MechaMate using Java 21 with PID 10476 (E:\SDGP\MechaMateSDGP\backend\target\classes started by Developer in E:\SDGP\MechaMateSDGP\backend)
-2024-02-21 00:37:57.728 	INFO  	[main] com.mechamate.MechaMate - No active profile set, falling back to 1 default profile: "default"
-2024-02-21 00:38:03.096 	INFO  	[main] com.mechamate.MechaMate - Started MechaMate in 6.327 seconds (process running for 7.042)
-2024-02-24 13:07:05.192 	INFO  	[main] com.mechamate.MechaMate - Starting MechaMate using Java 21.0.2 with PID 72237 (/Users/Gihan/Desktop//SDGP/MechaMateSDGP/backend/target/classes started by Gihan in /Users/Gihan/Desktop//SDGP/MechaMateSDGP/backend)
-2024-02-24 13:07:05.197 	INFO  	[main] com.mechamate.MechaMate - No active profile set, falling back to 1 default profile: "default"
-2024-02-24 13:07:13.857 	INFO  	[main] com.mechamate.MechaMate - Started MechaMate in 11.406 seconds (process running for 13.511)
-2024-02-24 13:30:51.945 	INFO  	[main] com.mechamate.MechaMate - Starting MechaMate using Java 21.0.2 with PID 75436 (/Users/Gihan/Desktop//SDGP/MechaMateSDGP/backend/target/classes started by Gihan in /Users/Gihan/Desktop//SDGP/MechaMateSDGP/backend)
-2024-02-24 13:30:52.015 	INFO  	[main] com.mechamate.MechaMate - No active profile set, falling back to 1 default profile: "default"
-2024-02-24 13:30:58.610 	INFO  	[main] com.mechamate.MechaMate - Started MechaMate in 8.288 seconds (process running for 10.671)
-2024-02-24 13:35:39.753 	INFO  	[main] com.mechamate.MechaMate - Starting MechaMate using Java 21.0.2 with PID 76083 (/Users/Gihan/Desktop//SDGP/MechaMateSDGP/backend/target/classes started by Gihan in /Users/Gihan/Desktop//SDGP/MechaMateSDGP/backend)
-2024-02-24 13:35:39.761 	INFO  	[main] com.mechamate.MechaMate - No active profile set, falling back to 1 default profile: "default"
-2024-02-24 13:35:50.355 	INFO  	[main] com.mechamate.MechaMate - Started MechaMate in 12.046 seconds (process running for 14.953)
-2024-02-24 13:38:23.292 	INFO  	[main] com.mechamate.MechaMate - Starting MechaMate using Java 21.0.2 with PID 76433 (/Users/Gihan/Desktop//SDGP/MechaMateSDGP/backend/target/classes started by Gihan in /Users/Gihan/Desktop//SDGP/MechaMateSDGP/backend)
-2024-02-24 13:38:23.297 	INFO  	[main] com.mechamate.MechaMate - No active profile set, falling back to 1 default profile: "default"
-2024-02-24 13:38:31.732 	INFO  	[main] com.mechamate.MechaMate - Started MechaMate in 9.935 seconds (process running for 11.572)
-2024-02-24 13:38:56.669 	INFO  	[main] com.mechamate.MechaMate - Starting MechaMate using Java 21.0.2 with PID 76520 (/Users/Gihan/Desktop//SDGP/MechaMateSDGP/backend/target/classes started by Gihan in /Users/Gihan/Desktop//SDGP/MechaMateSDGP/backend)
-2024-02-24 13:38:56.673 	INFO  	[main] com.mechamate.MechaMate - No active profile set, falling back to 1 default profile: "default"
-2024-02-24 13:39:05.176 	INFO  	[main] com.mechamate.MechaMate - Started MechaMate in 10.37 seconds (process running for 13.005)
+2024-02-26 00:05:45.378 	INFO  	[http-nio-8080-exec-8] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 00:05:45.810 	INFO  	[http-nio-8080-exec-8] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 00:05:46.040 	INFO  	[http-nio-8080-exec-8] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 00:05:46.041 	INFO  	[http-nio-8080-exec-8] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 00:05:55.749 	INFO  	[http-nio-8080-exec-1] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 00:05:55.750 	INFO  	[http-nio-8080-exec-1] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 00:05:55.938 	INFO  	[http-nio-8080-exec-1] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 00:05:55.939 	INFO  	[http-nio-8080-exec-1] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 00:17:20.133 	INFO  	[http-nio-8080-exec-6] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 00:17:20.165 	INFO  	[http-nio-8080-exec-6] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 00:17:20.439 	INFO  	[http-nio-8080-exec-6] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 00:17:20.440 	INFO  	[http-nio-8080-exec-6] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 09:12:18.466 	INFO  	[http-nio-8080-exec-3] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 09:12:18.496 	INFO  	[http-nio-8080-exec-3] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 09:12:18.669 	INFO  	[http-nio-8080-exec-3] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 09:12:18.669 	INFO  	[http-nio-8080-exec-3] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 09:50:54.085 	INFO  	[http-nio-8080-exec-5] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 09:50:54.091 	INFO  	[http-nio-8080-exec-5] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 09:50:54.274 	INFO  	[http-nio-8080-exec-5] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 09:50:54.274 	INFO  	[http-nio-8080-exec-5] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 09:51:02.569 	INFO  	[http-nio-8080-exec-7] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 09:51:02.569 	INFO  	[http-nio-8080-exec-7] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 09:51:02.731 	INFO  	[http-nio-8080-exec-7] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 09:51:02.731 	INFO  	[http-nio-8080-exec-7] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 10:07:00.130 	INFO  	[http-nio-8080-exec-5] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 10:07:00.161 	INFO  	[http-nio-8080-exec-5] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 10:07:00.551 	INFO  	[http-nio-8080-exec-5] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 10:07:00.552 	INFO  	[http-nio-8080-exec-5] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 10:15:42.663 	INFO  	[main] com.mechamate.MechaMate - Starting MechaMate using Java 21.0.1 with PID 28160 (C:\Users\hp\Desktop\MMSDGP\MechaMateSDGP\backend\target\classes started by hp in C:\Users\hp\Desktop\MMSDGP\MechaMateSDGP\backend)
+2024-02-26 10:15:42.666 	INFO  	[main] com.mechamate.MechaMate - No active profile set, falling back to 1 default profile: "default"
+2024-02-26 10:15:48.714 	INFO  	[main] com.mechamate.MechaMate - Started MechaMate in 7.183 seconds (process running for 8.47)
+2024-02-26 10:16:12.657 	INFO  	[http-nio-8080-exec-1] com.mechamate.MechaMate - cache miss for UserProfile key: justin
+2024-02-26 10:16:13.313 	INFO  	[http-nio-8080-exec-1] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 10:16:13.314 	INFO  	[http-nio-8080-exec-1] com.mechamate.MechaMate - Retrieved UserProfile from database and add to the cache by username: justin
+2024-02-26 10:16:13.784 	INFO  	[http-nio-8080-exec-1] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 10:16:13.785 	INFO  	[http-nio-8080-exec-1] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 10:23:51.501 	INFO  	[http-nio-8080-exec-6] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 10:23:51.533 	INFO  	[http-nio-8080-exec-6] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 10:23:51.777 	INFO  	[http-nio-8080-exec-6] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 10:23:51.777 	INFO  	[http-nio-8080-exec-6] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 10:26:02.935 	INFO  	[http-nio-8080-exec-9] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 10:26:02.941 	INFO  	[http-nio-8080-exec-9] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 10:26:03.219 	INFO  	[http-nio-8080-exec-9] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 10:26:03.219 	INFO  	[http-nio-8080-exec-9] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 10:26:13.000 	INFO  	[http-nio-8080-exec-10] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 10:26:13.000 	INFO  	[http-nio-8080-exec-10] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 10:26:13.520 	INFO  	[http-nio-8080-exec-10] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 10:26:13.521 	INFO  	[http-nio-8080-exec-10] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 10:26:46.236 	INFO  	[http-nio-8080-exec-2] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 10:26:46.237 	INFO  	[http-nio-8080-exec-2] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 10:26:46.379 	INFO  	[http-nio-8080-exec-2] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 10:26:46.379 	INFO  	[http-nio-8080-exec-2] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 10:28:17.807 	INFO  	[http-nio-8080-exec-4] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 10:28:17.810 	INFO  	[http-nio-8080-exec-4] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 10:28:17.971 	INFO  	[http-nio-8080-exec-4] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 10:28:17.972 	INFO  	[http-nio-8080-exec-4] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 10:29:38.256 	INFO  	[http-nio-8080-exec-6] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 10:29:38.258 	INFO  	[http-nio-8080-exec-6] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 10:29:38.407 	INFO  	[http-nio-8080-exec-6] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 10:29:38.407 	INFO  	[http-nio-8080-exec-6] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 10:29:51.046 	INFO  	[http-nio-8080-exec-7] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 10:29:51.047 	INFO  	[http-nio-8080-exec-7] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 10:29:51.329 	INFO  	[http-nio-8080-exec-7] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 10:29:51.330 	INFO  	[http-nio-8080-exec-7] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 10:32:23.188 	INFO  	[http-nio-8080-exec-9] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 10:32:23.206 	INFO  	[http-nio-8080-exec-9] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 10:32:23.727 	INFO  	[http-nio-8080-exec-9] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 10:32:23.728 	INFO  	[http-nio-8080-exec-9] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 10:33:34.408 	INFO  	[http-nio-8080-exec-10] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 10:33:34.409 	INFO  	[http-nio-8080-exec-10] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 10:33:34.886 	INFO  	[http-nio-8080-exec-10] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 10:33:34.887 	INFO  	[http-nio-8080-exec-10] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 10:37:48.739 	INFO  	[main] com.mechamate.MechaMate - Starting MechaMate using Java 21.0.1 with PID 30316 (C:\Users\hp\Desktop\MMSDGP\MechaMateSDGP\backend\target\classes started by hp in C:\Users\hp\Desktop\MMSDGP\MechaMateSDGP\backend)
+2024-02-26 10:37:48.747 	INFO  	[main] com.mechamate.MechaMate - No active profile set, falling back to 1 default profile: "default"
+2024-02-26 10:37:59.877 	INFO  	[main] com.mechamate.MechaMate - Started MechaMate in 13.973 seconds (process running for 17.279)
+2024-02-26 10:38:09.074 	ERROR 	[http-nio-8080-exec-2] o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.IllegalArgumentException: When allowCredentials is true, allowedOrigins cannot contain the special value "*" since that cannot be set on the "Access-Control-Allow-Origin" response header. To allow credentials to a set of origins, list them explicitly or consider using "allowedOriginPatterns" instead.] with root cause
+java.lang.IllegalArgumentException: When allowCredentials is true, allowedOrigins cannot contain the special value "*" since that cannot be set on the "Access-Control-Allow-Origin" response header. To allow credentials to a set of origins, list them explicitly or consider using "allowedOriginPatterns" instead.
+	at org.springframework.web.cors.CorsConfiguration.validateAllowCredentials(CorsConfiguration.java:572)
+	at org.springframework.web.servlet.handler.AbstractHandlerMapping.getHandler(AbstractHandlerMapping.java:542)
+	at org.springframework.web.servlet.DispatcherServlet.getHandler(DispatcherServlet.java:1283)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1065)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:205)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2024-02-26 10:39:50.224 	INFO  	[main] com.mechamate.MechaMate - Starting MechaMate using Java 21.0.1 with PID 23800 (C:\Users\hp\Desktop\MMSDGP\MechaMateSDGP\backend\target\classes started by hp in C:\Users\hp\Desktop\MMSDGP\MechaMateSDGP\backend)
+2024-02-26 10:39:50.232 	INFO  	[main] com.mechamate.MechaMate - No active profile set, falling back to 1 default profile: "default"
+2024-02-26 10:39:57.298 	INFO  	[main] com.mechamate.MechaMate - Started MechaMate in 8.467 seconds (process running for 11.175)
+2024-02-26 10:42:15.942 	INFO  	[main] com.mechamate.MechaMate - Starting MechaMate using Java 21.0.1 with PID 23724 (C:\Users\hp\Desktop\MMSDGP\MechaMateSDGP\backend\target\classes started by hp in C:\Users\hp\Desktop\MMSDGP\MechaMateSDGP\backend)
+2024-02-26 10:42:15.946 	INFO  	[main] com.mechamate.MechaMate - No active profile set, falling back to 1 default profile: "default"
+2024-02-26 10:42:22.697 	INFO  	[main] com.mechamate.MechaMate - Started MechaMate in 7.975 seconds (process running for 10.099)
+2024-02-26 10:42:31.883 	INFO  	[http-nio-8080-exec-1] com.mechamate.MechaMate - cache miss for UserProfile key: justin
+2024-02-26 10:42:32.122 	INFO  	[http-nio-8080-exec-1] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 10:42:32.123 	INFO  	[http-nio-8080-exec-1] com.mechamate.MechaMate - Retrieved UserProfile from database and add to the cache by username: justin
+2024-02-26 10:42:32.400 	INFO  	[http-nio-8080-exec-1] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 10:42:32.401 	INFO  	[http-nio-8080-exec-1] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 10:42:51.567 	INFO  	[http-nio-8080-exec-5] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 10:42:51.568 	INFO  	[http-nio-8080-exec-5] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 10:42:52.058 	INFO  	[http-nio-8080-exec-5] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 10:42:52.059 	INFO  	[http-nio-8080-exec-5] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 10:46:28.028 	INFO  	[main] com.mechamate.MechaMate - Starting MechaMate using Java 21.0.1 with PID 25204 (C:\Users\hp\Desktop\MMSDGP\MechaMateSDGP\backend\target\classes started by hp in C:\Users\hp\Desktop\MMSDGP\MechaMateSDGP\backend)
+2024-02-26 10:46:28.033 	INFO  	[main] com.mechamate.MechaMate - No active profile set, falling back to 1 default profile: "default"
+2024-02-26 10:46:33.953 	INFO  	[main] com.mechamate.MechaMate - Started MechaMate in 6.826 seconds (process running for 8.271)
+2024-02-26 10:46:40.784 	INFO  	[http-nio-8080-exec-3] com.mechamate.MechaMate - cache miss for UserProfile key: justin
+2024-02-26 10:46:40.986 	INFO  	[http-nio-8080-exec-3] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 10:46:40.987 	INFO  	[http-nio-8080-exec-3] com.mechamate.MechaMate - Retrieved UserProfile from database and add to the cache by username: justin
+2024-02-26 10:46:41.244 	INFO  	[http-nio-8080-exec-3] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 10:46:41.244 	INFO  	[http-nio-8080-exec-3] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 10:46:57.557 	INFO  	[http-nio-8080-exec-1] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 10:46:57.558 	INFO  	[http-nio-8080-exec-1] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 10:46:57.708 	INFO  	[http-nio-8080-exec-1] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 10:46:57.708 	INFO  	[http-nio-8080-exec-1] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 10:47:03.229 	INFO  	[http-nio-8080-exec-4] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 10:47:03.230 	INFO  	[http-nio-8080-exec-4] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 10:47:03.384 	INFO  	[http-nio-8080-exec-4] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 10:47:03.384 	INFO  	[http-nio-8080-exec-4] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 10:47:43.933 	INFO  	[http-nio-8080-exec-7] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 10:47:43.935 	INFO  	[http-nio-8080-exec-7] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 10:47:44.096 	INFO  	[http-nio-8080-exec-7] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 10:47:44.097 	INFO  	[http-nio-8080-exec-7] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 10:47:54.154 	INFO  	[http-nio-8080-exec-10] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 10:47:54.154 	INFO  	[http-nio-8080-exec-10] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 10:47:54.321 	INFO  	[http-nio-8080-exec-10] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 10:47:54.322 	INFO  	[http-nio-8080-exec-10] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 10:51:21.343 	INFO  	[main] com.mechamate.MechaMate - Starting MechaMate using Java 21.0.1 with PID 384 (C:\Users\hp\Desktop\MMSDGP\MechaMateSDGP\backend\target\classes started by hp in C:\Users\hp\Desktop\MMSDGP\MechaMateSDGP\backend)
+2024-02-26 10:51:21.351 	INFO  	[main] com.mechamate.MechaMate - No active profile set, falling back to 1 default profile: "default"
+2024-02-26 10:51:34.825 	INFO  	[main] com.mechamate.MechaMate - Started MechaMate in 15.289 seconds (process running for 17.771)
+2024-02-26 10:51:36.132 	INFO  	[http-nio-8080-exec-1] com.mechamate.MechaMate - cache miss for UserProfile key: justin
+2024-02-26 10:51:36.343 	INFO  	[http-nio-8080-exec-1] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 10:51:36.343 	INFO  	[http-nio-8080-exec-1] com.mechamate.MechaMate - Retrieved UserProfile from database and add to the cache by username: justin
+2024-02-26 10:51:36.642 	INFO  	[http-nio-8080-exec-1] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 10:51:36.643 	INFO  	[http-nio-8080-exec-1] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 10:51:52.912 	INFO  	[http-nio-8080-exec-4] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 10:51:52.913 	INFO  	[http-nio-8080-exec-4] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 10:51:53.093 	INFO  	[http-nio-8080-exec-4] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 10:51:53.093 	INFO  	[http-nio-8080-exec-4] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 10:56:34.957 	INFO  	[http-nio-8080-exec-6] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 10:56:34.979 	INFO  	[http-nio-8080-exec-6] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 10:56:35.197 	INFO  	[http-nio-8080-exec-6] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 10:56:35.198 	INFO  	[http-nio-8080-exec-6] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 10:57:09.437 	INFO  	[http-nio-8080-exec-8] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 10:57:09.438 	INFO  	[http-nio-8080-exec-8] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 10:57:09.599 	INFO  	[http-nio-8080-exec-8] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 10:57:09.599 	INFO  	[http-nio-8080-exec-8] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 10:57:26.754 	INFO  	[http-nio-8080-exec-10] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 10:57:26.755 	INFO  	[http-nio-8080-exec-10] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 10:57:26.917 	INFO  	[http-nio-8080-exec-10] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 10:57:26.918 	INFO  	[http-nio-8080-exec-10] com.mechamate.MechaMate - Updated UserProfile in database and cache for username: justin
+2024-02-26 11:07:23.188 	INFO  	[main] com.mechamate.MechaMate - Starting MechaMate using Java 21.0.1 with PID 29656 (C:\Users\hp\Desktop\MMSDGP\MechaMateSDGP\backend\target\classes started by hp in C:\Users\hp\Desktop\MMSDGP\MechaMateSDGP\backend)
+2024-02-26 11:07:23.196 	INFO  	[main] com.mechamate.MechaMate - No active profile set, falling back to 1 default profile: "default"
+2024-02-26 11:07:40.621 	INFO  	[main] com.mechamate.MechaMate - Started MechaMate in 19.352 seconds (process running for 24.578)
+2024-02-26 11:07:50.826 	INFO  	[http-nio-8080-exec-3] com.mechamate.MechaMate - cache miss for UserProfile key: justin
+2024-02-26 11:07:52.078 	INFO  	[http-nio-8080-exec-3] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 11:07:52.079 	INFO  	[http-nio-8080-exec-3] com.mechamate.MechaMate - Retrieved UserProfile from database and add to the cache by username: justin
+2024-02-26 11:18:22.372 	INFO  	[http-nio-8080-exec-7] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 11:18:22.401 	INFO  	[http-nio-8080-exec-7] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 11:18:43.018 	INFO  	[http-nio-8080-exec-10] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 11:18:43.019 	INFO  	[http-nio-8080-exec-10] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 11:19:54.328 	INFO  	[http-nio-8080-exec-1] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 11:19:54.338 	INFO  	[http-nio-8080-exec-1] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 11:24:43.139 	INFO  	[http-nio-8080-exec-4] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 11:24:43.163 	INFO  	[http-nio-8080-exec-4] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 12:09:03.952 	INFO  	[http-nio-8080-exec-9] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 12:09:03.975 	INFO  	[http-nio-8080-exec-9] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 12:10:29.524 	INFO  	[http-nio-8080-exec-6] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 12:10:29.525 	INFO  	[http-nio-8080-exec-6] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 12:13:10.619 	INFO  	[http-nio-8080-exec-10] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 12:13:10.633 	INFO  	[http-nio-8080-exec-10] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 12:16:02.404 	INFO  	[http-nio-8080-exec-4] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 12:16:02.420 	INFO  	[http-nio-8080-exec-4] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 12:19:00.501 	INFO  	[main] com.mechamate.MechaMate - Starting MechaMate using Java 21.0.1 with PID 7040 (C:\Users\hp\Desktop\MMSDGP\MechaMateSDGP\backend\target\classes started by hp in C:\Users\hp\Desktop\MMSDGP\MechaMateSDGP\backend)
+2024-02-26 12:19:00.505 	INFO  	[main] com.mechamate.MechaMate - No active profile set, falling back to 1 default profile: "default"
+2024-02-26 12:19:04.846 	INFO  	[main] com.mechamate.MechaMate - Started MechaMate in 5.334 seconds (process running for 7.176)
+2024-02-26 12:19:34.337 	INFO  	[http-nio-8080-exec-2] com.mechamate.MechaMate - cache miss for UserProfile key: justin
+2024-02-26 12:19:35.112 	INFO  	[http-nio-8080-exec-2] com.mechamate.MechaMate - UserProfile put into cache under key: justin
+2024-02-26 12:19:35.113 	INFO  	[http-nio-8080-exec-2] com.mechamate.MechaMate - Retrieved UserProfile from database and add to the cache by username: justin
+2024-02-26 13:51:00.939 	INFO  	[http-nio-8080-exec-1] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 13:51:01.008 	INFO  	[http-nio-8080-exec-1] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 13:54:32.093 	INFO  	[http-nio-8080-exec-5] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 13:54:32.101 	INFO  	[http-nio-8080-exec-5] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 13:54:57.941 	INFO  	[http-nio-8080-exec-6] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 13:54:57.942 	INFO  	[http-nio-8080-exec-6] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin
+2024-02-26 13:56:13.746 	INFO  	[http-nio-8080-exec-7] com.mechamate.MechaMate - found UserProfile for key: justin
+2024-02-26 13:56:13.747 	INFO  	[http-nio-8080-exec-7] com.mechamate.MechaMate - Retrieved UserProfile from cache for username: justin

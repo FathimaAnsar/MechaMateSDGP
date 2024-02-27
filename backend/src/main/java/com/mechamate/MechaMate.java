@@ -14,9 +14,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class MechaMate implements WebMvcConfigurer {
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/api/**")
-				.allowedOrigins("*")
+		registry.addMapping("/**")
+				.allowedOrigins("http://localhost:3001")
 				.allowedMethods("GET", "POST")
+				.allowCredentials(true)
 				.allowedHeaders("*");
 	}
 

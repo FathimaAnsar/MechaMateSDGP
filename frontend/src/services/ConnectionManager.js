@@ -27,7 +27,7 @@ class ConnectionManager {
 
             if (response.status === 200) {
                 // Login successful, redirect the user to the home page
-                window.location.href = "/home";
+                 window.location.href = "/home";
             } else if (response.status === 400){
                 // Login failed, handle the error (e.g., display an error message)
                 errorMessage.style.display = "block";
