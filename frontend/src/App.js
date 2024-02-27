@@ -18,6 +18,7 @@ import ProtectedRoute from './services/ProtectedRoute';
 
 
 function App() {
+  
   const { theme } = useContext(ThemeContext);
   const [loading, setLoading] = useState(true);
   const [isSessionAvailable, setIsSessionAvailable] = useState(false);
