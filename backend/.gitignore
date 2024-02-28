@@ -4,7 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 **/src/main/resources/credentials.properties
-
+logs/
 ### STS ###
 .apt_generated
 .classpath

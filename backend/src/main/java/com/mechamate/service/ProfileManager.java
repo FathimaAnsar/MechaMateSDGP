@@ -68,7 +68,6 @@ public class ProfileManager {
                             lang.get("error.email.exists", userProfile.getLanguage()),
                             lang.get("error.email.exists.help", userProfile.getLanguage())),
                             HttpStatus.UNAUTHORIZED);
-
         }
 
         userProfile.createActivationKey();
