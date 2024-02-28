@@ -4,17 +4,17 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.Date;
 
 @Document(collection = "Vehicles")
 public class Vehicle {
 
-    public enum VehicleModel {
+    public enum VehicleType {
         Unknown,
         Car,
         Van,
-        SUV,
         Bus,
         Lorry,
         Motorcycle
@@ -22,7 +22,7 @@ public class Vehicle {
 
     public enum FuelType {
         Unknown,
-        Patrol,
+        Petrol,
         Diesel,
         LPGas,
         Electric
@@ -32,14 +32,26 @@ public class Vehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private ObjectId _id;
     private String regNo;
-    private VehicleModel model;
+    private VehicleType vehicleType;
     private FuelType fuelType;
+
+    private String vehicleMake;
+    private String vehicleModel;
+    private Date regExpDate;
+    private String insNo;
+    private Date insExpDate;
+
     private ObjectId owner;
 
-    public Vehicle(String regNo, VehicleModel model, FuelType fuelType, ObjectId owner) {
+    public Vehicle(String regNo, VehicleType vehicleType, FuelType fuelType,String vehicleMake,String vehicleModel,String insNo,Date insExpDate,Date regExpDate, ObjectId owner) {
         this.regNo = regNo;
-        this.model = model;
+        this.vehicleType = vehicleType;
         this.fuelType = fuelType;
+        this.vehicleMake=vehicleMake;
+        this.vehicleModel=vehicleModel;
+        this.insNo=insNo;
+        this.insExpDate=insExpDate;
+        this.regExpDate=regExpDate;
         this.owner = owner;
     }
 
@@ -59,12 +71,52 @@ public class Vehicle {
         this.regNo = regNo;
     }
 
-    public VehicleModel getModel() {
-        return model;
+    public VehicleType getVehicleType() {
+        return vehicleType;
     }
 
-    public void setModel(VehicleModel model) {
-        this.model = model;
+    public String getVehicleMake() {
+        return vehicleMake;
+    }
+
+    public void setVehicleMake(String vehicleMake) {
+        this.vehicleMake = vehicleMake;
+    }
+
+    public String getVehicleModel() {
+        return vehicleModel;
+    }
+
+    public void setVehicleModel(String vehicleModel) {
+        this.vehicleModel = vehicleModel;
+    }
+
+    public Date getRegExpDate() {
+        return regExpDate;
+    }
+
+    public void setRegExpDate(Date regExpDate) {
+        this.regExpDate = regExpDate;
+    }
+
+    public String getInsNo() {
+        return insNo;
+    }
+
+    public void setInsNo(String insNo) {
+        this.insNo = insNo;
+    }
+
+    public Date getInsExpDate() {
+        return insExpDate;
+    }
+
+    public void setInsExpDate(Date insExpDate) {
+        this.insExpDate = insExpDate;
+    }
+
+    public void setVehicleType(VehicleType vehicleType) {
+        this.vehicleType = vehicleType;
     }
 
     public FuelType getFuelType() {

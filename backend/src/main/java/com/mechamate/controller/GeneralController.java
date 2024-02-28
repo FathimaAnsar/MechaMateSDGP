@@ -55,7 +55,7 @@ public class GeneralController {
                             HttpStatus.BAD_REQUEST);
 
         if (vehicle.getRegNo() == null) vehicle.setRegNo("");
-        if (vehicle.getModel() == null) vehicle.setModel(Vehicle.VehicleModel.Unknown);
+        if (vehicle.getVehicleType() == null) vehicle.setVehicleType(Vehicle.VehicleType.Unknown);
         if(vehicle.getFuelType() == null) vehicle.setFuelType(Vehicle.FuelType.Unknown);
 
         ResponseEntity<ErrorDTO> resp = Validation.validateVehicleRegNo(vehicle.getRegNo().trim().toUpperCase(),
@@ -94,7 +94,7 @@ public class GeneralController {
                             HttpStatus.BAD_REQUEST);
 
         if (vehicle.getRegNo() == null) vehicle.setRegNo("");
-        if (vehicle.getModel() == null) vehicle.setModel(Vehicle.VehicleModel.Unknown);
+        if (vehicle.getVehicleType() == null) vehicle.setVehicleType(Vehicle.VehicleType.Unknown);
         if(vehicle.getFuelType() == null) vehicle.setFuelType(Vehicle.FuelType.Unknown);
 
         ResponseEntity<ErrorDTO> resp = Validation.validateVehicleRegNo(vehicle.getRegNo().trim().toUpperCase(),
@@ -133,7 +133,7 @@ public class GeneralController {
                             HttpStatus.BAD_REQUEST);
 
         if (vehicle.getRegNo() == null) vehicle.setRegNo("");
-        if (vehicle.getModel() == null) vehicle.setModel(Vehicle.VehicleModel.Unknown);
+        if (vehicle.getVehicleType() == null) vehicle.setVehicleType(Vehicle.VehicleType.Unknown);
         if(vehicle.getFuelType() == null) vehicle.setFuelType(Vehicle.FuelType.Unknown);
 
         ResponseEntity<ErrorDTO> resp = Validation.validateVehicleRegNo(vehicle.getRegNo().trim().toUpperCase(),
