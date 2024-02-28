@@ -1,5 +1,5 @@
 runtime: java17
-service: api
+#service: api
 env: standard
 instance_class: F1  # Smallest instance for development to minimize costs.
 
