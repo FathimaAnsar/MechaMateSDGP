@@ -8,8 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class MechaMate {
 
-public class MechaMate {
-
 	private static final Logger logger = LoggerFactory.getLogger(MechaMate.class);
 
 	public static void main(String[] args) {
