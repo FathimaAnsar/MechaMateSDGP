@@ -16,6 +16,9 @@ jobs:
           echo "${{ secrets.APPLICATION_PROPERTIES_CONTENT }}" > backend/src/main/resources/application.properties
           cat backend/src/main/resources/application.properties
 
+      - name: List lang directory contents
+        run: |
+          ls -la src/main/resources/lang/
 
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -37,7 +40,6 @@ jobs:
           mvn clean package -DskipTests
           echo "Maven build process completed."
 
-
       - name: Find JAR File
         id: findjar
         run: |
@@ -47,6 +49,11 @@ jobs:
           echo "$JAR_FILE" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
           echo "JAR file found: $JAR_FILE"
+
+      - name: List contents of the JAR file
+        run: |
+          echo "Listing contents of the JAR file: $JAR_FILE"
+          jar tf $JAR_FILE
 
       - name: Deploy to Google App Engine
         uses: google-github-actions/deploy-appengine@v2.1.0
