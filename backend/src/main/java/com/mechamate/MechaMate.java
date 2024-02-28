@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
-public class MechaMate implements WebMvcConfigurer {
+public class MechaMate {
 	private static final Logger logger = LoggerFactory.getLogger(MechaMate.class);
 
 	public static void main(String[] args) {
