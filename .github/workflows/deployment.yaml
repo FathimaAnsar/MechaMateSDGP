@@ -41,7 +41,7 @@ jobs:
           echo "Starting Maven build process..."
           cd backend
           echo "switch to backend"
-          ./mvnw package -DskipTests
+          mvn clean package -DskipTests
           echo "Maven build process completed."
 
       - name: Find JAR File
