@@ -12,6 +12,7 @@ jobs:
 
       - name: Update application properties
         run: |
+          pwd
           echo "${{ secrets.APPLICATION_PROPERTIES_CONTENT }}" > backend/src/main/resources/application.properties
           cat backend/src/main/resources/application.properties
 
