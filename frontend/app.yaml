@@ -1,0 +1,17 @@
+runtime: nodejs20
+service: frontend
+
+env: standard
+
+handlers:
+  - url: /(.*\.(json|ico|js|png|jpg|css|map))
+    static_files: build/\1
+    upload: build/.*\.(json|ico|js|png|jpg|css|map)$
+
+  - url: /.*
+    static_files: build/index.html
+    upload: build/index.html
+
+skip_files:
+  - ^(.*/)?\..+$
+  - ^(.*/)?node_modules/.*$
