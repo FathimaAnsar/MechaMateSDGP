@@ -46,7 +46,10 @@ class MechaMate {
     }
 
     changePage(newPage) {
-        if(this.history.length > 0) {        
+        if(this.history.length > 0) {
+            if(this.currentHistoryIndex >= 0 && this.currentHistoryIndex < (this.history.length - 1)) {
+                this.history.splice(this.currentHistoryIndex + 1);
+            }            
             if(this.history[this.history.length - 1] !== newPage) this.history.push(newPage);
         } else {
             this.history.push(newPage);
