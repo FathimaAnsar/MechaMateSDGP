@@ -44,12 +44,29 @@ jobs:
           mvn clean package -DskipTests
           echo "Maven build process completed."
 
+#      - name: Find JAR File
+#        id: findjar
+#        run: |
+#          echo "Searching for the JAR file..."
+#          JAR_FILE=$(ls backend/target/*.jar)
+#          echo "::set-output name=JAR_FILE::$JAR_FILE"
+#          echo "JAR file found: $JAR_FILE"
+#
+#      - name: Deploy to Google App Engine
+#        uses: google-github-actions/deploy-appengine@v2.1.0
+#        with:
+#          project_id: ${{ secrets.GCP_PROJECT_ID }}
+#          promote: true
+#          deliverables: backend/target/${{ steps.findjar.outputs.JAR_FILE }}
+
       - name: Find JAR File
         id: findjar
         run: |
           echo "Searching for the JAR file..."
           JAR_FILE=$(ls backend/target/*.jar)
-          echo "::set-output name=JAR_FILE::$JAR_FILE"
+          echo "JAR_FILE<<EOF" >> $GITHUB_ENV
+          echo "$JAR_FILE" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
           echo "JAR file found: $JAR_FILE"
 
       - name: Deploy to Google App Engine
@@ -57,7 +74,8 @@ jobs:
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           promote: true
-          deliverables: backend/target/${{ steps.findjar.outputs.JAR_FILE }}
+          deliverables: ${{ env.JAR_FILE }}
+
 
 #  deploy-frontend:
 ##    needs: deploy-backend
