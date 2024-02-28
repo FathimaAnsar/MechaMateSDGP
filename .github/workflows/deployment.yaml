@@ -18,7 +18,7 @@ jobs:
 
       - name: List lang directory contents
         run: |
-          ls -la src/main/resources/lang/
+          ls -la backend/src/main/resources/lang/
 
       - name: Set up Java
         uses: actions/setup-java@v4
