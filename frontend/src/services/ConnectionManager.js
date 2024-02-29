@@ -48,6 +48,23 @@ class ConnectionManager {
 //        setTimeout(() => {}, 3000);
     }
 
+    signup(userData) {
+        const urlEncodedData = new URLSearchParams();
+    
+        for (const [key, value] of Object.entries(userData)) {
+            urlEncodedData.append(key, value);
+        }
+    
+        return this.sendPOSTRequest("/api/v1/auth/signup", "", urlEncodedData);
+    }
+
+    sendRecoverEmail(email) {
+        const urlEncodedData = new URLSearchParams();
+        urlEncodedData.append('email', email);
+    
+        return this.sendPOSTRequest("/api/v1/auth/recover", "", urlEncodedData);
+    }
+
     getProfile() {
         return this.sendGETRequest("/api/v1/general/profile");
 //        setTimeout(() => {}, 3000);

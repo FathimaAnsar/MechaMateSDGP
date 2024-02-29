@@ -16,14 +16,29 @@ function SignIn(props) {
         props.app.changePage(Pages.ForgotPasswordUI); 
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        let connection = new ConnectionManager();
-        console.log(connection.signin("justin", "Pass123!")); 
+    const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    // Extract username and password from form fields
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const keepMeSignedIn = document.getElementById('keep-me-signed-in').checked;
 
-        console.log(connection.getProfile()); 
-       
+    // Call the signin method with extracted credentials
+    let connection = new ConnectionManager();
+    const signInResponse = await connection.signin(username, password, keepMeSignedIn);
+
+    // Handle the sign-in response
+    if (signInResponse.ok) {
+        // Sign-in successful, get profile
+        const profileResponse = await connection.getProfile();
+        console.log("Profile:", profileResponse);
+    } else {
+        // Sign-in failed, handle error
+        console.error("Sign-in failed");
+        // You can display an error message to the user or handle it as needed
     }
+}
         
     return(
         <>
@@ -36,8 +51,8 @@ function SignIn(props) {
         <label htmlFor="password">Password:</label><br></br>
         <input type="password" id="password" name="password"/><br></br>
         
-        <input type="checkbox" id="already_signed_in" name="already_signed_in"/>
-        <label htmlFor="already_signed_in">Already Signed In</label><br></br>
+        <input type="checkbox" id="keep-me-signed-in" name="already_signed_in"/>
+        <label htmlFor="keep-me-signed-in">Keep Me Signed In</label><br></br>
         
         <button onClick={handleSubmit}>SignIn</button>        
     </form>

@@ -17,6 +17,7 @@ function Dashboard(props) {
 
 
   const handleGoBack = () => { props.app.goBack(); }
+  const handleClick = (page) => { props.app.changePage(page); }
 
   
   return (
@@ -74,7 +75,7 @@ function Dashboard(props) {
       
       <div id="emergency assistence">
         <h2>Emergency assistence</h2>
-        <button>
+        <button onClick={() => handleClick(Pages.EmergencyAssistUI)}>
           <span style={{ marginRight: '5px' }}></span> {/* Material Icon */}
           Open Emergency assistence
         </button>
