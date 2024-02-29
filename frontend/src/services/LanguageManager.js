@@ -6,9 +6,6 @@ export class LanguageManager {
 
     constructor() {
         this.activeLang = this.getLanguageId;
-        if(this.activeLang.length>=0 && this.activeLang<=2) {
-            document.getElementById("lang-select").selectedIndex = this.activeLang;
-        }
         this.loadLanguage(true);
     }
 
@@ -16,9 +13,10 @@ export class LanguageManager {
         let langId = 0;
         try {
             langId = localStorage.getItem("locale");
+            if(!langList.includes(langId)) return langList[0];
             return langId; 
         } catch(exp) {
-            return langId;
+            return langList[0];
         }
     }
 
@@ -29,9 +27,9 @@ export class LanguageManager {
 
     loadLanguage(classinit) {
         let langArr, lang, attr;
-        if(this.activeLang==1) {
+        if(this.activeLang == this.langList[1]) {
             langArr = sinhala;
-        } else if(this.activeLang==2) {
+        } else if(this.activeLang == this.langList[2]) {
             langArr = tamil;
         } else {
             if(classinit==false) { window.location.reload(); }

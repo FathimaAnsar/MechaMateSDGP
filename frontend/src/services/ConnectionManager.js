@@ -15,7 +15,14 @@ class ConnectionManager {
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 body: postParams,
                 credentials: 'include',
-            });
+            }).then( response => {
+                    response.json().then( json => {
+                        return json;
+                    })
+            }
+
+                
+            );
             const data = await response.json();
             if (response.ok) {
                 return response.body();
