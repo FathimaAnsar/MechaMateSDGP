@@ -16,13 +16,22 @@ class ConnectionManager {
                 body: postParams,
                 credentials: 'include',
             });
-            const data = await response.json();
+        
             if (response.ok) {
-                return response.body();
+                // Response is successful, parse JSON data
+                const data = await response.json();
+                // Now you can work with the JSON data
+                console.log(data); // Do whatever you want with the data
+                return JSON.stringify(data); // Convert data to JSON string and return
+            } else {
+                // Handle non-successful response
+                throw new Error('Failed to fetch data');
             }
         } catch (error) {
-            //
-        }        
+            // Handle errors in the try block
+            console.error('Error:', error);
+        }
+        
     }
 
     async sendGETRequest(apiEndPoint) {
@@ -31,13 +40,20 @@ class ConnectionManager {
                 method: 'GET',
                 credentials: 'include',
             });
-            const data = await response.json();
+            
             if (response.ok) {
-                return response.body();
+                // Parse the JSON data from the response
+                const jsonData = await response.json();
+                return jsonData;
+            } else {
+                // Handle non-successful response
+                throw new Error('Failed to fetch data');
             }
         } catch (error) {
-            //
-        }        
+            // Handle errors
+            console.error('Error:', error);
+            throw error; // Rethrow the error for the caller to handle if needed
+        }
     }
 
     signin(username, password) {
@@ -68,6 +84,10 @@ class ConnectionManager {
     getProfile() {
         return this.sendGETRequest("/api/v1/general/profile");
 //        setTimeout(() => {}, 3000);
+    }
+
+    signout(){
+        return this.sendGETRequest("/api/v1/auth/signout");
     }
     
 }

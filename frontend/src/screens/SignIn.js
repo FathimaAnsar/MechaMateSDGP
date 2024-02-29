@@ -17,27 +17,25 @@ function SignIn(props) {
     }
 
     const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    // Extract username and password from form fields
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    const keepMeSignedIn = document.getElementById('keep-me-signed-in').checked;
 
-    // Call the signin method with extracted credentials
-    let connection = new ConnectionManager();
-    const signInResponse = await connection.signin(username, password, keepMeSignedIn);
+        // props.app.changePage(Pages.DashboardUI); 
+        
+        e.preventDefault();
+        
+        // Extract username and password from form fields
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const keepMeSignedIn = document.getElementById('keep-me-signed-in').checked;
 
-    // Handle the sign-in response
-    if (signInResponse.ok) {
-        // Sign-in successful, get profile
-        const profileResponse = await connection.getProfile();
-        console.log("Profile:", profileResponse);
-    } else {
-        // Sign-in failed, handle error
-        console.error("Sign-in failed");
-        // You can display an error message to the user or handle it as needed
-    }
+        let connection = new ConnectionManager();
+        const signInResponse = await connection.signin(username, password, keepMeSignedIn);
+
+        
+
+        const userProfile = await connection.getProfile();
+
+        console.log(userProfile);
+        props.app.setUserProfile(userProfile);
 }
         
     return(
