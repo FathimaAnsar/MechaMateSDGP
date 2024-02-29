@@ -7,9 +7,9 @@ function Header() {
     dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
   };
 
-  
+ 
   const handleDropdownItemClick = (action) => {
-    
+   
     console.log("Clicked:", action);
     
     var dropdown = document.querySelector('.dropdown');
@@ -28,7 +28,7 @@ function Header() {
         <label htmlFor="menu-checkbox">Menu button</label>
       </div>
 
-      
+      {/* Dropdown Menu */}
       <div className="dropdown">
         <button className="dropdown-item" onClick={() => handleDropdownItemClick('Settings')}>Settings</button>
         <button className="dropdown-item" onClick={() => handleDropdownItemClick('About App')}>About App</button>

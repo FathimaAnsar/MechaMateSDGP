@@ -8,11 +8,11 @@ import Dashboard from "./screens/Dashboard.js";
 import { Pages } from "./Pages.js" 
 
 
-
 function App() {
   const [currentPage, setCurrentPage] = useState("");
 
   const changeCurrentPage = () => setCurrentPage(main.currentPage);
+
 
   main.setRefreshCaller(changeCurrentPage);
 
@@ -29,10 +29,7 @@ function App() {
   if(main.currentPage == Pages.SignUpUI) return (<><SignUp app={main}/></>);  
   if(main.currentPage == Pages.ForgotPasswordUI) return (<><ForgotPassword app={main}/></>); 
   if(main.currentPage == Pages.DashboardUI) return (<><Dashboard app={main}/></>); 
-  return (<>
-  <Dashboard></Dashboard>
-  
-  <GetStarted app={main}/></>);
+  return (<><GetStarted app={main}/></>);
 
 }
 
