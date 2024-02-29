@@ -18,7 +18,7 @@ import AutoMobSearch from "./screens/AutoMobSearch.js";
 import AutoMobDetails from "./screens/AutoMobDetails.js";
 import EmergencyAssistance from "./screens/EmergencyAssistance.js";
 import ManageDocuments from "./screens/ManageDocuments.js";
-import AddserviceRecordManually from "./screens/AddServiceRecordManually.js";
+import AddSRecords from "./screens/AddSRecords.js";
 import AddServiceRecordByQR from "./screens/AddServiceRecordByQR.js";
 import AddServiceRecordByServiceProvider from "./screens/AddServiceRecordByServiceProvider.js";
 import ShowServiceRecordRequest from "./screens/ShowServiceRecordRequest.js";
@@ -73,7 +73,7 @@ function App() {
   if (main.currentPage === Pages.EmergencyAssistUI) return (<><EmergencyAssistance app={main} /></>);
 
   if (main.currentPage === Pages.ManageDocumentsUI) return (<><ManageDocuments app={main} /></>);
-  if (main.currentPage === Pages.AddSRecordManualUI) return (<><AddserviceRecordManually app={main} /></>);
+  if (main.currentPage === Pages.AddSRecordManualUI) return (<><AddSRecords app={main} /></>);
   if (main.currentPage === Pages.AddSRecordQRUI) return (<><AddServiceRecordByQR app={main} /></>);
   if (main.currentPage === Pages.AddRecordBySPUI) return (<><AddServiceRecordByServiceProvider app={main} /></>);
   if (main.currentPage === Pages.ShowRecordReqUI) return (<><ShowServiceRecordRequest app={main} /></>);
