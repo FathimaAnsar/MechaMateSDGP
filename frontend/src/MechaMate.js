@@ -1,5 +1,5 @@
 
-import ConnectionManager from "./ConnectionManager.js"
+import ConnectionManager from "./services/ConnectionManager.js"
 import { Pages } from "./Pages.js" 
 
 class MechaMate {
