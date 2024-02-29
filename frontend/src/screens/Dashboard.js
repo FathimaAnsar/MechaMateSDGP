@@ -46,12 +46,25 @@ function Dashboard(props) {
         </ul>
       </div>
 
-      <div id="AutoMob section">
+      <div id="AutoMobSection">
         <h2>AutoMob Search</h2>
-
-      <button>Search</button>
-
+        <button>
+          <span style={{ marginRight: '5px' }}>search</span> {/* Material Icon */}
+          Search
+        </button>
       </div>
+
+      <div id="PredictiveMaintenance">
+        <h2>Predictive Maintenance</h2>
+        <button>
+          <span style={{ marginRight: '5px' }}>🛠️</span> {/* Material Icon */}
+          Open Predictive Maintenance
+        </button>
+      </div>
+
+
+      
+
 
 
       <button onClick={handleGoBack}>Go Back</button>
