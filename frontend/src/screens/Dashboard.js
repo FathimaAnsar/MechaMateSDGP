@@ -49,7 +49,7 @@ function Dashboard(props) {
       <div id="AutoMobSection">
         <h2>AutoMob Search</h2>
         <button>
-          <span style={{ marginRight: '5px' }}>search</span> {/* Material Icon */}
+          <span style={{ marginRight: '5px' }}></span> {/* Material Icon */}
           Search
         </button>
       </div>
@@ -62,7 +62,13 @@ function Dashboard(props) {
         </button>
       </div>
 
-
+      <div id="Track my vehicle">
+        <h2>Track my Vehicle</h2>
+        <button>
+          <span style={{ marginRight: '5px' }}></span> {/* Material Icon */}
+          Open To Track my vehicle
+        </button>
+      </div>
       
 
 
