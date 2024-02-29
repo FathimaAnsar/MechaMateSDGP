@@ -86,6 +86,16 @@ function Dashboard(props) {
         </button>
       </div>
 
+      <div id="parking finder">
+        <h2>Parking Finder</h2>
+        <button>
+          <span style={{ marginRight: '5px' }}></span> {/* Material Icon */}
+          Open to Find a parking place
+        </button>
+      </div>
+      
+
+
 
       <button onClick={handleGoBack}>Go Back</button>
 
