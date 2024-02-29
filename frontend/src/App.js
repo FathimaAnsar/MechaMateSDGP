@@ -6,6 +6,8 @@ import SignUp from "./screens/SignUp.js";
 import ForgotPassword from "./screens/ForgotPassword.js";
 import Dashboard from "./screens/Dashboard.js";
 import { Pages } from "./Pages.js" 
+import AddServiceRecordByQR from "./screens/AddServiceRecordByQR.js";
+import ConnectionManager from "./services/ConnectionManager.js";
 
 
 function App() {
@@ -29,6 +31,7 @@ function App() {
   if(main.currentPage == Pages.SignUpUI) return (<><SignUp app={main}/></>);  
   if(main.currentPage == Pages.ForgotPasswordUI) return (<><ForgotPassword app={main}/></>); 
   if(main.currentPage == Pages.DashboardUI) return (<><Dashboard app={main}/></>); 
+  if(main.currentPage == Pages.AddSRecordQRUI) return (<>< AddServiceRecordByQR app={main}/></>);
   return (<><GetStarted app={main}/></>);
 
 }

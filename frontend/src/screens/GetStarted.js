@@ -18,6 +18,8 @@ function GetStarted(props) {
         <button onClick={() => handleClick(Pages.ForgotPasswordUI)}>Forgot Password</button><br></br>
         <button onClick={() => handleClick(Pages.ForgotPasswordUI)}>Forgot Password</button><br></br>
 
+        <button onClick={() => handleClick(Pages.AddSRecordQRUI)}>Add using QR</button><br></br>
+
         </>
     );
     
