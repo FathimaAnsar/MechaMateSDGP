@@ -78,6 +78,13 @@ function Dashboard(props) {
         </button>
       </div>
 
+      <div id="manage my documents">
+        <h2>Manage vehicle documents</h2>
+        <button>
+          <span style={{ marginRight: '5px' }}></span> {/* Material Icon */}
+          Open vehicle documents/sercice records
+        </button>
+      </div>
 
 
       <button onClick={handleGoBack}>Go Back</button>
