@@ -14,6 +14,10 @@ function GetStarted(props) {
         <button onClick={() => handleClick(Pages.DashboardUI)}>Dashboard</button><br></br>
         <button onClick={() => handleClick(Pages.SignUpUI)}>Sign Up</button><br></br>
         <button onClick={() => handleClick(Pages.ForgotPasswordUI)}>Forgot Password</button><br></br>
+
+        <button onClick={() => handleClick(Pages.ForgotPasswordUI)}>Forgot Password</button><br></br>
+        <button onClick={() => handleClick(Pages.ForgotPasswordUI)}>Forgot Password</button><br></br>
+
         </>
     );
     

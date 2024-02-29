@@ -4,5 +4,13 @@ export const Pages = {
     SignInUI: "signin",
     SignUpUI: "signup",
     ForgotPasswordUI: "forgot-password",
-    DashboardUI: "dashboard"     
+    DashboardUI: "dashboard",
+    AddSRecordManualUI: "add-record",
+    AddSRecordQRUI: "add-record-qr",
+    ManageDocumentsUI: "documents",
+    TrackVehicleUI: "track-vehicle",
+    ParkingFinderUI: "parking-finder",
+    ParkingInfoUI: "parking-info",
+    EmergencyAssistUI: "emergency-assistance",
+    AutoMobSearchUI: "automob-search"        
 };

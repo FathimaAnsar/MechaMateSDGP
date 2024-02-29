@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { Pages } from "../Pages.js" 
-import ConnectionManager from "../ConnectionManager.js"
+import ConnectionManager from "../services/ConnectionManager.js"
 
 
 function SignIn(props) {

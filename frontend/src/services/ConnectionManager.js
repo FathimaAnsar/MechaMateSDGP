@@ -1,90 +1,58 @@
-import axios from 'axios';
 
-// const domain = "https://mechamate-backend.el.r.appspot.com/";
+import { API_BASE_URL } from "../Common.js"
+
 
 class ConnectionManager {
-    constructor() {}
 
-    async signIn(userName, passWord, rememberMe) {
-        const errorMessage = document.getElementById("login-error");
+    constructor() {
 
-        try {
-            const response = await axios.post('https://mechamate-backend.el.r.appspot.com/api/v1/auth/signin', {
-                username: userName,
-                password: passWord,
-                keepMeSignedIn: rememberMe
-            }, {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                transformRequest: [(data, headers) => {
-                    // Serialize the data to x-www-form-urlencoded format
-                    const params = new URLSearchParams();
-                    for (const key in data) {
-                        params.append(key, data[key]);
-                    }
-                    return params.toString();
-                }]
-            });
-
-            if (response.status === 200) {
-                // Login successful, redirect the user to the home page
-                 window.location.href = "/home";
-            } else if (response.status === 400){
-                // Login failed, handle the error 
-                errorMessage.style.display = "block";
-                console.error('Login failed:', response.statusText);
-            }
-            
-
-        } catch (error) {
-            errorMessage.style.display = "block";
-            console.error('Error:', error);
-        }
     }
 
-    async signUp(formData) {
+    async sendPOSTRequest(apiEndPoint, contentType, postParams) {
         try {
-            const response = await axios.post('https://mechamate-backend.el.r.appspot.com/api/v1/auth/signup', formData, {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                transformRequest: [(data, headers) => {
-                    // Serialize the data to x-www-form-urlencoded format
-                    const params = new URLSearchParams();
-                    for (const key in data) {
-                        params.append(key, data[key]);
-                    }
-                    return params.toString();
-                }]
+            const response = await fetch(`${API_BASE_URL + apiEndPoint}`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: postParams,
+                credentials: 'include',
             });
-            alert("done")
-
-            if (response.status === 200) {
-                // Sign up successful, handle success 
-                window.location.href = "/home";
-            } else {
-                // Handle other status codes
-                if (response.status === 401) {
-                    // Unauthorized, handle accordingly 
-                    alert("Unauthorized. Please check your credentials.");
-                    // Redirect to login page
-                    window.location.href = "/login";
-                } else {
-                    // Handle other status codes
-                    console.error('Error:', response.status);
-                    // Display a generic error message
-                    alert("An error occurred. Please try again later.");
-                }
+            const data = await response.json();
+            if (response.ok) {
+                return response.body();
             }
         } catch (error) {
-            // for testing purposes
-            alert(error.response.data.message)
-        }
+            //
+        }        
+    }
 
+    async sendGETRequest(apiEndPoint) {
+        try {
+            const response = await fetch(`${API_BASE_URL + apiEndPoint}`, {
+                method: 'GET',
+                credentials: 'include',
+            });
+            const data = await response.json();
+            if (response.ok) {
+                return response.body();
+            }
+        } catch (error) {
+            //
+        }        
+    }
+
+    signin(username, password) {
+        const urlEncodedData = new URLSearchParams();
+        urlEncodedData.append('username', username);
+        urlEncodedData.append('password', password);
+        return this.sendPOSTRequest("/api/v1/auth/signin", "", urlEncodedData);
+//        setTimeout(() => {}, 3000);
+    }
+
+    getProfile() {
+        return this.sendGETRequest("/api/v1/general/profile");
+//        setTimeout(() => {}, 3000);
     }
     
 }
-
 
 export default ConnectionManager;
