@@ -22,7 +22,7 @@ function SignIn(props) {
         console.log(connection.signin("justin", "Pass123!")); 
 
         console.log(connection.getProfile()); 
-
+       
     }
         
     return(
