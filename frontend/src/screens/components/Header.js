@@ -7,10 +7,10 @@ function Header() {
                 <div id="main-logo">Logo Mechamate</div>
 
                 <input type="checkbox" id="notify-checkbox"></input>
-                <label for="notify-checkbox">Notifications</label>
+                <label htmlFor="notify-checkbox">Notifications</label>
 
                 <input type="checkbox" id="menu-checkbox"></input>
-                <label for="menu-checkbox">Menu button</label>
+                <label htmlFor="menu-checkbox">Menu button</label>
 
             </div>
 

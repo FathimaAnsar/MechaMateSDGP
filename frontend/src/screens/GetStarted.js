@@ -5,22 +5,15 @@ import { Pages } from "../Pages.js"
 
 function GetStarted(props) {
 
-
-    const handleClick = () => {
-//        props.app.setFirstRunDone(true);
-        props.app.changePage(Pages.SignInUI); 
-    } 
-
-    const handleDashboardClick = () => {
-        //        props.app.setFirstRunDone(true);
-                props.app.changePage(Pages.DashboardUI); 
-            } 
+    const handleClick = (page) => {props.app.changePage(page);} 
 
     return(
         <>
         <h2>Welcome to Mechamate</h2>
-        <button onClick={handleClick}>Get Started</button>
-        <button onClick={handleDashboardClick}>getDashboard</button>
+        <button onClick={() => handleClick(Pages.SignInUI)}>Get Started</button><br></br>
+        <button onClick={() => handleClick(Pages.DashboardUI)}>Dashboard</button><br></br>
+        <button onClick={() => handleClick(Pages.SignUpUI)}>Sign Up</button><br></br>
+        <button onClick={() => handleClick(Pages.ForgotPasswordUI)}>Forgot Password</button><br></br>
         </>
     );
     

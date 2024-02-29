@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { Pages } from "../Pages.js"
 import ConnectionManager from "../ConnectionManager.js"
-import Header from "./Header.js";
+import Header from "./components/Header.js";
 
 
 function Dashboard(props) {
@@ -17,6 +17,8 @@ function Dashboard(props) {
 
 
   const handleGoBack = () => { props.app.goBack(); }
+
+  
   return (
 
     <>
