@@ -1,5 +1,6 @@
 import React from 'react';
 import ConnectionManager from '../../services/ConnectionManager';
+import { Pages } from "../../Pages.js";
 
 function Header(props) {
 
@@ -19,8 +20,19 @@ function Header(props) {
 
   const handleSignout = () => {
     const connection = new ConnectionManager();
-    connection.signout();
-    props.app.reset();
+//    const resp = connection.signout();
+    const response = JSON.parse(resp);
+    if(response.error) {
+        alert("Error occured: " + response.message + "\n" + response.help);
+    } else if(response.status) {
+        alert("Success: " + response.message + "\n" + response.info);
+        props.app.reset();
+        props.app.changePage(Pages.SignInUI);
+    } else {
+        alert("Error: Unknown");
+    }
+
+
   }
 
   return (

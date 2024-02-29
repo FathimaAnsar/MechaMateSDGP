@@ -66,12 +66,16 @@ class MechaMate {
     }
 
     getUserProfile() {
-        let userProfile = JSON.parse(localStorage.getItem("userProfile"));
-        return (!userProfile ? userProfile : null);
+        try {
+            let userProfile = JSON.parse(localStorage.getItem("userProfile"));
+            return (userProfile ? userProfile : null);
+        } catch(exp) {}
     }
 
     setUserProfile(userProfile) {
-        localStorage.setItem("userProfile", JSON.stringify(userProfile));
+        try {
+            localStorage.setItem("userProfile", JSON.stringify(userProfile));
+        } catch(exp) {}
     }
 
 

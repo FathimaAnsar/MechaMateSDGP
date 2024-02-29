@@ -52,7 +52,7 @@ class ConnectionManager {
         const urlEncodedData = new URLSearchParams();
         urlEncodedData.append('username', username);
         urlEncodedData.append('password', password);
-        return await this.postParamRequest("/api/v1/auth/signin", "", urlEncodedData);
+        return await this.postParamRequest("/api/v1/auth/signin", urlEncodedData);
     }
 
     async signup(username, password, email, firstName, lastName, telephone, agreedTOS) {
@@ -64,7 +64,7 @@ class ConnectionManager {
         urlEncodedData.append('lastName', lastName);
         urlEncodedData.append('telephone', telephone);
         urlEncodedData.append('agreedTOS', agreedTOS);
-        return await this.postParamRequest("/api/v1/auth/signup", "", urlEncodedData);
+        return await this.postParamRequest("/api/v1/auth/signup", urlEncodedData);
     }
 
     async sendRecoveryEmail(email) {

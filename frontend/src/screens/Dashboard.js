@@ -42,7 +42,7 @@ function Dashboard(props) {
       <Header app ={props.app}/>
       <div>
 
-        <h1>Hello {},Welcome to mechamate!</h1>
+        <h1>Hello { (props.app.getUserProfile() == null ? "<User>" : props.app.getUserProfile().firstName) },Welcome to mechamate!</h1>
 
       </div>
 

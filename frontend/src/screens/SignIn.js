@@ -11,34 +11,34 @@ function SignIn(props) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        
-        const username = "justin";
-        const password = "Pass123";
-        const keepMeSignedIn = true;
-
-        // const username = document.getElementById('username').value;
-        // const password = document.getElementById('password').value;
-        // const keepMeSignedIn = document.getElementById('keep-me-signed-in').checked;
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const keepMeSignedIn = document.getElementById('keep-me-signed-in').checked;
 
         // Validate inputs
         // If failed to validate, return here
 
         let connection = new ConnectionManager();
 
-        console.log(1234);
-        const response = connection.signin(username, password, (keepMeSignedIn ? 1 : 0));
+        const resp = await connection.signin(username, password, (keepMeSignedIn ? 1 : 0));
+        const response = JSON.parse(resp);
 
-        console.log(2345);
-        if(response) {
-            console.log(response);
+        if(response.error) {
+            alert("Error occured: " + response.message + "\n" + response.help);
+        } else if(response.status) {
+            alert("Success: " + response.message + "\n" + response.info);
+            const uProf = await connection.getUserProfile();
+            const userProfile = JSON.parse(uProf);
+            if(userProfile.error) {
+                alert("Error occured: " + userProfile.message + "\n" + userProfile.help);
+            } else {
+                props.app.setUserProfile(userProfile);
+                props.app.changePage(Pages.DashboardUI);
+            }    
+        } else {
+            alert("Error: Unknown");
         }
-
-        const userProfile = connection.getUserProfile();
-        console.log(55678);
-
-//        console.log(userProfile);
-//        props.app.setUserProfile(userProfile);
-}
+    }
         
     return(
         <>
