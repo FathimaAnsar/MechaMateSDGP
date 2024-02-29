@@ -70,6 +70,13 @@ function Dashboard(props) {
         </button>
       </div>
       
+      <div id="emergency assistence">
+        <h2>Emergency assistence</h2>
+        <button>
+          <span style={{ marginRight: '5px' }}></span> {/* Material Icon */}
+          Open Emergency assistence
+        </button>
+      </div>
 
 
 
