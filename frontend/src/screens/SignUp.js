@@ -53,6 +53,7 @@ function SignUp(props) {
 
     return(
         <>
+    <button onClick={handleGoBack}>Go Back</button>
 
     <h2>Signup Form</h2>
     <form>
@@ -83,7 +84,6 @@ function SignUp(props) {
         <input type="submit" onClick={handleSubmit} value="Sign Up"/>
     </form>
     <br></br>
-    <button onClick={handleGoBack}>Go Back</button>
  
         </>
     );

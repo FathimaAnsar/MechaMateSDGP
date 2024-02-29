@@ -37,7 +37,7 @@ public class SuperUserActionManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.mobj.exists", userProfile.getLanguage()),
                             lang.get("error.mobj.exists.help", userProfile.getLanguage())),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
         }
 
         if(!databaseAbstractLayer.addMaintenance(maintenance))
@@ -45,7 +45,7 @@ public class SuperUserActionManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorOperationFailed,
                             lang.get("error.mobj.add.failed", userProfile.getLanguage()),
                             lang.get("error.mobj.add.failed.help", userProfile.getLanguage())),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
+                            HttpStatus.OK);
 
         return null;
     }
@@ -76,7 +76,7 @@ public class SuperUserActionManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.mobj.doesnt.exist", userProfile.getLanguage()),
                             lang.get("error.mobj.doesnt.exist.help", userProfile.getLanguage())),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
         }
 
         if(!databaseAbstractLayer.deleteMaintenance(maintenance))
@@ -84,7 +84,7 @@ public class SuperUserActionManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorOperationFailed,
                             lang.get("error.mobj.del.failed", userProfile.getLanguage()),
                             lang.get("error.mobj.del.failed.help", userProfile.getLanguage())),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
+                            HttpStatus.OK);
 
         return null;
     }
@@ -108,7 +108,7 @@ public class SuperUserActionManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.pmodel.exists", userProfile.getLanguage()),
                             lang.get("error.pmodel.exists.help", userProfile.getLanguage())),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
         }
 
         if(!databaseAbstractLayer.addPredictionModel(predictionModel))
@@ -116,7 +116,7 @@ public class SuperUserActionManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorOperationFailed,
                             lang.get("error.pmodel.add.failed", userProfile.getLanguage()),
                             lang.get("error.pmodel.add.failed.help", userProfile.getLanguage())),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
+                            HttpStatus.OK);
 
         return null;
     }
@@ -144,7 +144,7 @@ public class SuperUserActionManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.pmodel.doesnt.exist", userProfile.getLanguage()),
                             lang.get("error.pmodel.doesnt.exist.help", userProfile.getLanguage())),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
         }
 
         if(!databaseAbstractLayer.deletePredictionModel(predictionModel))
@@ -152,7 +152,7 @@ public class SuperUserActionManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorOperationFailed,
                             lang.get("error.pmodel.del.failed", userProfile.getLanguage()),
                             lang.get("error.pmodel.del.failed.help", userProfile.getLanguage())),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
+                            HttpStatus.OK);
 
         return null;
     }

@@ -52,7 +52,7 @@ public class GeneralController {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.vehicle.notfound", userProfile.getLanguage()),
                             lang.get("error.vehicle.notfound.help", userProfile.getLanguage())),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
 
         if (vehicle.getRegNo() == null) vehicle.setRegNo("");
         if (vehicle.getVehicleType() == null) vehicle.setVehicleType(Vehicle.VehicleType.Unknown);
@@ -91,7 +91,7 @@ public class GeneralController {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.vehicle.notfound", userProfile.getLanguage()),
                             lang.get("error.vehicle.notfound.help", userProfile.getLanguage())),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
 
         if (vehicle.getRegNo() == null) vehicle.setRegNo("");
         if (vehicle.getVehicleType() == null) vehicle.setVehicleType(Vehicle.VehicleType.Unknown);
@@ -130,7 +130,7 @@ public class GeneralController {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.vehicle.notfound", userProfile.getLanguage()),
                             lang.get("error.vehicle.notfound.help", userProfile.getLanguage())),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
 
         if (vehicle.getRegNo() == null) vehicle.setRegNo("");
         if (vehicle.getVehicleType() == null) vehicle.setVehicleType(Vehicle.VehicleType.Unknown);
@@ -170,7 +170,7 @@ public class GeneralController {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.srecord.notfound", userProfile.getLanguage()),
                             lang.get("error.srecord.notfound.help", userProfile.getLanguage())),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
 
         if (serviceRecordDTO.getServiceRecordId() == null) serviceRecordDTO.setServiceRecordId("");
         if (serviceRecordDTO.getServices() == null) serviceRecordDTO.setServices(new ArrayList<>());
@@ -215,7 +215,7 @@ public class GeneralController {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.srecord.notfound", userProfile.getLanguage()),
                             lang.get("error.srecord.notfound.help", userProfile.getLanguage())),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
 
         if (serviceRecordDTO.getServiceRecordId() == null) serviceRecordDTO.setServiceRecordId("");
         if (serviceRecordDTO.getServices() == null) serviceRecordDTO.setServices(new ArrayList<>());
@@ -263,7 +263,7 @@ public class GeneralController {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.srecord.notfound", userProfile.getLanguage()),
                             lang.get("error.srecord.notfound.help", userProfile.getLanguage())),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
 
         if (serviceRecordDTO.getServiceRecordId() == null) serviceRecordDTO.setServiceRecordId("");
         if (serviceRecordDTO.getServices() == null) serviceRecordDTO.setServices(new ArrayList<>());
@@ -312,7 +312,7 @@ public class GeneralController {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.InternalError,
                             lang.get("error.internal.error", userProfile.getLanguage()),
                             lang.get("error.internal.error.help", userProfile.getLanguage())),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
+                            HttpStatus.OK);
 
         return new ResponseEntity<>(profileDTO, HttpStatus.OK);
     }
@@ -333,7 +333,7 @@ public class GeneralController {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.InternalError,
                             lang.get("error.internal.error", userProfile.getLanguage()),
                             lang.get("error.internal.error.help", userProfile.getLanguage())),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
+                            HttpStatus.OK);
 
         return new ResponseEntity<>(detailedProfileDTO, HttpStatus.OK);
     }
@@ -352,7 +352,7 @@ public class GeneralController {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.profinfo.notfound", userProfile.getLanguage()),
                             lang.get("error.profinfo.notfound.help", userProfile.getLanguage())),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
 
         if(profileDTO.getFirstName() == null || profileDTO.getFirstName().isEmpty()) profileDTO.setFirstName(userProfile.getFirstname());
         if(profileDTO.getLastName() == null || profileDTO.getLastName().isEmpty()) profileDTO.setLastName(userProfile.getLastname());

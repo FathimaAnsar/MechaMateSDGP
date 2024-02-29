@@ -8,93 +8,81 @@ class ConnectionManager {
 
     }
 
-    async sendPOSTRequest(apiEndPoint, contentType, postParams) {
+    async postParamRequest(apiEndPoint, postParams) {
         try {
             const response = await fetch(`${API_BASE_URL + apiEndPoint}`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 body: postParams,
                 credentials: 'include',
-            }).then( response => {
-                    response.json().then( json => {
-                        return json;
-                    })
-            }
-
-                
-            );
+            });
             const data = await response.json();
-            if (response.ok) {
-                // Response is successful, parse JSON data
-                const data = await response.json();
-                // Now you can work with the JSON data
-                console.log(data); // Do whatever you want with the data
-                return JSON.stringify(data); // Convert data to JSON string and return
-            } else {
-                // Handle non-successful response
-                throw new Error('Failed to fetch data');
-            }
-        } catch (error) {
-            // Handle errors in the try block
-            console.error('Error:', error);
-        }
-        
+            return JSON.stringify(data);            
+        } catch (error) {}
+        return null;
     }
 
-    async sendGETRequest(apiEndPoint) {
+    async postJsonRequest(apiEndPoint, jsonObject) {
         try {
             const response = await fetch(`${API_BASE_URL + apiEndPoint}`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: jsonObject,
+                credentials: 'include',
+            });
+            const data = await response.json();
+            return JSON.stringify(data);            
+        } catch (error) {}
+        return null;
+    }
+
+    async getRequest(apiEndPoint,  urlEncodedData = null) {
+        try {
+            const response = await fetch(`${API_BASE_URL + ((urlEncodedData == null) ? apiEndPoint : apiEndPoint + "?" + urlEncodedData) }`, {
                 method: 'GET',
                 credentials: 'include',
             });
-            
-            if (response.ok) {
-                // Parse the JSON data from the response
-                const jsonData = await response.json();
-                return jsonData;
-            } else {
-                // Handle non-successful response
-                throw new Error('Failed to fetch data');
-            }
-        } catch (error) {
-            // Handle errors
-            console.error('Error:', error);
-            throw error; // Rethrow the error for the caller to handle if needed
-        }
+            const data = await response.json();
+            return JSON.stringify(data);            
+        } catch (error) {}
+        return null;
     }
 
-    signin(username, password) {
+    async signin(username, password) {
         const urlEncodedData = new URLSearchParams();
         urlEncodedData.append('username', username);
         urlEncodedData.append('password', password);
-        return this.sendPOSTRequest("/api/v1/auth/signin", "", urlEncodedData);
-//        setTimeout(() => {}, 3000);
+        return await this.postParamRequest("/api/v1/auth/signin", "", urlEncodedData);
     }
 
-    signup(userData) {
+    async signup(username, password, email, firstName, lastName, telephone, agreedTOS) {
         const urlEncodedData = new URLSearchParams();
-    
-        for (const [key, value] of Object.entries(userData)) {
-            urlEncodedData.append(key, value);
-        }
-    
-        return this.sendPOSTRequest("/api/v1/auth/signup", "", urlEncodedData);
-    }
-
-    sendRecoverEmail(email) {
-        const urlEncodedData = new URLSearchParams();
+        urlEncodedData.append('username', username);
+        urlEncodedData.append('password', password);
         urlEncodedData.append('email', email);
-    
-        return this.sendPOSTRequest("/api/v1/auth/recover", "", urlEncodedData);
+        urlEncodedData.append('firstName', firstName);
+        urlEncodedData.append('lastName', lastName);
+        urlEncodedData.append('telephone', telephone);
+        urlEncodedData.append('agreedTOS', agreedTOS);
+        return await this.postParamRequest("/api/v1/auth/signup", "", urlEncodedData);
     }
 
-    getProfile() {
-        return this.sendGETRequest("/api/v1/general/profile");
-//        setTimeout(() => {}, 3000);
+    async sendRecoveryEmail(email) {
+        const urlEncodedData = new URLSearchParams();
+        urlEncodedData.append('email', email);    
+        return await this.postParamRequest("/api/v1/auth/recover", "", urlEncodedData);
     }
 
-    signout(){
-        return this.sendGETRequest("/api/v1/auth/signout");
+    async getUserProfile() {
+        return await this.getRequest("/api/v1/general/profile");
+    }
+
+    async getDetailedUserProfile() {
+        return await this.getRequest("/api/v1/general/detailed-profile");
+    }
+
+    async signout() {
+        return await this.getRequest("/api/v1/auth/signout");
     }
     
 }

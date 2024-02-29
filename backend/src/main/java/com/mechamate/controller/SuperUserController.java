@@ -52,14 +52,14 @@ public class SuperUserController {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorUnauthorized,
                             lang.get("error.superuser.operation", userProfile.getLanguage()),
                             lang.get("error.superuser.operation.help", userProfile.getLanguage())),
-                            HttpStatus.UNAUTHORIZED);
+                            HttpStatus.OK);
 
         if(maintenanceDTO == null)
             return new ResponseEntity<>
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.mobj.notfound", userProfile.getLanguage()),
                             lang.get("error.mobj.notfound.help", userProfile.getLanguage())),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
 
         if (maintenanceDTO.getMaintenanceId() == null || maintenanceDTO.getMaintenanceId().isEmpty()) maintenanceDTO.setMaintenanceId("");
         if (maintenanceDTO.getMaintenanceType() == null) maintenanceDTO.setMaintenanceType(Maintenance.MaintenanceType.Default);
@@ -101,7 +101,7 @@ public class SuperUserController {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorUnauthorized,
                             lang.get("error.superuser.operation", userProfile.getLanguage()),
                             lang.get("error.superuser.operation.help", userProfile.getLanguage())),
-                            HttpStatus.UNAUTHORIZED);
+                            HttpStatus.OK);
 
         return superUserActionManager.getMaintenanceList();
     }
@@ -121,14 +121,14 @@ public class SuperUserController {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorUnauthorized,
                             lang.get("error.superuser.operation", userProfile.getLanguage()),
                             lang.get("error.superuser.operation.help", userProfile.getLanguage())),
-                            HttpStatus.UNAUTHORIZED);
+                            HttpStatus.OK);
 
         if(maintenanceDTO == null)
             return new ResponseEntity<>
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.mobj.notfound", userProfile.getLanguage()),
                             lang.get("error.mobj.notfound.help", userProfile.getLanguage())),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
 
         if (maintenanceDTO.getMaintenanceId() == null || maintenanceDTO.getMaintenanceId().isEmpty()) maintenanceDTO.setMaintenanceId("");
 
@@ -165,14 +165,14 @@ public class SuperUserController {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorUnauthorized,
                             lang.get("error.superuser.operation", userProfile.getLanguage()),
                             lang.get("error.superuser.operation.help", userProfile.getLanguage())),
-                            HttpStatus.UNAUTHORIZED);
+                            HttpStatus.OK);
 
         if(predictionModelDTO == null)
             return new ResponseEntity<>
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.pmodel.notfound", userProfile.getLanguage()),
                             lang.get("error.pmodel.notfound.help", userProfile.getLanguage())),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
 
         if (predictionModelDTO.getModelId() == null || predictionModelDTO.getModelId().isEmpty()) predictionModelDTO.setModelId("");
         if (predictionModelDTO.getName() == null || predictionModelDTO.getName().isEmpty()) predictionModelDTO.setName("<No name>");
@@ -214,7 +214,7 @@ public class SuperUserController {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorUnauthorized,
                             lang.get("error.superuser.operation", userProfile.getLanguage()),
                             lang.get("error.superuser.operation.help", userProfile.getLanguage())),
-                            HttpStatus.UNAUTHORIZED);
+                            HttpStatus.OK);
 
         return superUserActionManager.getPredictionModelList();
     }
@@ -234,14 +234,14 @@ public class SuperUserController {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorUnauthorized,
                             lang.get("error.superuser.operation", userProfile.getLanguage()),
                             lang.get("error.superuser.operation.help", userProfile.getLanguage())),
-                            HttpStatus.UNAUTHORIZED);
+                            HttpStatus.OK);
 
         if(predictionModelDTO == null)
             return new ResponseEntity<>
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.pmodel.notfound", userProfile.getLanguage()),
                             lang.get("error.pmodel.notfound.help", userProfile.getLanguage())),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
 
         if (predictionModelDTO.getModelId() == null || predictionModelDTO.getModelId().isEmpty()) predictionModelDTO.setModelId("");
 

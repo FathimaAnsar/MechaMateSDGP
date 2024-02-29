@@ -24,14 +24,14 @@ public class Validation {
                         (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                                 lang.getFilledWith("error.input.missing", session, new String[]{inputIdentifier}),
                                 lang.getFilledWith("error.input.missing.help", session, new String[]{inputIdentifier})),
-                                HttpStatus.BAD_REQUEST);
+                                HttpStatus.OK);
             }
             if (input.isEmpty()) {
                 return new ResponseEntity<>
                         (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                                 lang.getFilledWith("error.input.empty", session, new String[]{inputIdentifier}),
                                 lang.getFilledWith("error.input.empty.help", session, new String[]{inputIdentifier})),
-                                HttpStatus.BAD_REQUEST);
+                                HttpStatus.OK);
             }
             if (Pattern.compile(regex).matcher(input).matches()) return null;
         } catch (Exception ignore) {
@@ -60,7 +60,7 @@ public class Validation {
                 (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                         lang.getFilledWith("error.input.invalid", session, new String[]{inputIdentifier}),
                         helpStr),
-                        HttpStatus.BAD_REQUEST);
+                        HttpStatus.OK);
     }
 
 
@@ -74,14 +74,14 @@ public class Validation {
                         (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                                 lang.getFilledWith("error.input.json.missing", session, new String[]{inputIdentifier}),
                                 lang.getFilledWith("error.input.json.missing.help", session, new String[]{inputIdentifier})),
-                                HttpStatus.BAD_REQUEST);
+                                HttpStatus.OK);
             }
             if (input.isEmpty()) {
                 return new ResponseEntity<>
                         (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                                 lang.getFilledWith("error.input.json.empty", session, new String[]{inputIdentifier}),
                                 lang.getFilledWith("error.input.json.empty.help", session, new String[]{inputIdentifier})),
-                                HttpStatus.BAD_REQUEST);
+                                HttpStatus.OK);
             }
             if (Pattern.compile(regex).matcher(input).matches()) return null;
         } catch (Exception ignore) {
@@ -100,7 +100,7 @@ public class Validation {
                 (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                         lang.getFilledWith("error.input.json.invalid", session, new String[]{inputIdentifier}),
                         helpStr),
-                        HttpStatus.BAD_REQUEST);
+                        HttpStatus.OK);
     }
 
 
@@ -163,7 +163,7 @@ public class Validation {
                 (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                         lang.get("error.input.tos.disagreed", session),
                         lang.get("error.input.tos.disagreed.help", session)),
-                        HttpStatus.BAD_REQUEST);
+                        HttpStatus.OK);
     }
 
 
@@ -182,7 +182,7 @@ public class Validation {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.already.signedin", httpSession),
                             lang.get("error.already.signedin.help", httpSession)),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
         } else {
             return null;
         }
@@ -196,7 +196,7 @@ public class Validation {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.not.signedin", httpSession),
                             lang.get("error.not.signedin.help", httpSession)),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
         } else {
             return null;
         }
@@ -217,7 +217,7 @@ public class Validation {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorUnauthorized,
                             lang.get("error.session.unauthorized", lang.getLanguage(request.getSession())),
                             lang.get("error.session.unauthorized.help", lang.getLanguage(request.getSession()))),
-                            HttpStatus.UNAUTHORIZED);
+                            HttpStatus.OK);
 
         resp = profileOperationAllowed(userProfile, true, false,
                 lang.get("error.invalid.account.operation.help", lang.getLanguage(request.getSession())),
@@ -241,20 +241,20 @@ public class Validation {
                         (new ErrorDTO(ErrorDTO.ErrorStatus.InternalError,
                                 lang.get("error.internal.session.prof.null", language),
                                 lang.get("error.internal.session.prof.null.help", language)),
-                                HttpStatus.INTERNAL_SERVER_ERROR);
+                                HttpStatus.OK);
             } else {
                 if(checkByEmail) {
                     return new ResponseEntity<>
                             (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorEmailDoesntExist,
                                     lang.get("error.email.doesnt.exist", language),
                                     lang.get("error.email.doesnt.exist.help", language)),
-                                    HttpStatus.NOT_FOUND);
+                                    HttpStatus.OK);
                 } else {
                     return new ResponseEntity<>
                             (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorUserDoesntExist,
                                     lang.get("error.user.notexists", language),
                                     lang.get("error.user.notexists.help", language)),
-                                    HttpStatus.NOT_FOUND);
+                                    HttpStatus.OK);
                 }
             }
         }
@@ -264,19 +264,19 @@ public class Validation {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.deleted.account", language),
                             helpStr),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
         } else if(userProfile.getStatus() == UserProfile.Status.StatusBlocked) {
             return new ResponseEntity<>
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.blocked.account", language),
                             helpStr),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
         } else if (userProfile.getStatus() == UserProfile.Status.StatusInactive) {
             return new ResponseEntity<>
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.inactive.account", language),
                             helpStr),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
         }
 
         if (includePendingAct && userProfile.getStatus() == UserProfile.Status.StatusPendingActivation) {
@@ -284,7 +284,7 @@ public class Validation {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.user.pending.activation", language),
                             lang.get("error.user.pending.activation.help", language)),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
         }
 
         return null;

@@ -7,39 +7,43 @@ import ConnectionManager from "../services/ConnectionManager.js"
 function SignIn(props) {
 
     const handleGoBack = () => {props.app.goBack();} 
-    
-    const handleSignUp = () => {
-        props.app.changePage(Pages.SignUpUI); 
-    }
-
-    const handleForgotPass = () => {
-        props.app.changePage(Pages.ForgotPasswordUI); 
-    }
-
+    const handleClick = (page) => { props.app.changePage(page); }
     const handleSubmit = async (e) => {
-
-        // props.app.changePage(Pages.DashboardUI); 
-        
         e.preventDefault();
+
         
-        // Extract username and password from form fields
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-        const keepMeSignedIn = document.getElementById('keep-me-signed-in').checked;
+        const username = "justin";
+        const password = "Pass123";
+        const keepMeSignedIn = true;
+
+        // const username = document.getElementById('username').value;
+        // const password = document.getElementById('password').value;
+        // const keepMeSignedIn = document.getElementById('keep-me-signed-in').checked;
+
+        // Validate inputs
+        // If failed to validate, return here
 
         let connection = new ConnectionManager();
-        const signInResponse = await connection.signin(username, password, keepMeSignedIn);
 
-        
+        console.log(1234);
+        const response = connection.signin(username, password, (keepMeSignedIn ? 1 : 0));
 
-        const userProfile = await connection.getProfile();
+        console.log(2345);
+        if(response) {
+            console.log(response);
+        }
 
-        console.log(userProfile);
-        props.app.setUserProfile(userProfile);
+        const userProfile = connection.getUserProfile();
+        console.log(55678);
+
+//        console.log(userProfile);
+//        props.app.setUserProfile(userProfile);
 }
         
     return(
         <>
+    <button onClick={handleGoBack}>Go Back</button>
+
     <h1>Sign In</h1>
     
     <form action="#" method="post">
@@ -56,13 +60,11 @@ function SignIn(props) {
     </form>
     <br></br>
 
-    <button onClick={handleSignUp}>Dont have an account</button>
+    <button onClick={() => {handleClick(Pages.SignUpUI)}}>Dont you have an account?</button>
     <br></br>
-    <button onClick={handleForgotPass}>Forgot Password</button>
+    <button onClick={() => {handleClick(Pages.ForgotPasswordUI)}}>Forgot Password?</button>
     <br></br>
-    <button onClick={handleGoBack}>Go Back</button>
     
-
         </>
     );
     

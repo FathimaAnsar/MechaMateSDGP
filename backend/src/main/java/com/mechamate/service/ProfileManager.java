@@ -52,13 +52,13 @@ public class ProfileManager {
                         (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorUsernameNotAllowed,
                                 lang.get("error.username.notallowed", userProfile.getLanguage()),
                                 lang.get("error.username.notallowed.help", userProfile.getLanguage())),
-                                HttpStatus.UNAUTHORIZED);
+                                HttpStatus.OK);
             } else {
                 return new ResponseEntity<>
                         (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorUserExists,
                                 lang.get("error.user.exists", userProfile.getLanguage()),
                                 lang.get("error.user.exists.help", userProfile.getLanguage())),
-                                HttpStatus.UNAUTHORIZED);
+                                HttpStatus.OK);
             }
         }
 
@@ -67,7 +67,7 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorEmailExists,
                             lang.get("error.email.exists", userProfile.getLanguage()),
                             lang.get("error.email.exists.help", userProfile.getLanguage())),
-                            HttpStatus.UNAUTHORIZED);
+                            HttpStatus.OK);
         }
 
         userProfile.createActivationKey();
@@ -77,7 +77,7 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.InternalError,
                             lang.get("error.internal.user.add.failed", userProfile.getLanguage()),
                             lang.get("error.internal.user.add.failed.help", userProfile.getLanguage())),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
+                            HttpStatus.OK);
         }
 
         UserProfile testUProf = databaseAbstractLayer.getUserProfile(userProfile.getUsername());
@@ -86,7 +86,7 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.InternalError,
                             lang.get("error.internal.user.add.failed", userProfile.getLanguage()),
                             lang.get("error.internal.user.add.failed.help", userProfile.getLanguage())),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
+                            HttpStatus.OK);
         }
 
         userProfile.set_id(testUProf.get_id());
@@ -95,7 +95,7 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.InternalError,
                             lang.get("error.internal.send.actemail.failed", userProfile.getLanguage()),
                             lang.get("error.internal.send.actemail.failed.help", userProfile.getLanguage())),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
+                            HttpStatus.OK);
         }
 
         return null;
@@ -118,7 +118,7 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.user.not.pending.activation", userProfile.getLanguage()),
                             lang.get("error.user.not.pending.activation.help", userProfile.getLanguage())),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
         }
 
         if(!userProfile.getActivationKey().equals(key)) {
@@ -126,7 +126,7 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorActivationFailed,
                             lang.get("error.user.activation.failed", userProfile.getLanguage()),
                             lang.get("error.user.activation.failed.help", userProfile.getLanguage())),
-                            HttpStatus.UNAUTHORIZED);
+                            HttpStatus.OK);
         }
 
         userProfile.clearActivationKey(UserProfile.Status.StatusActive);
@@ -136,7 +136,7 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.InternalError,
                             lang.get("error.internal.user.update.failed", userProfile.getLanguage()),
                             lang.get("error.internal.user.update.failed.help", userProfile.getLanguage())),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
+                            HttpStatus.OK);
         }
 
         notificationManager.sendWelcomeEmail(userProfile);
@@ -161,7 +161,7 @@ public class ProfileManager {
                         (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorMaxAttemptCountExceeded,
                                 lang.get("error.attempt.count.exceeded", userProfile.getLanguage()),
                                 lang.get("error.attempt.count.exceeded.help", userProfile.getLanguage())),
-                                HttpStatus.UNAUTHORIZED);
+                                HttpStatus.OK);
             }
         }
 
@@ -174,14 +174,14 @@ public class ProfileManager {
                         (new ErrorDTO(ErrorDTO.ErrorStatus.InternalError,
                                 lang.get("error.internal.userdata.update.failed", userProfile.getLanguage()),
                                 lang.get("error.internal.userdata.update.failed.help", userProfile.getLanguage())),
-                                HttpStatus.INTERNAL_SERVER_ERROR);
+                                HttpStatus.OK);
             }
 
             return new ResponseEntity<>
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorLoginFailed,
                             lang.get("error.user.login.failed", userProfile.getLanguage()),
                             lang.get("error.user.login.failed.help", userProfile.getLanguage())),
-                            HttpStatus.UNAUTHORIZED);
+                            HttpStatus.OK);
         } else {
             userProfile.setUnsuccessfulLoginAttempts(0);
         }
@@ -191,7 +191,7 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.InternalError,
                             lang.get("error.internal.userdata.update.failed", userProfile.getLanguage()),
                             lang.get("error.internal.userdata.update.failed.help", userProfile.getLanguage())),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
+                            HttpStatus.OK);
         }
 
         notificationManager.sendLoginAlert(userProfile);
@@ -224,7 +224,7 @@ public class ProfileManager {
                         (new ErrorDTO(ErrorDTO.ErrorStatus.InternalError,
                                 lang.get("error.internal.user.update.failed", userProfile.getLanguage()),
                                 lang.get("error.internal.user.update.failed.help", userProfile.getLanguage())),
-                                HttpStatus.INTERNAL_SERVER_ERROR);
+                                HttpStatus.OK);
             }
         }
 
@@ -233,7 +233,7 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.InternalError,
                             lang.get("error.internal.send.recvemail.failed", userProfile.getLanguage()),
                             lang.get("error.internal.send.recvemail.failed.help", userProfile.getLanguage())),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
+                            HttpStatus.OK);
         }
 
         return null;
@@ -249,7 +249,7 @@ public class ProfileManager {
                         (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                                 lang.get("error.recovery.info.not.found", lang.getLanguage(request.getSession())),
                                 lang.get("error.recovery.info.not.found.help", lang.getLanguage(request.getSession()))),
-                                HttpStatus.BAD_REQUEST);
+                                HttpStatus.OK);
 
         ResponseEntity<ErrorDTO> resp = Validation.profileOperationAllowed(userProfile, false, false,
                 lang.get("error.invalid.account.resetpass.help", lang.getLanguage(request.getSession())),
@@ -264,7 +264,7 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.InternalError,
                             lang.get("error.internal.user.update.failed", userProfile.getLanguage()),
                             lang.get("error.internal.user.update.failed.help", userProfile.getLanguage())),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
+                            HttpStatus.OK);
         }
 
         if(!notificationManager.sendResetConfirmEmail(userProfile)) {
@@ -272,7 +272,7 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.InternalError,
                             lang.get("error.internal.send.resetmail.failed", userProfile.getLanguage()),
                             lang.get("error.internal.send.resetmail.failed.help", userProfile.getLanguage())),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
+                            HttpStatus.OK);
         }
 
         return null;
@@ -290,7 +290,7 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorOperationFailed,
                             lang.get("error.user.update.failed", userProfile.getLanguage()),
                             lang.get("error.user.update.failed.help", userProfile.getLanguage())),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
+                            HttpStatus.OK);
 
         return null;
     }
@@ -358,14 +358,14 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorVehicleExists,
                             lang.get("error.vehicle.exists", userProfile.getLanguage()),
                             lang.get("error.vehicle.exists.help", userProfile.getLanguage())),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
 
         if(!databaseAbstractLayer.addVehicle(vehicle))
             return new ResponseEntity<>
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorOperationFailed,
                             lang.get("error.vehicle.add.failed", userProfile.getLanguage()),
                             lang.get("error.vehicle.add.failed.help", userProfile.getLanguage())),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
+                            HttpStatus.OK);
 
         return null;
     }
@@ -380,7 +380,7 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorVehicleExists,
                             lang.get("error.vehicle.doesnt.exist", userProfile.getLanguage()),
                             lang.get("error.vehicle.doesnt.exist.help", userProfile.getLanguage())),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
 
         Vehicle v = databaseAbstractLayer.getVehicle(vehicle.getRegNo());
         if(v == null)
@@ -388,14 +388,14 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorOperationFailed,
                             lang.get("error.vehicle.update.failed", userProfile.getLanguage()),
                             lang.get("error.vehicle.update.failed.help", userProfile.getLanguage())),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
+                            HttpStatus.OK);
 
         if(!v.getOwner().equals(vehicle.getOwner()))
             return new ResponseEntity<>
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorUnauthorized,
                             lang.get("error.no.permission", userProfile.getLanguage()),
                             lang.get("error.no.permission.help", userProfile.getLanguage())),
-                            HttpStatus.UNAUTHORIZED);
+                            HttpStatus.OK);
 
 
         if(!databaseAbstractLayer.updateVehicle(vehicle))
@@ -403,7 +403,7 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorOperationFailed,
                             lang.get("error.vehicle.update.failed", userProfile.getLanguage()),
                             lang.get("error.vehicle.update.failed.help", userProfile.getLanguage())),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
+                            HttpStatus.OK);
 
         return null;
     }
@@ -419,7 +419,7 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorVehicleExists,
                             lang.get("error.vehicle.doesnt.exist", userProfile.getLanguage()),
                             lang.get("error.vehicle.doesnt.exist.help", userProfile.getLanguage())),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
 
         Vehicle v = databaseAbstractLayer.getVehicle(vehicle.getRegNo());
         if(v == null)
@@ -427,14 +427,14 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorOperationFailed,
                             lang.get("error.vehicle.delete.failed", userProfile.getLanguage()),
                             lang.get("error.vehicle.delete.failed.help", userProfile.getLanguage())),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
+                            HttpStatus.OK);
 
         if(!v.getOwner().equals(vehicle.getOwner()))
             return new ResponseEntity<>
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorUnauthorized,
                             lang.get("error.no.permission", userProfile.getLanguage()),
                             lang.get("error.no.permission.help", userProfile.getLanguage())),
-                            HttpStatus.UNAUTHORIZED);
+                            HttpStatus.OK);
 
         vehicle.set_id(v.get_id());
         if(!databaseAbstractLayer.deleteVehicle(vehicle))
@@ -442,7 +442,7 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorOperationFailed,
                             lang.get("error.vehicle.delete.failed", userProfile.getLanguage()),
                             lang.get("error.vehicle.delete.failed.help", userProfile.getLanguage())),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
+                            HttpStatus.OK);
 
         return null;
     }
@@ -458,14 +458,14 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.vehicle.notfound", userProfile.getLanguage()),
                             lang.get("error.vehicle.notfound.help", userProfile.getLanguage())),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
 
         if(!vehicle.getOwner().equals(userProfile.get_id()))
             return new ResponseEntity<>
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorUnauthorized,
                             lang.get("error.no.permission", userProfile.getLanguage()),
                             lang.get("error.no.permission.help", userProfile.getLanguage())),
-                            HttpStatus.UNAUTHORIZED);
+                            HttpStatus.OK);
 
 
         if(serviceRecord.get_id() != null && databaseAbstractLayer.isServiceRecordExists(serviceRecord.get_id())) {
@@ -473,7 +473,7 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.srecord.exists", userProfile.getLanguage()),
                             lang.get("error.srecord.exists.help", userProfile.getLanguage())),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
         }
 
         if(!databaseAbstractLayer.addServiceRecord(serviceRecord))
@@ -481,7 +481,7 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorOperationFailed,
                             lang.get("error.srecord.add.failed", userProfile.getLanguage()),
                             lang.get("error.srecord.add.failed.help", userProfile.getLanguage())),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
+                            HttpStatus.OK);
 
         return null;
     }
@@ -495,28 +495,28 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.vehicle.notfound", userProfile.getLanguage()),
                             lang.get("error.vehicle.notfound.help", userProfile.getLanguage())),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
 
         if(!vehicle.getOwner().equals(userProfile.get_id()))
             return new ResponseEntity<>
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorUnauthorized,
                             lang.get("error.no.permission", userProfile.getLanguage()),
                             lang.get("error.no.permission.help", userProfile.getLanguage())),
-                            HttpStatus.UNAUTHORIZED);
+                            HttpStatus.OK);
 
         if(serviceRecord.get_id() == null)
             return new ResponseEntity<>
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.srecord.id.missing", userProfile.getLanguage()),
                             lang.get("error.srecord.id.missing.help", userProfile.getLanguage())),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
 
         if(!databaseAbstractLayer.isServiceRecordExists(serviceRecord.get_id())) {
             return new ResponseEntity<>
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.srecord.doesnt.exist", userProfile.getLanguage()),
                             lang.get("error.srecord.doesnt.exist.help", userProfile.getLanguage())),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
         }
 
         ServiceRecord svr = databaseAbstractLayer.getServiceRecord(serviceRecord.get_id());
@@ -525,7 +525,7 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorOperationFailed,
                             lang.get("error.srecord.update.failed", userProfile.getLanguage()),
                             lang.get("error.srecord.update.failed.help", userProfile.getLanguage())),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
+                            HttpStatus.OK);
 
 
         if(!svr.getVehicleRegNo().equals(serviceRecord.getVehicleRegNo()))
@@ -533,7 +533,7 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorUnauthorized,
                             lang.get("error.no.permission", userProfile.getLanguage()),
                             lang.get("error.no.permission.help", userProfile.getLanguage())),
-                            HttpStatus.UNAUTHORIZED);
+                            HttpStatus.OK);
 
 
         if(!databaseAbstractLayer.updateServiceRecord(serviceRecord))
@@ -541,7 +541,7 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorOperationFailed,
                             lang.get("error.srecord.update.failed", userProfile.getLanguage()),
                             lang.get("error.srecord.update.failed.help", userProfile.getLanguage())),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
+                            HttpStatus.OK);
 
         return null;
     }
@@ -558,28 +558,28 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.vehicle.notfound", userProfile.getLanguage()),
                             lang.get("error.vehicle.notfound.help", userProfile.getLanguage())),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
 
         if(!vehicle.getOwner().equals(userProfile.get_id()))
             return new ResponseEntity<>
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorUnauthorized,
                             lang.get("error.no.permission", userProfile.getLanguage()),
                             lang.get("error.no.permission.help", userProfile.getLanguage())),
-                            HttpStatus.UNAUTHORIZED);
+                            HttpStatus.OK);
 
         if(serviceRecord.get_id() == null)
             return new ResponseEntity<>
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.srecord.id.missing", userProfile.getLanguage()),
                             lang.get("error.srecord.id.missing.help", userProfile.getLanguage())),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
 
         if(!databaseAbstractLayer.isServiceRecordExists(serviceRecord.get_id())) {
             return new ResponseEntity<>
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.srecord.doesnt.exist", userProfile.getLanguage()),
                             lang.get("error.srecord.doesnt.exist.help", userProfile.getLanguage())),
-                            HttpStatus.BAD_REQUEST);
+                            HttpStatus.OK);
         }
 
 
@@ -589,14 +589,14 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorOperationFailed,
                             lang.get("error.srecord.delete.failed", userProfile.getLanguage()),
                             lang.get("error.srecord.delete.failed.help", userProfile.getLanguage())),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
+                            HttpStatus.OK);
         
         if(!svr.getVehicleRegNo().equals(serviceRecord.getVehicleRegNo()))
             return new ResponseEntity<>
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorUnauthorized,
                             lang.get("error.no.permission", userProfile.getLanguage()),
                             lang.get("error.no.permission.help", userProfile.getLanguage())),
-                            HttpStatus.UNAUTHORIZED);
+                            HttpStatus.OK);
 
 
         if(!databaseAbstractLayer.deleteServiceRecord(serviceRecord))
@@ -604,7 +604,7 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorOperationFailed,
                             lang.get("error.srecord.delete.failed", userProfile.getLanguage()),
                             lang.get("error.srecord.delete.failed.help", userProfile.getLanguage())),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
+                            HttpStatus.OK);
 
         return null;
     }

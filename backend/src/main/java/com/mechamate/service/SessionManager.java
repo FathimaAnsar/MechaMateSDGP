@@ -78,7 +78,7 @@ public class SessionManager {
                         (new ErrorDTO(ErrorDTO.ErrorStatus.InternalError,
                                 lang.get("error.internal.response.invalid", userProfile.getLanguage()),
                                 lang.get("error.internal.response.invalid.help", userProfile.getLanguage())),
-                                HttpStatus.INTERNAL_SERVER_ERROR);
+                                HttpStatus.OK);
             }
 
             String sessionKey = Common.getSha256("SKEY#>" + userProfile.getUsername() +
@@ -93,7 +93,7 @@ public class SessionManager {
                         (new ErrorDTO(ErrorDTO.ErrorStatus.InternalError,
                                 lang.get("error.internal.session.db.failed", userProfile.getLanguage()),
                                 lang.get("error.internal.session.db.failed.help", userProfile.getLanguage())),
-                                HttpStatus.INTERNAL_SERVER_ERROR);
+                                HttpStatus.OK);
             }
 
             Cookie sessionCookie = new Cookie("sessionKey", sessionKey);
@@ -114,7 +114,7 @@ public class SessionManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.InternalError,
                             lang.get("error.internal.session.creation.failed", userProfile.getLanguage()),
                             lang.get("error.internal.session.creation.failed.help", userProfile.getLanguage())),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
+                            HttpStatus.OK);
         }
     }
 
@@ -128,7 +128,7 @@ public class SessionManager {
                         (new ErrorDTO(ErrorDTO.ErrorStatus.InternalError,
                                 lang.get("error.internal.response.invalid", userProfile.getLanguage()),
                                 lang.get("error.internal.response.invalid.help", userProfile.getLanguage())),
-                                HttpStatus.INTERNAL_SERVER_ERROR);
+                                HttpStatus.OK);
             }
 
             Cookie cookie = new Cookie("sessionKey", null);
@@ -143,7 +143,7 @@ public class SessionManager {
                         (new ErrorDTO(ErrorDTO.ErrorStatus.InternalError,
                                 lang.get("error.internal.request.invalid", userProfile.getLanguage()),
                                 lang.get("error.internal.request.invalid.help", userProfile.getLanguage())),
-                                HttpStatus.INTERNAL_SERVER_ERROR);
+                                HttpStatus.OK);
             }
 
             Cookie[] cookies = request.getCookies();
@@ -152,7 +152,7 @@ public class SessionManager {
                         (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                                 lang.get("error.no.cookies", userProfile.getLanguage()),
                                 lang.get("error.no.cookies.help", userProfile.getLanguage())),
-                                HttpStatus.BAD_REQUEST);
+                                HttpStatus.OK);
             }
 
             String sessionKey = "";
@@ -178,7 +178,7 @@ public class SessionManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.InternalError,
                             lang.get("error.internal.session.deletion.failed", userProfile.getLanguage()),
                             lang.get("error.internal.session.deletion.failed.help", userProfile.getLanguage())),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
+                            HttpStatus.OK);
 
         }
 
