@@ -1,6 +1,6 @@
 import React from 'react';
 
-function AddServiceRecordsManually(props) {
+function AddSRecords(props) {
     return (
         <>
             <h2>Add Service Records Manually</h2>
@@ -9,4 +9,4 @@ function AddServiceRecordsManually(props) {
         </>
     );
 }
-export default AddServiceRecordsManually;
+export default AddSRecords;
