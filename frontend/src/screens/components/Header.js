@@ -1,7 +1,8 @@
 import React from 'react';
+import ConnectionManager from '../../services/ConnectionManager';
 
-function Header() {
-  
+function Header(props) {
+
   const toggleDropdown = () => {
     var dropdown = document.querySelector('.dropdown');
     dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
@@ -15,6 +16,12 @@ function Header() {
     var dropdown = document.querySelector('.dropdown');
     dropdown.style.display = 'none';
   };
+
+  const handleSignout = () => {
+    const connection = new ConnectionManager();
+    connection.signout();
+    props.app.reset();
+  }
 
   return (
     <>
@@ -32,7 +39,7 @@ function Header() {
       <div className="dropdown">
         <button className="dropdown-item" onClick={() => handleDropdownItemClick('Settings')}>Settings</button>
         <button className="dropdown-item" onClick={() => handleDropdownItemClick('About App')}>About App</button>
-        <button className="dropdown-item" onClick={() => handleDropdownItemClick('Sign Out')}>Sign Out</button>
+        <button className="dropdown-item" onClick={handleSignout}>Sign Out</button>
       </div>
     </>
   );

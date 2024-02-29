@@ -3,10 +3,25 @@ import React, { useState } from "react";
 import { Pages } from "../Pages.js"
 import ConnectionManager from "../services/ConnectionManager.js"
 import Header from "./components/Header.js";
+import { main } from "../MechaMate.js";
 
 
 function Dashboard(props) {
   const [dropdownStates, setDropdownStates] = useState({});
+  
+  let firstName = "";
+
+  let userProfile = props.app.getUserProfile();
+
+  console.log(userProfile);
+  
+  if (userProfile !== null) {
+    // firstName = userProfile.firstName;
+   
+    console.log(firstName); 
+  } else {
+    console.log('No object found in local storage with the specified key.');
+  }
 
   const toggleDropdown = (id) => {
     setDropdownStates(prevState => ({
@@ -16,16 +31,18 @@ function Dashboard(props) {
   }
 
 
+
   const handleGoBack = () => { props.app.goBack(); }
+  const handleClick = (page) => { props.app.changePage(page); }
 
   
   return (
 
     <>
-      <Header></Header>
+      <Header app ={props.app}/>
       <div>
 
-        <h1>Hello Peter,Welcome to mechamate!</h1>
+        <h1>Hello {},Welcome to mechamate!</h1>
 
       </div>
 
@@ -50,7 +67,7 @@ function Dashboard(props) {
 
       <div id="AutoMobSection">
         <h2>AutoMob Search</h2>
-        <button>
+        <button onClick={() =>{props.app.changePage(Pages.AutoMobSearchUI)}}>
           <span style={{ marginRight: '5px' }}></span> {/* Material Icon */}
           Search
         </button>
@@ -58,7 +75,7 @@ function Dashboard(props) {
 
       <div id="PredictiveMaintenance">
         <h2>Predictive Maintenance</h2>
-        <button>
+        <button onClick={() =>{props.app.changePage(Pages.PredictMaintenanceUI)}}>
           <span style={{ marginRight: '5px' }}>🛠️</span> {/* Material Icon */}
           Open Predictive Maintenance
         </button>
@@ -66,7 +83,7 @@ function Dashboard(props) {
 
       <div id="Track my vehicle">
         <h2>Track my Vehicle</h2>
-        <button>
+        <button onClick={() =>{props.app.changePage(Pages.TrackVehicleUI)}}>
           <span style={{ marginRight: '5px' }}></span> {/* Material Icon */}
           Open To Track my vehicle
         </button>
@@ -74,7 +91,7 @@ function Dashboard(props) {
       
       <div id="emergency assistence">
         <h2>Emergency assistence</h2>
-        <button>
+        <button onClick={() => handleClick(Pages.EmergencyAssistUI)}>
           <span style={{ marginRight: '5px' }}></span> {/* Material Icon */}
           Open Emergency assistence
         </button>
@@ -82,7 +99,7 @@ function Dashboard(props) {
 
       <div id="manage my documents">
         <h2>Manage vehicle documents</h2>
-        <button>
+        <button onClick={() =>{props.app.changePage(Pages.ManageDocumentsUI)}}>
           <span style={{ marginRight: '5px' }}></span> {/* Material Icon */}
           Open vehicle documents/sercice records
         </button>
@@ -90,7 +107,7 @@ function Dashboard(props) {
 
       <div id="parking finder">
         <h2>Parking Finder</h2>
-        <button>
+        <button onClick={() =>{props.app.changePage(Pages.ParkingFinderUI)}}>
           <span style={{ marginRight: '5px' }}></span> {/* Material Icon */}
           Open to Find a parking place
         </button>

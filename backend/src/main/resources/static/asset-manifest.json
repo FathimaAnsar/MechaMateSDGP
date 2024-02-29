@@ -1,19 +1,10 @@
 {
   "files": {
-    "main.css": "/static/css/main.94aeb7b2.css",
-    "main.js": "/static/js/main.926cc907.js",
-    "static/media/logo-black.png": "/static/media/logo-black.1c200f85d831ab27efe0.png",
-    "static/media/brake.png": "/static/media/brake.b3c5b9769fb8243e1ae8.png",
-    "static/media/maintenance.png": "/static/media/maintenance.7e9b9733fa9a13003908.png",
-    "static/media/tow-truck.png": "/static/media/tow-truck.46847e9bc1f2c970923a.png",
-    "static/media/car-insurance (2).png": "/static/media/car-insurance (2).54b14b1c985642d146f7.png",
-    "static/media/add.png": "/static/media/add.f2472aa9d94a26ac674f.png",
+    "main.js": "/static/js/main.de6a4e58.js",
     "index.html": "/index.html",
-    "main.94aeb7b2.css.map": "/static/css/main.94aeb7b2.css.map",
-    "main.926cc907.js.map": "/static/js/main.926cc907.js.map"
+    "main.de6a4e58.js.map": "/static/js/main.de6a4e58.js.map"
   },
   "entrypoints": [
-    "static/css/main.94aeb7b2.css",
-    "static/js/main.926cc907.js"
+    "static/js/main.de6a4e58.js"
   ]
 }

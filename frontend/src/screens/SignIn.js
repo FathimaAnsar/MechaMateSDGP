@@ -16,14 +16,27 @@ function SignIn(props) {
         props.app.changePage(Pages.ForgotPasswordUI); 
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        let connection = new ConnectionManager();
-        console.log(connection.signin("justin", "Pass123!")); 
+    const handleSubmit = async (e) => {
 
-        console.log(connection.getProfile()); 
-       
-    }
+        // props.app.changePage(Pages.DashboardUI); 
+        
+        e.preventDefault();
+        
+        // Extract username and password from form fields
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const keepMeSignedIn = document.getElementById('keep-me-signed-in').checked;
+
+        let connection = new ConnectionManager();
+        const signInResponse = await connection.signin(username, password, keepMeSignedIn);
+
+        
+
+        const userProfile = await connection.getProfile();
+
+        console.log(userProfile);
+        props.app.setUserProfile(userProfile);
+}
         
     return(
         <>
@@ -36,8 +49,8 @@ function SignIn(props) {
         <label htmlFor="password">Password:</label><br></br>
         <input type="password" id="password" name="password"/><br></br>
         
-        <input type="checkbox" id="already_signed_in" name="already_signed_in"/>
-        <label htmlFor="already_signed_in">Already Signed In</label><br></br>
+        <input type="checkbox" id="keep-me-signed-in" name="already_signed_in"/>
+        <label htmlFor="keep-me-signed-in">Keep Me Signed In</label><br></br>
         
         <button onClick={handleSubmit}>SignIn</button>        
     </form>

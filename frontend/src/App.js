@@ -42,30 +42,30 @@ function App() {
   //   }
   // }
 
-  if (main.currentPage == Pages.GetStartedUI) return (<><GetStarted app={main} /></>);
+  if (main.currentPage === Pages.GetStartedUI) return (<><GetStarted app={main} /></>);
 
-  if (main.currentPage == Pages.SignInUI) return (<><SignIn app={main} /></>);
-  if (main.currentPage == Pages.SignUpUI) return (<><SignUp app={main} /></>);
+  if (main.currentPage ===Pages.SignInUI) return (<><SignIn app={main} /></>);
+  if (main.currentPage === Pages.SignUpUI) return (<><SignUp app={main} /></>);
 
-  if (main.currentPage == Pages.ForgotPasswordUI) return (<><ForgotPassword app={main} /></>);
-  if (main.currentPage == Pages.ResetPasswordUI) return (<><ResetPassword app={main} /></>);
+  if (main.currentPage === Pages.ForgotPasswordUI) return (<><ForgotPassword app={main} /></>);
+  if (main.currentPage === Pages.ResetPasswordUI) return (<><ResetPassword app={main} /></>);
 
-  if (main.currentPage == Pages.DashboardUI) return (<><Dashboard app={main} /></>);
+  if (main.currentPage === Pages.DashboardUI) return (<><Dashboard app={main} /></>);
 
-  if (main.currentPage == Pages.SettingsUI) return (<><Settings app={main} /></>);
+  if (main.currentPage === Pages.SettingsUI) return (<><Settings app={main} /></>);
 
-  if (main.currentPage == Pages.NotificationsUI) return (<><Notifications app={main} /></>);
+  if (main.currentPage === Pages.NotificationsUI) return (<><Notifications app={main} /></>);
 
-  if (main.currentPage == Pages.AboutUsUI) return (<><AboutUs app={main} /></>);
+  if (main.currentPage === Pages.AboutUsUI) return (<><AboutUs app={main} /></>);
 
-  if (main.currentPage == Pages.MyVehiclesUI) return (<><MyVehicles app={main} /></>);
+  if (main.currentPage === Pages.MyVehiclesUI) return (<><MyVehicles app={main} /></>);
 
-  if (main.currentPage == Pages.PredictMaintenanceUI) return (<><PredictMaintenance app={main} /></>);
-  if (main.currentPage == Pages.ShowPredictionsUI) return (<><ShowPredictions app={main} /></>);
+  if (main.currentPage === Pages.PredictMaintenanceUI) return (<><PredictMaintenance app={main} /></>);
+  if (main.currentPage === Pages.ShowPredictionsUI) return (<><ShowPredictions app={main} /></>);
 
-  if (main.currentPage == Pages.TrackVehicleUI) return (<><TrackVehicle app={main} /></>);
+  if (main.currentPage === Pages.TrackVehicleUI) return (<><TrackVehicle app={main} /></>);
 
-  if (main.currentPage == Pages.ShowPredictionsUI) return (<><ShowPredictions app={main} /></>);
+  if (main.currentPage === Pages.ShowPredictionsUI) return (<><ShowPredictions app={main} /></>);
 
   if (main.currentPage === Pages.AutoMobSearchUI) return (<><AutoMobSearch app={main} /></>);
   if (main.currentPage === Pages.AutoMobDetailsUI) return (<><AutoMobDetails app={main} /></>);
