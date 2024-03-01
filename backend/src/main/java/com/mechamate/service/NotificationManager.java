@@ -86,7 +86,7 @@ public class NotificationManager {
                 """;
         emailTemplate = emailTemplate.replace("[REPLACE1]", userProfile.getFirstname());
         emailTemplate = emailTemplate.replace("[REPLACE2]",
-                hostname + "/api/v1/auth/activate?key=" + userProfile.getActivationKey());
+                hostname + "/activate.html?key=" + userProfile.getActivationKey());
 
         return sendEmail(emailTemplate, userProfile, "MechaMate Account Activation");
     }

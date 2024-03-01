@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        async function activate() {
+            let apiEndPoint = window.location.href;
+            apiEndPoint = apiEndPoint.toLocaleLowerCase().replace(":3000/", ":8080/");
+            apiEndPoint = apiEndPoint.toLocaleLowerCase().replace("/activate.html?", "/api/v1/auth/activate?");
+            console.log(apiEndPoint);
+            try {
+                const resp = await fetch(`${apiEndPoint}`, {
+                    method: 'GET',
+                    credentials: 'include',
+                });
+                const data = await resp.json();
+                if(data.error) {
+                    alert("Error occured: " + data.message + "\n" + data.help);
+                } else if(data.status) {
+                    alert("Success: " + data.message + "\n" + data.info);
+                } else {
+                    alert("Error: Unknown");
+                }
+                window.location.href = window.location.href.substr(0, window.location.href.indexOf("/activate.html?"));
+                return;
+            } catch (error) {}
+            alert("Failed to activate your account! Please contact support center");
+            window.location.href = window.location.href.substr(0, window.location.href.indexOf("/activate.html?"));
+            return;
+        }
+        window.onload = () => { activate(); }
+    </script>
+</head>
+<body>
+</body>
+</html>
