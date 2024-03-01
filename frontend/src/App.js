@@ -28,15 +28,22 @@ import ParkingInfo from "./screens/ParkingInfo.js";
 
 function App() {
 
-
-
-console.log(window.location.href);
-
   const [currentPage, setCurrentPage] = useState("");
 
   const changeCurrentPage = () => setCurrentPage(main.currentPage);
   main.setRefreshCaller(changeCurrentPage);
+
+  let apiEndPoint = window.location.pathname.toLowerCase();
+  if(apiEndPoint.startsWith("/activate?")) {
+
+
+  }
+  //apiEndPoint = apiEndPoint.toLowerCase().replace("/activate.html?", "/api/v1/auth/activate?");
+
+  console.log(window.location.search);
   
+
+
   if(!main.getUserProfile()) {
     if(main.currentPage !== Pages.SignInUI && main.currentPage !== Pages.SignUpUI && main.currentPage !== Pages.ForgotPasswordUI) {
       if(main.isFirstRunDone()) {

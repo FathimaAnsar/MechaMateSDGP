@@ -5,6 +5,8 @@ export const Pages = {
     SignInUI: "signin",//
     SignUpUI: "signup",//
 
+    EnterCodeUI: "enter-code",//
+
     ForgotPasswordUI: "forgot-password",//
     ResetPasswordUI: "reset-password",//
 
