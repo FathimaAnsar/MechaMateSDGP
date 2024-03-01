@@ -76,6 +76,10 @@ class ConnectionManager {
         return await this.postParamRequest("/api/v1/auth/signup", urlEncodedData);
     }
 
+    async activate(code) {
+        return await this.getRequest("/api/v1/auth/activate?key=" + code);
+    }
+
     async signout() {
         return await this.getRequest("/api/v1/auth/signout");
     }
@@ -85,7 +89,6 @@ class ConnectionManager {
         urlEncodedData.append('email', email);    
         return await this.postParamRequest("/api/v1/auth/recover", urlEncodedData);
     }
-
 
     async getUserProfile() {
         return await this.getRequest("/api/v1/general/profile");

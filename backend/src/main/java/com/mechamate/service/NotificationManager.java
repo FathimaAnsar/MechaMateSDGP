@@ -76,8 +76,8 @@ public class NotificationManager {
                         <h1>Welcome to MechaMate!</h1><br>
                         <h3>Hello [REPLACE1]!</h3>
                         <p>Thank you for joining MechaMate, your trusted vehicle maintenance prediction application. We're excited to have you onboard!</p>
-                        <p>To activate your account and start predicting your vehicle's maintenance needs, please click the button below:</p>
-                        <a class="button" href="[REPLACE2]" target="_blank">Activate Account</a>
+                        <p>To activate your account and start predicting your vehicle's maintenance needs, please enter the code below to MechaMate app:</p>
+                        <h3>[REPLACE2]</h3>
                         <p>If you have any questions or need assistance, feel free to contact our support team.</p>
                         <p>Best regards,<br>The MechaMate Team</p>
                     </div>
@@ -85,8 +85,7 @@ public class NotificationManager {
                 </html>
                 """;
         emailTemplate = emailTemplate.replace("[REPLACE1]", userProfile.getFirstname());
-        emailTemplate = emailTemplate.replace("[REPLACE2]",
-                hostname + "/activate.html?key=" + userProfile.getActivationKey());
+        emailTemplate = emailTemplate.replace("[REPLACE2]", userProfile.getActivationKey());
 
         return sendEmail(emailTemplate, userProfile, "MechaMate Account Activation");
     }

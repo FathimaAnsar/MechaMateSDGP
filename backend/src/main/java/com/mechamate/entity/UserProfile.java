@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
+import java.util.Random;
 
 @Document(collection = "UserProfiles")
 public class UserProfile {
@@ -139,7 +140,9 @@ public class UserProfile {
     }
 
     public void createActivationKey() {
-        this.activationKey = Common.getSha256("ACTV#>>(" + username + email + password + System.currentTimeMillis() + ")<<#");
+        Random random = new Random();
+        Integer code = random.nextInt(900000) + 100000;
+        this.activationKey = code.toString();
         this.status = Status.StatusPendingActivation;
     }
 

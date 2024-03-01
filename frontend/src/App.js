@@ -36,13 +36,18 @@ function App() {
   const changeCurrentPage = () => setCurrentPage(main.currentPage);
   main.setRefreshCaller(changeCurrentPage);
 
+
+
+
+
   if(!main.getUserProfile()) {
     if(main.currentPage != Pages.GetStartedUI &&
       main.currentPage != Pages.SignInUI &&
       main.currentPage != Pages.SignUpUI &&
-      main.currentPage != Pages.ForgotPasswordUI) {
+      main.currentPage != Pages.ForgotPasswordUI &&
+      main.currentPage != Pages.EnterCodeUI) {
       if(main.isFirstRunDone()) {
-        alert("Please sign in to continue!");
+        if(main.isAppLoaded()) alert("Please sign in to continue!");
         main.currentPage = Pages.SignInUI;
       } else {
         main.currentPage = Pages.GetStartedUI;
@@ -56,7 +61,7 @@ function App() {
     }
   }
 
-
+  if(!main.isAppLoaded()) main.setAppLoaded(true);
 
   if (main.currentPage === Pages.GetStartedUI) return (<><GetStarted app={main} /></>);
 

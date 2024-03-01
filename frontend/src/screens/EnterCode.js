@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Pages } from "../Pages.js"
 import ConnectionManager from "../services/ConnectionManager.js"
 
@@ -23,11 +23,43 @@ function EnterCode(props) {
             alert("Error occured: " + response.message + "\n" + response.help);
         }else if(response.status) {
             alert("Success: " + response.message + "\n" + response.info);
-            props.app.changePage(Pages.DashboardUI);
+            const uProf = await connection.getUserProfile();
+            const userProfile = JSON.parse(uProf);
+            if(userProfile.error) {
+                alert(userProfile.message + "\n" + userProfile.help);
+                props.app.changePage(Pages.SignInUI);
+            } else {
+                props.app.setUserProfile(userProfile);
+                props.app.changePage(Pages.DashboardUI);
+            }    
         } else {
             alert("Error: Unknown");
         }
     }
+
+    
+    useEffect(() => {
+        try {
+            let connection = new ConnectionManager();
+            connection.getUserProfile().then( uProf => {
+                const userProfile = JSON.parse(uProf);
+                if(userProfile.error) {
+                    if(userProfile.error === "ErrorPendingActivation") {
+                        //
+                    } else if(userProfile.error === "ErrorNotSignedIn") {
+                        props.app.changePage(Pages.SignInUI);
+                    } else {
+                        alert(userProfile.message + "\n" + userProfile.help);
+                    }
+                } else {
+                    props.app.changePage(Pages.DashboardUI);
+                }    
+            });
+        } catch(exp) {}
+    }, []);
+
+    
+
     return(
         <>
             <button onClick={handleGoBack}>Go Back</button>

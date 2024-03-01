@@ -144,7 +144,7 @@ public class Validation {
 
     public static ResponseEntity<ErrorDTO> validateActivationKey(String key, LanguageManager lang,
                                                              HttpSession session) {
-        return validateInput(key, "^[a-fA-F0-9]{64}$",
+        return validateInput(key, "^[0-9]{6}$",
                 lang , session, "key");
     }
 

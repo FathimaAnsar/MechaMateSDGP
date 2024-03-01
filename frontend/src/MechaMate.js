@@ -10,7 +10,11 @@ class MechaMate {
         this.currentPageInternal = Pages.DashboardUI;    
         this.refreshStateCaller = null;
         this.connection = new ConnectionManager();
+        this.appLoaded = false;
     }
+
+    isAppLoaded() { return this.appLoaded; }
+    setAppLoaded(value) { this.appLoaded = value; }
 
     get currentPage() { return this.currentPageInternal; }
     set currentPage(newPage) { 
