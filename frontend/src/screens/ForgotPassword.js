@@ -1,55 +1,53 @@
-
 import React, { useState } from "react";
-import { Pages } from "../Pages.js" 
+import { Pages } from "../Pages.js"
 import ConnectionManager from "../services/ConnectionManager.js"
 
 
 function ForgotPassword(props) {
-    const [email, setEmail] = useState('');
 
-    const handleChange = (e) => {
-        setEmail(e.target.value);
-    };
-
-    const handleGoBack = () => {props.app.goBack();} 
-
+    const handleGoBack = () => {props.app.goBack();}
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try {
+        const email = document.getElementById('email').value;
 
-            let connection = new ConnectionManager();
-            const recoverResponse = await connection.sendRecoverEmail(email);
-            console.log("Recovery email sent successfully:", recoverResponse);
+        // Validate inputs
+        // If failed to validate, return here
 
-        } catch (error) {
-            console.error("Error sending recovery email:", error);
+        let connection = new ConnectionManager();
+
+        const resp = await connection.requestPasswordRecovery(email);
+        const response = JSON.parse(resp);
+
+        if(response.error) {
+            alert("Error occured: " + response.message + "\n" + response.help);
+        }else if(response.status) {
+            alert("Success: " + response.message + "\n" + response.info);
+            props.app.changePage(Pages.DashboardUI);
+        } else {
+            alert("Error: Unknown");
         }
-    };
-
+    }
     return(
         <>
-        <h2>Enter your email to send reset link</h2>
+            <button onClick={handleGoBack}>Go Back</button>
 
-        <form onSubmit={handleSubmit}>
-                <label htmlFor="email">Email:</label><br />
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={email}
-                    onChange={handleChange}
-                    required
-                /><br />
-                <button type="submit">Send email</button>
-                <br />
-                <button type="button" onClick={handleGoBack}>Go Back</button>
+            <h1>Password Recovery</h1>
+            <p>Please enter your email address </p>
+            <form action="#" method="post">
+                <label htmlFor="email">Email:</label><br></br>
+                <input type="text" id="email" name="email"/><br></br>
+                <br></br>
+                <button onClick={handleSubmit}>Request Password Reset Link</button>
             </form>
-            
+
+
         </>
     );
-    
+
 
 }
+
+
 
 export default ForgotPassword;

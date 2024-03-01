@@ -289,7 +289,7 @@ public class NotificationManager {
                 """;
         emailTemplate = emailTemplate.replace("[REPLACE1]", userProfile.getFirstname());
         emailTemplate = emailTemplate.replace("[REPLACE2]",
-                hostname + "/api/v1/auth/reset?token=" + userProfile.getRecoveryKey());
+                hostname + "/reset.html?token=" + userProfile.getRecoveryKey());
 
         return sendEmail(emailTemplate, userProfile, "MechaMate Password Reset");
     }
