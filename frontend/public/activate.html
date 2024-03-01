@@ -6,9 +6,10 @@
     <title>Document</title>
     <script>
         async function activate() {
+            document.body.style.cursor = 'wait';
             let apiEndPoint = window.location.href;
-            apiEndPoint = apiEndPoint.toLocaleLowerCase().replace(":3000/", ":8080/");
-            apiEndPoint = apiEndPoint.toLocaleLowerCase().replace("/activate.html?", "/api/v1/auth/activate?");
+            //apiEndPoint = apiEndPoint.toLocaleLowerCase().replace(":3000/", ":8080/");
+            apiEndPoint = apiEndPoint.toLowerCase().replace("/activate.html?", "/api/v1/auth/activate?");
             console.log(apiEndPoint);
             try {
                 const resp = await fetch(`${apiEndPoint}`, {

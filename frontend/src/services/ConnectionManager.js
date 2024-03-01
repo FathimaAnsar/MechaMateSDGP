@@ -9,6 +9,7 @@ class ConnectionManager {
     }
 
     async postParamRequest(apiEndPoint, postParams) {
+        document.body.style.cursor = 'wait';
         try {
             const response = await fetch(`${API_BASE_URL + apiEndPoint}`, {
                 method: 'POST',
@@ -17,12 +18,15 @@ class ConnectionManager {
                 credentials: 'include',
             });
             const data = await response.json();
+            document.body.style.cursor = 'default';
             return JSON.stringify(data);            
         } catch (error) {}
+        document.body.style.cursor = 'default';
         return null;
     }
 
     async postJsonRequest(apiEndPoint, jsonObject) {
+        document.body.style.cursor = 'wait';
         try {
             const response = await fetch(`${API_BASE_URL + apiEndPoint}`, {
                 method: 'POST',
@@ -31,20 +35,25 @@ class ConnectionManager {
                 credentials: 'include',
             });
             const data = await response.json();
+            document.body.style.cursor = 'default';
             return JSON.stringify(data);            
         } catch (error) {}
+        document.body.style.cursor = 'default';
         return null;
     }
 
     async getRequest(apiEndPoint,  urlEncodedData = null) {
+        document.body.style.cursor = 'wait';
         try {
             const response = await fetch(`${API_BASE_URL + ((urlEncodedData == null) ? apiEndPoint : apiEndPoint + "?" + urlEncodedData) }`, {
                 method: 'GET',
                 credentials: 'include',
             });
             const data = await response.json();
+            document.body.style.cursor = 'default';
             return JSON.stringify(data);            
         } catch (error) {}
+        document.body.style.cursor = 'default';
         return null;
     }
 

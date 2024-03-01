@@ -32,12 +32,6 @@ function App() {
 
 console.log(window.location.href);
 
-
-
-
-
-
-
   const [currentPage, setCurrentPage] = useState("");
 
   const changeCurrentPage = () => setCurrentPage(main.currentPage);
