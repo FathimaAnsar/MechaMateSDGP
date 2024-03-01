@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Pages } from "../Pages.js" 
 import ConnectionManager from "../services/ConnectionManager.js"
 
@@ -26,12 +26,17 @@ function SignIn(props) {
         if(response.error) {
             alert("Error occured: " + response.message + "\n" + response.help);
         } else if(response.status) {
-            if(!props.app.isFirstRunDone()) props.app.setFirstRunDone(true);
+            props.app.setFirstRunDone(true);
             alert("Success: " + response.message + "\n" + response.info);
             const uProf = await connection.getUserProfile();
             const userProfile = JSON.parse(uProf);
             if(userProfile.error) {
-                alert(userProfile.message + "\n" + userProfile.help);
+                if(userProfile.error === "ErrorPendingActivation") {
+                    alert("Your account is in a pending activation state. Please check your email inbox and enter the code we sent during registration process.");
+                    props.app.changePage(Pages.EnterCodeUI);
+                } else {
+                    alert(userProfile.message + "\n" + userProfile.help);
+                }
             } else {
                 props.app.setUserProfile(userProfile);
                 props.app.changePage(Pages.DashboardUI);
@@ -40,7 +45,30 @@ function SignIn(props) {
             alert("Error: Unknown");
         }
     }
-        
+
+    useEffect(() => {
+        try {
+            let connection = new ConnectionManager();
+            connection.getUserProfile().then( uProf => {
+                const userProfile = JSON.parse(uProf);
+                if(userProfile.error) {
+                    if(userProfile.error === "ErrorPendingActivation") {
+                        props.app.changePage(Pages.EnterCodeUI);
+                    } else if(userProfile.error === "ErrorNotSignedIn") {
+                        //
+                    } else {
+                        alert(userProfile.message + "\n" + userProfile.help);
+
+                    }
+                } else {
+                    props.app.setUserProfile(userProfile);
+                    props.app.changePage(Pages.DashboardUI);
+                }    
+            });
+        } catch(exp) {}
+    }, []);
+
+    
     return(
         <>
     <button onClick={handleGoBack}>Go Back</button>
@@ -65,6 +93,7 @@ function SignIn(props) {
     <br></br>
     <button onClick={() => {handleClick(Pages.ForgotPasswordUI)}}>Forgot Password?</button>
     <br></br>
+
     
         </>
     );

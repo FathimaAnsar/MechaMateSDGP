@@ -38,9 +38,9 @@ function SignUp(props) {
            if(response.error) {
                 alert("Error occured: " + response.message + "\n" + response.help);
            } else if(response.status) {
-                if(!props.app.isFirstRunDone()) props.app.setFirstRunDone(true);
+                props.app.setFirstRunDone(true);
                 alert("Success: " + response.message + "\n" + response.info);
-                props.app.changePage(Pages.SignInUI);
+                props.app.changePage(Pages.EnterCodeUI);
             } else {
                 alert("Error: Unknown");
             }

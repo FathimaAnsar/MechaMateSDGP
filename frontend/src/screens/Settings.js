@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 
-function Settings() {
+function Settings(props) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [theme, setTheme] = useState('light');
   const [language, setLanguage] = useState('english');
   const [newUsername, setNewUsername] = useState('');
   const [newPassword, setNewPassword] = useState('');
+
+  const handleGoBack = () => { props.app.goBack(); }
 
   const handleFirstNameChange = (event) => {
     setFirstName(event.target.value);
@@ -39,6 +41,9 @@ function Settings() {
 
   return (
     <div>
+
+    <button onClick={handleGoBack}>Go Back</button>
+
       <h2>Settings</h2>
       <form onSubmit={handleSubmit}>
         <label>

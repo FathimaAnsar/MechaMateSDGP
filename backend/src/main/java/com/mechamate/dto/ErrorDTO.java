@@ -18,7 +18,9 @@ public class ErrorDTO {
 
         ErrorUnauthorized,
         ErrorVehicleExists,
-        ErrorOperationFailed
+        ErrorOperationFailed,
+        ErrorPendingActivation,
+        ErrorNotSignedIn
 
     }
 

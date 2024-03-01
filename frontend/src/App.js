@@ -1,9 +1,10 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { main } from "./MechaMate.js"
 import { Pages } from "./Pages.js"
 import GetStarted from "./screens/GetStarted.js";
 import SignIn from "./screens/SignIn.js";
 import SignUp from "./screens/SignUp.js";
+import EnterCode from "./screens/EnterCode.js"; 
 import ForgotPassword from "./screens/ForgotPassword.js";
 import Dashboard from "./screens/Dashboard.js";
 import ResetPassword from "./screens/ResetPassword.js";
@@ -26,6 +27,8 @@ import ParkingFinder from "./screens/ParkingFinder.js";
 import ParkingInfo from "./screens/ParkingInfo.js"; 
 
 
+//main.reset();
+
 function App() {
 
   const [currentPage, setCurrentPage] = useState("");
@@ -33,19 +36,11 @@ function App() {
   const changeCurrentPage = () => setCurrentPage(main.currentPage);
   main.setRefreshCaller(changeCurrentPage);
 
-  let apiEndPoint = window.location.pathname.toLowerCase();
-  if(apiEndPoint.startsWith("/activate?")) {
-
-
-  }
-  //apiEndPoint = apiEndPoint.toLowerCase().replace("/activate.html?", "/api/v1/auth/activate?");
-
-  console.log(window.location.search);
-  
-
-
   if(!main.getUserProfile()) {
-    if(main.currentPage !== Pages.SignInUI && main.currentPage !== Pages.SignUpUI && main.currentPage !== Pages.ForgotPasswordUI) {
+    if(main.currentPage != Pages.GetStartedUI &&
+      main.currentPage != Pages.SignInUI &&
+      main.currentPage != Pages.SignUpUI &&
+      main.currentPage != Pages.ForgotPasswordUI) {
       if(main.isFirstRunDone()) {
         alert("Please sign in to continue!");
         main.currentPage = Pages.SignInUI;
@@ -54,18 +49,20 @@ function App() {
       }
     }
   } else {
-    if(main.currentPage === Pages.GetStartedUI) {
+    if(main.currentPage === Pages.GetStartedUI || main.currentPage === Pages.SignUpUI) {
       main.currentPage = Pages.DashboardUI;
-    } else if(main.currentPage === Pages.SignUpUI) {
-      alert("You are already signed in!");
-      main.goBack();
+    } else if(main.currentPage === Pages.SignInUI) {
+
     }
   }
+
+
 
   if (main.currentPage === Pages.GetStartedUI) return (<><GetStarted app={main} /></>);
 
   if (main.currentPage === Pages.SignInUI) return (<><SignIn app={main} /></>);
   if (main.currentPage === Pages.SignUpUI) return (<><SignUp app={main} /></>);
+  if (main.currentPage === Pages.EnterCodeUI) return (<><EnterCode app={main} /></>);
 
   if (main.currentPage === Pages.ForgotPasswordUI) return (<><ForgotPassword app={main} /></>);
   if (main.currentPage === Pages.ResetPasswordUI) return (<><ResetPassword app={main} /></>);

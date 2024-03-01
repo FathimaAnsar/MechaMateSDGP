@@ -1,48 +1,50 @@
 import React, { useState } from "react";
-import { Pages } from "../Pages.js" 
+import { Pages } from "../Pages.js"
 import ConnectionManager from "../services/ConnectionManager.js"
 
 
 function EnterCode(props) {
-    const [email, setEmail] = useState('');
 
-    const handleChange = (e) => {
-        setEmail(e.target.value);
-    };
-
-    const handleGoBack = () => {props.app.goBack();} 
-
+    const handleGoBack = () => {props.app.goBack();}
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try {
+        const code = document.getElementById('code').value;
 
-            let connection = new ConnectionManager();
-            const recoverResponse = await connection.sendRecoverEmail(email);
-            console.log("Recovery email sent successfully:", recoverResponse);
+        // Validate inputs
+        // If failed to validate, return here
 
-        } catch (error) {
-            console.error("Error sending recovery email:", error);
+        let connection = new ConnectionManager();
+
+        const resp = await connection.activate(code);
+        const response = JSON.parse(resp);
+
+        if(response.error) {
+            alert("Error occured: " + response.message + "\n" + response.help);
+        }else if(response.status) {
+            alert("Success: " + response.message + "\n" + response.info);
+            props.app.changePage(Pages.DashboardUI);
+        } else {
+            alert("Error: Unknown");
         }
-    };
-
+    }
     return(
         <>
-        <button type="button" onClick={handleGoBack}>Go Back</button>
+            <button onClick={handleGoBack}>Go Back</button>
 
-        <h2>Enter your email to send reset link</h2>
-
-        <form onSubmit={handleSubmit}>
-                <label htmlFor="code">Activation Code:</label><br />
-                <input type="code" id="code" name="code" value={email} required/><br />
-                <button type="submit">Activate</button>
-                <br />
-                <br />
+            <h1>Account Activation</h1>
+            <p>Please enter your the 6 digits activation code we sent to your email</p>
+            <form action="#" method="post">
+                <label htmlFor="code">Activation code:</label><br></br>
+                <input type="code" id="code" name="code"/><br></br>
+                <br></br>
+                <button onClick={handleSubmit}>Activate</button>
             </form>
-            
+
+
         </>
     );
-    
+
 
 }
 

@@ -10,28 +10,26 @@ function Header(props) {
   };
 
  
-  const handleDropdownItemClick = (action) => {
-   
-    console.log("Clicked:", action);
-    
+  const handleDropdownItemClick = (page) => {
     var dropdown = document.querySelector('.dropdown');
     dropdown.style.display = 'none';
+    props.app.changePage(page);
   };
 
   const handleSignout = () => {
     const connection = new ConnectionManager();
-    const resp = connection.signout();
-    // const response = JSON.parse(resp);
-    // if(response.error) {
-    //     alert("Error occured: " + response.message + "\n" + response.help);
-    // } else if(response.status) {
-    //     alert("Success: " + response.message + "\n" + response.info);
+    connection.signout().then( resp => {
+     const response = JSON.parse(resp);
+    if(response.error) {
+        alert("Error occured: " + response.message + "\n" + response.help);
+    } else if(response.status) {
+        alert("Success: " + response.message + "\n" + response.info);
          props.app.clearSessionCache();
          props.app.changePage(Pages.SignInUI);
-    // } else {
-    //     alert("Error: Unknown");
-    // }
-
+    } else {
+        alert("Error: Unknown");
+    }
+  });
 
   }
 
@@ -49,8 +47,8 @@ function Header(props) {
 
       {/* Dropdown Menu */}
       <div className="dropdown">
-        <button className="dropdown-item" onClick={() => handleDropdownItemClick('Settings')}>Settings</button>
-        <button className="dropdown-item" onClick={() => handleDropdownItemClick('About App')}>About App</button>
+        <button className="dropdown-item" onClick={() => handleDropdownItemClick(Pages.SettingsUI)}>Settings</button>
+        <button className="dropdown-item" onClick={() => handleDropdownItemClick(Pages.AboutUsUI)}>About App</button>
         <button className="dropdown-item" onClick={handleSignout}>Sign Out</button>
       </div>
     </>

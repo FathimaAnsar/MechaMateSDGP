@@ -13,12 +13,12 @@ function Dashboard(props) {
 
   let userProfile = props.app.getUserProfile();
 
-  console.log(userProfile);
+ // console.log(userProfile);
   
   if (userProfile !== null) {
     // firstName = userProfile.firstName;
    
-    console.log(firstName); 
+ //   console.log(firstName); 
   } else {
     console.log('No object found in local storage with the specified key.');
   }
@@ -39,7 +39,9 @@ function Dashboard(props) {
   return (
 
     <>
-      <Header app ={props.app}/>
+        <button onClick={handleGoBack}>Go Back</button>
+        
+    <Header app ={props.app}/>
       <div>
 
         <h1>Hello { (props.app.getUserProfile() == null ? "<User>" : props.app.getUserProfile().firstName) },Welcome to mechamate!</h1>
@@ -116,7 +118,6 @@ function Dashboard(props) {
 
 
 
-      <button onClick={handleGoBack}>Go Back</button>
 
 
 

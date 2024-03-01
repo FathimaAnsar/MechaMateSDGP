@@ -7,19 +7,46 @@ class MechaMate {
     constructor() {
         this.currentHistoryIndex = 0;
         this.history = [Pages.DashboardUI];
-        this.currentPage = Pages.DashboardUI;    
+        this.currentPageInternal = Pages.DashboardUI;    
         this.refreshStateCaller = null;
+        this.connection = new ConnectionManager();
     }
 
-
-
-    isFirstRunDone() {
-        return localStorage.getItem("isFirstRunDone") == 1;
+    get currentPage() { return this.currentPageInternal; }
+    set currentPage(newPage) { 
+        if(this.history.length > 0) {
+            if(this.currentHistoryIndex >= 0 && this.currentHistoryIndex < (this.history.length - 1)) {
+                this.history.splice(this.currentHistoryIndex + 1);
+            }            
+            if(this.history[this.history.length - 1] !== newPage) this.history.push(newPage);
+        } else {
+            this.history.push(newPage);
+        }
+        if(this.history.length > 10) this.history.splice(0, 1);
+        this.currentHistoryIndex = this.history.length - 1;
+        this.currentPageInternal = newPage;
     }
 
-    setFirstRunDone(value) {
-        localStorage.setItem("isFirstRunDone", (value == true ? 1 : 0));
+    async isAlreadySignedIn() {
+        const resp = await this.connection.signin("username", "password", 0);
+        const response = JSON.parse(resp);
+        try {
+            return (response.status === "AlreadySignedIn");
+        } catch(exp) {}
+        return false;
     }
+
+    async isPendingActivation() {
+        const resp = await this.connection.getUserProfile();
+        const response = JSON.parse(resp);
+        try {
+            return (response.error === "ErrorPendingActivation");
+        } catch(exp) {}
+        return false;
+    }
+
+    isFirstRunDone() { return localStorage.getItem("isFirstRunDone") == 1; }
+    setFirstRunDone(value) { localStorage.setItem("isFirstRunDone", (value ? 1 : 0)); }
 
     setRefreshCaller(refreshStateCaller) {
         this.refreshStateCaller = refreshStateCaller;

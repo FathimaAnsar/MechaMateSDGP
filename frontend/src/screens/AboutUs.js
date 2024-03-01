@@ -30,7 +30,7 @@ function AboutUs(props) {
         <img  alt="Fathima" />
         <p>Fathima</p>
       </div>
-      <button onClick={() => props.app.changePage('Dashboard')}>Go Back to Dashboard</button>
+      <button onClick={() => props.app.goBack()}>Go Back to Dashboard</button>
     </div>
   );
 }

@@ -11,4 +11,4 @@ function EmergencyAssistance(props) {
   )
 }
 
-export default EmergencyAssistance
+export default EmergencyAssistance;

@@ -193,7 +193,7 @@ public class Validation {
                                                            HttpSession httpSession) {
         if(session == null) {
             return new ResponseEntity<>
-                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorNotSignedIn,
                             lang.get("error.not.signedin", httpSession),
                             lang.get("error.not.signedin.help", httpSession)),
                             HttpStatus.OK);
@@ -281,7 +281,7 @@ public class Validation {
 
         if (includePendingAct && userProfile.getStatus() == UserProfile.Status.StatusPendingActivation) {
             return new ResponseEntity<>
-                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorPendingActivation,
                             lang.get("error.user.pending.activation", language),
                             lang.get("error.user.pending.activation.help", language)),
                             HttpStatus.OK);

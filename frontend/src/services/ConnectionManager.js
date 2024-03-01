@@ -76,19 +76,16 @@ class ConnectionManager {
         return await this.postParamRequest("/api/v1/auth/signup", urlEncodedData);
     }
 
-    async activate(path) {
-        return await this.getRequest("/api/v1/auth/activate" + path);
-    }
-
     async signout() {
         return await this.getRequest("/api/v1/auth/signout");
     }
 
-    async sendRecoveryEmail(email) {
+    async requestPasswordRecovery(email) {
         const urlEncodedData = new URLSearchParams();
         urlEncodedData.append('email', email);    
-        return await this.postParamRequest("/api/v1/auth/recover", "", urlEncodedData);
+        return await this.postParamRequest("/api/v1/auth/recover", urlEncodedData);
     }
+
 
     async getUserProfile() {
         return await this.getRequest("/api/v1/general/profile");
