@@ -39,3 +39,6 @@ body {
 .textbox{
   width: 20rem;
 }
+.button{
+  border-radius: 50%;
+}
