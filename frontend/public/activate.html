@@ -8,7 +8,6 @@
         async function activate() {
             document.body.style.cursor = 'wait';
             let apiEndPoint = window.location.href;
-
             apiEndPoint = apiEndPoint.toLocaleLowerCase().replace(":3000/", ":8080/");
             apiEndPoint = apiEndPoint.toLowerCase().replace("/activate.html?", "/api/v1/auth/activate?");
             console.log(apiEndPoint);
@@ -22,6 +21,18 @@
                     alert("Error occured: " + data.message + "\n" + data.help);
                 } else if(data.status) {
                     alert("Success: " + data.message + "\n" + data.info);
+                    apiEndPoint = window.location.href.substr(0, window.location.href.indexOf("/activate.html?")) + "/api/v1/general/profile";
+                    apiEndPoint = apiEndPoint.toLocaleLowerCase().replace(":3000/", ":8080/");
+                    const resp2 = await fetch(`${apiEndPoint}`, {
+                        method: 'GET',
+                        credentials: 'include',
+                    });
+                    const userProfile = await resp2.json();
+                    if(userProfile.error) {
+                        alert(userProfile.message + "\n" + userProfile.help);
+                    } else {
+                        localStorage.setItem("userProfile", JSON.stringify(userProfile));
+                    }    
                 } else {
                     alert("Error: Unknown");
                 }
