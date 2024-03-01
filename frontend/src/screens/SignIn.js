@@ -31,7 +31,7 @@ function SignIn(props) {
             const uProf = await connection.getUserProfile();
             const userProfile = JSON.parse(uProf);
             if(userProfile.error) {
-                alert("Error occured: " + userProfile.message + "\n" + userProfile.help);
+                alert(userProfile.message + "\n" + userProfile.help);
             } else {
                 props.app.setUserProfile(userProfile);
                 props.app.changePage(Pages.DashboardUI);

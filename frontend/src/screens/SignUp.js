@@ -26,13 +26,11 @@ function SignUp(props) {
         const agreedTOS = document.getElementById('agreed-tos').checked;
     
         // Validation should be done here
+        
         if (password !== confirmPassword) {
             alert("Passwords do not match");
             return;
         }
-    
-        console.log(firstName);
-
 
         try {
             const resp = await connection.signup(username, password, email, firstName, lastName, telephone, agreedTOS);
