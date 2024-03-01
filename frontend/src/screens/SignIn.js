@@ -26,6 +26,7 @@ function SignIn(props) {
         if(response.error) {
             alert("Error occured: " + response.message + "\n" + response.help);
         } else if(response.status) {
+            if(!props.app.isFirstRunDone()) props.app.setFirstRunDone(true);
             alert("Success: " + response.message + "\n" + response.info);
             const uProf = await connection.getUserProfile();
             const userProfile = JSON.parse(uProf);

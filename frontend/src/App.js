@@ -30,21 +30,29 @@ function App() {
   const [currentPage, setCurrentPage] = useState("");
 
   const changeCurrentPage = () => setCurrentPage(main.currentPage);
-
-
   main.setRefreshCaller(changeCurrentPage);
-
-  // if(!main.getUserProfile()) {
-  //   if(main.isFirstRunDone()) {
-  //     main.currentPage = "signin";
-  //   } else {
-  //     main.currentPage = "get-started";
-  //   }
-  // }
+  
+  if(!main.getUserProfile()) {
+    if(main.currentPage !== Pages.SignInUI && main.currentPage !== Pages.SignUpUI && main.currentPage !== Pages.ForgotPasswordUI) {
+      if(main.isFirstRunDone()) {
+        alert("Please sign in to continue!");
+        main.currentPage = Pages.SignInUI;
+      } else {
+        main.currentPage = Pages.GetStartedUI;
+      }
+    }
+  } else {
+    if(main.currentPage === Pages.GetStartedUI) {
+      main.currentPage = Pages.DashboardUI;
+    } else if(main.currentPage === Pages.SignUpUI) {
+      alert("You are already signed in!");
+      main.goBack();
+    }
+  }
 
   if (main.currentPage === Pages.GetStartedUI) return (<><GetStarted app={main} /></>);
 
-  if (main.currentPage ===Pages.SignInUI) return (<><SignIn app={main} /></>);
+  if (main.currentPage === Pages.SignInUI) return (<><SignIn app={main} /></>);
   if (main.currentPage === Pages.SignUpUI) return (<><SignUp app={main} /></>);
 
   if (main.currentPage === Pages.ForgotPasswordUI) return (<><ForgotPassword app={main} /></>);
@@ -81,7 +89,7 @@ function App() {
   if (main.currentPage === Pages.ParkingFinderUI) return (<><ParkingFinder app={main} /></>);
   if (main.currentPage === Pages.ParkingInfoUI) return (<><ParkingInfo app={main} /></>);
 
-  return (<><GetStarted app={main} /></>);
+  return (<><SignIn app={main} /></>);
 
 }
 

@@ -6,8 +6,8 @@ class MechaMate {
 
     constructor() {
         this.currentHistoryIndex = 0;
-        this.history = [Pages.GetStartedUI];
-        this.currentPage = Pages.GetStartedUI;    
+        this.history = [Pages.DashboardUI];
+        this.currentPage = Pages.DashboardUI;    
         this.refreshStateCaller = null;
     }
 
@@ -60,6 +60,9 @@ class MechaMate {
         if(this.refreshStateCaller) this.refreshStateCaller();
     }
 
+    clearSessionCache() {
+        localStorage.removeItem("userProfile");
+    }
 
     reset() {
         localStorage.clear();
@@ -70,6 +73,7 @@ class MechaMate {
             let userProfile = JSON.parse(localStorage.getItem("userProfile"));
             return (userProfile ? userProfile : null);
         } catch(exp) {}
+        return null;
     }
 
     setUserProfile(userProfile) {

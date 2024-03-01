@@ -23,28 +23,29 @@ function SignUp(props) {
         const confirmPassword = document.getElementById('confirm-password').value;
         const email = document.getElementById('email').value;
         const telephone = document.getElementById('telephone').value;
-        const keepSignedIn = document.getElementById('keepsignedin').checked;
+        const agreedTOS = document.getElementById('agreed-tos').checked;
     
+        // Validation should be done here
         if (password !== confirmPassword) {
             alert("Passwords do not match");
             return;
         }
     
-        const userData = {
-            firstName,
-            lastName,
-            username,
-            password,
-            email,
-            telephone,
-            keepSignedIn
-        };
+        console.log(firstName);
 
-        console.log(userData)
-    
+
         try {
-            const signUpResponse = await connection.signup(userData);
-            console.log("Signup response:", signUpResponse);
+            const resp = await connection.signup(username, password, email, firstName, lastName, telephone, agreedTOS);
+            const response = JSON.parse(resp);
+           if(response.error) {
+                alert("Error occured: " + response.message + "\n" + response.help);
+           } else if(response.status) {
+                if(!props.app.isFirstRunDone()) props.app.setFirstRunDone(true);
+                alert("Success: " + response.message + "\n" + response.info);
+                props.app.changePage(Pages.SignInUI);
+            } else {
+                alert("Error: Unknown");
+            }
         } catch (error) {
             console.error("Signup failed:", error);
         }
@@ -78,8 +79,8 @@ function SignUp(props) {
         <label htmlFor="telephone">Telephone:</label><br></br>
         <input type="tel" id="telephone" name="telephone"/><br></br>
 
-        <input type="checkbox" id="keepsignedin" name="keepsignedin" value="yes"/>
-        <label htmlFor="keepsignedin">Agree to TOS</label><br></br>
+        <input type="checkbox" id="agreed-tos" name="agreed-tos" value="yes"/>
+        <label htmlFor="agreed-tos">Agree to TOS</label><br></br>
 
         <input type="submit" onClick={handleSubmit} value="Sign Up"/>
     </form>

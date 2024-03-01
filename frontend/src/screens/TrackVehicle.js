@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Pages } from "../Pages.js" 
 
 function TrackMyVehicle(props) {
     const [selectedVehicle, setSelectedVehicle] = useState('');
@@ -34,8 +35,9 @@ function TrackMyVehicle(props) {
                     loading="lazy"
                 ></iframe>
             )}
-            <button >Send SOS</button>
-            <button onClick={() => props.app.changePage('Dashboard')}>Go Back to Dashboard</button>
+            <br></br>
+            <button >Send SOS</button><br></br>
+            <button onClick={() => props.app.changePage(Pages.DashboardUI)}>Go Back to Dashboard</button>
         </div>
     );
 }

@@ -60,8 +60,8 @@ class ConnectionManager {
         urlEncodedData.append('username', username);
         urlEncodedData.append('password', password);
         urlEncodedData.append('email', email);
-        urlEncodedData.append('firstName', firstName);
-        urlEncodedData.append('lastName', lastName);
+        urlEncodedData.append('firstname', firstName);
+        urlEncodedData.append('lastname', lastName);
         urlEncodedData.append('telephone', telephone);
         urlEncodedData.append('agreedTOS', agreedTOS);
         return await this.postParamRequest("/api/v1/auth/signup", urlEncodedData);

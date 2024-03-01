@@ -20,17 +20,17 @@ function Header(props) {
 
   const handleSignout = () => {
     const connection = new ConnectionManager();
-//    const resp = connection.signout();
-    const response = JSON.parse(resp);
-    if(response.error) {
-        alert("Error occured: " + response.message + "\n" + response.help);
-    } else if(response.status) {
-        alert("Success: " + response.message + "\n" + response.info);
-        props.app.reset();
-        props.app.changePage(Pages.SignInUI);
-    } else {
-        alert("Error: Unknown");
-    }
+    const resp = connection.signout();
+    // const response = JSON.parse(resp);
+    // if(response.error) {
+    //     alert("Error occured: " + response.message + "\n" + response.help);
+    // } else if(response.status) {
+    //     alert("Success: " + response.message + "\n" + response.info);
+         props.app.clearSessionCache();
+         props.app.changePage(Pages.SignInUI);
+    // } else {
+    //     alert("Error: Unknown");
+    // }
 
 
   }
