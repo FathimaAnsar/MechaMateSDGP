@@ -1,9 +1,12 @@
 package com.mechamate.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mechamate.common.Common;
 import com.mechamate.common.DeviceDetails;
-import com.mechamate.common.JimiToken;
+import com.mechamate.common.ApiToken;
+import com.mechamate.common.DeviceLocation;
+import com.mechamate.entity.Token;
+import com.mechamate.entity.Vehicle;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,7 @@ import java.util.TreeMap;
 
 @Service
 public class APIManager {
+
     @Autowired
     private DatabaseAbstractLayer databaseAbstractLayer;
 
@@ -62,13 +66,13 @@ public class APIManager {
     }
 
     public String getNearbyServiceStations(double latitude, double longitude, double radius, int limitCount) {
-        String ret = "";
+        String ret = "{ \"error\": \"InternalError\", \"message\": \"Internal API connection failed\", \"help\": \"Please contact support center\" }";
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.add("X-Goog-Api-Key", apiKey);
             headers.add("X-Goog-FieldMask",
-                    "places.displayName,places.internationalPhoneNumber,places.currentOpeningHours.openNow,places.userRatingCount,places.websiteUri,places.formattedAddress");
+                    "places.displayName.text,places.parkingOptions,places.internationalPhoneNumber,places.nationalPhoneNumber,places.priceLevel,places.googleMapsUri,places.location,places.currentOpeningHours.openNow,places.rating,places.userRatingCount,places.websiteUri,places.formattedAddress,places.reviews.relativePublishTimeDescription,places.reviews.rating,places.reviews.authorAttribution.displayName,places.reviews.originalText.text");
 
             String requestBody = """
                     { "includedTypes": ["car_repair", "car_wash"], "maxResultCount": """ + limitCount + """
@@ -93,13 +97,13 @@ public class APIManager {
 
 
     public String getNearbyPoliceStations(double latitude, double longitude, double radius, int limitCount) {
-        String ret = "";
+        String ret = "{ \"error\": \"InternalError\", \"message\": \"Internal API connection failed\", \"help\": \"Please contact support center\" }";
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.add("X-Goog-Api-Key", apiKey);
             headers.add("X-Goog-FieldMask",
-                    "places.displayName,places.location,places.internationalPhoneNumber,places.formattedAddress");
+                    "places.displayName.text,places.location,places.internationalPhoneNumber,places.nationalPhoneNumber,places.formattedAddress,places.googleMapsUri");
 
             String requestBody = """
                     { "includedTypes": ["police"], "maxResultCount": """ + limitCount + """
@@ -123,13 +127,13 @@ public class APIManager {
 
 
     public String getNearbyHospitals(double latitude, double longitude, double radius, int limitCount) {
-        String ret = "";
+        String ret = "{ \"error\": \"InternalError\", \"message\": \"Internal API connection failed\", \"help\": \"Please contact support center\" }";
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.add("X-Goog-Api-Key", apiKey);
             headers.add("X-Goog-FieldMask",
-                    "places.displayName,places.location,places.internationalPhoneNumber,places.formattedAddress");
+                    "places.displayName.text,places.location,places.internationalPhoneNumber,places.nationalPhoneNumber,places.formattedAddress,places.googleMapsUri");
 
             String requestBody = """
                     { "includedTypes": ["hospital","doctor"], "maxResultCount": """ + limitCount + """
@@ -153,13 +157,13 @@ public class APIManager {
 
 
     public String getNearbySparePartShops(double latitude, double longitude, double radius, int limitCount) {
-        String ret = "";
+        String ret = "{ \"error\": \"InternalError\", \"message\": \"Internal API connection failed\", \"help\": \"Please contact support center\" }";
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.add("X-Goog-Api-Key", apiKey);
             headers.add("X-Goog-FieldMask",
-                    "places.displayName,places.location,places.internationalPhoneNumber,places.formattedAddress");
+                    "places.displayName.text,places.parkingOptions,places.internationalPhoneNumber,places.nationalPhoneNumber,places.priceLevel,places.googleMapsUri,places.location,places.currentOpeningHours.openNow,places.rating,places.userRatingCount,places.websiteUri,places.formattedAddress,places.reviews.relativePublishTimeDescription,places.reviews.rating,places.reviews.authorAttribution.displayName,places.reviews.originalText.text");
 
             String requestBody = """
                     { "includedTypes": ["auto_parts_store"], "maxResultCount": """ + limitCount + """
@@ -182,13 +186,13 @@ public class APIManager {
 
 
     public String getNearbyParking(double latitude, double longitude, double radius, int limitCount) {
-        String ret = "";
+        String ret = "{ \"error\": \"InternalError\", \"message\": \"Internal API connection failed\", \"help\": \"Please contact support center\" }";
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.add("X-Goog-Api-Key", apiKey);
             headers.add("X-Goog-FieldMask",
-                    "places.displayName,places.location,places.internationalPhoneNumber,places.formattedAddress");
+                    "places.displayName.text,places.parkingOptions,places.internationalPhoneNumber,places.nationalPhoneNumber,places.priceLevel,places.googleMapsUri,places.location,places.currentOpeningHours.openNow,places.rating,places.userRatingCount,places.websiteUri,places.formattedAddress,places.reviews.relativePublishTimeDescription,places.reviews.rating,places.reviews.authorAttribution.displayName,places.reviews.originalText.text");
 
             String requestBody = """
                     { "includedTypes": ["parking"], "maxResultCount": """ + limitCount + """
@@ -209,47 +213,15 @@ public class APIManager {
 
 
 
+    public DeviceLocation getDeviceLocation(ApiToken apiToken, Vehicle vehicle) {
 
-    public String getDeviceLocation(double latitude, double longitude, double radius, int limitCount) {
-        String ret = "";
-        try {
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.add("X-Goog-Api-Key", apiKey);
-            headers.add("X-Goog-FieldMask",
-                    "places.displayName,places.location,places.internationalPhoneNumber,places.formattedAddress");
-
-            String requestBody = """
-                    { "includedTypes": ["parking"], "maxResultCount": """ + limitCount + """
-                    ,"rankPreference": "DISTANCE", "locationRestriction": { "circle": { "center": {
-                    "latitude": """ + latitude + """
-                    ,
-                    "longitude": """ + longitude + """
-                    },
-                    "radius": """ + radius + """
-                    }}}
-                    """;
-            HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
-            ResponseEntity<String> response = restTemplate.exchange(apiNearbyUri, HttpMethod.POST, requestEntity, String.class);
-            if(response.getStatusCode() == HttpStatus.OK) ret = response.getBody();
-        } catch (Exception e) {}
-        return ret;
-    }
-
-
-
-
-    //
-
-
-    public DeviceDetails getDeviceLocation(JimiToken jimiToken, String imei) {
         Map<String,String> params = new HashMap<>();
-        params.put("access_token", jimiToken.getAccessToken());
-        params.put("imeis", imei);
+        params.put("access_token", apiToken.getAccessToken());
+        params.put("imeis", vehicle.getObd2DeviceID());
         params.put("map_type", "GOOGLE");
         String requestBody = getRequestParams("jimi.device.location.get", params);
 
-        DeviceDetails deviceDetails = new DeviceDetails();
+        DeviceLocation deviceLocation = new DeviceLocation(false, false, vehicle.getRegNo(), 0,0,"", "");
         String ret = "";
         try {
             HttpHeaders headers = new HttpHeaders();
@@ -262,16 +234,21 @@ public class APIManager {
                 if(!ret.isEmpty()) {
                     JSONParser parser = new JSONParser();
                     JSONObject json = (JSONObject) parser.parse(ret);
-                    JSONObject result = (JSONObject) json.get("result");
-                    if(result != null) {
-                        deviceDetails.setStatus(result.get("status").toString());
-                        deviceDetails.setImei(result.get("imei").toString());
-                        deviceDetails.setVehicleIcon(result.get("vehicleIcon").toString());
+                    JSONArray result = (JSONArray) json.get("result");
+                    if(result != null && !result.isEmpty()) {
+                        JSONObject jobj = (JSONObject) result.get(0);
+                        deviceLocation.setDeviceOnline(jobj.get("status").toString().equals("1"));
+                        deviceLocation.setEngineRunning(!jobj.get("speed").toString().equals("0"));
+                        deviceLocation.setLatitude(Double.parseDouble(jobj.get("lat").toString()));
+                        deviceLocation.setLongitude(Double.parseDouble(jobj.get("lng").toString()));
+                        deviceLocation.setLocationDateTime(jobj.get("gpsTime").toString());
+                        deviceLocation.setMapUrl("https://maps.google.com/maps?q=" + deviceLocation.getLatitude() + "," +
+                                deviceLocation.getLongitude());
                     }
                 }
             } catch (Exception e) {}
         } catch (Exception e) {}
-        return deviceDetails;
+        return deviceLocation;
     }
 
 
@@ -281,9 +258,9 @@ public class APIManager {
 
 
 
-    public DeviceDetails getDeviceDetails(JimiToken jimiToken, String imei) {
+    public DeviceDetails getDeviceDetails(ApiToken apiToken, String imei) {
         Map<String,String> params = new HashMap<>();
-        params.put("access_token", jimiToken.getAccessToken());
+        params.put("access_token", apiToken.getAccessToken());
         params.put("imei", imei);
         String requestBody = getRequestParams("jimi.track.device.detail", params);
 
@@ -321,14 +298,14 @@ public class APIManager {
 
 
 
-    public JimiToken getJimiRefreshToken(JimiToken jimiToken) {
+    public ApiToken getJimiRefreshToken(ApiToken apiToken) {
         Map<String,String> params = new HashMap<>();
-        params.put("access_token", jimiToken.getAccessToken());
-        params.put("refresh_token", jimiToken.getRefreshToken());
+        params.put("access_token", apiToken.getAccessToken());
+        params.put("refresh_token", apiToken.getRefreshToken());
         params.put("expires_in", "7200");
         String requestBody = getRequestParams("jimi.oauth.token.refresh", params);
 
-        JimiToken token = new JimiToken();
+        ApiToken token = null;
         String ret = "";
         try {
             HttpHeaders headers = new HttpHeaders();
@@ -343,10 +320,17 @@ public class APIManager {
                     JSONObject json = (JSONObject) parser.parse(ret);
                     JSONObject result = (JSONObject) json.get("result");
                     if(result != null) {
+                        token = new ApiToken();
                         token.setAccessToken(result.get("accessToken").toString());
                         token.setRefreshToken(result.get("refreshToken").toString());
-                        token.setExpiresIn(result.get("expiresIn").toString());
-                        token.setTime(result.get("time").toString());
+                        token.setExpiresIn(Long.parseLong(result.get("expiresIn").toString()));
+                        token.setTime(System.currentTimeMillis());
+                        Token dbToken = new Token("jimiToken", token);
+                        if(databaseAbstractLayer.isTokenExists("jimiToken")) {
+                            databaseAbstractLayer.updateToken(dbToken);
+                        } else {
+                            databaseAbstractLayer.addToken(dbToken);
+                        }
                     }
                 }
             } catch (Exception e) {}
@@ -360,14 +344,29 @@ public class APIManager {
 
 
 
-    public JimiToken getJimiToken() {
+    public ApiToken getJimiToken() {
+        ApiToken token = null;
+        if(databaseAbstractLayer.isTokenExists("jimiToken")) {
+            Token dbToken = databaseAbstractLayer.getToken("jimiToken");
+            if(dbToken != null) token = dbToken.getToken();
+            if(token != null) {
+                if((token.getTime() + (token.getExpiresIn() * 1000)) < System.currentTimeMillis()) {
+                    ApiToken retToken = getJimiRefreshToken(token);
+                    if(retToken != null) return retToken;
+                    databaseAbstractLayer.deleteToken(dbToken);
+                    token = null;
+                } else {
+                    return token;
+                }
+            }
+        }
+
         Map<String,String> params = new HashMap<>();
         params.put("user_id", jimiAppAccount);
         params.put("user_pwd_md5", jimiAppPassword);
         params.put("expires_in", "7200");
         String requestBody = getRequestParams("jimi.oauth.token.get", params);
 
-        JimiToken token = new JimiToken();
         String ret = "";
         try {
             HttpHeaders headers = new HttpHeaders();
@@ -382,10 +381,17 @@ public class APIManager {
                     JSONObject json = (JSONObject) parser.parse(ret);
                     JSONObject result = (JSONObject) json.get("result");
                     if(result != null) {
+                        token = new ApiToken();
                         token.setAccessToken(result.get("accessToken").toString());
                         token.setRefreshToken(result.get("refreshToken").toString());
-                        token.setExpiresIn(result.get("expiresIn").toString());
-                        token.setTime(result.get("time").toString());
+                        token.setExpiresIn(Long.parseLong(result.get("expiresIn").toString()));
+                        token.setTime(System.currentTimeMillis());
+                        Token dbToken = new Token("jimiToken", token);
+                        if(databaseAbstractLayer.isTokenExists("jimiToken")) {
+                            databaseAbstractLayer.updateToken(dbToken);
+                        } else {
+                            databaseAbstractLayer.addToken(dbToken);
+                        }
                     }
                 }
             } catch (Exception e) {}

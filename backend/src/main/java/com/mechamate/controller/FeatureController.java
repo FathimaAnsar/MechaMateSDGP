@@ -1,10 +1,12 @@
 package com.mechamate.controller;
 
 import com.mechamate.common.DeviceDetails;
-import com.mechamate.common.JimiToken;
+import com.mechamate.common.ApiToken;
+import com.mechamate.common.DeviceLocation;
 import com.mechamate.common.Validation;
 import com.mechamate.dto.ErrorDTO;
 import com.mechamate.entity.UserProfile;
+import com.mechamate.entity.Vehicle;
 import com.mechamate.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 @RestController
 @RequestMapping("/api/v1/features")
@@ -32,13 +36,12 @@ public class FeatureController {
     @Autowired
     private APIManager apiManager;
 
+
     @GetMapping("/get-features-list")
     public ResponseEntity<?> getFeaturesList(HttpServletRequest request, HttpServletResponse response) {
         Object obj = Validation.authenticate(request, response, sessionManager, lang);
         if(!(obj instanceof UserProfile)) return (ResponseEntity<ErrorDTO>) (obj);
         UserProfile userProfile = (UserProfile) obj;
-
-
 
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
@@ -46,13 +49,9 @@ public class FeatureController {
 
 
     @GetMapping("/get-feature")
-    public ResponseEntity<?> getDetailedProfile() {
+    public ResponseEntity<?> getFeature() {
         return null;
     }
-
-
-
-
 
     @GetMapping("/get-nearby-service-stations")
     public ResponseEntity<?> getNearbyServiceStations(HttpServletRequest request, HttpServletResponse response,
@@ -118,9 +117,6 @@ public class FeatureController {
 
 
 
-
-
-
     @GetMapping("/get-nearby-spare-part-shops")
     public ResponseEntity<?> getNearbySparePartShops(HttpServletRequest request, HttpServletResponse response,
                                                 @RequestParam(required = false) Double lat,
@@ -142,9 +138,6 @@ public class FeatureController {
 
 
 
-
-
-
     @GetMapping("/get-nearby-parking")
     public ResponseEntity<?> getNearbyParking(HttpServletRequest request, HttpServletResponse response,
                                                      @RequestParam(required = false) Double lat,
@@ -160,17 +153,60 @@ public class FeatureController {
         if(radius == null) radius = 0.0;
         if(limit == null) limit = 0;
 
-
-        JimiToken jimiToken = apiManager.getJimiToken();
-
-        JimiToken token2 = apiManager.getJimiRefreshToken(jimiToken);
-
-
-        DeviceDetails dev = apiManager.getDeviceLocation(token2, "863850060019373");
-
-
         return new ResponseEntity<String>(
                 apiManager.getNearbyParking(lat, lng, radius, limit), HttpStatus.OK);
+    }
+
+
+    @GetMapping("/get-device-location")
+    public ResponseEntity<?> getDeviceLocation(HttpServletRequest request, HttpServletResponse response,
+                                               @RequestParam(required = false) String vehicleRegNo) {
+        Object obj = Validation.authenticate(request, response, sessionManager, lang);
+        if(!(obj instanceof UserProfile)) return (ResponseEntity<ErrorDTO>) (obj);
+        UserProfile userProfile = (UserProfile) obj;
+
+        if (vehicleRegNo == null) vehicleRegNo ="";
+        ResponseEntity<ErrorDTO> resp = Validation.validateVehicleRegNo(vehicleRegNo.trim().toUpperCase(),
+                lang, request.getSession());
+        if(resp != null) return resp;
+
+        ApiToken apiToken = apiManager.getJimiToken();
+        if(apiToken == null)
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.InternalError,
+                            lang.get("error.token.error", userProfile.getLanguage()),
+                            lang.get("error.token.error.help", userProfile.getLanguage())),
+                            HttpStatus.OK);
+
+
+//        Vehicle vehicle = profileManager.getVehicle(vehicleRegNo);
+//        if(vehicle == null)
+//            return new ResponseEntity<>
+//                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
+//                            lang.get("error.vehicle.doesnt.exist", userProfile.getLanguage()),
+//                            lang.get("error.vehicle.doesnt.exist.help", userProfile.getLanguage())),
+//                            HttpStatus.OK);
+//
+//        if(!userProfile.get_id().toHexString().equals(vehicle.getOwner().toHexString()))
+//            return new ResponseEntity<>
+//                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorUnauthorized,
+//                            lang.get("error.no.permission", userProfile.getLanguage()),
+//                            lang.get("error.no.permission.help", userProfile.getLanguage())),
+//                            HttpStatus.OK);
+//
+
+        Vehicle vehicle = new Vehicle("abc-1234", Vehicle.VehicleType.Bus, Vehicle.FuelType.Unknown, "","","",new Date(),new Date(), null);
+        vehicle.setObd2DeviceID("863850060019373"); // for testing, remove this when testings are done
+
+        if(vehicle.getObd2DeviceID().isEmpty())
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
+                            lang.get("error.no.device.found", userProfile.getLanguage()),
+                            lang.get("error.no.device.found.help", userProfile.getLanguage())),
+                            HttpStatus.OK);
+
+        return new ResponseEntity<DeviceLocation>(
+                apiManager.getDeviceLocation(apiToken, vehicle), HttpStatus.OK);
     }
 
 

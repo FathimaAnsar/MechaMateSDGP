@@ -46,6 +46,9 @@ public class DatabaseAbstractLayer {
     @Autowired
     private PredictionModelRepo predictionModelRepo;
 
+    @Autowired
+    private TokenRepo tokenRepo;
+
 
     public boolean isUserExists(String username) {
         return userProfileRepo.existsByUsername(username);
@@ -497,6 +500,53 @@ public class DatabaseAbstractLayer {
     }
 
 
+    public boolean isTokenExists(String tokenName) {
+        try {
+            return tokenRepo.existsByTokenName(tokenName);
+        } catch (Exception e) {}
+        return false;
+    }
+
+
+    public boolean addToken(Token token) {
+        try {
+            if(token == null) return false;
+            if(token.get_id() != null && isTokenExists(token.getTokenName())) return false;
+            tokenRepo.save(token);
+            return true;
+        } catch (Exception e) {}
+        return false;
+    }
+
+
+    public boolean updateToken(Token token) {
+        try {
+            if(token == null) return false;
+            if(!isTokenExists(token.getTokenName())) return false;
+            tokenRepo.save(token);
+            return true;
+        } catch (Exception e) {}
+        return false;
+    }
+
+    public boolean deleteToken(Token token) {
+        try {
+            if(token == null) return false;
+            if(!isTokenExists(token.getTokenName())) return true;
+            tokenRepo.delete(token);
+            return true;
+        } catch (Exception e) {}
+        return false;
+    }
+
+    public Token getToken(String tokenName) {
+        try {
+            if(tokenName == null) return null;
+            Optional<Token> token = tokenRepo.findByTokenName(tokenName);
+            return token.orElse(null);
+        } catch (Exception e) {}
+        return null;
+    }
 
 
 
