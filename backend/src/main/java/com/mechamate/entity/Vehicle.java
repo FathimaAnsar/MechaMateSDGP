@@ -34,18 +34,18 @@ public class Vehicle {
     private String regNo;
     private VehicleType vehicleType;
     private FuelType fuelType;
-
     private String vehicleMake;
     private String vehicleModel;
     private Date regExpDate;
     private String insNo;
     private Date insExpDate;
-
     private ObjectId owner;
-
     private String obd2DeviceID;
+    private long currentMileage;
 
-    public Vehicle(String regNo, VehicleType vehicleType, FuelType fuelType,String vehicleMake,String vehicleModel,String insNo,Date insExpDate,Date regExpDate, ObjectId owner) {
+
+
+    public Vehicle(String regNo, VehicleType vehicleType, FuelType fuelType,String vehicleMake,String vehicleModel,String insNo,Date insExpDate,Date regExpDate, ObjectId owner, long currentMileage) {
         this.regNo = regNo;
         this.vehicleType = vehicleType;
         this.fuelType = fuelType;
@@ -56,6 +56,7 @@ public class Vehicle {
         this.regExpDate=regExpDate;
         this.owner = owner;
         this.obd2DeviceID = "";
+        this.currentMileage = currentMileage;
     }
 
     public ObjectId get_id() {
@@ -145,4 +146,13 @@ public class Vehicle {
     public void setObd2DeviceID(String obd2DeviceID) {
         this.obd2DeviceID = obd2DeviceID;
     }
+
+    public long getCurrentMileage() {
+        return currentMileage;
+    }
+
+    public void setCurrentMileage(long currentMileage) {
+        this.currentMileage = currentMileage;
+    }
+
 }

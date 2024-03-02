@@ -98,6 +98,14 @@ class ConnectionManager {
         return await this.getRequest("/api/v1/general/detailed-profile");
     }
 
+    async getNearbyParking(lat, lng, radius, limit) {
+        return await this.getRequest("/api/v1/features/get-nearby-parking?lat=" + lat + "&lng=" + lng + "&radius=" + radius + "&limit=" + limit);
+    }
+
+    async getNearbyAutoShops(lat, lng, radius, limit) {
+        return await this.getRequest("/api/v1/features/get-nearby-spare-part-shops?lat=" + lat + "&lng=" + lng + "&radius=" + radius + "&limit=" + limit);
+    }
+
     
 }
 

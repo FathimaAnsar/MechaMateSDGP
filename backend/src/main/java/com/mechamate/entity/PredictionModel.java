@@ -16,11 +16,15 @@ public class PredictionModel {
     private ObjectId _id;
     private String name;
     private String description;
+    private double mValue;
+    private double cValue;
     private List<Maintenance.MaintenanceType> appliedMaintenanceList;
 
-    public PredictionModel(String name, String description, List<Maintenance.MaintenanceType> appliedMaintenanceList) {
+    public PredictionModel(String name, String description, double mValue, double cValue, List<Maintenance.MaintenanceType> appliedMaintenanceList) {
         this.name = name;
         this.description = description;
+        this.mValue = mValue;
+        this.cValue = cValue;
         this.appliedMaintenanceList = appliedMaintenanceList;
     }
 
@@ -46,6 +50,22 @@ public class PredictionModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public double getmValue() {
+        return mValue;
+    }
+
+    public void setmValue(double mValue) {
+        this.mValue = mValue;
+    }
+
+    public double getcValue() {
+        return cValue;
+    }
+
+    public void setcValue(double cValue) {
+        this.cValue = cValue;
     }
 
     public List<Maintenance.MaintenanceType> getAppliedMaintenanceList() {

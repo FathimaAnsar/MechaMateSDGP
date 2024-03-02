@@ -49,6 +49,9 @@ public class DatabaseAbstractLayer {
     @Autowired
     private TokenRepo tokenRepo;
 
+    @Autowired
+    private TrackingInfoRepo trackingInfoRepo;
+
 
     public boolean isUserExists(String username) {
         return userProfileRepo.existsByUsername(username);
@@ -322,7 +325,7 @@ public class DatabaseAbstractLayer {
         try {
             if(vehicles == null || vehicles.isEmpty()) return vehicleDTOS;
             for(Vehicle v: vehicles) {
-                VehicleDTO vDTO = new VehicleDTO(v.getRegNo(), v.getVehicleType(), v.getFuelType(), v.getVehicleMake(),v.getVehicleModel(),v.getInsNo(),v.getInsExpDate(),v.getRegExpDate(), new ArrayList<>());
+                VehicleDTO vDTO = new VehicleDTO(v.getRegNo(), v.getVehicleType(), v.getFuelType(), v.getVehicleMake(),v.getVehicleModel(),v.getInsNo(),v.getInsExpDate(),v.getRegExpDate(), new ArrayList<>(), v.getCurrentMileage());
                 vehicleDTOS.add(vDTO);
             }
         } catch (Exception e) {}
@@ -544,6 +547,49 @@ public class DatabaseAbstractLayer {
             if(tokenName == null) return null;
             Optional<Token> token = tokenRepo.findByTokenName(tokenName);
             return token.orElse(null);
+        } catch (Exception e) {}
+        return null;
+    }
+
+
+
+
+
+
+    public boolean isTrackingInfoExists(String vehicleRegNo) {
+        try {
+            return trackingInfoRepo.existsByVehicleRegNo(vehicleRegNo);
+        } catch (Exception e) {}
+        return false;
+    }
+
+
+    public boolean addTrackingInfo(TrackingInfo trackingInfo) {
+        try {
+            if(trackingInfo == null) return false;
+            if(trackingInfo.get_id() != null && isTrackingInfoExists(trackingInfo.getVehicleRegNo())) return false;
+            trackingInfoRepo.save(trackingInfo);
+            return true;
+        } catch (Exception e) {}
+        return false;
+    }
+
+
+    public boolean deleteTrackingInfo(TrackingInfo trackingInfo) {
+        try {
+            if(trackingInfo == null) return false;
+            if(!isTrackingInfoExists(trackingInfo.getVehicleRegNo())) return true;
+            trackingInfoRepo.delete(trackingInfo);
+            return true;
+        } catch (Exception e) {}
+        return false;
+    }
+
+    public List<TrackingInfo> getTrackingInfo(String vehicleRegNo) {
+        try {
+            if(vehicleRegNo == null) return null;
+            List<TrackingInfo> trackingInfo = trackingInfoRepo.findAllByVehicleRegNo(vehicleRegNo);
+            return trackingInfo;
         } catch (Exception e) {}
         return null;
     }

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -41,28 +42,37 @@ public class GeneralController {
 
     @PostMapping("/add-vehicle")
     public ResponseEntity<?> addVehicle(HttpServletRequest request, HttpServletResponse response,
-                                        @RequestBody(required = false) Vehicle vehicle) {
+                                        @RequestBody(required = false) VehicleDTO vehicleDTO) {
 
         Object obj = Validation.authenticate(request, response, sessionManager, lang);
         if(!(obj instanceof UserProfile)) return ((ResponseEntity<ErrorDTO>) obj);
         UserProfile userProfile = (UserProfile) obj;
 
-        if(vehicle == null)
+        if(vehicleDTO == null)
             return new ResponseEntity<>
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.vehicle.notfound", userProfile.getLanguage()),
                             lang.get("error.vehicle.notfound.help", userProfile.getLanguage())),
                             HttpStatus.OK);
 
-        if (vehicle.getRegNo() == null) vehicle.setRegNo("");
-        if (vehicle.getVehicleType() == null) vehicle.setVehicleType(Vehicle.VehicleType.Unknown);
-        if(vehicle.getFuelType() == null) vehicle.setFuelType(Vehicle.FuelType.Unknown);
+        if (vehicleDTO.getRegistrationNumber() == null) vehicleDTO.setRegistrationNumber("");
+        if (vehicleDTO.getVehicleType() == null) vehicleDTO.setVehicleType(Vehicle.VehicleType.Unknown);
+        if(vehicleDTO.getFuelType() == null) vehicleDTO.setFuelType(Vehicle.FuelType.Unknown);
 
-        ResponseEntity<ErrorDTO> resp = Validation.validateVehicleRegNo(vehicle.getRegNo().trim().toUpperCase(),
+        ResponseEntity<ErrorDTO> resp = Validation.validateVehicleRegNo(vehicleDTO.getRegistrationNumber().trim().toUpperCase(),
                                                 lang, request.getSession());
         if(resp != null) return resp;
 
-        vehicle.setOwner(userProfile.get_id());
+        Vehicle vehicle = new Vehicle(vehicleDTO.getRegistrationNumber(),
+                vehicleDTO.getVehicleType(),
+                vehicleDTO.getFuelType(),
+                vehicleDTO.getVehicleMake(),
+                vehicleDTO.getVehicleModel(),
+                vehicleDTO.getInsNo(),
+                vehicleDTO.getInsExpDate(),
+                vehicleDTO.getRegExpDate(),
+                userProfile.get_id(),
+                vehicleDTO.getCurrentMileage());
 
         resp = profileManager.addVehicle(vehicle, userProfile);
         if(resp != null) return resp;
@@ -77,31 +87,39 @@ public class GeneralController {
 
 
 
-
     @PostMapping("/update-vehicle")
     public ResponseEntity<?> updateVehicle(HttpServletRequest request, HttpServletResponse response,
-                                        @RequestBody(required = false) Vehicle vehicle) {
+                                        @RequestBody(required = false) VehicleDTO vehicleDTO) {
 
         Object obj = Validation.authenticate(request, response, sessionManager, lang);
         if(!(obj instanceof UserProfile)) return ((ResponseEntity<ErrorDTO>) obj);
         UserProfile userProfile = (UserProfile) obj;
 
-        if(vehicle == null)
+        if(vehicleDTO == null)
             return new ResponseEntity<>
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.vehicle.notfound", userProfile.getLanguage()),
                             lang.get("error.vehicle.notfound.help", userProfile.getLanguage())),
                             HttpStatus.OK);
 
-        if (vehicle.getRegNo() == null) vehicle.setRegNo("");
-        if (vehicle.getVehicleType() == null) vehicle.setVehicleType(Vehicle.VehicleType.Unknown);
-        if(vehicle.getFuelType() == null) vehicle.setFuelType(Vehicle.FuelType.Unknown);
+        if (vehicleDTO.getRegistrationNumber() == null) vehicleDTO.setRegistrationNumber("");
+        if (vehicleDTO.getVehicleType() == null) vehicleDTO.setVehicleType(Vehicle.VehicleType.Unknown);
+        if(vehicleDTO.getFuelType() == null) vehicleDTO.setFuelType(Vehicle.FuelType.Unknown);
 
-        ResponseEntity<ErrorDTO> resp = Validation.validateVehicleRegNo(vehicle.getRegNo().trim().toUpperCase(),
+        ResponseEntity<ErrorDTO> resp = Validation.validateVehicleRegNo(vehicleDTO.getRegistrationNumber().trim().toUpperCase(),
                 lang, request.getSession());
         if(resp != null) return resp;
 
-        vehicle.setOwner(userProfile.get_id());
+        Vehicle vehicle = new Vehicle(vehicleDTO.getRegistrationNumber(),
+                vehicleDTO.getVehicleType(),
+                vehicleDTO.getFuelType(),
+                vehicleDTO.getVehicleMake(),
+                vehicleDTO.getVehicleModel(),
+                vehicleDTO.getInsNo(),
+                vehicleDTO.getInsExpDate(),
+                vehicleDTO.getRegExpDate(),
+                userProfile.get_id(),
+                vehicleDTO.getCurrentMileage());
 
         resp = profileManager.updateVehicle(vehicle, userProfile);
         if(resp != null) return resp;
@@ -119,28 +137,35 @@ public class GeneralController {
 
     @PostMapping("/delete-vehicle")
     public ResponseEntity<?> deleteVehicle(HttpServletRequest request, HttpServletResponse response,
-                                           @RequestBody(required = false) Vehicle vehicle) {
+                                           @RequestBody(required = false) VehicleDTO vehicleDTO) {
 
         Object obj = Validation.authenticate(request, response, sessionManager, lang);
         if(!(obj instanceof UserProfile)) return ((ResponseEntity<ErrorDTO>) obj);
         UserProfile userProfile = (UserProfile) obj;
 
-        if(vehicle == null)
+        if(vehicleDTO == null)
             return new ResponseEntity<>
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.vehicle.notfound", userProfile.getLanguage()),
                             lang.get("error.vehicle.notfound.help", userProfile.getLanguage())),
                             HttpStatus.OK);
 
-        if (vehicle.getRegNo() == null) vehicle.setRegNo("");
-        if (vehicle.getVehicleType() == null) vehicle.setVehicleType(Vehicle.VehicleType.Unknown);
-        if(vehicle.getFuelType() == null) vehicle.setFuelType(Vehicle.FuelType.Unknown);
+        if (vehicleDTO.getRegistrationNumber() == null) vehicleDTO.setRegistrationNumber("");
 
-        ResponseEntity<ErrorDTO> resp = Validation.validateVehicleRegNo(vehicle.getRegNo().trim().toUpperCase(),
+        ResponseEntity<ErrorDTO> resp = Validation.validateVehicleRegNo(vehicleDTO.getRegistrationNumber().trim().toUpperCase(),
                 lang, request.getSession());
         if(resp != null) return resp;
 
-        vehicle.setOwner(userProfile.get_id());
+        Vehicle vehicle = new Vehicle(vehicleDTO.getRegistrationNumber(),
+                vehicleDTO.getVehicleType(),
+                vehicleDTO.getFuelType(),
+                vehicleDTO.getVehicleMake(),
+                vehicleDTO.getVehicleModel(),
+                vehicleDTO.getInsNo(),
+                vehicleDTO.getInsExpDate(),
+                vehicleDTO.getRegExpDate(),
+                userProfile.get_id(),
+                vehicleDTO.getCurrentMileage());
 
         resp = profileManager.deleteVehicle(vehicle, userProfile);
         if(resp != null) return resp;
@@ -315,6 +340,18 @@ public class GeneralController {
                             HttpStatus.OK);
 
         return new ResponseEntity<>(profileDTO, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/get-vehicles")
+    public ResponseEntity<?> getVehicles(HttpServletRequest request, HttpServletResponse response) {
+
+        Object obj = Validation.authenticate(request, response, sessionManager, lang);
+        if(!(obj instanceof UserProfile)) return (ResponseEntity<ErrorDTO>) (obj);
+        UserProfile userProfile = (UserProfile) obj;
+
+        List<VehicleDTO> vehicleDTOList = profileManager.getVehicleDTOs(userProfile);
+        return new ResponseEntity<>(vehicleDTOList, HttpStatus.OK);
     }
 
 

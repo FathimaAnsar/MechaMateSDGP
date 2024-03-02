@@ -11,18 +11,6 @@ function Header(props) {
 
   const handleToggleOffcanvas = () => setShowOffcanvas(!showOffcanvas);
 
-  const toggleDropdown = () => {
-    var dropdown = document.querySelector('.dropdown');
-    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-  };
-
- 
-  const handleDropdownItemClick = (page) => {
-    var dropdown = document.querySelector('.dropdown');
-    dropdown.style.display = 'none';
-    props.app.changePage(page);
-  };
-
   const handleSignout = () => {
       props.app.clearSessionCache();
     const connection = new ConnectionManager();
@@ -67,10 +55,14 @@ function Header(props) {
         <button className="dropdown-item" onClick={() => handleDropdownItemClick(Pages.AboutUsUI)}>About App</button>
         <button className="dropdown-item" onClick={handleSignout}>Sign Out</button>
       </div> */} 
-      <Navbar expand="lg" className="bg-body-tertiary">
+      
+      <Navbar expand="lg" className="bg-body-tertiary" bg="primary" data-bs-theme="dark">
         <Container>
-          <Navbar.Brand href="#home">MechaMate</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={handleToggleOffcanvas} />
+          <Navbar.Brand >MechaMate</Navbar.Brand>
+          <Button variant="dark"  class="navbar-toggler-icon" onClick={handleToggleOffcanvas}>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" /> 
+           </Button>
+          {/* <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={handleToggleOffcanvas} /> */}
           {/* Navbar.Collapse is moved inside the Offcanvas */}
         </Container>
       </Navbar>
@@ -82,16 +74,17 @@ function Header(props) {
         <Offcanvas.Body>
           {/* Your offcanvas menu items go here */}
           <Nav className="flex-column">
-          <Button onClick={() =>{props.app.changePage(Pages.MyVehiclesUI)}}>Add Vehicle</Button>
-          <Button onClick={() =>{props.app.changePage(Pages.AddSRecordManualUI)}}>Add Service Record</Button>
-          <Button onClick={() =>{props.app.changePage(Pages.ParkingFinderUI)}}>Parking Finder</Button>
-          <Button onClick={() =>{props.app.changePage(Pages.ManageDocumentsUI)}}>Documents</Button>
-          <Button onClick={() =>{props.app.changePage(Pages.EmergencyAssistUI)}}>Emergency Assistance</Button>
-          <Button onClick={() =>{props.app.changePage(Pages.TrackVehicleUI)}}>Vehicle Tracker</Button>
-          <Button onClick={() =>{props.app.changePage(Pages.AutoMobSearchUI)}}>Find Mechanic</Button>
-          <Button onClick={() =>{props.app.changePage(Pages.SettingsUI)}}>Settings</Button>
-          <Button onClick={() =>{props.app.changePage(Pages.PredictMaintenanceUI)}}>Predict</Button>
-          <Button onClick={handleSignout}>Sign Out</Button>
+          <Button variant='link' onClick={() =>{props.app.changePage(Pages.MyVehiclesUI)}}>Add Vehicle</Button>
+          <Button variant='link' onClick={() =>{props.app.changePage(Pages.AddSRecordManualUI)}}>Add Service Record</Button>
+          <Button variant='link' onClick={() =>{props.app.changePage(Pages.ParkingFinderUI)}}>Parking Finder</Button>
+          <Button variant='link' onClick={() =>{props.app.changePage(Pages.ManageDocumentsUI)}}>Documents</Button>
+          <Button variant='link' onClick={() =>{props.app.changePage(Pages.EmergencyAssistUI)}}>Emergency Assistance</Button>
+          <Button variant='link' onClick={() =>{props.app.changePage(Pages.TrackVehicleUI)}}>Vehicle Tracker</Button>
+          <Button variant='link' onClick={() =>{props.app.changePage(Pages.AutoMobSearchUI)}}>Find Mechanic</Button>
+          <Button variant='link' onClick={() =>{props.app.changePage(Pages.SettingsUI)}}>Settings</Button>
+          <Button variant='link' onClick={() =>{props.app.changePage(Pages.PredictMaintenanceUI)}}>Predict</Button>
+          <Button variant='link' onClick={() =>{props.app.changePage(Pages.AboutUsUI)}}>About Us</Button>
+          <Button variant='link' onClick={handleSignout}>Sign Out</Button>
             {/* Add more Nav.Link items as needed */}
           </Nav>
         </Offcanvas.Body>

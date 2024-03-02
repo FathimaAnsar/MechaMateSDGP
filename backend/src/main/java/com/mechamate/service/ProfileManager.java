@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -347,6 +348,11 @@ public class ProfileManager {
     public List<Vehicle> getVehicles(UserProfile userProfile) {
         return databaseAbstractLayer.getVehicles(userProfile.get_id());
     }
+
+    public List<VehicleDTO> getVehicleDTOs(UserProfile userProfile) {
+        return databaseAbstractLayer.getVehicleDTOs(userProfile.get_id());
+    }
+
     public Vehicle getVehicle(String regNo) {
         return databaseAbstractLayer.isVehicleExists(regNo) ? databaseAbstractLayer.getVehicle(regNo) : null;
     }
