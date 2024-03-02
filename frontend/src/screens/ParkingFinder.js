@@ -55,7 +55,7 @@ function ParkingFinder(props) {
             {/*<p>{currentParking.name}</p>*/}
             <iframe
                 title="map"
-                src={`https://maps.google.com/maps?q=${currentLocation.latitude},${currentLocation.longitude}&z=15&output=embed`}
+                src={`https://maps.google.com/maps?q=${82},${43}&z=15&output=embed`}
                 width="100%"
                 height="400"
                 style={{border: 0}}
