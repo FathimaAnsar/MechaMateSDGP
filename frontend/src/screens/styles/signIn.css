@@ -1,0 +1,268 @@
+.login-container {
+    /* border:#333 1px solid; */
+
+    margin: auto;
+    height: 80vh;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+.login-container img {
+    width: 60%;
+    margin: 30px 0 50px 0;
+    flood-color: #0750be;
+}
+
+.signup-container {
+    margin: auto;
+
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+.signup-container form {
+    width: 100%;
+}
+
+.login-container form {
+    width: 85%;
+}
+
+.error-message {
+    position: fixed;
+    top: 0;
+    display: none;
+    font-weight: 600;
+    font-size: 10pt;
+    padding: 4px 10px;
+    height: 8vh;
+    width: 100vw;
+    background-color: #e00000;
+    color: white;
+}
+
+.error-message a {
+    font-weight: bolder;
+    color: white;
+    text-decoration: wavy;
+
+}
+
+.sign-up-screen-logo {
+    width: 50%;
+    height: auto;
+    margin: 30px 0 50px 0;
+}
+
+.login-container h2 {
+    text-align: center;
+    color: #000000;
+}
+
+
+
+.login-container input[type="text"],
+.login-container input[type="password"] {
+    margin: 8px 0;
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 10pt;
+}
+
+.signup-container input[type="text"],
+.signup-container input[type="password"],
+.signup-container input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 10pt;
+    /* margin: 0px 0px px 0px; */
+}
+
+.signup-container label {
+    margin-left: 2px;
+    font-weight: 600;
+}
+
+.agreeTotermsAndConditions {
+    margin: 15px 0px 0px 0px;
+}
+
+#inputGroupPrepend {
+    height: 50px;
+}
+
+.login-container input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+
+.login-container label {
+    margin: px;
+    font-size: 10pt;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: 1px solid black; */
+}
+
+.login-container input:focus {
+    outline: none;
+    /* outline: #085ad4 1px solid; */
+}
+
+.invalid {
+    border-color: 1px solid red;
+    /* Set the border color to red */
+}
+
+.login-container button,
+.signup-btn, .get-started-btn{
+    background-color: #085bd4;
+    color: white;
+    border: none;
+    margin: 10px 0 5px 0;
+    border-radius: 30px;
+    padding: 6px;
+    cursor: pointer;
+    font-weight: 800;
+    font-size: 13pt;
+    width: 100%;
+}
+
+.forget-password {
+    /* border:#333 1px solid; */
+    font-size: 10pt;
+    margin: 15px 0 10px 0;
+}
+
+.forget-password a {
+    text-decoration: none;
+    font-weight: 600;
+    color: #085bd4;
+    cursor: pointer;
+}
+
+.login-container button:hover,
+.signup-btn:hover {
+    background-color: #0750be;
+}
+
+.sign-up {
+    font-size: 10pt;
+    color: hsl(0, 0%, 20%);
+}
+
+.sign-up a {
+    cursor: pointer;
+    text-decoration: none;
+    color: #085bd4;
+    font-weight: 700;
+}
+
+
+.login-footer {
+    margin: auto;
+    height: 20vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: column;
+}
+
+.languages {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.languages button {
+    font-size: 10pt;
+    background-color: #fff;
+    color: #085bd4;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    outline: inherit;
+}
+
+.languages button:hover {
+    color: #0750be;
+    background-color: #fff;
+}
+
+.active-lan-button {
+    color: #fff;
+    font-weight: bold;
+    background-color: white;
+}
+
+.login-footer .copyright {
+    font-size: 9pt;
+    color: #7a7a7a;
+    margin: 3px 0 5px 0;
+
+}
+
+.otpInput {
+    width: 35px;
+    height: 40px;
+    margin: 7px;
+    text-align: center;
+    font-size: 1em;
+    border-radius: 8px;
+    border: #7a7a7a 1px solid;
+  }
+
+.otpInput:focus {
+    outline: none;
+    border: #0750be 2px solid;
+
+}
+
+
+
+
+@media only screen and (min-width: 480px) {
+    .login-container {
+        /* border: #000000 1px solid; */
+        width: 350px;
+    }
+
+    .signup-container form {
+        /* border: #000000 solid 1px; */
+        width: 400px;
+    }
+
+    .login-footer {
+        width: 350px;
+    }
+
+    .error-message {
+        height: auto;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .login-container {
+        width: 90%;
+    }
+
+    .signup-container {
+        width: 90%;
+    }
+
+    .login-footer {
+        width: 90%;
+    }
+}

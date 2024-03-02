@@ -1,0 +1,39 @@
+#about-header {
+    background-color: #333;
+    color : white;
+    padding: 100px;
+    text-align: center ; 
+  }
+
+ 
+
+#container1 {
+  display: flex; 
+}
+
+.sub-div {
+  flex: 1;
+ 
+}
+
+@media (max-width: 768px) {
+  .flex-container {
+    flex-direction: column; 
+  }
+
+  .sub-div {
+    flex: none; 
+    width: 100%; 
+  }
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 0 auto;
+}
+
+.card {
+  margin-bottom: 20px;
+}

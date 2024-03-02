@@ -26,7 +26,10 @@ import ShowServiceRecordRequest from "./screens/ShowServiceRecordRequest.js";
 import ParkingFinder from "./screens/ParkingFinder.js";
 import ParkingInfo from "./screens/ParkingInfo.js"; 
 import './styles/App.css';
+<<<<<<< HEAD
 
+=======
+>>>>>>> e80ad7ddb6463f163ba0eab035222cb56dfd1739
 
 
 //main.reset();

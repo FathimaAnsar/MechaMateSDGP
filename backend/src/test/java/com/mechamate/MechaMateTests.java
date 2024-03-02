@@ -1,15 +1,6 @@
 package com.mechamate;
 
-import com.mechamate.common.DeviceDetails;
-import com.mechamate.common.JimiToken;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @SpringBootTest
 class MechaMateTests {

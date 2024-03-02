@@ -43,6 +43,8 @@ public class Vehicle {
 
     private ObjectId owner;
 
+    private String obd2DeviceID;
+
     public Vehicle(String regNo, VehicleType vehicleType, FuelType fuelType,String vehicleMake,String vehicleModel,String insNo,Date insExpDate,Date regExpDate, ObjectId owner) {
         this.regNo = regNo;
         this.vehicleType = vehicleType;
@@ -53,6 +55,7 @@ public class Vehicle {
         this.insExpDate=insExpDate;
         this.regExpDate=regExpDate;
         this.owner = owner;
+        this.obd2DeviceID = "";
     }
 
     public ObjectId get_id() {
@@ -133,5 +136,13 @@ public class Vehicle {
 
     public void setOwner(ObjectId owner) {
         this.owner = owner;
+    }
+
+    public String getObd2DeviceID() {
+        return obd2DeviceID;
+    }
+
+    public void setObd2DeviceID(String obd2DeviceID) {
+        this.obd2DeviceID = obd2DeviceID;
     }
 }

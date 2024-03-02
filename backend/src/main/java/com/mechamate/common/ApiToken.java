@@ -1,11 +1,11 @@
 package com.mechamate.common;
 
-public class JimiToken {
+public class ApiToken {
 
     private String accessToken;
     private String refreshToken;
-    private String expiresIn;
-    private String time;
+    private long expiresIn;
+    private long time;
 
     public String getAccessToken() {
         return accessToken;
@@ -23,20 +23,19 @@ public class JimiToken {
         this.refreshToken = refreshToken;
     }
 
-    public String getExpiresIn() {
+    public long getExpiresIn() {
         return expiresIn;
     }
 
-    public void setExpiresIn(String expiresIn) {
+    public void setExpiresIn(long expiresIn) {
         this.expiresIn = expiresIn;
     }
 
-    public String getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(long time) {
         this.time = time;
     }
-
 }

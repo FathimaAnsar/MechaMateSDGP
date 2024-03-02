@@ -35,6 +35,12 @@ function SignUp(props) {
         try {
             const resp = await connection.signup(username, password, email, firstName, lastName, telephone, agreedTOS);
             const response = JSON.parse(resp);
+
+            if(!response) {
+                alert("Please check your springboot localhost is running");
+                return;
+            }
+    
            if(response.error) {
                 alert("Error occured: " + response.message + "\n" + response.help);
            } else if(response.status) {
