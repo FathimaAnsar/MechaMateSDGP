@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import { Pages } from "../Pages.js"
 import ConnectionManager from "../services/ConnectionManager.js"
@@ -8,10 +7,10 @@ import './styles/signIn.css';
 
 function SignIn(props) {
     const handleClick = (page) => { props.app.changePage(page); }
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        
 
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
@@ -30,14 +29,17 @@ function SignIn(props) {
 
         if (response.error) {
             if (response.error == 'ErrorUserDoesntExist') {
-                alert("case")
                 errorMessage.style.display = "block";
-                loginContainer.style.height = '72vh';
             }
             console.log("Error occured: " + response.message + "\n" + response.help);
         } else if (response.status) {
             props.app.setFirstRunDone(true);
-            alert("Success: " + response.message + "\n" + response.info);
+            console.log("Success: " + response.message + "\n" + response.info);
+            errorMessage.style.backgroundColor = '#45ab26';
+            errorMessage.style.display = "block";
+            errorMessage.innerHTML=response.message;
+            errorMessage.style.height = 'auto';
+            
             const uProf = await connection.getUserProfile();
             const userProfile = JSON.parse(uProf);
             if (userProfile.error) {
@@ -55,6 +57,7 @@ function SignIn(props) {
             alert("Error: Unknown");
         }
     }
+
 
     useEffect(() => {
         try {
@@ -77,6 +80,7 @@ function SignIn(props) {
             });
         } catch (exp) { }
     }, []);
+
 
 
     return (
