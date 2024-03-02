@@ -1,19 +1,27 @@
 package com.mechamate.dto;
 
-import org.bson.types.ObjectId;
+import com.mechamate.entity.Maintenance;
 
 public class ServiceDTO {
+
+    public enum ServiceQualityEnum {
+        Low,
+        Medium,
+        High
+    }
+
     private String description;
-    private String appliedMaintenanceId;
+    private Maintenance.MaintenanceType appliedMaintenanceId;
     private long nextServiceInKMs;
-    private long nextServiceInMonths;
+    private ServiceQualityEnum serviceQuality;
     private boolean archived;
 
-    public ServiceDTO(String description, String appliedMaintenanceId, long nextServiceInKMs, long nextServiceInMonths, boolean archived) {
+
+    public ServiceDTO(String description, Maintenance.MaintenanceType appliedMaintenanceId, long nextServiceInKMs, ServiceQualityEnum serviceQuality, boolean archived) {
         this.description = description;
         this.appliedMaintenanceId = appliedMaintenanceId;
         this.nextServiceInKMs = nextServiceInKMs;
-        this.nextServiceInMonths = nextServiceInMonths;
+        this.serviceQuality = serviceQuality;
         this.archived = archived;
     }
 
@@ -25,11 +33,11 @@ public class ServiceDTO {
         this.description = description;
     }
 
-    public String getAppliedMaintenanceId() {
+    public Maintenance.MaintenanceType getAppliedMaintenanceId() {
         return appliedMaintenanceId;
     }
 
-    public void setAppliedMaintenanceId(String appliedMaintenanceId) {
+    public void setAppliedMaintenanceId(Maintenance.MaintenanceType appliedMaintenanceId) {
         this.appliedMaintenanceId = appliedMaintenanceId;
     }
 
@@ -41,12 +49,12 @@ public class ServiceDTO {
         this.nextServiceInKMs = nextServiceInKMs;
     }
 
-    public long getNextServiceInMonths() {
-        return nextServiceInMonths;
+    public ServiceQualityEnum getServiceQuality() {
+        return serviceQuality;
     }
 
-    public void setNextServiceInMonths(long nextServiceInMonths) {
-        this.nextServiceInMonths = nextServiceInMonths;
+    public void setServiceQuality(ServiceQualityEnum serviceQuality) {
+        this.serviceQuality = serviceQuality;
     }
 
     public boolean isArchived() {

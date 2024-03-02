@@ -178,7 +178,7 @@ public class FeatureController {
                             lang.get("error.token.error.help", userProfile.getLanguage())),
                             HttpStatus.OK);
 
-
+//
 //        Vehicle vehicle = profileManager.getVehicle(vehicleRegNo);
 //        if(vehicle == null)
 //            return new ResponseEntity<>
@@ -193,9 +193,9 @@ public class FeatureController {
 //                            lang.get("error.no.permission", userProfile.getLanguage()),
 //                            lang.get("error.no.permission.help", userProfile.getLanguage())),
 //                            HttpStatus.OK);
-//
 
-        Vehicle vehicle = new Vehicle("abc-1234", Vehicle.VehicleType.Bus, Vehicle.FuelType.Unknown, "","","",new Date(),new Date(), null);
+
+        Vehicle vehicle = new Vehicle("abc-1234", Vehicle.VehicleType.Bus, Vehicle.FuelType.Unknown, "","","",new Date(),new Date(), null, 0);
         vehicle.setObd2DeviceID("863850060019373"); // for testing, remove this when testings are done
 
         if(vehicle.getObd2DeviceID().isEmpty())

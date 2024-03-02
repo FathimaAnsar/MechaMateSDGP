@@ -10,12 +10,16 @@ public class PredictionModelDTO {
     private String modelId;
     private String name;
     private String description;
+    private double mValue;
+    private double cValue;
     private List<Maintenance.MaintenanceType> appliedMaintenanceList;
 
-    public PredictionModelDTO(String modelId, String name, String description, List<Maintenance.MaintenanceType> appliedMaintenanceList) {
+    public PredictionModelDTO(String modelId, String name, String description, double mValue, double cValue, List<Maintenance.MaintenanceType> appliedMaintenanceList) {
         this.modelId = modelId;
         this.name = name;
         this.description = description;
+        this.mValue = mValue;
+        this.cValue = cValue;
         this.appliedMaintenanceList = appliedMaintenanceList;
     }
 
@@ -37,6 +41,22 @@ public class PredictionModelDTO {
 
     public String getDescription() {
         return description;
+    }
+
+    public double getmValue() {
+        return mValue;
+    }
+
+    public void setmValue(double mValue) {
+        this.mValue = mValue;
+    }
+
+    public double getcValue() {
+        return cValue;
+    }
+
+    public void setcValue(double cValue) {
+        this.cValue = cValue;
     }
 
     public void setDescription(String description) {

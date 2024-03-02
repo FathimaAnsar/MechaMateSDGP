@@ -128,6 +128,8 @@ public class SuperUserActionManager {
             List<PredictionModel> predictionModels = databaseAbstractLayer.getPredictionModelList();
             for(PredictionModel m: predictionModels) {
                 predictionModelDTOS.add(new PredictionModelDTO(m.get_id().toHexString(), m.getName(), m.getDescription(),
+                        m.getmValue(),
+                        m.getcValue(),
                         m.getAppliedMaintenanceList()));
             }
         } catch (Exception e) {}
