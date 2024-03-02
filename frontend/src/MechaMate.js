@@ -113,7 +113,24 @@ class MechaMate {
         } catch(exp) {}
     }
 
-
+    getCurrentLocation() {
+        return new Promise((resolve, reject) => {
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        const latitude = position.coords.latitude;
+                        const longitude = position.coords.longitude;
+                        resolve({ longitude, latitude });
+                    },
+                    error => {
+                        reject(error);
+                    }
+                );
+            } else {
+                reject("Geolocation is not supported by this browser");
+            }
+        });
+    }
 
 }
 

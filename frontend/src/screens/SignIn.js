@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { Pages } from "../Pages.js"
-import ConnectionManager from "../services/ConnectionManager.js"
+import { Pages } from "../Pages.js";
+import ConnectionManager from "../services/ConnectionManager.js";
 import logo from '../images/logo-black.png';
 import './styles/signIn.css';
 
