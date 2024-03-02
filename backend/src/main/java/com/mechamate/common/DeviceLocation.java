@@ -3,23 +3,33 @@ package com.mechamate.common;
 public class DeviceLocation {
 
     private boolean isDeviceOnline;
+    private boolean isEngineRunning;
     private String vehicleRegNo;
     private double longitude;
     private double latitude;
     private String mapUrl;
     private String locationDateTime;
 
-    public DeviceLocation(boolean isDeviceOnline, String vehicleRegNo, double longitude, double latitude, String mapUrl, String locationDateTime) {
+    public DeviceLocation(boolean isDeviceOnline, boolean isEngineRunning, String vehicleRegNo, double longitude, double latitude, String mapUrl, String locationDateTime) {
         this.isDeviceOnline = isDeviceOnline;
         this.vehicleRegNo = vehicleRegNo;
         this.longitude = longitude;
         this.latitude = latitude;
         this.mapUrl = mapUrl;
         this.locationDateTime = locationDateTime;
+        this.isEngineRunning = isEngineRunning;
     }
 
     public boolean isDeviceOnline() {
         return isDeviceOnline;
+    }
+
+    public boolean isEngineRunning() {
+        return isEngineRunning;
+    }
+
+    public void setEngineRunning(boolean engineRunning) {
+        isEngineRunning = engineRunning;
     }
 
     public void setDeviceOnline(boolean deviceOnline) {

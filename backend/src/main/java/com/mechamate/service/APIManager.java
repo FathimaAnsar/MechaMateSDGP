@@ -221,7 +221,7 @@ public class APIManager {
         params.put("map_type", "GOOGLE");
         String requestBody = getRequestParams("jimi.device.location.get", params);
 
-        DeviceLocation deviceLocation = new DeviceLocation(false, vehicle.getRegNo(), 0,0,"", "");
+        DeviceLocation deviceLocation = new DeviceLocation(false, false, vehicle.getRegNo(), 0,0,"", "");
         String ret = "";
         try {
             HttpHeaders headers = new HttpHeaders();
@@ -238,10 +238,12 @@ public class APIManager {
                     if(result != null && !result.isEmpty()) {
                         JSONObject jobj = (JSONObject) result.get(0);
                         deviceLocation.setDeviceOnline(jobj.get("status").toString().equals("1"));
+                        deviceLocation.setEngineRunning(!jobj.get("speed").toString().equals("0"));
                         deviceLocation.setLatitude(Double.parseDouble(jobj.get("lat").toString()));
                         deviceLocation.setLongitude(Double.parseDouble(jobj.get("lng").toString()));
                         deviceLocation.setLocationDateTime(jobj.get("gpsTime").toString());
-                        deviceLocation.setMapUrl("");
+                        deviceLocation.setMapUrl("https://maps.google.com/maps?q=" + deviceLocation.getLatitude() + "," +
+                                deviceLocation.getLongitude());
                     }
                 }
             } catch (Exception e) {}

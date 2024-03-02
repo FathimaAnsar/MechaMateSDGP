@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 @RestController
 @RequestMapping("/api/v1/features")
 public class FeatureController {
@@ -177,22 +179,23 @@ public class FeatureController {
                             HttpStatus.OK);
 
 
-        Vehicle vehicle = profileManager.getVehicle(vehicleRegNo);
-        if(vehicle == null)
-            return new ResponseEntity<>
-                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
-                            lang.get("error.vehicle.notfound", userProfile.getLanguage()),
-                            lang.get("error.vehicle.notfound.help", userProfile.getLanguage())),
-                            HttpStatus.OK);
+//        Vehicle vehicle = profileManager.getVehicle(vehicleRegNo);
+//        if(vehicle == null)
+//            return new ResponseEntity<>
+//                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
+//                            lang.get("error.vehicle.doesnt.exist", userProfile.getLanguage()),
+//                            lang.get("error.vehicle.doesnt.exist.help", userProfile.getLanguage())),
+//                            HttpStatus.OK);
+//
+//        if(!userProfile.get_id().toHexString().equals(vehicle.getOwner().toHexString()))
+//            return new ResponseEntity<>
+//                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorUnauthorized,
+//                            lang.get("error.no.permission", userProfile.getLanguage()),
+//                            lang.get("error.no.permission.help", userProfile.getLanguage())),
+//                            HttpStatus.OK);
+//
 
-        if(!userProfile.get_id().toHexString().equals(vehicle.getOwner().toHexString()))
-            return new ResponseEntity<>
-                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorUnauthorized,
-                            lang.get("error.no.permission", userProfile.getLanguage()),
-                            lang.get("error.no.permission.help", userProfile.getLanguage())),
-                            HttpStatus.OK);
-
-
+        Vehicle vehicle = new Vehicle("abc-1234", Vehicle.VehicleType.Bus, Vehicle.FuelType.Unknown, "","","",new Date(),new Date(), null);
         vehicle.setObd2DeviceID("863850060019373"); // for testing, remove this when testings are done
 
         if(vehicle.getObd2DeviceID().isEmpty())
