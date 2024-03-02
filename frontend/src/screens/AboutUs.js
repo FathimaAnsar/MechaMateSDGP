@@ -1,24 +1,96 @@
 import React from 'react';
-import { Container, Row, Col, Image } from 'react-bootstrap';
 import '../pages/css/AboutUs.css';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import p1 from '../images/p1.avif';
+import p2 from '../images/p2.avif';
+import p3 from '../images/p3.avif';
+import p4 from '../images/p4.avif';
+import p5 from '../images/p5.avif';
 
-// import teamMember1 from './images/teamMember1.jpg';
-// import teamMember2 from './images/teamMember2.jpg';
-// import teamMember3 from './images/teamMember3.jpg';
-// import teamMember4 from './images/teamMember4.jpg';
-// import teamMember5 from './images/teamMember5.jpg';
-// src={teamMember5}
 
 function AboutUs(props) {
   return (
-
-<div>
-      <header  id="about-header">
-        img
+    <>
+      <header id="about-header">
+        {/* <img src="./img1.jpg" alt="About Us Image" /> */}
         <h1>About Us</h1>
       </header>
 
-      <Container style={{ marginTop: '20px' }}>
+
+      <div className="card-container">
+        <Card style={{ width: '18rem' }}>
+          <Card.Img variant="top" src={p1} />
+          <Card.Body>
+            <Card.Title>Card Title</Card.Title>
+            <Card.Text>
+              Some quick example text to build on the card title and make up the bulk of the card's content.
+            </Card.Text>
+            <Button variant="primary">Go somewhere</Button>
+          </Card.Body>
+        </Card>
+
+        <Card style={{ width: '18rem' }}>
+          <Card.Img variant="top" src={p2} />
+          <Card.Body>
+            <Card.Title>Card Title</Card.Title>
+            <Card.Text>
+              Some quick example text to build on the card title and make up the bulk of the card's content.
+            </Card.Text>
+            <Button variant="primary">Go somewhere</Button>
+          </Card.Body>
+        </Card>
+
+        <Card style={{ width: '18rem' }}>
+          <Card.Img variant="top" src={p3} />
+          <Card.Body>
+            <Card.Title>Card Title</Card.Title>
+            <Card.Text>
+              Some quick example text to build on the card title and make up the bulk of the card's content.
+            </Card.Text>
+            <Button variant="primary">Go somewhere</Button>
+          </Card.Body>
+        </Card>
+
+        <Card style={{ width: '18rem' }}>
+          <Card.Img variant="top" src={p4} />
+          <Card.Body>
+            <Card.Title>Card Title</Card.Title>
+            <Card.Text>
+              Some quick example text to build on the card title and make up the bulk of the card's content.
+            </Card.Text>
+            <Button variant="primary">Go somewhere</Button>
+          </Card.Body>
+        </Card>
+
+        <Card style={{ width: '18rem' }}>
+          <Card.Img variant="top" src={p5} />
+          <Card.Body>
+            <Card.Title>Card Title</Card.Title>
+            <Card.Text>
+              Some quick example text to build on the card title and make up the bulk of the card's content.
+            </Card.Text>
+            <Button variant="primary">Go somewhere</Button>
+          </Card.Body>
+        </Card>
+      </div>
+
+
+
+
+      {/* 
+      <div id="container1" className="flex-container">
+        <div className='sub-div sub1'>
+          <p className="larger-text">MechaMate is the cutting-edge vehicle maintenance assistant developed by Group CS56 of IIT 2022 batch.</p>
+        </div>
+        <div className='sub-div sub2'>
+          <p>MechaMate isn't just a vehicle maintenance assistant—it's a reliable partner dedicated to ensuring the safety, efficiency, and peace of mind of every vehicle owner in Sri Lanka, a forward-thinking software service provider in Sri Lanka. With a primary focus on predictive maintenance, MechaMate harnesses the power of AI and machine learning to forecast maintenance needs accurately, ensuring optimal vehicle health and minimizing unexpected breakdowns. This innovative solution addresses the common challenges faced by novice drivers, new vehicle owners, and especially women vehicle owners in Sri Lanka who may lack awareness about proper maintenance practices. MechaMate not only educates users about maintenance requirements but also assists them in finding authorized service providers, sourcing quality spare parts, and managing documentation and service records effortlessly.</p>
+        </div>
+      </div> */}
+
+
+
+      {/* <Container style={{ marginTop: '20px' }}>
         <Row>
           <Col>
             <h2>Our Mission</h2>
@@ -45,12 +117,10 @@ function AboutUs(props) {
             </div>
           </Col>
         </Row>
-      </Container>
+      </Container> */}
 
-      <footer style={{ backgroundColor: '#333', color: 'white', padding: '20px', textAlign: 'center', marginTop: '20px' }}>
-        <p>&copy; 2024 Your Company. All rights reserved.</p>
-      </footer>
-    </div>
+
+    </>
 
 
 
@@ -70,23 +140,23 @@ function AboutUs(props) {
     // <div>
     //   <h2>Our Team</h2>
     //   <div>
-    //     <img  alt="Hansila" />
+    //     <img alt="Hansila" />
     //     <p>Hansila</p>
     //   </div>
     //   <div>
-    //     <img  alt="Chamath" />
+    //     <img alt="Chamath" />
     //     <p>Chamath</p>
     //   </div>
     //   <div>
-    //     <img  alt="Gihan" />
+    //     <img alt="Gihan" />
     //     <p>Gihan</p>
     //   </div>
     //   <div>
-    //     <img  alt="Radeesh" />
+    //     <img alt="Radeesh" />
     //     <p>Radeesh</p>
     //   </div>
     //   <div>
-    //     <img  alt="Fathima" />
+    //     <img alt="Fathima" />
     //     <p>Fathima</p>
     //   </div>
     //   <button onClick={() => props.app.goBack()}>Go Back to Dashboard</button>
