@@ -1,6 +1,7 @@
 import React from 'react'
 
-function MyVehicles() {
+function MyVehicles(props) {
+  const handleGoBack = () => { props.app.goBack(); }
   return (
     <div>
         <form>
@@ -41,6 +42,8 @@ function MyVehicles() {
   
   <button type="submit">Save</button>
 </form>
+
+<button onClick={handleGoBack}>Go Back</button>
 
       
     </div>
