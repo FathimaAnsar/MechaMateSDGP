@@ -139,7 +139,7 @@ public class ProfileManager {
                             HttpStatus.OK);
         }
 
-        notificationManager.sendWelcomeEmail(userProfile);
+//        notificationManager.sendWelcomeEmail(userProfile);
 
         return null;
     }
@@ -155,7 +155,7 @@ public class ProfileManager {
                 false, lang.getLanguage(request.getSession()), lang);
         if(resp != null) return resp;
 
-        if(userProfile.getUnsuccessfulLoginAttempts() > 3) {
+        if(userProfile.getUnsuccessfulLoginAttempts() > 5) {
             if((System.currentTimeMillis() - userProfile.getLastLoginAttemptTime()) < 3600000) {
                 return new ResponseEntity<>
                         (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorMaxAttemptCountExceeded,
@@ -194,7 +194,7 @@ public class ProfileManager {
                             HttpStatus.OK);
         }
 
-        notificationManager.sendLoginAlert(userProfile);
+//        notificationManager.sendLoginAlert(userProfile);
 
         return null;
     }

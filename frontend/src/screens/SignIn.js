@@ -27,6 +27,13 @@ function SignIn(props) {
         const resp = await connection.signin(username, password, (keepMeSignedIn ? 1 : 0));
         const response = JSON.parse(resp);
 
+
+        if(!response) {
+            alert("Please check your springboot localhost is running");
+            return;
+        }
+
+        
         if (response.error) {
             if (response.error == 'ErrorUserDoesntExist') {
                 errorMessage.style.display = "block";
@@ -42,6 +49,14 @@ function SignIn(props) {
             
             const uProf = await connection.getUserProfile();
             const userProfile = JSON.parse(uProf);
+
+
+            if(!userProfile) {
+                alert("Please check your springboot localhost is running");
+                return;
+            }
+    
+
             if (userProfile.error) {
                 if (userProfile.error === "ErrorPendingActivation") {
                     alert("Your account is in a pending activation state. Please check your email inbox and enter the code we sent during registration process.");
@@ -64,6 +79,12 @@ function SignIn(props) {
             let connection = new ConnectionManager();
             connection.getUserProfile().then(uProf => {
                 const userProfile = JSON.parse(uProf);
+
+                if(!userProfile) {
+                    alert("Please check your springboot localhost is running");
+                    return;
+                }
+        
                 if (userProfile.error) {
                     if (userProfile.error === "ErrorPendingActivation") {
                         props.app.changePage(Pages.EnterCodeUI);
