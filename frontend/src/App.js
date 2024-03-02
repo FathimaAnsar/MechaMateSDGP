@@ -25,7 +25,8 @@ import AddServiceRecordByServiceProvider from "./screens/AddServiceRecordByServi
 import ShowServiceRecordRequest from "./screens/ShowServiceRecordRequest.js";
 import ParkingFinder from "./screens/ParkingFinder.js";
 import ParkingInfo from "./screens/ParkingInfo.js"; 
-import '../styles/App.css';
+import './styles/App.css';
+
 
 
 //main.reset();
