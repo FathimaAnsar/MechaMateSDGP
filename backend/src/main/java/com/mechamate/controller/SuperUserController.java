@@ -183,6 +183,8 @@ public class SuperUserController {
         } catch (Exception e) {}
 
         PredictionModel predictionModel = new PredictionModel(predictionModelDTO.getName(), predictionModelDTO.getDescription(),
+                predictionModelDTO.getmValue(),
+                predictionModelDTO.getcValue(),
                 predictionModelDTO.getAppliedMaintenanceList());
 
         try {
@@ -245,7 +247,7 @@ public class SuperUserController {
 
         if (predictionModelDTO.getModelId() == null || predictionModelDTO.getModelId().isEmpty()) predictionModelDTO.setModelId("");
 
-        PredictionModel predictionModel = new PredictionModel("", "", null);
+        PredictionModel predictionModel = new PredictionModel("", "",0, 0, null);
 
         try {
             predictionModel.set_id(new ObjectId(predictionModelDTO.getModelId()));
