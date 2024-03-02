@@ -16,18 +16,20 @@ public class VehicleDTO {
     private String insNo;
     private Date insExpDate;
     private Date regExpDate;
+    private long currentMileage;
     private List<ServiceRecordDTO> serviceRecords;
 
-    public VehicleDTO(String registrationNumber, Vehicle.VehicleType vehicleType, Vehicle.FuelType fuelType,String vehicleMake,String vehicleModel,String insNo,Date insExpDate,Date regExpDate, List<ServiceRecordDTO> serviceRecords) {
+    public VehicleDTO(String registrationNumber, Vehicle.VehicleType vehicleType, Vehicle.FuelType fuelType,String vehicleMake,String vehicleModel,String insNo,Date insExpDate,Date regExpDate, List<ServiceRecordDTO> serviceRecords, long currentMileage) {
         this.registrationNumber = registrationNumber;
         this.vehicleType = vehicleType;
         this.fuelType = fuelType;
-        this.vehicleMake=vehicleMake;
-        this.vehicleModel=vehicleModel;
-        this.insNo=insNo;
-        this.insExpDate=insExpDate;
-        this.regExpDate=regExpDate;
+        this.vehicleMake = vehicleMake;
+        this.vehicleModel = vehicleModel;
+        this.insNo = insNo;
+        this.insExpDate = insExpDate;
+        this.regExpDate = regExpDate;
         this.serviceRecords = serviceRecords;
+        this.currentMileage = currentMileage;
     }
 
     public String getRegistrationNumber() {
@@ -109,4 +111,13 @@ public class VehicleDTO {
     public void setServiceRecords(List<ServiceRecordDTO> serviceRecords) {
         this.serviceRecords = serviceRecords;
     }
+
+    public long getCurrentMileage() {
+        return currentMileage;
+    }
+
+    public void setCurrentMileage(long currentMileage) {
+        this.currentMileage = currentMileage;
+    }
+
 }
