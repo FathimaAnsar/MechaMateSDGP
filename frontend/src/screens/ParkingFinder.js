@@ -97,10 +97,12 @@ function ParkingFinder(props) {
         props.app.setCurrentParking(parking);
         props.app.changePage('ShowParkingInfo');
     };
-
+    const handleGoBack = () => { props.app.goBack(); }
 
     return (
         <>
+    <button onClick={handleGoBack}>Go Back</button>
+
         <div>
             <h2>Finding a parking place!</h2>
             <h4>You are here!</h4>
