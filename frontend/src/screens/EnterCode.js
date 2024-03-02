@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import ConnectionManager from "../services/ConnectionManager.js";
 import { Pages } from "../Pages.js";
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import logo from '../images/logo-black.png';
+
 
 function EnterCode(props) {
     const handleGoBack = () => props.app.goBack();
@@ -30,7 +34,7 @@ function EnterCode(props) {
                     props.app.changePage(Pages.DashboardUI);
                 }
             });
-        } catch (exp) {}
+        } catch (exp) { }
     }, []);
 
     const onOtpSubmit = async (otp) => {
@@ -77,18 +81,32 @@ function EnterCode(props) {
 
     return (
         <>
-            <button onClick={handleGoBack}>Go Back</button>
+            <Card className="text-center" style={{ height: '100vh' }}>
+            <Card.Header className="d-flex justify-content-between align-items-center">
+        <div>
+            <Button variant= 'secondary' onClick={handleGoBack} className="btn btn-primary">Back</Button>
+            
+        </div>
+        <div className="text-center">
+            <img src={logo} style={{ width: '150px' }} alt="Logo" />
+        </div>
+    </Card.Header>
+                <Card.Body className="f-column justify-content-center align-items-center ">
 
-            <h1>Account Activation</h1>
+                    <Card.Title><h3>Activate your account</h3></Card.Title>
+                    <Card.Text>
+                        Please enter the 6-digitOTP we sent to your email</Card.Text>
+                    <OtpInput length={6} onOtpSubmit={onOtpSubmit} />
 
-            <p>Please enter the 6-digit activation code we sent to your email</p>
-
-            <OtpInput length={6} onOtpSubmit={onOtpSubmit} />
+                </Card.Body>
+                <Card.Footer className="text-muted" style={{ width: '100vw', marginBottom:'5px',borderTop: '0', backgroundColor: 'transparent' }}>
+                    <div className='copyright'>MechaMate © 2024</div></Card.Footer>
+            </Card>
         </>
     );
 }
 
-const OtpInput = ({ length = 6, onOtpSubmit = () => {} }) => {
+const OtpInput = ({ length = 6, onOtpSubmit = () => { } }) => {
     const [otp, setOtp] = useState(new Array(length).fill(""));
     const inputRefs = useRef([]);
 
@@ -133,7 +151,7 @@ const OtpInput = ({ length = 6, onOtpSubmit = () => {} }) => {
                 <input
                     key={index}
                     type="text"
-                    placeholder={index+1}
+                    placeholder={'#'}
                     ref={(input) => (inputRefs.current[index] = input)}
                     value={value}
                     onChange={(e) => handleChange(index, e)}
