@@ -21,6 +21,14 @@ function Header(props) {
     const connection = new ConnectionManager();
     connection.signout().then( resp => {
      const response = JSON.parse(resp);
+
+    if(!response) {
+      alert("Please check your springboot localhost is running");
+      props.app.changePage(Pages.SignInUI);
+      return;
+    }
+
+
     if(response.error) {
         props.app.changePage(Pages.SignInUI);
         // alert("Error occured: " + response.message + "\n" + response.help);

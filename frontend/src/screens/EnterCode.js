@@ -10,6 +10,14 @@ function EnterCode(props) {
             let connection = new ConnectionManager();
             connection.getUserProfile().then((uProf) => {
                 const userProfile = JSON.parse(uProf);
+
+
+                if(!userProfile) {
+                    alert("Please check your springboot localhost is running");
+                    return;
+                }
+        
+
                 if (userProfile.error) {
                     if (userProfile.error === "ErrorPendingActivation") {
                         //
@@ -31,12 +39,27 @@ function EnterCode(props) {
             let connection = new ConnectionManager();
             const resp = await connection.activate(otp);
             const response = JSON.parse(resp);
+
+            if(!response) {
+                alert("Please check your springboot localhost is running");
+                return;
+            }
+    
+
             if (response.error) {
                 alert("Error occurred: " + response.message + "\n" + response.help);
             } else if (response.status) {
                 alert("Success: " + response.message + "\n" + response.info);
                 const uProf = await connection.getUserProfile();
                 const userProfile = JSON.parse(uProf);
+
+
+                if(!userProfile) {
+                    alert("Please check your springboot localhost is running");
+                    return;
+                }
+        
+
                 if (userProfile.error) {
                     alert(userProfile.message + "\n" + userProfile.help);
                     props.app.changePage(Pages.SignInUI);
