@@ -91,6 +91,7 @@ function Header(props) {
           <Button onClick={() =>{props.app.changePage(Pages.AutoMobSearchUI)}}>Find Mechanic</Button>
           <Button onClick={() =>{props.app.changePage(Pages.SettingsUI)}}>Settings</Button>
           <Button onClick={() =>{props.app.changePage(Pages.PredictMaintenanceUI)}}>Predict</Button>
+          <Button onClick={() =>{props.app.changePage(Pages.AboutUsUI)}}>About Us</Button>
           <Button onClick={handleSignout}>Sign Out</Button>
             {/* Add more Nav.Link items as needed */}
           </Nav>
