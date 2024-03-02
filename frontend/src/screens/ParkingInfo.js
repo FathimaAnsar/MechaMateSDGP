@@ -27,7 +27,7 @@ function ShowParkingInfo(props) {
             <p>{currentParking.name}</p>
             <iframe
                 title="map"
-                src={`https://maps.google.com/maps?q=${currentParking.location.lat},${currentParking.location.lng}&z=15&output=embed`}
+                src={`https://maps.google.com/maps?q=${24.197611},${120.780512}&z=15&output=embed`}
                 width="100%"
                 height="400"
                 frameBorder="0"

@@ -48,19 +48,36 @@ function ParkingFinder(props) {
     };
 
     return (
+
+
         <div>
-            <h1>Nearby Parking Spaces</h1>
-            {currentLocation && (
-                <ul>
-                    {parkingSpaces.map(parking => (
-                        <li key={parking.id} onClick={() => handleParkingSelect(parking)}>
-                            {parking.name} - {parking.distance}m
-                        </li>
-                    ))}
-                </ul>
-            )}
+            <h1>Parking Information</h1>
+            {/*<p>{currentParking.name}</p>*/}
+            <iframe
+                title="map"
+                src={`https://maps.google.com/maps?q=${currentLocation.latitude},${currentLocation.longitude}&z=15&output=embed`}
+                width="100%"
+                height="400"
+                style={{border: 0}}
+                allowFullScreen=""
+                aria-hidden="false"
+                tabIndex="0"
+            ></iframe>
         </div>
-    );
+    // <div>
+    //     <h1>Nearby Parking Spaces</h1>
+    //     {currentLocation && (
+    //         <ul>
+    //             {parkingSpaces.map(parking => (
+    //                 <li key={parking.id} onClick={() => handleParkingSelect(parking)}>
+    //                     {parking.name} - {parking.distance}m
+    //                 </li>
+    //             ))}
+    //         </ul>
+    //     )}
+    // </div>
+)
+    ;
 }
 
 export default ParkingFinder;
