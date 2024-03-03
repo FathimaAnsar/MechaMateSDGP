@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SessionManager {
 
+
     private static final Logger logger = LoggerFactory.getLogger(MechaMate.class);
 
     @Autowired
@@ -27,11 +28,18 @@ public class SessionManager {
     private LanguageManager lang;
 
     public Session getSession(HttpServletRequest request, HttpServletResponse response) {
+        logger.info("Entering getSession method");
         try {
-            if (request == null) return null;
+            if (request == null){
+                logger.error("request object is null");
+                return null;
+            }
 
             Cookie[] cookies = request.getCookies();
-            if (cookies == null) return null;
+            if (cookies == null) {
+                logger.info("no cookies found in the request");
+                return null;
+            }
 
             String sessionKey = "";
             String locale = "default";
@@ -42,14 +50,29 @@ public class SessionManager {
                     locale = cookie.getValue();
                 }
             }
-            if(sessionKey == null || sessionKey.length() != 64) return null;
-            if(locale == null || locale.isEmpty()) locale = "default";
 
+            //validate session key with locale
+            if(sessionKey == null || sessionKey.length() != 64) {
+                logger.info("invalid or missing session key");
+                return null;
+            }
+            if(locale == null || locale.isEmpty()){
+                logger.warn("local is missing or null so local set to default");
+                locale = "default";
+            }
+
+            //retrieve and validate the session
             Session session = databaseAbstractLayer.getSession(sessionKey);
-            if(session == null) return null;
+            if(session == null){
+                logger.info("no session found for provided session key");
+                return null;
+            }
 
+            //check if the session has expired
             if(session.hasExpired()) {
+                logger.info("session expired so delete the session");
                 databaseAbstractLayer.deleteSession(session);
+
                 Cookie cookie = new Cookie("sessionKey", null);
                 cookie.setHttpOnly(true);
                 cookie.setSecure(false);
@@ -59,14 +82,19 @@ public class SessionManager {
                 return null;
             } else {
                 if((session.getValidUntil() - System.currentTimeMillis()) < 3600000) { // 1 hour
+                    logger.info("extending session validity");
                     session.setValidUntil(System.currentTimeMillis() + 7200000); // 2 hours
-                    if(!databaseAbstractLayer.updateSession(session)) return null;
+                    if(!databaseAbstractLayer.updateSession(session)){
+                        logger.error("failed to update session");
+                        return null;
+                    }
                 }
                 return session;
             }
         } catch (Exception e) {
-            logger.error("Exception thrown: " + e.getMessage());
+            logger.error("Exception in getting the session: " + e.getMessage(),e);
         }
+        logger.info("exiting getSession method");
         return null;
     }
 
