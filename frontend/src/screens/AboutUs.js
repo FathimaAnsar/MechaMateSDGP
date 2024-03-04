@@ -7,11 +7,12 @@ import p2 from '../images/p2.avif';
 import p3 from '../images/p3.avif';
 import p4 from '../images/p4.avif';
 import p5 from '../images/p5.avif';
-
+import Header from "./components/Header";
 
 function AboutUs(props) {
   return (
     <>
+    <Header app ={props.app}/>
       <header id="about-header">
         {/* <img src="./img1.jpg" alt="About Us Image" /> */}
         <h1>About Us</h1>

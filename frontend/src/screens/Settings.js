@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import Header from "./components/Header";
 function Settings(props) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -41,9 +41,8 @@ function Settings(props) {
 
   return (
     <div>
-
-    <button onClick={handleGoBack}>Go Back</button>
-
+      <Header app ={props.app}/>
+    
       <h2>Settings</h2>
       <form onSubmit={handleSubmit}>
         <label>
@@ -85,6 +84,8 @@ function Settings(props) {
         <br />
         <button type="submit">Save Changes</button>
       </form>
+      <button onClick={handleGoBack}>Go Back</button>
+
     </div>
   );
 }

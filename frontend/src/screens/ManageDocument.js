@@ -1,8 +1,11 @@
 import React from 'react';
+import Header from "./components/Header";
 
 function ManageMyDocuments(props) {
     return (
+        
         <>
+        <Header app ={props.app}/>
             <h2>Manage My Documents</h2>
             <button onClick={() => props.app.changePage('AddServiceRecordsManually')}>Add Service Records Manually</button>
             <button onClick={() => props.app.changePage('AddServiceRecordByQR')}>Add Service Record by QR</button>

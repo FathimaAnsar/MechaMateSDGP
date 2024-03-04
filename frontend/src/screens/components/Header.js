@@ -66,8 +66,8 @@ function Header(props) {
           <Button variant='link' onClick={() =>{props.app.changePage(Pages.EmergencyAssistUI)}}>Emergency Assistance</Button>
           <Button variant='link' onClick={() =>{props.app.changePage(Pages.TrackVehicleUI)}}>Vehicle Tracker</Button>
           <Button variant='link' onClick={() =>{props.app.changePage(Pages.AutoMobSearchUI)}}>Find Mechanic</Button>
-          <Button variant='link' onClick={() =>{props.app.changePage(Pages.SettingsUI)}}>Settings</Button>
           <Button variant='link' onClick={() =>{props.app.changePage(Pages.PredictMaintenanceUI)}}>Predict</Button>
+          <Button variant='link' onClick={() =>{props.app.changePage(Pages.SettingsUI)}}>Settings</Button>
           <Button variant='link' onClick={() =>{props.app.changePage(Pages.AboutUsUI)}}>About Us</Button>
           <Button variant='link' onClick={handleSignout}>Sign Out</Button>
             {/* Add more Nav.Link items as needed */}

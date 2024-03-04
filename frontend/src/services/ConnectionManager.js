@@ -75,6 +75,9 @@ class ConnectionManager {
         urlEncodedData.append('agreedTOS', agreedTOS);
         return await this.postParamRequest("/api/v1/auth/signup", urlEncodedData);
     }
+    async addVehicle(vehicle) {
+        return await this.postJsonRequest("/api/v1/general/add-vehicle", vehicle);
+    }
 
     async activate(code) {
         return await this.getRequest("/api/v1/auth/activate?key=" + code);

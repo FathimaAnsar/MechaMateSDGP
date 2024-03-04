@@ -17,6 +17,7 @@
 import React, { useState, useEffect } from 'react';
 import { Pages } from "../Pages.js"
 import ConnectionManager from '../services/ConnectionManager';
+import Header from "./components/Header";
 
 function ParkingFinder(props) {
     const [currentLocation, setCurrentLocation] = useState(null);
@@ -101,7 +102,8 @@ function ParkingFinder(props) {
 
     return (
         <>
-    <button onClick={handleGoBack}>Go Back</button>
+        <Header app ={props.app}/>
+    
 
         <div>
             <h2>Finding a parking place!</h2>
@@ -136,6 +138,7 @@ function ParkingFinder(props) {
         <h3>{varCap}</h3>
         
         <div dangerouslySetInnerHTML={{ __html: parkingSpaces }} />
+        <button onClick={handleGoBack}>Go Back</button>
 
         </div>
     </>
