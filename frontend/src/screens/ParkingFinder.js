@@ -1,160 +1,154 @@
-// import React from 'react';
-//
-// function ParkingFinder(props) {
-//     return (
-//         <div>
-//             <h1>Parking Finder</h1>
-//             <p>Find parking spaces near you.</p>
-//             <button onClick={() => props.app.changePage('ShowParkingInfo')}>Show Parking Information</button>
-//             <button onClick={() => props.app.changePage('Dashboard')}>Go Back to Dashboard</button>
-//         </div>
-//     );
-// }
-//
-// export default ParkingFinder;
-
-// ParkingFinder.js
 import React, { useState, useEffect } from 'react';
-import { Pages } from "../Pages.js"
+import { Container, Row, Col, Card, Button, Form, Alert } from 'react-bootstrap';
 import ConnectionManager from '../services/ConnectionManager';
-import Header from "./components/Header";
+import { Pages } from "../Pages";
+import Header from "./components/Header"; // If you have a Header component
 
 function ParkingFinder(props) {
     const [currentLocation, setCurrentLocation] = useState(null);
-    const [parkingSpaces, setParkingSpaces] = useState("");
+    const [parkingSpaces, setParkingSpaces] = useState([]);
     const [varCap, setVarCap] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [alertInfo, setAlertInfo] = useState({ show: false, message: '' });
 
+    useEffect(() => {
+        props.app.getCurrentLocation().then(location => {
+            setCurrentLocation(location);
+        }).catch(exp => {
+            displayAlert(exp.message || "Failed to get location information");
+            props.app.changePage(Pages.DashboardUI);
+        });
+    }, [props.app]);
 
+    const displayAlert = (message) => {
+        setAlertInfo({ show: true, message });
+        setTimeout(() => setAlertInfo({ show: false, message: '' }), 5000);
+    };
 
-
-    const handleClick = async (e) => {
-        setVarCap("Loading...");
-        setParkingSpaces("");
+    const fetchNearbyParking = async () => {
+        setLoading(true);
         const limit = document.getElementById('limit').value;
         const radius = document.getElementById('radius').value;
 
-        // Validate inputs
-        // If failed to validate, return here
+        // Include validation for limit and radius as needed
 
         let connection = new ConnectionManager();
 
-        const resp = await connection.getNearbyParking(currentLocation.latitude, currentLocation.longitude, radius, limit);
-        const response = JSON.parse(resp);
+        try {
+            const resp = await connection.getNearbyParking(currentLocation.latitude, currentLocation.longitude, radius, limit);
+            const response = JSON.parse(resp);
+            console.log(response)
 
-        if(!response) {
-            setVarCap("");
-            alert("Please check your springboot localhost is running");
-            return;
-        }
-
-        
-        if (response.error) {
-            setVarCap("");
-            setParkingSpaces("");
-            alert("Error occured: " + response.message + "\n" + response.help);
-        } else if(response.places && Array.isArray(response.places)) {
-            let s = "<hr></hr>";
-            for(let i = 0; i < response.places.length; i++) {
-                let place = response.places[i];
-                s += "<h6>" + place.displayName.text + "</h6>";
-                s += "<p>" + place.internationalPhoneNumber + "</p>";
-                s += "<p>" + place.formattedAddress + "</p>";
-                s += "<button>Show details</button>";
-                s += "<hr></hr>";
-            }
-            if(s.length < 10) s = "No parking found";
-            setVarCap("Parking Spaces");
-            setParkingSpaces(s);
-        } else {
-            setVarCap("");
-            setParkingSpaces("");
-            alert("Invalid response");
-        }       
-    };
-
-
-
-
-    useEffect(() => {
-        props.app.getCurrentLocation().then( location => {
-            setCurrentLocation(location);
-        }).catch(exp => {
-            if(exp.message) {
-                alert(exp.message);
+            if (response.error) {
+                displayAlert(`Error occurred: ${response.message}`);
             } else {
-                alert("Failed to get location information");
+                setVarCap("Parking Spaces");
+                setParkingSpaces(response.places);
             }
-            props.app.changePage(Pages.DashboardUI);            
-        });
-    }, []);
-
-    const fetchNearbyParking = async (latitude, longitude) => {
-        const response = await fetch(`https://localhost:8080=${latitude}&long=${longitude}`);
-        const data = await response.json();
-        setParkingSpaces(data);
+        } catch (error) {
+            displayAlert("Please check your Spring Boot service is running");
+        } finally {
+            setLoading(false);
+        }
     };
 
-    const handleParkingSelect = (parking) => {
-        props.app.setCurrentParking(parking);
-        props.app.changePage('ShowParkingInfo');
+    const handleGoBack = () => {
+        props.app.goBack();
     };
-    const handleGoBack = () => { props.app.goBack(); }
 
     return (
         <>
-        <Header app ={props.app}/>
-    
+            <Header app={props.app}/> {/* If you have a Header component */}
+            <Container>
+                <Row className="mt-3">
+                    <Col>
+                        <h2>Finding a parking place!</h2>
+                        <h4>You are here!</h4>
+                        <iframe
+                            title="map"
+                            src={`https://maps.google.com/maps?q=${currentLocation ? currentLocation.latitude : 6.899752439069889},${currentLocation ? currentLocation.longitude : 79.85362275600751}&z=15&output=embed`}
+                            width="100%"
+                            height="300"
+                            frameBorder="0"
+                            style={{ border: 0 }}
+                            allowFullScreen=""
+                        ></iframe>
+                    </Col>
+                </Row>
 
-        <div>
-            <h2>Finding a parking place!</h2>
-            <h4>You are here!</h4>
-            <iframe
-                title="map"
-                src={`https://maps.google.com/maps?q=${(currentLocation == null ? 6.899752439069889:currentLocation.latitude)},${(currentLocation == null ? 79.85362275600751:currentLocation.longitude)}&z=18&output=embed`}
-                width="100%"
-                height="300px"
-                style={{border: 0}}
-                allowFullScreen=""
-                aria-hidden="false"
-                tabIndex="0"
-            ></iframe>
+                <Row className="my-3">
+                    <Col xs={12} md={6}>
+                        <Form.Group controlId="limit">
+                            <Form.Label>Number of Results</Form.Label>
+                            <Form.Control as="select" defaultValue="5">
+                                <option value="5">Show only 5 results</option>
+                                <option value="10">Show only 10 results</option>
+                                <option value="15">Show only 15 results</option>
+                                <option value="20">Show only 20 results</option>
+                                <option value="25">Show only 25 results</option>
+                            </Form.Control>
+                        </Form.Group>
+                    </Col>
+                    <Col xs={12} md={6}>
+                        <Form.Group controlId="radius">
+                            <Form.Label>Search Radius</Form.Label>
+                            <Form.Control as="select" defaultValue="500">
+                                <option value="500">Within 500 meters</option>
+                                <option value="1000">Within 1 kilometer</option>
+                                <option value="2000">Within 2 kilometers</option>
+                                <option value="5000">Within 5 kilometers</option>
+                                <option value="10000">Within 10 kilometers</option>
+                            </Form.Control>
+                        </Form.Group>
+                    </Col>
+                </Row>
 
-        <select id="limit">
-        <option value="5">Show only 5 results</option>
-        <option value="10">Show only 10 results</option>
-        <option value="15">Show only 15 results</option>
-        <option value="20">Show only 20 results</option>
-        <option value="25">Show only 25 results</option>
-        </select>
-        <select id="radius">
-        <option value="500">Within 500 meters</option>
-        <option value="1000">Within 1 kilometer</option>
-        <option value="2000">Within 2 kilometers</option>
-        <option value="5000">Within 5 kilometers</option>
-        <option value="10000">Within 10 kilometers</option>
-        </select>
+                <Row className="my-3">
+                    <Col>
+                        <Button variant="primary" onClick={fetchNearbyParking} disabled={loading}>
+                            {loading ? 'Loading...' : 'Show Me Nearby Parking Spaces'}
+                        </Button>
+                    </Col>
+                </Row>
 
-        <button onClick={handleClick}>Show Me Nearby Parking Spaces</button>
-        <h3>{varCap}</h3>
-        
-        <div dangerouslySetInnerHTML={{ __html: parkingSpaces }} />
-        <button onClick={handleGoBack}>Go Back</button>
+                {alertInfo.show && (
+                    <Row className="my-3">
+                        <Col>
+                            <Alert variant="danger" onClose={() => setAlertInfo({ show: false, message: '' })} dismissible>
+                                {alertInfo.message}
+                            </Alert>
+                        </Col>
+                    </Row>
+                )}
 
-        </div>
-    </>
-    // <div>
-    //     <h1>Nearby Parking Spaces</h1>
-    //     {currentLocation && (
-    //         <ul>
-    //             {parkingSpaces.map(parking => (
-    //                 <li key={parking.id} onClick={() => handleParkingSelect(parking)}>
-    //                     {parking.name} - {parking.distance}m
-    //                 </li>
-    //             ))}
-    //         </ul>
-    //     )}
-    // </div>
+                <Row className="my-3">
+                    {parkingSpaces.map((parking, index) => (
+                        <Col key={index} sm={12} md={6} lg={4} className="mb-3">
+                            <Card>
+                                <Card.Body>
+                                    <Card.Title>{parking.displayName.text}</Card.Title>
+                                    <Card.Text>
+                                        {parking.internationalPhoneNumber}
+                                        {parking.formattedAddress}
+                                    </Card.Text>
+                                    <Button variant="primary" onClick={() => props.app.setCurrentParking(parking)}>
+                                        Show Details
+                                    </Button>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    ))}
+                </Row>
+
+                <Row className="my-3">
+                    <Col>
+                        <Button variant="secondary" onClick={handleGoBack}>Go Back</Button>
+                    </Col>
+                </Row>
+            </Container>
+        </>
     );
 }
 
 export default ParkingFinder;
+
