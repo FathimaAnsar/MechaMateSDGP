@@ -16,6 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
@@ -363,6 +367,40 @@ public class APIManager {
     }
 
 
+    public String getDirections(String origin, String destination) {
+        logger.info("Entering getDirections with origin: {}, destination: {}", origin, destination);
+
+        if (origin == null || origin.isBlank() || destination == null || destination.isBlank()) {
+            logger.error("Invalid origin or destination");
+            return "{ \"error\": \"ValidationError\", \"message\": \"Invalid origin or destination values\" }";
+        }
+
+        String urlTemplate = "https://maps.googleapis.com/maps/api/directions/json?origin=%s&destination=%s&key=%s";
+        String url = String.format(urlTemplate, origin, destination, apiKey);
+
+        try {
+            ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+
+            logger.debug("Response status: {}", response.getStatusCode());
+            logger.debug("Response body: {}", response.getBody());
+
+            if (response.getStatusCode() == HttpStatus.OK) {
+                return response.getBody();
+            } else {
+                logger.error("Error response received with status: {}", response.getStatusCode());
+                return "{ \"error\": \"APIError\", \"message\": \"Error fetching directions\" }";
+            }
+        } catch (Exception e) {
+            logger.error("Unexpected error in getDirections: {}", e.getMessage());
+            return "{ \"error\": \"InternalError\", \"message\": \"Unexpected error occurred\" }";
+        } finally {
+            logger.info("Exiting from getDirections");
+        }
+    }
+
+//    public String googleMapJs(){
+//        return "https://maps.googleapis.com/maps/api/js?key=" + apiKey + "&callback=initMap";
+//    };
 
     public DeviceLocation getDeviceLocation(ApiToken apiToken, Vehicle vehicle) {
         logger.info("enter to the getDeviceLocation");

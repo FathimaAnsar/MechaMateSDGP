@@ -1,6 +1,5 @@
 package com.mechamate.controller;
 
-import com.mechamate.common.DeviceDetails;
 import com.mechamate.common.ApiToken;
 import com.mechamate.common.DeviceLocation;
 import com.mechamate.common.Validation;
@@ -156,6 +155,29 @@ public class FeatureController {
         return new ResponseEntity<String>(
                 apiManager.getNearbyParking(lat, lng, radius, limit), HttpStatus.OK);
     }
+
+
+    @GetMapping("/get-directions")
+    public ResponseEntity<?> getDirections(HttpServletRequest request, HttpServletResponse response,
+                                           @RequestParam(required = false) String origin,
+                                           @RequestParam(required = false) String destination) {
+        Object obj = Validation.authenticate(request, response, sessionManager, lang);
+        if (!(obj instanceof UserProfile)) return (ResponseEntity<?>) obj;
+        UserProfile userProfile = (UserProfile) obj;
+
+        if (origin == null || origin.isEmpty() || destination == null || destination.isEmpty()) {
+            return ResponseEntity.badRequest().body("{ \"error\": \"ValidationError\", \"message\": \"Origin and destination are required.\" }");
+        }
+
+        String result = apiManager.getDirections(origin, destination);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+//    @GetMapping("/maps-api-url")
+//    public ResponseEntity<String> getGoogleMapsApiUrl() {
+//        String mapsApiUrl = apiManager.googleMapJs();
+//        return ResponseEntity.ok(mapsApiUrl);
+//    }
 
 
     @GetMapping("/get-device-location")
