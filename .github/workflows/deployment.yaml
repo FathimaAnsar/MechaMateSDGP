@@ -55,7 +55,6 @@ jobs:
           pwd
           npm install
           npm run build
-          ls /backend/src/main/resources/static
           
 
       - name: Build with Maven
@@ -63,6 +62,7 @@ jobs:
           pwd
           echo "Starting Maven build process"
           cd backend
+          ls /src/main/resources/static
           echo "switch to backend"
           mvn clean package -DskipTests
           echo "Maven build process completed."
