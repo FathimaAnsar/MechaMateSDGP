@@ -1,14 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Pages } from "../Pages.js";
 import ConnectionManager from "../services/ConnectionManager.js";
 import logo from '../images/logo-black.png';
 import './styles/signIn.css';
+import SignUpModal from "./SignUpModal.js";
 
 
 function SignIn(props) {
+    const [modalShow, setModalShow] = useState(false);
+
     const handleClick = (page) => { props.app.changePage(page); }
-
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -42,10 +43,6 @@ function SignIn(props) {
         } else if (response.status) {
             props.app.setFirstRunDone(true);
             console.log("Success: " + response.message + "\n" + response.info);
-            errorMessage.style.backgroundColor = '#45ab26';
-            errorMessage.style.display = "block";
-            errorMessage.innerHTML=response.message;
-            errorMessage.style.height = 'auto';
             
             const uProf = await connection.getUserProfile();
             const userProfile = JSON.parse(uProf);
@@ -59,12 +56,15 @@ function SignIn(props) {
 
             if (userProfile.error) {
                 if (userProfile.error === "ErrorPendingActivation") {
-                    alert("Your account is in a pending activation state. Please check your email inbox and enter the code we sent during registration process.");
                     props.app.changePage(Pages.EnterCodeUI);
                 } else {
                     alert(userProfile.message + "\n" + userProfile.help);
                 }
             } else {
+                errorMessage.style.backgroundColor = '#45ab26';
+                errorMessage.style.display = "block";
+                errorMessage.innerHTML=response.message;
+                errorMessage.style.height = 'auto';
                 props.app.setUserProfile(userProfile);
                 props.app.changePage(Pages.DashboardUI);
             }
@@ -72,7 +72,6 @@ function SignIn(props) {
             alert("Error: Unknown");
         }
     }
-
 
     useEffect(() => {
         try {
@@ -124,11 +123,12 @@ function SignIn(props) {
                     <button onClick={handleSubmit}>Sign In</button>
                 </form>
                 <div className="forget-password"><a style={{ color: '#085bd4' }} onClick={() => { handleClick(Pages.ForgotPasswordUI) }}>Forgotten password?</a></div>
-                <div className='sign-up'>Don't have an account? <a style={{ color: '#085bd4' }} onClick={() => { handleClick(Pages.SignUpUI) }}>sign up</a></div>
+                <div className='sign-up'>Don't have an account? <a style={{ color: '#085bd4' }} onClick={() => setModalShow(true)}>sign up</a></div>
 
 
 
             </div>
+            <SignUpModal show={modalShow} onHide={() => {setModalShow(false)}}/>
 
 
             {/* <button onClick={() => { handleClick(Pages.SignUpUI) }}>Dont you have an account?</button>

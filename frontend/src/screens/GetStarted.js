@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Button, Card, CardFooter, CardImg } from 'react-bootstrap';
+import { Container, Button, Card, CardFooter, CardImg, CardText } from 'react-bootstrap';
 import logo from '../images/logo-white.png';
 import { Pages } from "../Pages.js"
 
@@ -9,18 +9,19 @@ function GetStarted(props) {
 
     return (
         <>
-            <Card style={{ height: '100vh', backgroundColor: '#085bd4', borderRadius: '0' }}>
+            <Card style={{ height: '100vh', backgroundColor: '#085bd4', borderRadius: '0', margin: '0' }}>
                 <Card.Body className="d-flex justify-content-center align-items-center">
                     <Card.Img variant="top" src={logo} style={{ width: '250px' }} />
+                    <CardText></CardText>
                 </Card.Body>
-                <Card.Footer className='d-flex  justify-content-center' style={{ width: '100vw', marginBottom:'5px',borderTop: '0', backgroundColor: 'transparent' }}>
-                    <Button style={{ backgroundColor: 'white', width: '300px', color: '#085bd4', fontSize: '12pt', fontWeight: '700', borderRadius: '30px', padding: '6px' }}
+                <Card.Footer className='d-flex  justify-content-center' style={{ width: '90vw',borderTop: '0', backgroundColor: 'transparent',marginLeft:'5vw' }}>
+                    <Button style={{ backgroundColor: 'white', width: '300px', color: '#085bd4', fontSize: '12pt',marginBottom:'25px', fontWeight: '700', borderRadius: '30px', padding: '8px' }}
                             onClick={() => handleClick(Pages.SignInUI)}>
                         Let's Get Started
                     </Button>
                 </Card.Footer>
             </Card>
-            <Card></Card>
+            
         </>
     );
 

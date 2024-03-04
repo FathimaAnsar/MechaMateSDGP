@@ -4,9 +4,18 @@ import { Pages } from "../Pages.js";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import logo from '../images/logo-black.png';
+import Modal from 'react-bootstrap/Modal';
 
 
 function EnterCode(props) {
+    const [show, setShow] = useState(false);
+    const handleClose = () => {
+        setShow(false);
+
+        props.app.changePage(Pages.DashboardUI);
+    };
+
+    const handleShow = () => setShow(true);
     const handleGoBack = () => props.app.goBack();
 
     useEffect(() => {
@@ -16,11 +25,11 @@ function EnterCode(props) {
                 const userProfile = JSON.parse(uProf);
 
 
-                if(!userProfile) {
+                if (!userProfile) {
                     alert("Please check your springboot localhost is running");
                     return;
                 }
-        
+
 
                 if (userProfile.error) {
                     if (userProfile.error === "ErrorPendingActivation") {
@@ -44,32 +53,33 @@ function EnterCode(props) {
             const resp = await connection.activate(otp);
             const response = JSON.parse(resp);
 
-            if(!response) {
+            if (!response) {
                 alert("Please check your springboot localhost is running");
                 return;
             }
-    
+
 
             if (response.error) {
+
                 alert("Error occurred: " + response.message + "\n" + response.help);
             } else if (response.status) {
-                alert("Success: " + response.message + "\n" + response.info);
+                setShow(true);
+                // alert("Success: " + response.message + "\n" + response.info);
                 const uProf = await connection.getUserProfile();
                 const userProfile = JSON.parse(uProf);
 
 
-                if(!userProfile) {
+                if (!userProfile) {
                     alert("Please check your springboot localhost is running");
                     return;
                 }
-        
+
 
                 if (userProfile.error) {
                     alert(userProfile.message + "\n" + userProfile.help);
                     props.app.changePage(Pages.SignInUI);
                 } else {
                     props.app.setUserProfile(userProfile);
-                    props.app.changePage(Pages.DashboardUI);
                 }
             } else {
                 alert("Error: Unknown");
@@ -82,16 +92,16 @@ function EnterCode(props) {
     return (
         <>
             <Card className="text-center" style={{ height: '100vh' }}>
-            <Card.Header className="d-flex justify-content-between align-items-center">
-        <div>
-            <Button variant= 'secondary' onClick={handleGoBack} className="btn btn-primary">Back</Button>
-            
-        </div>
-        <div className="text-center">
-            <img src={logo} style={{ width: '150px' }} alt="Logo" />
-        </div>
-    </Card.Header>
-                <Card.Body className="f-column justify-content-center align-items-center ">
+                <Card.Header className="d-flex justify-content-between align-items-center">
+                    <div>
+                        <Button variant='primary' onClick={handleGoBack} className="btn btn-primary">Back</Button>
+
+                    </div>
+                    <div className="text-center">
+                        <img src={logo} style={{ width: '150px' }} alt="Logo" />
+                    </div>
+                </Card.Header>
+                <Card.Body className="f-column justify-content-center align-items-center " style={{marginTop: '35px'}}>
 
                     <Card.Title><h3>Activate your account</h3></Card.Title>
                     <Card.Text>
@@ -99,9 +109,21 @@ function EnterCode(props) {
                     <OtpInput length={6} onOtpSubmit={onOtpSubmit} />
 
                 </Card.Body>
-                <Card.Footer className="text-muted" style={{ width: '100vw', marginBottom:'5px',borderTop: '0', backgroundColor: 'transparent' }}>
+                <Card.Footer className="text-muted" style={{ width: '100vw', marginBottom: '5px', borderTop: '0', backgroundColor: 'transparent' }}>
                     <div className='copyright'>MechaMate © 2024</div></Card.Footer>
             </Card>
+            <Modal show={show} onHide={handleClose} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Account activated</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Welcome to MechaMate! Now you can use MechaMate features</Modal.Body>
+                <Modal.Footer>
+
+                    <Button variant="primary" onClick={handleClose}>
+                        Continue
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </>
     );
 }
