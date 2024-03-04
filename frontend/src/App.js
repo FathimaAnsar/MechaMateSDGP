@@ -47,9 +47,9 @@ function App() {
       main.currentPage != Pages.SignUpUI &&
       main.currentPage != Pages.ForgotPasswordUI &&
       main.currentPage != Pages.EnterCodeUI) {
-      if(main.isFirstRunDone()) {
+      if(!main.isFirstRunDone()) {
         if(main.isAppLoaded()) alert("Please sign in to continue!");
-        main.currentPage = Pages.SignInUI;
+        main.currentPage = Pages.DashboardUI;
       } else {
         main.currentPage = Pages.GetStartedUI;
       }

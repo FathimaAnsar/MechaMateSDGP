@@ -46,12 +46,12 @@ function Dashboard(props) {
   }
 
   const cars = [
-    { color: 'Dark', title: 'Toyota Camry', description: 'A reliable sedan.' },
-    { color: 'Light', title: 'Honda Civic', description: 'A popular compact car.' },
-    { color: 'Dark', title: 'Toyota Vitz', description: 'A reliable hatchback.' },
+    { title: 'Camry', regNo: 'CBK-4567', description: 'Toyota' },
+    { title: 'Civic', regNo: 'CGK-4367', description: 'Honda' },
+    { title: 'Vitz', regNo: 'CEK-4567', description: 'Toyota' },
   ];
 
-  
+
 
   const handleCardClick = (car) => {
     console.log(`Clicked on ${car.title}`);
@@ -65,44 +65,47 @@ function Dashboard(props) {
   return (
 
     <>
+      <div style={{ position: 'sticky', top: '0', width: '100vw', zIndex: '5' }}>
+        <Header app={props.app} />
+      </div>
 
-      <Header app={props.app} />
+      <Container fluid >
 
-      <Container fluid>
         <Row>
           <Col>
-          <CustomCarousel />
+            <CustomCarousel />
           </Col>
         </Row>
         <Row>
           <Col><h1>{generateGreeting()} {(props.app.getUserProfile() == null ? "<User>" : props.app.getUserProfile().firstName)}!</h1>
           </Col>
         </Row>
-        <hr></hr>
+
 
         <Row>
           <Col>
             <h2>My vehicles</h2>
             <div style={{ height: '100%', overflowY: 'auto' }}>
-            <Stack direction="horizontal" gap={3}>
-              {cars.map((car, index) => (
-                
-                <div className=""><ClickableCard key={index} content={car} onClick={handleCardClick} /></div>
-              ))}
-            </Stack>
+              <Stack direction="horizontal" gap={3}>
+                {cars.map((car, index) => (
+                  <div className="">
+                    <ClickableCard key={index} content={car} onClick={handleCardClick} />
+                  </div>
+                ))}
+              </Stack>
             </div>
           </Col>
         </Row>
-        
+
       </Container>
 
 
 
 
       <hr></hr>
-     
 
-      
+
+
 
       <div id="AutoMobSection">
         <h2>AutoMob Search</h2>
