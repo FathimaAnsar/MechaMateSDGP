@@ -55,6 +55,8 @@ jobs:
           pwd
           npm install
           npm run build
+          ls /backend/src/main/resources/static
+          
 
       - name: Build with Maven
         run: |
