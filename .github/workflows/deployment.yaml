@@ -62,7 +62,8 @@ jobs:
           pwd
           echo "Starting Maven build process"
           cd backend
-          ls /src/main/resources/static
+          echo "Listing React build files in static folder"
+          ls src/main/resources/static
           echo "switch to backend"
           mvn clean package -DskipTests
           echo "Maven build process completed."
