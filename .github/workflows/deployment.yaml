@@ -6,7 +6,7 @@ on:
 jobs:
   deploy-backend:
     runs-on: ubuntu-latest
-    environment:
+    env:
       CI: false
     steps:
       - name: Checkout repository
