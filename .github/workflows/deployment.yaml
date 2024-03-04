@@ -46,6 +46,7 @@ jobs:
       - name: Install dependencies
         run: |
           pwd
+          ls
           echo "Starting React build process"
           cd frontend
           echo "switch to frontend"
