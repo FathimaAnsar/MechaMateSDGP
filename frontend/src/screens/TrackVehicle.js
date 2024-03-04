@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Pages } from "../Pages.js" 
+import { Pages } from "../Pages.js"
+import Header from "./components/Header";
 
 function TrackMyVehicle(props) {
     const [selectedVehicle, setSelectedVehicle] = useState('');
@@ -16,6 +17,7 @@ function TrackMyVehicle(props) {
 
     return (
         <div>
+            <Header app ={props.app}/>
             <h1>Track My Vehicle</h1>
             <select value={selectedVehicle} onChange={handleVehicleChange}>
                 <option value="">Select a vehicle</option>

@@ -39,22 +39,6 @@ function Header(props) {
 
   return (
     <>
-      {/* <div id="main-header">
-        <div id="main-logo">Logo Mechamate</div>
-
-        <input type="checkbox" id="notify-checkbox"></input>
-        <label htmlFor="notify-checkbox">Notifications</label>
-
-        <input type="checkbox" id="menu-checkbox" onChange={toggleDropdown}></input>
-        <label htmlFor="menu-checkbox">Menu button</label>
-      </div>
-
-      {/* Dropdown Menu */}
-      {/* <div className="dropdown">
-        <button className="dropdown-item" onClick={() => handleDropdownItemClick(Pages.SettingsUI)}>Settings</button>
-        <button className="dropdown-item" onClick={() => handleDropdownItemClick(Pages.AboutUsUI)}>About App</button>
-        <button className="dropdown-item" onClick={handleSignout}>Sign Out</button>
-      </div> */} 
       
       <Navbar expand="lg" className="bg-body-tertiary" bg="primary" data-bs-theme="dark">
         <Container>
@@ -74,6 +58,7 @@ function Header(props) {
         <Offcanvas.Body>
           {/* Your offcanvas menu items go here */}
           <Nav className="flex-column">
+          <Button variant='link' onClick={() =>{props.app.changePage(Pages.DashboardUI)}}>Home</Button>
           <Button variant='link' onClick={() =>{props.app.changePage(Pages.MyVehiclesUI)}}>Add Vehicle</Button>
           <Button variant='link' onClick={() =>{props.app.changePage(Pages.AddSRecordManualUI)}}>Add Service Record</Button>
           <Button variant='link' onClick={() =>{props.app.changePage(Pages.ParkingFinderUI)}}>Parking Finder</Button>
@@ -81,8 +66,8 @@ function Header(props) {
           <Button variant='link' onClick={() =>{props.app.changePage(Pages.EmergencyAssistUI)}}>Emergency Assistance</Button>
           <Button variant='link' onClick={() =>{props.app.changePage(Pages.TrackVehicleUI)}}>Vehicle Tracker</Button>
           <Button variant='link' onClick={() =>{props.app.changePage(Pages.AutoMobSearchUI)}}>Find Mechanic</Button>
-          <Button variant='link' onClick={() =>{props.app.changePage(Pages.SettingsUI)}}>Settings</Button>
           <Button variant='link' onClick={() =>{props.app.changePage(Pages.PredictMaintenanceUI)}}>Predict</Button>
+          <Button variant='link' onClick={() =>{props.app.changePage(Pages.SettingsUI)}}>Settings</Button>
           <Button variant='link' onClick={() =>{props.app.changePage(Pages.AboutUsUI)}}>About Us</Button>
           <Button variant='link' onClick={handleSignout}>Sign Out</Button>
             {/* Add more Nav.Link items as needed */}

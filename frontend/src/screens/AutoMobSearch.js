@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Pages } from "../Pages.js"
 import ConnectionManager from '../services/ConnectionManager';
-
+import Header from "./components/Header";
 function AutoMobSearch(props) {
     const [currentLocation, setCurrentLocation] = useState(null);
     const [autoShops, setAutoShops] = useState("");
@@ -73,7 +73,7 @@ function AutoMobSearch(props) {
 
     return (
         <>
-            <button onClick={handleGoBack}>Go Back</button>
+            <Header app ={props.app}/>
         <div>
             <h2>Finding spare parts for your vehicle!</h2>
 
@@ -96,6 +96,7 @@ function AutoMobSearch(props) {
         <h3>{varCap}</h3>
         
         <div dangerouslySetInnerHTML={{ __html: autoShops }} />
+        <button onClick={handleGoBack}>Go Back</button>
 
         </div>
     </>
