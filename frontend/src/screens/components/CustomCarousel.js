@@ -28,5 +28,4 @@ function CustomCarousel({ }) {
     </Carousel>
   );
 }
-
 export default CustomCarousel;
