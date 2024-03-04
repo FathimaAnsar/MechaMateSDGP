@@ -54,7 +54,6 @@ jobs:
           echo "switch to frontend"
           pwd
           npm install
-          npm audit fix
           npm run build
 
       - name: Build with Maven
