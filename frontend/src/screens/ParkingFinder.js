@@ -3,7 +3,7 @@ import { Container, Row, Col, Card, Button, Form, Alert } from 'react-bootstrap'
 import ConnectionManager from '../services/ConnectionManager';
 import { Pages } from "../Pages";
 import Header from "./components/Header";
-
+import './styles/ParkingFinder.css';
 function ParkingFinder(props) {
     const [currentLocation, setCurrentLocation] = useState(null);
     const [parkingSpaces, setParkingSpaces] = useState([]);
@@ -36,7 +36,7 @@ function ParkingFinder(props) {
         try {
             const resp = await connection.getNearbyParking(currentLocation.latitude, currentLocation.longitude, radius, limit);
             const response = JSON.parse(resp);
-            console.log(response); // Display the whole response for debugging
+            console.log(response);
 
             if (response.error) {
                 displayAlert(`Error occurred: ${response.message}`);
@@ -87,17 +87,20 @@ function ParkingFinder(props) {
             <Container>
                 <Row className="mt-3">
                     <Col>
-                        <h2>Finding a parking place!</h2>
-                        <h4>You are here!</h4>
-                        <iframe
-                            title="map"
-                            src={selectedMapUri || `https://maps.google.com/maps?q=${currentLocation ? currentLocation.latitude : ''},${currentLocation ? currentLocation.longitude : ''}&z=15&output=embed`}
-                            width="100%"
-                            height="300"
-                            frameBorder="0"
-                            style={{border: 0}}
-                            allowFullScreen=""
-                        ></iframe>
+                        <h2 className="text-center mb-4" >Finding a parking place!</h2>
+                        <h4 className="text-secondary text-center mb-3">You are here!</h4>
+                        <div className="map-container mb-4">
+                            <iframe
+                                title="map"
+                                src={selectedMapUri || `https://maps.google.com/maps?q=${currentLocation ? currentLocation.latitude : ''},${currentLocation ? currentLocation.longitude : ''}&z=15&output=embed`}
+                                width="100%"
+                                height="300"
+                                frameBorder="0"
+                                style={{border: 0}}
+                                allowFullScreen=""
+                            ></iframe>
+                        </div>
+
                     </Col>
                 </Row>
 
@@ -106,7 +109,7 @@ function ParkingFinder(props) {
                         <Form.Group controlId="limit">
                             <Form.Label>Number of Results</Form.Label>
                             <Form.Control as="select" defaultValue="5">
-                            <option value="5">Show only 5 results</option>
+                                <option value="5">Show only 5 results</option>
                                 <option value="10">Show only 10 results</option>
                                 <option value="15">Show only 15 results</option>
                                 <option value="20">Show only 20 results</option>
@@ -153,17 +156,17 @@ function ParkingFinder(props) {
                                 <Card.Body>
                                     <Card.Title>{parking.displayName.text}</Card.Title>
                                     <Card.Text>
-                                        {parking.internationalPhoneNumber}
-                                        {parking.formattedAddress}
+                                        {/*NEEDS TO ADD OPEN TIME */}
+                                        {/*{parking.formattedAddress}*/}
                                     </Card.Text>
                                     <Button variant="primary" onClick={() => props.app.setCurrentParking(parking)}>
                                         Show Details
                                     </Button>
-                                    <Button variant="success" onClick={() => showOnMap(parking.location)}>
+                                    <Button variant="primary" onClick={() => showOnMap(parking.location)}>
                                         View on Map
                                     </Button>
                                     {/*this button for testing*/}
-                                    <Button variant="success" onClick={() => getDirections(parking.location)}>
+                                    <Button variant="primary" onClick={() => getDirections(parking.location)}>
                                         Get Directions
                                     </Button>
                                 </Card.Body>
