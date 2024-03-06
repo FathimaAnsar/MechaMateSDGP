@@ -2,8 +2,8 @@ name: Deploy to Google App Engine
 on:
   push:
     branches:
-#      - main
-      - release
+      - main
+#      - release
 jobs:
   deploy-backend:
     runs-on: ubuntu-latest
@@ -55,7 +55,7 @@ jobs:
           echo "switch to frontend"
           pwd
           npm install
-          npm run build
+          npm run buildToServer
           
 
       - name: Build with Maven
