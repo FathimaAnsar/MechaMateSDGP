@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Form, Alert } from 'react-bootstrap';
 import ConnectionManager from '../services/ConnectionManager';
 import { Pages } from "../Pages";
-import Header from "./components/Header"; // If you have a Header component
+import Header from "./components/Header";
 
 function ParkingFinder(props) {
     const [currentLocation, setCurrentLocation] = useState(null);
@@ -10,6 +10,7 @@ function ParkingFinder(props) {
     const [varCap, setVarCap] = useState("");
     const [loading, setLoading] = useState(false);
     const [alertInfo, setAlertInfo] = useState({ show: false, message: '' });
+    const [selectedMapUri, setSelectedMapUri] = useState("");
 
     useEffect(() => {
         props.app.getCurrentLocation().then(location => {
@@ -30,14 +31,12 @@ function ParkingFinder(props) {
         const limit = document.getElementById('limit').value;
         const radius = document.getElementById('radius').value;
 
-        // Include validation for limit and radius as needed
-
         let connection = new ConnectionManager();
 
         try {
             const resp = await connection.getNearbyParking(currentLocation.latitude, currentLocation.longitude, radius, limit);
             const response = JSON.parse(resp);
-            console.log(response)
+            console.log(response); // Display the whole response for debugging
 
             if (response.error) {
                 displayAlert(`Error occurred: ${response.message}`);
@@ -56,9 +55,35 @@ function ParkingFinder(props) {
         props.app.goBack();
     };
 
+    // const showOnMap = (uri) => {
+    //     console.log("Displaying map for URI:", uri);
+    //     const embedUri = `${uri}&z=15&output=embed`;
+    //     console.log("Attempting to display map for URI:", embedUri);
+    //     setSelectedMapUri(embedUri);
+    //     setSelectedMapUri(uri);
+    // };
+
+    const showOnMap = (location) => {
+        if (location && location.latitude && location.longitude) {
+            const mapsUrl = `https://maps.google.com/maps?q=${location.latitude},${location.longitude}&z=15&output=embed`;
+            setSelectedMapUri(mapsUrl);
+        } else {
+            displayAlert("Invalid location data.");
+        }
+    };
+    const getDirections = (endLocation) => {
+        if (currentLocation && endLocation) {
+            const directionsUrl = `https://www.google.com/maps/dir/?api=1&origin=${currentLocation.latitude},${currentLocation.longitude}&destination=${endLocation.latitude},${endLocation.longitude}&travelmode=driving`;
+            window.open(directionsUrl, '_blank');
+        } else {
+            displayAlert("Location data for start or destination is missing.");
+        }
+    };
+
+
     return (
         <>
-            <Header app={props.app}/> {/* If you have a Header component */}
+            <Header app={props.app}/>
             <Container>
                 <Row className="mt-3">
                     <Col>
@@ -66,11 +91,11 @@ function ParkingFinder(props) {
                         <h4>You are here!</h4>
                         <iframe
                             title="map"
-                            src={`https://maps.google.com/maps?q=${currentLocation ? currentLocation.latitude : 6.899752439069889},${currentLocation ? currentLocation.longitude : 79.85362275600751}&z=15&output=embed`}
+                            src={selectedMapUri || `https://maps.google.com/maps?q=${currentLocation ? currentLocation.latitude : ''},${currentLocation ? currentLocation.longitude : ''}&z=15&output=embed`}
                             width="100%"
                             height="300"
                             frameBorder="0"
-                            style={{ border: 0 }}
+                            style={{border: 0}}
                             allowFullScreen=""
                         ></iframe>
                     </Col>
@@ -81,7 +106,7 @@ function ParkingFinder(props) {
                         <Form.Group controlId="limit">
                             <Form.Label>Number of Results</Form.Label>
                             <Form.Control as="select" defaultValue="5">
-                                <option value="5">Show only 5 results</option>
+                            <option value="5">Show only 5 results</option>
                                 <option value="10">Show only 10 results</option>
                                 <option value="15">Show only 15 results</option>
                                 <option value="20">Show only 20 results</option>
@@ -133,6 +158,13 @@ function ParkingFinder(props) {
                                     </Card.Text>
                                     <Button variant="primary" onClick={() => props.app.setCurrentParking(parking)}>
                                         Show Details
+                                    </Button>
+                                    <Button variant="success" onClick={() => showOnMap(parking.location)}>
+                                        View on Map
+                                    </Button>
+                                    {/*this button for testing*/}
+                                    <Button variant="success" onClick={() => getDirections(parking.location)}>
+                                        Get Directions
                                     </Button>
                                 </Card.Body>
                             </Card>
