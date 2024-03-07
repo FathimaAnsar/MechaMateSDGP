@@ -221,114 +221,309 @@ public class DatabaseAbstractLayer {
 //sessions
 
     public boolean isSessionExists(String sessionKey) {
-        return sessionRepo.existsBySessionKey(sessionKey);
+        logger.info("Check session: {}", sessionKey);
+
+        if (sessionKey == null || sessionKey.trim().isEmpty()) {
+            logger.warn("Session key empty. Assume no session.");
+            return false;
+        }
+
+        try {
+            boolean exists = sessionRepo.existsBySessionKey(sessionKey);
+            logger.info("Session exists: {}", exists);
+            return exists;
+        } catch (Exception e) {
+            logger.error("Error checking session.", e);
+            return false;
+        }
     }
 
     public boolean addSession(Session session) {
+        logger.info("Adding session");
+
+        if (session == null) {
+            logger.warn("No session to add");
+            return false;
+        }
+
+        if (session.getSessionKey() == null || session.getSessionKey().trim().isEmpty()) {
+            logger.warn("Session key missing");
+            return false;
+        }
+
+        if (isSessionExists(session.getSessionKey())) {
+            logger.info("Session exists. Cannot add.");
+            return false;
+        }
+
         try {
-            if(session == null) return false;
-            if(isSessionExists(session.getSessionKey())) return false;
             sessionRepo.save(session);
+            logger.info("Session added");
             return true;
-        } catch (Exception e) {}
-        return false;
+        } catch (Exception e) {
+            logger.error("Error adding session", e);
+            return false;
+        }
     }
 
     public Session getSession(String sessionKey) {
+        logger.info("Getting session.");
+
+        if (sessionKey == null || sessionKey.trim().isEmpty()) {
+            logger.warn("Session key is null or empty. Return null.");
+            return null;
+        }
+
         try {
             Optional<Session> session = sessionRepo.findBySessionKey(sessionKey);
-            return session.orElse(null);
-        } catch (Exception e) {}
-        return null;
+            if (!session.isPresent()) {
+                logger.info("Session not found.");
+                return null;
+            }
+
+            logger.info("Session found.");
+            return session.get();
+        } catch (Exception e) {
+            logger.error("Get session failed", e);
+            return null;
+        }
     }
 
     public boolean updateSession(Session session) {
+        logger.info("updating session");
+
+        if (session == null) {
+            logger.warn("session is null not updated");
+            return false;
+        }
+
+        if (!isSessionExists(session.getSessionKey())) {
+            logger.warn("session does not exist not updated");
+            return false;
+        }
+
         try {
-            if(session == null) return false;
-            if(!isSessionExists(session.getSessionKey())) return false;
             sessionRepo.save(session);
+            logger.info("session updated");
             return true;
-        } catch (Exception e) {}
-        return false;
+        } catch (Exception e) {
+            logger.error("update session failed", e);
+            return false;
+        }
     }
 
     public boolean deleteSession(Session session) {
-        try {
-            if(session == null) return false;
-            if(!isSessionExists(session.getSessionKey())) return true;
-            sessionRepo.delete(session);
+        logger.info("deleting session");
+
+        if (session == null) {
+            logger.warn("session is null not deleted");
+            return false;
+        }
+
+        if (!isSessionExists(session.getSessionKey())) {
+            logger.info("session does not exist considered deleted");
             return true;
-        } catch (Exception e) {}
-        return false;
+        }
+
+        try {
+            sessionRepo.delete(session);
+            logger.info("session deleted");
+            return true;
+        } catch (Exception e) {
+            logger.error("delete session failed", e);
+            return false;
+        }
     }
 
     //vehicles
     public boolean isVehicleExists(String regNo) {
-        return vehicleRepo.existsByRegNo(regNo);
+        logger.info("checking if vehicle exists");
+
+        if (regNo == null || regNo.trim().isEmpty()) {
+            logger.warn("registration number is null or blank returning false");
+            return false;
+        }
+
+        try {
+            boolean exists = vehicleRepo.existsByRegNo(regNo);
+            logger.info("vehicle existence check completed");
+            return exists;
+        } catch (Exception e) {
+            logger.error("vehicle existence check failed", e);
+            return false;
+        }
     }
     public boolean isVehicleExistsByOwner(ObjectId owner) {
-        return vehicleRepo.existsByOwner(owner);
+        logger.info("checking if vehicle exists by owner");
+
+        if (owner == null) {
+            logger.warn("owner id is null returning false");
+            return false;
+        }
+
+        try {
+            boolean exists = vehicleRepo.existsByOwner(owner);
+            logger.info("vehicle existence by owner check completed");
+            return exists;
+        } catch (Exception e) {
+            logger.error("vehicle existence by owner check failed", e);
+            return false;
+        }
     }
 
 
     public boolean addVehicle(Vehicle vehicle) {
+        logger.info("adding vehicle");
+
+        if (vehicle == null) {
+            logger.warn("vehicle is null not added");
+            return false;
+        }
+
+        if (vehicle.get_id() != null && isVehicleExists(vehicle.getRegNo())) {
+            logger.warn("vehicle already exists not added");
+            return false;
+        }
+
         try {
-            if(vehicle == null) return false;
-            if(vehicle.get_id() != null && isVehicleExists(vehicle.getRegNo())) return false;
             vehicleRepo.save(vehicle);
+            logger.info("vehicle added");
             return true;
-        } catch (Exception e) {}
-        return false;
+        } catch (Exception e) {
+            logger.error("add vehicle failed", e);
+            return false;
+        }
     }
 
-
     public boolean updateVehicle(Vehicle vehicle) {
+        logger.info("updating vehicle");
+
+        if (vehicle == null) {
+            logger.warn("vehicle is null not updated");
+            return false;
+        }
+
+        if (!isVehicleExists(vehicle.getRegNo())) {
+            logger.warn("vehicle does not exist not updated");
+            return false;
+        }
+
         try {
-            if(vehicle == null) return false;
-            if(!isVehicleExists(vehicle.getRegNo())) return false;
             vehicleRepo.save(vehicle);
+            logger.info("vehicle updated");
             return true;
-        } catch (Exception e) {}
-        return false;
+        } catch (Exception e) {
+            logger.error("update vehicle failed", e);
+            return false;
+        }
     }
 
 
     public boolean deleteVehicle(Vehicle vehicle) {
-        try {
-            if(vehicle == null) return false;
-            if(!isVehicleExists(vehicle.getRegNo())) return true;
-            vehicleRepo.delete(vehicle);
+        logger.info("deleting vehicle");
+
+        if (vehicle == null) {
+            logger.warn("vehicle is null not deleted");
+            return false;
+        }
+
+        if (!isVehicleExists(vehicle.getRegNo())) {
+            logger.info("vehicle does not exist considered deleted");
             return true;
-        } catch (Exception e) {}
-        return false;
+        }
+
+        try {
+            vehicleRepo.delete(vehicle);
+            logger.info("vehicle deleted");
+            return true;
+        } catch (Exception e) {
+            logger.error("delete vehicle failed", e);
+            return false;
+        }
     }
 
     public List<Vehicle> getVehicles(ObjectId owner) {
+        logger.info("retrieving vehicles");
+
+        if (owner == null) {
+            logger.warn("owner is null returning empty list");
+            return new ArrayList<>();
+        }
+
         try {
             List<Vehicle> vehicles = vehicleRepo.findByOwner(owner);
-            return (vehicles == null || vehicles.isEmpty()) ? new ArrayList<>() : vehicles;
-        } catch (Exception e) {}
-        return new ArrayList<>();
+            if (vehicles == null || vehicles.isEmpty()) {
+                logger.info("no vehicles found");
+                return new ArrayList<>();
+            }
+
+            logger.info("vehicles retrieved");
+            return vehicles;
+        } catch (Exception e) {
+            logger.error("retrieve vehicles failed", e);
+            return new ArrayList<>();
+        }
     }
 
     public Vehicle getVehicle(String regNo) {
+        logger.info("retrieving vehicle");
+
+        if (regNo == null || regNo.trim().isEmpty()) {
+            logger.warn("registration number is null or blank returning null");
+            return null;
+        }
+
         try {
             Optional<Vehicle> vehicle = vehicleRepo.findByRegNo(regNo);
-            return vehicle.orElse(null);
-        } catch (Exception e) {}
-        return null;
+            if (!vehicle.isPresent()) {
+                logger.info("vehicle not found");
+                return null;
+            }
+
+            logger.info("vehicle retrieved");
+            return vehicle.get();
+        } catch (Exception e) {
+            logger.error("retrieve vehicle failed", e);
+            return null;
+        }
     }
 
     public List<VehicleDTO> getVehicleDTOs(ObjectId owner) {
-        List<Vehicle> vehicles = vehicleRepo.findByOwner(owner);
+        logger.info("retrieving vehicle dtos");
+
         List<VehicleDTO> vehicleDTOS = new ArrayList<>();
+        if (owner == null) {
+            logger.warn("owner is null returning empty list");
+            return vehicleDTOS;
+        }
+
+        List<Vehicle> vehicles;
         try {
-            if(vehicles == null || vehicles.isEmpty()) return vehicleDTOS;
-            for(Vehicle v: vehicles) {
-                VehicleDTO vDTO = new VehicleDTO(v.getRegNo(), v.getVehicleType(), v.getFuelType(), v.getVehicleMake(),v.getVehicleModel(),v.getInsNo(),v.getInsExpDate(),v.getRegExpDate(), new ArrayList<>(), v.getCurrentMileage());
+            vehicles = vehicleRepo.findByOwner(owner);
+            if (vehicles == null || vehicles.isEmpty()) {
+                logger.info("no vehicles found");
+                return vehicleDTOS;
+            }
+
+            for (Vehicle v : vehicles) {
+                VehicleDTO vDTO = new VehicleDTO(
+                        v.getRegNo(),
+                        v.getVehicleType(),
+                        v.getFuelType(),
+                        v.getVehicleMake(),
+                        v.getVehicleModel(),
+                        v.getInsNo(),
+                        v.getInsExpDate(),
+                        v.getRegExpDate(),
+                        new ArrayList<>(),
+                        v.getCurrentMileage());
                 vehicleDTOS.add(vDTO);
             }
-        } catch (Exception e) {}
+
+            logger.info("vehicle dtos retrieved");
+        } catch (Exception e) {
+            logger.error("retrieve vehicle dtos failed", e);
+        }
         return vehicleDTOS;
     }
 
@@ -337,78 +532,187 @@ public class DatabaseAbstractLayer {
 //service records
 
     public boolean isServiceRecordExists(ObjectId serviceRecordId) {
+        logger.info("checking if service record exists");
+
+        if (serviceRecordId == null) {
+            logger.warn("service record id is null returning false");
+            return false;
+        }
+
         try {
-            return serviceRecordRepo.existsById(serviceRecordId);
-        } catch (Exception e) {}
-        return false;
+            boolean exists = serviceRecordRepo.existsById(serviceRecordId);
+            logger.info("service record existence check completed");
+            return exists;
+        } catch (Exception e) {
+            logger.error("service record existence check failed", e);
+            return false;
+        }
     }
 
 
 
     public boolean isServiceRecordExistsByVehicle(String vehicleRegNo) {
-        return serviceRecordRepo.existsByVehicle(vehicleRegNo);
+        logger.info("checking if service record exists by vehicle registration number");
+
+        if (vehicleRegNo == null || vehicleRegNo.trim().isEmpty()) {
+            logger.warn("vehicle registration number is null or blank returning false");
+            return false;
+        }
+
+        try {
+            boolean exists = serviceRecordRepo.existsByVehicle(vehicleRegNo);
+            logger.info("service record existence check by vehicle completed");
+            return exists;
+        } catch (Exception e) {
+            logger.error("service record existence check by vehicle failed", e);
+            return false;
+        }
     }
 
-
     public boolean addServiceRecord(ServiceRecord serviceRecord) {
+        logger.info("adding service record");
+
+        if (serviceRecord == null) {
+            logger.warn("service record is null not added");
+            return false;
+        }
+
+        if (serviceRecord.get_id() != null && isServiceRecordExists(serviceRecord.get_id())) {
+            logger.warn("service record already exists not added");
+            return false;
+        }
+
         try {
-            if(serviceRecord == null) return false;
-            if(serviceRecord.get_id() != null && isServiceRecordExists(serviceRecord.get_id())) return false;
             serviceRecordRepo.save(serviceRecord);
+            logger.info("service record added");
             return true;
-        } catch (Exception e) {}
-        return false;
+        } catch (Exception e) {
+            logger.error("add service record failed", e);
+            return false;
+        }
     }
 
 
     public boolean updateServiceRecord(ServiceRecord serviceRecord) {
+        logger.info("updating service record");
+
+        if (serviceRecord == null) {
+            logger.warn("service record is null not updated");
+            return false;
+        }
+
+        if (serviceRecord.get_id() == null || !isServiceRecordExists(serviceRecord.get_id())) {
+            logger.warn("service record does not exist or id is null not updated");
+            return false;
+        }
+
         try {
-            if(serviceRecord == null) return false;
-            if(!isServiceRecordExists(serviceRecord.get_id())) return false;
             serviceRecordRepo.save(serviceRecord);
+            logger.info("service record updated");
             return true;
-        } catch (Exception e) {}
-        return false;
+        } catch (Exception e) {
+            logger.error("update service record failed", e);
+            return false;
+        }
     }
 
     public boolean deleteServiceRecord(ServiceRecord serviceRecord) {
-        try {
-            if(serviceRecord == null) return false;
-            if(!isServiceRecordExists(serviceRecord.get_id())) return true;
-            serviceRecordRepo.delete(serviceRecord);
+        logger.info("deleting service record");
+
+        if (serviceRecord == null) {
+            logger.warn("service record is null not deleted");
+            return false;
+        }
+
+
+        if (serviceRecord.get_id() == null || !isServiceRecordExists(serviceRecord.get_id())) {
+            logger.info("service record does not exist or id is null considered deleted");
             return true;
-        } catch (Exception e) {}
-        return false;
+        }
+
+        try {
+            serviceRecordRepo.delete(serviceRecord);
+            logger.info("service record deleted");
+            return true;
+        } catch (Exception e) {
+            logger.error("delete service record failed", e);
+            return false;
+        }
     }
 
     public ServiceRecord getServiceRecord(ObjectId recordId) {
+        logger.info("retrieving service record");
+
+        if (recordId == null) {
+            logger.warn("record id is null returning null");
+            return null;
+        }
+
         try {
-            if(recordId == null) return null;
             Optional<ServiceRecord> serviceRecord = serviceRecordRepo.findById(recordId);
+            if (!serviceRecord.isPresent()) {
+                logger.info("service record not found");
+            } else {
+                logger.info("service record retrieved");
+            }
             return serviceRecord.orElse(null);
-        } catch (Exception e) {}
-        return null;
+        } catch (Exception e) {
+            logger.error("retrieve service record failed", e);
+            return null;
+        }
     }
 
     public List<ServiceRecord> getServiceRecords(String vehicleRegNo) {
+        logger.info("retrieving service records for vehicle");
+
+        if (vehicleRegNo == null || vehicleRegNo.trim().isEmpty()) {
+            logger.warn("vehicle registration number is null or blank returning empty list");
+            return new ArrayList<>();
+        }
+
         try {
             List<ServiceRecord> serviceRecords = serviceRecordRepo.findByVehicle(vehicleRegNo);
-            return (serviceRecords == null || serviceRecords.isEmpty()) ? new ArrayList<>() : serviceRecords;
-        } catch (Exception e) {}
-        return new ArrayList<>();
+            if (serviceRecords == null || serviceRecords.isEmpty()) {
+                logger.info("no service records found");
+                return new ArrayList<>();
+            } else {
+                logger.info("service records retrieved");
+                return serviceRecords;
+            }
+        } catch (Exception e) {
+            logger.error("retrieve service records failed", e);
+            return new ArrayList<>();
+        }
     }
 
 
     public List<ServiceRecordDTO> getServiceRecordDTOs(String vehicleRegNo) {
-        List<ServiceRecord> serviceRecords = serviceRecordRepo.findByVehicle(vehicleRegNo);
+        logger.info("retrieving service record DTOs for vehicle");
+
         List<ServiceRecordDTO> serviceRecordDTOS = new ArrayList<>();
+        if (vehicleRegNo == null || vehicleRegNo.trim().isEmpty()) {
+            logger.warn("vehicle registration number is null or blank returning empty list");
+            return serviceRecordDTOS;
+        }
+
+        List<ServiceRecord> serviceRecords;
         try {
-            if(serviceRecords == null || serviceRecords.isEmpty()) return serviceRecordDTOS;
-            for(ServiceRecord s: serviceRecords) {
+            serviceRecords = serviceRecordRepo.findByVehicle(vehicleRegNo);
+            if (serviceRecords == null || serviceRecords.isEmpty()) {
+                logger.info("no service records found");
+                return serviceRecordDTOS;
+            }
+
+            for (ServiceRecord s : serviceRecords) {
                 ServiceRecordDTO sDTO = new ServiceRecordDTO(s.get_id().toHexString(), s.getDescription(), s.getDate(), s.getMileage(), new ArrayList<>());
                 serviceRecordDTOS.add(sDTO);
             }
-        } catch (Exception e) {}
+
+            logger.info("service record DTOs retrieved");
+        } catch (Exception e) {
+            logger.error("retrieve service record DTOs failed", e);
+            return new ArrayList<>();
+        }
         return serviceRecordDTOS;
     }
 
@@ -417,44 +721,108 @@ public class DatabaseAbstractLayer {
 //maintaince
 
     public boolean isMaintenanceExists(Maintenance maintenance) {
-        return maintenanceRepo.existsById(maintenance.get_id());
-    }
+        logger.info("checking if maintenance exists");
 
-    public boolean addMaintenance(Maintenance maintenance) {
+        if (maintenance == null || maintenance.get_id() == null) {
+            logger.warn("maintenance or maintenance id is null returning false");
+            return false;
+        }
+
         try {
-            if(maintenance == null) return false;
-            if(maintenance.get_id() != null && isMaintenanceExists(maintenance)) return false;
+            boolean exists = maintenanceRepo.existsById(maintenance.get_id());
+            logger.info("maintenance existence check completed");
+            return exists;
+        } catch (Exception e) {
+            logger.error("maintenance existence check failed", e);
+            return false;
+        }
+    }
+    public boolean addMaintenance(Maintenance maintenance) {
+        logger.info("adding maintenance");
+
+        if (maintenance == null) {
+            logger.warn("maintenance is null not added");
+            return false;
+        }
+
+
+        if (maintenance.get_id() != null && isMaintenanceExists(maintenance)) {
+            logger.warn("maintenance already exists not added");
+            return false;
+        }
+
+        try {
             maintenanceRepo.save(maintenance);
+            logger.info("maintenance added");
             return true;
-        } catch (Exception e) {}
-        return false;
+        } catch (Exception e) {
+            logger.error("add maintenance failed", e);
+            return false;
+        }
     }
 
     public List<Maintenance> getMaintenanceList() {
+        logger.info("retrieving all maintenance records");
+
         try {
             List<Maintenance> maintenances = maintenanceRepo.findAll();
-            return maintenances.isEmpty() ? new ArrayList<>() : maintenances;
-        } catch (Exception e) {}
-        return new ArrayList<>();
+            if (maintenances == null || maintenances.isEmpty()) {
+                logger.info("no maintenance records found");
+                return new ArrayList<>();
+            } else {
+                logger.info("maintenance records retrieved");
+                return maintenances;
+            }
+        } catch (Exception e) {
+            logger.error("retrieve maintenance records failed", e);
+            return new ArrayList<>();
+        }
     }
 
     public List<Maintenance> getMaintenanceListByPredictionModel(PredictionModel predictionModel) {
-        try {
-            if(predictionModel == null) return new ArrayList<>();
-            List<Maintenance> maintenances = maintenanceRepo.findByPredictionModel(predictionModel.get_id());
-            return maintenances.isEmpty() ? new ArrayList<>() : maintenances;
-        } catch (Exception e) {}
-        return new ArrayList<>();
-    }
+        logger.info("retrieving maintenance records by prediction model");
 
-    public boolean deleteMaintenance(Maintenance maintenance) {
+        if (predictionModel == null || predictionModel.get_id() == null) {
+            logger.warn("prediction model or model id is null returning empty list");
+            return new ArrayList<>();
+        }
+
         try {
-            if(maintenance == null) return false;
-            if(!isMaintenanceExists(maintenance)) return true;
-            maintenanceRepo.delete(maintenance);
+            List<Maintenance> maintenances = maintenanceRepo.findByPredictionModel(predictionModel.get_id());
+            if (maintenances == null || maintenances.isEmpty()) {
+                logger.info("no maintenance records found for given prediction model");
+                return new ArrayList<>();
+            } else {
+                logger.info("maintenance records retrieved for given prediction model");
+                return maintenances;
+            }
+        } catch (Exception e) {
+            logger.error("retrieve maintenance records by prediction model failed", e);
+            return new ArrayList<>();
+        }
+    }
+    public boolean deleteMaintenance(Maintenance maintenance) {
+        logger.info("deleting maintenance");
+
+        if (maintenance == null) {
+            logger.warn("maintenance is null not deleted");
+            return false;
+        }
+
+
+        if (!isMaintenanceExists(maintenance)) {
+            logger.info("maintenance does not exist considered deleted");
             return true;
-        } catch (Exception e) {}
-        return false;
+        }
+
+        try {
+            maintenanceRepo.delete(maintenance);
+            logger.info("maintenance deleted");
+            return true;
+        } catch (Exception e) {
+            logger.error("delete maintenance failed", e);
+            return false;
+        }
     }
 
 
@@ -462,85 +830,202 @@ public class DatabaseAbstractLayer {
 //prediction model
 
     public boolean isPredictionModelExists(PredictionModel predictionModel) {
-        return predictionModelRepo.existsById(predictionModel.get_id());
+        logger.info("checking if prediction model exists");
+
+        if (predictionModel == null || predictionModel.get_id() == null) {
+            logger.warn("prediction model or model id is null returning false");
+            return false;
+        }
+
+        try {
+            boolean exists = predictionModelRepo.existsById(predictionModel.get_id());
+            logger.info("prediction model existence check completed");
+            return exists;
+        } catch (Exception e) {
+            logger.error("prediction model existence check failed", e);
+            return false;
+        }
     }
 
     public boolean addPredictionModel(PredictionModel predictionModel) {
+        logger.info("adding prediction model");
+
+        if (predictionModel == null) {
+            logger.warn("prediction model is null not added");
+            return false;
+        }
+
+        if (predictionModel.get_id() != null && isPredictionModelExists(predictionModel)) {
+            logger.warn("prediction model already exists not added");
+            return false;
+        }
+
         try {
-            if(predictionModel == null) return false;
-            if(predictionModel.get_id() != null && isPredictionModelExists(predictionModel)) return false;
             predictionModelRepo.save(predictionModel);
+            logger.info("prediction model added");
             return true;
-        } catch (Exception e) {}
-        return false;
+        } catch (Exception e) {
+            logger.error("add prediction model failed", e);
+            return false;
+        }
     }
 
     public boolean deletePredictionModel(PredictionModel predictionModel) {
-        try {
-            if(predictionModel == null) return false;
-            if(!isPredictionModelExists(predictionModel)) return true;
-            predictionModelRepo.delete(predictionModel);
+        logger.info("deleting prediction model");
+
+        if (predictionModel == null) {
+            logger.warn("prediction model is null not deleted");
+            return false;
+        }
+
+        if (!isPredictionModelExists(predictionModel)) {
+            logger.info("prediction model does not exist considered deleted");
             return true;
-        } catch (Exception e) {}
-        return false;
+        }
+
+        try {
+            predictionModelRepo.delete(predictionModel);
+            logger.info("prediction model deleted");
+            return true;
+        } catch (Exception e) {
+            logger.error("delete prediction model failed", e);
+            return false;
+        }
     }
 
 
     public List<PredictionModel> getPredictionModelList() {
+        logger.info("retrieving all prediction models");
+
         try {
             List<PredictionModel> predictionModels = predictionModelRepo.findAll();
-            return predictionModels.isEmpty() ? new ArrayList<>() : predictionModels;
-        } catch (Exception e) {}
-        return new ArrayList<>();
+            if (predictionModels == null || predictionModels.isEmpty()) {
+                logger.info("no prediction models found");
+                return new ArrayList<>();
+            } else {
+                logger.info("prediction models retrieved");
+                return predictionModels;
+            }
+        } catch (Exception e) {
+            logger.error("retrieve prediction models failed", e);
+            return new ArrayList<>();
+        }
     }
 
     public List<PredictionModel> getPredictionModelListByMaintenance(Maintenance.MaintenanceType maintenanceType) {
+        logger.info("retrieving prediction models by maintenance type");
+
+        if (maintenanceType == null) {
+            logger.warn("maintenance type is null returning empty list");
+            return new ArrayList<>();
+        }
+
         try {
             List<PredictionModel> predictionModels = predictionModelRepo.findByMaintenanceType(maintenanceType);
-            return predictionModels.isEmpty() ? new ArrayList<>() : predictionModels;
-        } catch (Exception e) {}
-        return new ArrayList<>();
+            if (predictionModels == null || predictionModels.isEmpty()) {
+                logger.info("no prediction models found for the given maintenance type");
+                return new ArrayList<>();
+            } else {
+                logger.info("prediction models retrieved for the given maintenance type");
+                return predictionModels;
+            }
+        } catch (Exception e) {
+            logger.error("retrieve prediction models by maintenance type failed", e);
+            return new ArrayList<>();
+        }
     }
 
 
     public boolean isTokenExists(String tokenName) {
+        logger.info("checking if token exists");
+
+        if (tokenName == null || tokenName.trim().isEmpty()) {
+            logger.warn("token name is null or empty returning false");
+            return false;
+        }
+
         try {
-            return tokenRepo.existsByTokenName(tokenName);
-        } catch (Exception e) {}
-        return false;
+            boolean exists = tokenRepo.existsByTokenName(tokenName);
+            logger.info("token existence check completed");
+            return exists;
+        } catch (Exception e) {
+            logger.error("token existence check failed", e);
+            return false;
+        }
     }
 
 
     public boolean addToken(Token token) {
+        logger.info("adding token");
+
+        if (token == null) {
+            logger.warn("token is null not added");
+            return false;
+        }
+
+        if (token.get_id() != null && isTokenExists(token.getTokenName())) {
+            logger.warn("token already exists not added");
+            return false;
+        }
+
         try {
-            if(token == null) return false;
-            if(token.get_id() != null && isTokenExists(token.getTokenName())) return false;
             tokenRepo.save(token);
+            logger.info("token added");
             return true;
-        } catch (Exception e) {}
-        return false;
+        } catch (Exception e) {
+            logger.error("add token failed", e);
+            return false;
+        }
     }
 
 
     public boolean updateToken(Token token) {
+        logger.info("updating token");
+
+        if (token == null) {
+            logger.warn("token is null not updated");
+            return false;
+        }
+
+        if (!isTokenExists(token.getTokenName())) {
+            logger.warn("token does not exist not updated");
+            return false;
+        }
+
         try {
-            if(token == null) return false;
-            if(!isTokenExists(token.getTokenName())) return false;
             tokenRepo.save(token);
+            logger.info("token updated");
             return true;
-        } catch (Exception e) {}
-        return false;
+        } catch (Exception e) {
+            logger.error("update token failed", e);
+            return false;
+        }
+    }
+    public boolean deleteToken(Token token) {
+        logger.info("deleting token");
+
+        if (token == null) {
+            logger.warn("token is null not deleted");
+            return false;
+        }
+
+        if (!isTokenExists(token.getTokenName())) {
+            logger.info("token does not exist considered deleted");
+            return true;
+        }
+
+        try {
+            tokenRepo.delete(token);
+            logger.info("token deleted");
+            return true;
+        } catch (Exception e) {
+            logger.error("delete token failed", e);
+            return false;
+        }
     }
 
-    public boolean deleteToken(Token token) {
-        try {
-            if(token == null) return false;
-            if(!isTokenExists(token.getTokenName())) return true;
-            tokenRepo.delete(token);
-            return true;
-        } catch (Exception e) {}
-        return false;
-    }
+
+    // to bo completed from here
 
     public Token getToken(String tokenName) {
         try {
@@ -550,10 +1035,6 @@ public class DatabaseAbstractLayer {
         } catch (Exception e) {}
         return null;
     }
-
-
-
-
 
 
     public boolean isTrackingInfoExists(String vehicleRegNo) {
@@ -593,7 +1074,4 @@ public class DatabaseAbstractLayer {
         } catch (Exception e) {}
         return null;
     }
-
-
-
 }
