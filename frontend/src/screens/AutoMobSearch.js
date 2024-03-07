@@ -10,6 +10,7 @@ function AutoMobSearch(props) {
     const [varCap, setVarCap] = useState("");
     const [selectedMapUri, setSelectedMapUri] = useState("");
     const [error, setError] = useState("");
+    const [expandedInfo, setExpandedInfo] = useState({});
 
     useEffect(() => {
         props.app.getCurrentLocation().then(location => {
@@ -84,6 +85,12 @@ function AutoMobSearch(props) {
             setAutoShops([]);
         }
     };
+    const toggleAdditionalInfo = (index) => {
+        setExpandedInfo(prevState => ({
+            ...prevState,
+            [index]: !prevState[index]
+        }));
+    };
 
     return (
         <>
@@ -152,20 +159,28 @@ function AutoMobSearch(props) {
                             <Card>
                                 <Card.Body>
                                     <Card.Title>{shop.displayName.text}</Card.Title>
-                                    <Card.Text>{shop.internationalPhoneNumber}</Card.Text>
-                                    <Card.Text>{shop.formattedAddress}</Card.Text>
-                                    <Card.Text>Open Now? {shop.currentOpeningHours?.openNow.toString()}</Card.Text>
+                                    <Card.Text>{shop.currentOpeningHours?.openNow ? 'Open Now' : 'Currently Closed'}</Card.Text>
+                                    <Card.Text>
+                                        <a href={`tel:${shop.internationalPhoneNumber}`}>{shop.internationalPhoneNumber}</a>
+                                    </Card.Text>
                                     <Card.Text>Rating: {shop.rating}</Card.Text>
                                     {shop.location && (
                                         <Button variant="primary" onClick={() => showOnMap(shop.location)}>View on Map</Button>
                                     )}
+                                    <Button variant="info" onClick={() => toggleAdditionalInfo(index)}>
+                                        {expandedInfo[index] ? 'Show Less' : 'Show More Info'}
+                                    </Button>
+                                    {expandedInfo[index] && (
+                                        <div className="additional-info">
+                                            <Card.Text>{shop.formattedAddress}</Card.Text>
+                                        </div>
+                                    )}
+
                                 </Card.Body>
                             </Card>
                         </Col>
                     )) : <Col><p className="text-center">{varCap}</p></Col>}
                 </Row>
-
-
                 <Row className="my-3">
                     <Col>
                         <Button variant="secondary" onClick={handleGoBack}>Go Back</Button>
