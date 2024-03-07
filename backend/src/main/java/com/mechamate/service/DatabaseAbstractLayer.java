@@ -53,6 +53,12 @@ public class DatabaseAbstractLayer {
     private TrackingInfoRepo trackingInfoRepo;
 
 
+
+
+        /*
+    USERPROFILE SECTION
+        */
+
     public boolean isUserExists(String username) {
         return userProfileRepo.existsByUsername(username);
     }
@@ -218,7 +224,12 @@ public class DatabaseAbstractLayer {
         }
     }
 
-//sessions
+
+
+    /*
+    SESSION SECTION
+    */
+
 
     public boolean isSessionExists(String sessionKey) {
         logger.info("Check session: {}", sessionKey);
@@ -335,7 +346,12 @@ public class DatabaseAbstractLayer {
         }
     }
 
-    //vehicles
+
+        /*
+    Vehicle SECTION
+    */
+
+
     public boolean isVehicleExists(String regNo) {
         logger.info("checking if vehicle exists");
 
@@ -529,7 +545,10 @@ public class DatabaseAbstractLayer {
 
 
 
-//service records
+    /*
+    SERVICE RECORD SECTION
+    */
+
 
     public boolean isServiceRecordExists(ObjectId serviceRecordId) {
         logger.info("checking if service record exists");
@@ -718,7 +737,10 @@ public class DatabaseAbstractLayer {
 
 
 
-//maintaince
+        /*
+    MAINTENANCE SECTION
+    */
+
 
     public boolean isMaintenanceExists(Maintenance maintenance) {
         logger.info("checking if maintenance exists");
@@ -827,7 +849,9 @@ public class DatabaseAbstractLayer {
 
 
 
-//prediction model
+    /*
+    PREDICTION MODEL SECTION
+    */
 
     public boolean isPredictionModelExists(PredictionModel predictionModel) {
         logger.info("checking if prediction model exists");
@@ -936,6 +960,11 @@ public class DatabaseAbstractLayer {
     }
 
 
+    /*
+    TOKEN SECTION
+    */
+
+
     public boolean isTokenExists(String tokenName) {
         logger.info("checking if token exists");
 
@@ -1025,53 +1054,120 @@ public class DatabaseAbstractLayer {
     }
 
 
-    // to bo completed from here
 
     public Token getToken(String tokenName) {
+        logger.info("retrieving token by name");
+
+        if (tokenName == null || tokenName.trim().isEmpty()) {
+            logger.warn("token name is null or empty returning null");
+            return null;
+        }
+
         try {
-            if(tokenName == null) return null;
             Optional<Token> token = tokenRepo.findByTokenName(tokenName);
+            if (!token.isPresent()) {
+                logger.info("token not found");
+            } else {
+                logger.info("token retrieved");
+            }
             return token.orElse(null);
-        } catch (Exception e) {}
-        return null;
+        } catch (Exception e) {
+            logger.error("retrieve token failed", e);
+            return null;
+        }
     }
 
 
+    /*
+    TRACKING INFORMATION SECTION
+    */
+
+
     public boolean isTrackingInfoExists(String vehicleRegNo) {
+        logger.info("checking if tracking info exists for vehicle");
+
+        if (vehicleRegNo == null || vehicleRegNo.trim().isEmpty()) {
+            logger.warn("vehicle registration number is null or empty returning false");
+            return false;
+        }
+
         try {
-            return trackingInfoRepo.existsByVehicleRegNo(vehicleRegNo);
-        } catch (Exception e) {}
-        return false;
+            boolean exists = trackingInfoRepo.existsByVehicleRegNo(vehicleRegNo);
+            logger.info("tracking info existence check completed");
+            return exists;
+        } catch (Exception e) {
+            logger.error("tracking info existence check failed", e);
+            return false;
+        }
     }
 
 
     public boolean addTrackingInfo(TrackingInfo trackingInfo) {
+        logger.info("adding tracking info");
+
+        if (trackingInfo == null) {
+            logger.warn("tracking info is null not added");
+            return false;
+        }
+
+        if (trackingInfo.getVehicleRegNo() != null && isTrackingInfoExists(trackingInfo.getVehicleRegNo())) {
+            logger.warn("tracking info already exists for the vehicle not added");
+            return false;
+        }
+
         try {
-            if(trackingInfo == null) return false;
-            if(trackingInfo.get_id() != null && isTrackingInfoExists(trackingInfo.getVehicleRegNo())) return false;
             trackingInfoRepo.save(trackingInfo);
+            logger.info("tracking info added");
             return true;
-        } catch (Exception e) {}
-        return false;
+        } catch (Exception e) {
+            logger.error("add tracking info failed", e);
+            return false;
+        }
     }
 
 
     public boolean deleteTrackingInfo(TrackingInfo trackingInfo) {
-        try {
-            if(trackingInfo == null) return false;
-            if(!isTrackingInfoExists(trackingInfo.getVehicleRegNo())) return true;
-            trackingInfoRepo.delete(trackingInfo);
+        logger.info("deleting tracking info");
+
+        if (trackingInfo == null) {
+            logger.warn("tracking info is null not deleted");
+            return false;
+        }
+
+        if (!isTrackingInfoExists(trackingInfo.getVehicleRegNo())) {
+            logger.info("tracking info does not exist considered deleted");
             return true;
-        } catch (Exception e) {}
-        return false;
+        }
+
+        try {
+            trackingInfoRepo.delete(trackingInfo);
+            logger.info("tracking info deleted");
+            return true;
+        } catch (Exception e) {
+            logger.error("delete tracking info failed", e);
+            return false;
+        }
     }
 
     public List<TrackingInfo> getTrackingInfo(String vehicleRegNo) {
+        logger.info("retrieving tracking info for vehicle");
+
+        if (vehicleRegNo == null || vehicleRegNo.trim().isEmpty()) {
+            logger.warn("vehicle registration number is null or empty returning null");
+            return null;
+        }
+
         try {
-            if(vehicleRegNo == null) return null;
             List<TrackingInfo> trackingInfo = trackingInfoRepo.findAllByVehicleRegNo(vehicleRegNo);
+            if (trackingInfo == null || trackingInfo.isEmpty()) {
+                logger.info("no tracking info found for vehicle");
+            } else {
+                logger.info("tracking info retrieved for vehicle");
+            }
             return trackingInfo;
-        } catch (Exception e) {}
-        return null;
+        } catch (Exception e) {
+            logger.error("retrieve tracking info failed", e);
+            return null;
+        }
     }
 }
