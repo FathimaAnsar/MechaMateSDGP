@@ -103,6 +103,22 @@ function AutoMobSearch(props) {
                         <h2 className="text-center">Finding Spare Parts for Your Vehicle!</h2>
                     </Col>
                 </Row>
+                <Row className="mt-3">
+                    <Col>
+                        <h4 className="text-center mb-3">Selected Location</h4>
+                        <div className="map-container mb-4">
+                            <iframe
+                                title="map"
+                                src={selectedMapUri}
+                                width="100%"
+                                height="300"
+                                frameBorder="0"
+                                style={{border: 0}}
+                                allowFullScreen=""
+                            ></iframe>
+                        </div>
+                    </Col>
+                </Row>
                 <Row className="my-3">
                     <Col xs={12} md={6}>
                         <Form.Group controlId="limit">
@@ -136,22 +152,7 @@ function AutoMobSearch(props) {
                     </Col>
                 </Row>
 
-                <Row className="mt-3">
-                    <Col>
-                        <h4 className="text-center mb-3">Selected Location</h4>
-                        <div className="map-container mb-4">
-                            <iframe
-                                title="map"
-                                src={selectedMapUri}
-                                width="100%"
-                                height="300"
-                                frameBorder="0"
-                                style={{border: 0}}
-                                allowFullScreen=""
-                            ></iframe>
-                        </div>
-                    </Col>
-                </Row>
+
 
                 <Row className="my-3">
                     {autoShops.length ? autoShops.map((shop, index) => (
@@ -161,8 +162,13 @@ function AutoMobSearch(props) {
                                     <Card.Title>{shop.displayName.text}</Card.Title>
                                     <Card.Text>{shop.currentOpeningHours?.openNow ? 'Open Now' : 'Currently Closed'}</Card.Text>
                                     <Card.Text>
-                                        <a href={`tel:${shop.internationalPhoneNumber}`}>{shop.internationalPhoneNumber}</a>
+                                        {shop.internationalPhoneNumber ? (
+                                            <a href={`tel:${shop.internationalPhoneNumber}`}>{shop.internationalPhoneNumber}</a>
+                                        ) : (
+                                            'No number available'
+                                        )}
                                     </Card.Text>
+
                                     <Card.Text>Rating: {shop.rating}</Card.Text>
                                     {shop.location && (
                                         <Button variant="primary" onClick={() => showOnMap(shop.location)}>View on Map</Button>
