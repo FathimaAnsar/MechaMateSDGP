@@ -159,11 +159,12 @@ function MyVehicles(props) {
 
   <Button variant="primary" onClick={addVehicle} >Save</Button> 
   </Form>
+  </div>
   <Button variant="secondary" onClick={handleGoBack}>Go Back</Button>{' '}
 
 
   </div>  
-    </div>
+ 
   )
 }
 

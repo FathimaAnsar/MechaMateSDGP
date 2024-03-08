@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Header from "./components/Header";
+import ToggleThemeButton from "./components/ToggleThemeButton";
 function Settings(props) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -57,10 +58,7 @@ function Settings(props) {
         <br />
         <label>
           Theme:
-          <select value={theme} onChange={handleThemeChange}>
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
-          </select>
+          <ToggleThemeButton/>
         </label>
         <br />
         <label>
