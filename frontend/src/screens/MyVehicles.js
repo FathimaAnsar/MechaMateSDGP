@@ -6,6 +6,7 @@ import DatePicker from "react-datepicker";
 import Button from 'react-bootstrap/Button';
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
+import './styles/Form.css';
 
 
 
@@ -57,9 +58,41 @@ function MyVehicles(props) {
       }
  }
 
+//  const addVehicle = async(e) =>{
+//   const vehicle= {
+//      regNo: regNo,
+//      vehicleType: vehicleType,
+//      fuelType: fuelType,
+//      vehicleMake: vehicleMake,
+//      vehicleModel: vehicleModel,
+//      insNo: insNo,
+//      insExpDate: insExpDate,
+//      regExpDate: regExpDate
+//    }
+//    let connection = new ConnectionManager();
+
+//       const resp = await connection.addVehicle(vehicle);
+//       const response = JSON.parse(resp);
+
+
+//       if(!response) {
+//           alert("Please check your springboot localhost is running");
+//           return;
+//       }
+//       if (response.error) {
+        
+//          alert("Vehicle Registration Failed: " + response.message + "\n" + response.help);
+//       } else if (response.status) {
+//         alert("VEhicle Registration Success: " + response.message + "\n" + response.help);
+//       } else {
+//           alert("Error: Unknown");
+//       }
+//   }
+
   return (
     <div>
     <Header app ={props.app}/>
+    <div className="form-container">
     <Form>
     <FloatingLabel controlId="floatingSelect" label="Vehicle Type" className='dropdown'>
     <Form.Select aria-label="Floating label select example"  value={vehicleType}
@@ -124,12 +157,12 @@ function MyVehicles(props) {
   <DatePicker selected={insExpDate} onChange={(date) => setInsExpDate(date)} />
   </Form.Group>
 
-  <Button variant="primary" onClick={addVehicle}>Save</Button> 
+  <Button variant="primary" onClick={addVehicle} >Save</Button> 
   </Form>
+  <Button variant="secondary" onClick={handleGoBack}>Go Back</Button>{' '}
 
-<button onClick={handleGoBack}>Go Back</button>
 
-      
+  </div>  
     </div>
   )
 }
