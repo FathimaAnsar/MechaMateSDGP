@@ -36,12 +36,8 @@ body {
   min-height: 100vh; 
 }
 
-.dropdown  {
-  width: 20rem;
-}
-.textbox{
-  width: 20rem;
-}
+
+
 .circle{
   border-radius: 50%;
 }

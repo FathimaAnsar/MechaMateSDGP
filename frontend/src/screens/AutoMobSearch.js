@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Button, Form, Card } from 'react-bootstrap';
+import { Container, Row, Col, Button, Form, Card, Alert } from 'react-bootstrap';
 import { Pages } from "../Pages.js"
 import ConnectionManager from '../services/ConnectionManager';
 import Header from "./components/Header";
@@ -8,12 +8,18 @@ function AutoMobSearch(props) {
     const [currentLocation, setCurrentLocation] = useState(null);
     const [autoShops, setAutoShops] = useState([]);
     const [varCap, setVarCap] = useState("");
+    const [selectedMapUri, setSelectedMapUri] = useState("");
+    const [error, setError] = useState("");
+    const [expandedInfo, setExpandedInfo] = useState({});
 
     useEffect(() => {
         props.app.getCurrentLocation().then(location => {
+            console.log("Current location obtained: ", location);
             setCurrentLocation(location);
+            setSelectedMapUri(`https://maps.google.com/maps?q=${location.latitude},${location.longitude}&z=15&output=embed`);
         }).catch(exp => {
-            alert(exp.message || "Failed to get location information");
+            console.error("Failed to get location: ", exp);
+            setError(exp.message || "Failed to get location information");
             props.app.changePage(Pages.DashboardUI);
         });
     }, [props.app]);
@@ -22,43 +28,95 @@ function AutoMobSearch(props) {
         props.app.goBack();
     }
 
+    const showOnMap = (location) => {
+        if (location && location.latitude && location.longitude) {
+            const mapsUrl = `https://maps.google.com/maps?q=${location.latitude},${location.longitude}&z=15&output=embed`;
+            setSelectedMapUri(mapsUrl);
+        } else {
+            console.error("Invalid location data for map: ", location);
+            setError("Invalid location data for map.");
+        }
+    };
+
     const handleClick = async () => {
+        setError("");
         setVarCap("Loading...");
         setAutoShops([]);
         const limit = document.getElementById('limit').value;
         const radius = document.getElementById('radius').value;
 
-        let connection = new ConnectionManager();
-        const resp = await connection.getNearbyAutoShops(currentLocation.latitude, currentLocation.longitude, radius, limit);
-        const response = JSON.parse(resp);
-
-        if (!response) {
-            setVarCap("");
-            alert("Please check your Spring Boot service is running");
+        // Input validation
+        if (!limit || !radius) {
+            console.error("Invalid input: Limit or radius is missing.");
+            setError("Please select both a limit and a radius.");
             return;
         }
 
-        if (response.error) {
-            setVarCap("");
-            setAutoShops([]);
-            alert(`Error occurred: ${response.message}`);
-        } else if (response.places && Array.isArray(response.places)) {
-            setVarCap("Automobile Shops");
-            setAutoShops(response.places);
-        } else {
-            setVarCap("");
-            setAutoShops([]);
-            alert("Invalid response");
+        if (!currentLocation) {
+            console.error("No current location available.");
+            setError("Current location is not available.");
+            return;
         }
+
+        let connection = new ConnectionManager();
+        try {
+            const resp = await connection.getNearbyAutoShops(currentLocation.latitude, currentLocation.longitude, radius, limit);
+            const response = JSON.parse(resp);
+
+            if (response.error) {
+                console.error("Error from server: ", response.message);
+                setError(`Error occurred: ${response.message}`);
+                setVarCap("");
+                setAutoShops([]);
+            } else if (response.places && Array.isArray(response.places)) {
+                console.log("Auto shops retrieved: ", response.places);
+                setVarCap("Automobile Shops");
+                setAutoShops(response.places);
+            } else {
+                console.error("Invalid response format: ", response);
+                setError("Invalid response format.");
+                setVarCap("");
+                setAutoShops([]);
+            }
+        } catch (error) {
+            console.error("Exception when calling getNearbyAutoShops: ", error);
+            setError("An error occurred while trying to fetch auto shops. Please check your network connection and try again.");
+            setVarCap("");
+            setAutoShops([]);
+        }
+    };
+    const toggleAdditionalInfo = (index) => {
+        setExpandedInfo(prevState => ({
+            ...prevState,
+            [index]: !prevState[index]
+        }));
     };
 
     return (
         <>
             <Header app={props.app} />
             <Container>
+                {error && <Alert variant="danger">{error}</Alert>}
+
                 <Row>
                     <Col>
-                        <h2 className="text-center">Finding spare parts for your vehicle!</h2>
+                        <h2 className="text-center">Finding Spare Parts for Your Vehicle!</h2>
+                    </Col>
+                </Row>
+                <Row className="mt-3">
+                    <Col>
+                        <h4 className="text-center mb-3">Selected Location</h4>
+                        <div className="map-container mb-4">
+                            <iframe
+                                title="map"
+                                src={selectedMapUri}
+                                width="100%"
+                                height="300"
+                                frameBorder="0"
+                                style={{border: 0}}
+                                allowFullScreen=""
+                            ></iframe>
+                        </div>
                     </Col>
                 </Row>
                 <Row className="my-3">
@@ -70,7 +128,7 @@ function AutoMobSearch(props) {
                                 <option value="10">Show only 10 results</option>
                                 <option value="15">Show only 15 results</option>
                                 <option value="20">Show only 20 results</option>
-                                <option value="25">Show only 25 results</option>
+                                {/*/!*<option value="25">Show only 25 results</option>*!/ committed due to   Internal API connection failed*/}
                             </Form.Control>
                         </Form.Group>
                     </Col>
@@ -94,22 +152,41 @@ function AutoMobSearch(props) {
                     </Col>
                 </Row>
 
+
+
                 <Row className="my-3">
                     {autoShops.length ? autoShops.map((shop, index) => (
                         <Col key={index} sm={12} md={6} lg={4} className="mb-3">
                             <Card>
                                 <Card.Body>
                                     <Card.Title>{shop.displayName.text}</Card.Title>
-                                    <Card.Text>{shop.internationalPhoneNumber}</Card.Text>
-                                    <Card.Text>{shop.formattedAddress}</Card.Text>
-                                    <Card.Text>Open Now? {shop.currentOpeningHours.openNow.toString()}</Card.Text>
+                                    <Card.Text>{shop.currentOpeningHours?.openNow ? 'Open Now' : 'Currently Closed'}</Card.Text>
+                                    <Card.Text>
+                                        {shop.internationalPhoneNumber ? (
+                                            <a href={`tel:${shop.internationalPhoneNumber}`}>{shop.internationalPhoneNumber}</a>
+                                        ) : (
+                                            'No number available'
+                                        )}
+                                    </Card.Text>
+
                                     <Card.Text>Rating: {shop.rating}</Card.Text>
+                                    {shop.location && (
+                                        <Button variant="primary" onClick={() => showOnMap(shop.location)}>View on Map</Button>
+                                    )}
+                                    <Button variant="info" onClick={() => toggleAdditionalInfo(index)}>
+                                        {expandedInfo[index] ? 'Show Less' : 'Show More Info'}
+                                    </Button>
+                                    {expandedInfo[index] && (
+                                        <div className="additional-info">
+                                            <Card.Text>{shop.formattedAddress}</Card.Text>
+                                        </div>
+                                    )}
+
                                 </Card.Body>
                             </Card>
                         </Col>
                     )) : <Col><p className="text-center">{varCap}</p></Col>}
                 </Row>
-
                 <Row className="my-3">
                     <Col>
                         <Button variant="secondary" onClick={handleGoBack}>Go Back</Button>

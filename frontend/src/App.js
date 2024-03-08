@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useContext } from "react"
 import { main } from "./MechaMate.js"
 import { Pages } from "./Pages.js"
 import GetStarted from "./screens/GetStarted.js";
@@ -26,6 +26,7 @@ import ShowServiceRecordRequest from "./screens/ShowServiceRecordRequest.js";
 import ParkingFinder from "./screens/ParkingFinder.js";
 import ParkingInfo from "./screens/ParkingInfo.js"; 
 import './styles/App.css';
+import ThemeContext from './screens/components/ThemeContext.js';
 
 
 //main.reset();
@@ -33,7 +34,7 @@ import './styles/App.css';
 function App() {
 
   const [currentPage, setCurrentPage] = useState("");
-
+  const { theme } = useContext(ThemeContext);
   const changeCurrentPage = () => setCurrentPage(main.currentPage);
   main.setRefreshCaller(changeCurrentPage);
 
@@ -104,7 +105,10 @@ function App() {
   if (main.currentPage === Pages.ParkingFinderUI) return (<><ParkingFinder app={main} /></>);
   if (main.currentPage === Pages.ParkingInfoUI) return (<><ParkingInfo app={main} /></>);
 
-  return (<><SignIn app={main} /></>);
+  return (<div className={`App ${theme}`}>
+    <><SignIn app={main} /></>
+    </div>
+    );
 
 }
 
