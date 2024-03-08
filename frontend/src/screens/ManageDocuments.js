@@ -10,7 +10,7 @@ function ManageDocuments(props) {
       {/* Button to add service record manually */}
       <button onClick={() =>{props.app.changePage(Pages.AddSRecordManualUI)}}>Add Service Record Manually</button>
       {/* Button to add service record with a QR code */}
-      <button onClick={() => props.app.changePage('AddServiceRecordByServiceProvider')}>Add Service Record by QR Code</button>
+      <button onClick={() => props.app.changePage(Pages.AddSRecordQRUI)}>Add Service Record by QR Code</button>
     </div>
   );
 }
