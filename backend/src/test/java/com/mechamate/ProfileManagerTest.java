@@ -42,13 +42,13 @@ public class ProfileManagerTest {
         MockitoAnnotations.openMocks(this);
 
         userProfile = new UserProfile();
-        userProfile.setUsername("testUser");
-        userProfile.setEmail("testUser@example.com");
+        userProfile.setUsername("ado");
+        userProfile.setEmail("adooo@xml.com");
         userProfile.setStatus(UserProfile.Status.StatusActive);
         userProfile.setLanguage("en");
         userProfile.setPassword(Common.getSha256("AUTH#>>(" + correctPassword + ")<<#"));
 
-        when(lang.get(anyString(), anyString())).thenReturn("Sample error message");
+        when(lang.get(anyString(), anyString())).thenReturn("error message");
     }
 
 
@@ -139,7 +139,6 @@ public class ProfileManagerTest {
 
         ResponseEntity<ErrorDTO> response = profileManager.signin(request, userProfile.getUsername(), correctPassword, userProfile);
 
-        // expecting a failure response because the user is inactive
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotEquals(null, response.getBody());
