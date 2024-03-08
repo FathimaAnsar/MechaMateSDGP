@@ -14,6 +14,10 @@ import java.util.Random;
 @Document(collection = "UserProfiles")
 public class UserProfile {
 
+    public UserProfile() {
+
+    }
+
     public enum Status {
         StatusActive,
         StatusInactive,
