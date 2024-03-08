@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Header from "./components/Header";
 import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
+import './styles/Form.css';
 
 function AddServiceRecordByServiceProvider(props) {
     const [serviceType, setServiceType] = useState('');
@@ -32,7 +33,7 @@ function AddServiceRecordByServiceProvider(props) {
     <div>
         <Header app ={props.app}/>
       <h2>Add Service Records Manually</h2>
-
+      <div className="form-container">
       <Form>
         <Form.Group controlId="serviceType">
           <Form.Label>Service Type:</Form.Label>
@@ -67,11 +68,13 @@ function AddServiceRecordByServiceProvider(props) {
 
         <Button variant="primary" onClick={addSRecord}>Submit</Button> 
       </Form>
+      </div>
 
-      <Button onClick={() => props.app.changePage('ManageMyDocuments')}>
+      <Button variant="secondary" onClick={() => props.app.changePage('ManageMyDocuments')}>
         Go Back
       </Button>
     </div>
+    
   );
 }
 
