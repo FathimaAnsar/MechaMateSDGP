@@ -1,8 +1,4 @@
 
-/*
-    Author:     B.D.C JAYASANKA
-    Copyright:  © 2023, All rights reserved
-*/
 
 
 package com.mechamate.service;

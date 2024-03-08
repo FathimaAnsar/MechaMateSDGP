@@ -23,3 +23,34 @@
 
 // export default AddServiceRecordByQR;
 
+import React, { useEffect, useRef } from 'react';
+import QRCode from 'qrcode.react';
+
+function AddServiceRecordByQR({ url }) {
+  const qrCodeRef = useRef(null);
+
+  useEffect(() => {
+    if (qrCodeRef.current) {
+      const canvas = qrCodeRef.current.querySelector('canvas');
+      if (canvas) {
+        const context = canvas.getContext('2d');
+        if (context) {
+          context.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+
+      new QRCode(qrCodeRef.current, {
+        text: url,
+        width: 128,
+        height: 128,
+        colorDark: '#000',
+        colorLight: '#fff',
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    }
+  }, [url]);
+
+  return <div ref={qrCodeRef}></div>;
+}
+
+export default AddServiceRecordByQR;
