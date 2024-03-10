@@ -49,6 +49,8 @@ function Dashboard(props) {
     { title: 'Camry', regNo: 'CBK-4567', description: 'Toyota' },
     { title: 'Civic', regNo: 'CGK-4367', description: 'Honda' },
     { title: 'Vitz', regNo: 'CEK-4567', description: 'Toyota' },
+    { title: 'Camry', regNo: 'CBK-4567', description: 'Toyota' },
+    { title: 'Civic', regNo: 'CGK-4367', description: 'Honda' },
   ];
 
 
@@ -71,22 +73,21 @@ function Dashboard(props) {
 
       <Container fluid >
 
+        <Row style={{ marginTop: '10px' }}>
+          <Col><h1 style={{ fontWeight: '700', fontFamily: 'sans-serif' }}>{generateGreeting()} {(props.app.getUserProfile() == null ? "<User>" : props.app.getUserProfile().firstName)}!</h1>
+          </Col>
+        </Row>
         <Row>
           <Col>
             <CustomCarousel />
           </Col>
         </Row>
-        <Row>
-          <Col><h1>{generateGreeting()} {(props.app.getUserProfile() == null ? "<User>" : props.app.getUserProfile().firstName)}!</h1>
-          </Col>
-        </Row>
-
 
         <Row>
           <Col>
-            <h2>My vehicles</h2>
-            <div style={{ height: '100%', overflowY: 'auto' }}>
-              <Stack direction="horizontal" gap={3}>
+            <h2>Vehicles</h2>
+            <div style={{ marginTop:'15px', height: '100%', overflowY: 'auto' }}>
+              <Stack direction="horizontal" gap={4}>
                 {cars.map((car, index) => (
                   <div className="">
                     <ClickableCard key={index} content={car} onClick={handleCardClick} />
@@ -116,10 +117,10 @@ function Dashboard(props) {
       </div>
 
       <div id="PredictiveMaintenance">
-        <h2>Predictive Maintenance</h2>
+        <h2>Maintenance predictions</h2>
         <button onClick={() => { props.app.changePage(Pages.PredictMaintenanceUI) }}>
           <span style={{ marginRight: '5px' }}>🛠️</span> {/* Material Icon */}
-          Open Predictive Maintenance
+          Open Maintenance predictions
         </button>
       </div>
 
@@ -154,35 +155,6 @@ function Dashboard(props) {
           Open to Find a parking place
         </button>
       </div>
-
-      <Button size='sm' variant='dark' onClick={handleGoBack}>Go Back</Button>
-
-      <hr></hr>
-
-      <div id="myVehicle">
-        <h2>My vehicles</h2>
-        <ul>
-          <li>
-            <button onClick={() => toggleDropdown('desc1')}>Vehicle 1</button>
-            <div style={{ display: dropdownStates['desc1'] ? 'block' : 'none' }} className="dropdown-content">
-              Description for Vehicle 1.
-            </div>
-          </li>
-          <li>
-            <button onClick={() => toggleDropdown('desc2')}>Vehicle 2</button>
-            <div style={{ display: dropdownStates['desc2'] ? 'block' : 'none' }} className="dropdown-content">
-              Description for Vehicle 2.
-            </div>
-          </li>
-
-        </ul>
-      </div>
-
-
-
-
-
-
     </>
   )
 }

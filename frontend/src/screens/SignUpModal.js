@@ -47,7 +47,13 @@ function SignUpModal(props) {
       } else {
         alert("Error: Unknown");
       }
-      
+      props.app.setFirstRunDone(true);
+            console.log("Success: " + response.message + "\n" + response.info);
+            
+            const uProf = await connection.getUserProfile();
+            const userProfile = JSON.parse(uProf);
+
+            props.app.setUserProfile(userProfile);
       props.onHide();
       
     } catch (error) {

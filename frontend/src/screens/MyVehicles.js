@@ -29,7 +29,7 @@ function MyVehicles(props) {
       event.preventDefault();
   try
       {
-       await axios.post("http://localhost:8080/api/v1/general/add-vehicle",
+       await axios.post("https://mechamate-backend.el.r.appspot.com/api/v1/general/add-vehicle",
       {
         regNo: regNo,
         vehicleType: vehicleType,
