@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button';
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
 import './styles/Form.css';
+//import ConnectionManager from "../services/ConnectionManager.js"
 
 
 
@@ -17,21 +18,18 @@ function MyVehicles(props) {
   const [fuelType, setFuelType] = useState(null);
   const [vehicleMake, setVehicleMake] = useState(null);
   const [vehicleModel, setVehicleModel] = useState(null);
-  const [regNo, setRegNo] = useState(null);
+  const [registrationNumber, setRegistrationNumber] = useState(null);
   const [regExpDate, setRegExpDate] = useState(new Date());
   const [insNo, setInsNo] = useState(null);
   const [insExpDate, setInsExpDate] = useState(new Date());
   const handleGoBack = () => { props.app.goBack(); }
 
-  // add vehicle with api logic
-  async function addVehicle(event)
-  {
-      event.preventDefault();
-  try
-      {
-       await axios.post("https://mechamate-backend.el.r.appspot.com/api/v1/general/add-vehicle",
-      {
-        regNo: regNo,
+
+  async function addVehicle(event) {
+    event.preventDefault();
+
+    const requestBody = {
+        registrationNumber: registrationNumber,
         vehicleType: vehicleType,
         fuelType: fuelType,
         vehicleMake: vehicleMake,
@@ -39,28 +37,96 @@ function MyVehicles(props) {
         insNo: insNo,
         insExpDate: insExpDate,
         regExpDate: regExpDate
-      });
-        alert("Vehicle Registation Successful");
-        //setId("");
-        setRegNo("");
-        setVehicleType("");
-        setFuelType("");
-        setVehicleMake("");
-        setVehicleModel("");
-        setInsNo("");
-        setInsExpDate("");
-        setRegExpDate("");
+    };
 
-      }
-  catch(err)
-      {
-        alert("Vehicle Registation Failed");
-      }
- }
+    try {
+        const response = await axios.post("http://localhost:8080/api/v1/general/add-vehicle", requestBody, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            withCredentials: true // Use withCredentials instead of credentials
+        });
+
+        // Check if response is successful (status code 2xx)
+        if (response.status >= 200 && response.status < 300) {
+            const data = response.data;
+            alert("Vehicle Registration Successful");
+            // Clear input fields after successful registration
+            clearInputFields();
+            return data; // Returning data might be useful if you need it elsewhere
+        } else {
+            throw new Error('Failed to register vehicle'); // Throw an error if response status is not in the success range
+        }
+    } catch (error) {
+        alert("Vehicle Registration Failed");
+        console.error('Error registering vehicle:', error);
+    }
+}
+
+function clearInputFields() {
+    // Clear input fields
+    setRegistrationNumber("");
+    setVehicleType("");
+    setFuelType("");
+    setVehicleMake("");
+    setVehicleModel("");
+    setInsNo("");
+    setInsExpDate("");
+    setRegExpDate("");
+}
+
+
+//   // add vehicle with api logic
+//   async function addVehicle(event)
+//   {
+//       event.preventDefault();
+
+//   try
+//       {
+//       try {
+//             const response = await axios.post("https://mechamate-backend.el.r.appspot.com/api/v1/general/add-vehicle",
+//              {
+//                 method: 'POST',
+//                 headers: {'Content-Type': 'application/json'},
+//                 body: {
+//                   registrationNumber: registrationNumber,
+//                   vehicleType: vehicleType,
+//                   fuelType: fuelType,
+//                   vehicleMake: vehicleMake,
+//                   vehicleModel: vehicleModel,
+//                   insNo: insNo,
+//                   insExpDate: insExpDate,
+//                   regExpDate: regExpDate
+          
+//                 },
+//                 credentials: 'include',
+//             });
+//             const data = await response.json();
+//             document.body.style.cursor = 'default';
+//             return JSON.stringify(data);            
+//         } catch (error) {}
+      
+//         alert("Vehicle Registation Successful");
+//         //setId("");
+//         setRegistrationNumber("");
+//         setVehicleType("");
+//         setFuelType("");
+//         setVehicleMake("");
+//         setVehicleModel("");
+//         setInsNo("");
+//         setInsExpDate("");
+//         setRegExpDate("");
+
+//       }
+//   catch(err)
+//       {
+//         alert("Vehicle Registation Failed");
+//       }
+//  }
 
 //  const addVehicle = async(e) =>{
 //   const vehicle= {
-//      regNo: regNo,
+//      registrationNumber: registrationNumber,
 //      vehicleType: vehicleType,
 //      fuelType: fuelType,
 //      vehicleMake: vehicleMake,
@@ -135,9 +201,9 @@ function MyVehicles(props) {
   }}
   />
   <Form.Label>Vehicle Registration Number</Form.Label>
-  <Form.Control className='textbox'  type="text" placeholder="ABC1234" value={regNo}
+  <Form.Control className='textbox'  type="text" placeholder="ABC1234" value={registrationNumber}
   onChange={(event)=>{
-    setRegNo(event.target.value);
+    setRegistrationNumber(event.target.value);
   }}/>
 
   <Form.Group controlId="vred">
@@ -159,8 +225,7 @@ function MyVehicles(props) {
 
   <Button variant="primary" onClick={addVehicle} >Save</Button> 
   </Form>
-  </div>
-  <Button variant="secondary" onClick={handleGoBack}>Go Back</Button>{' '}
+     </div>  <Button variant="secondary" onClick={handleGoBack}>Go Back</Button>{' '}
 
 
   </div>  
