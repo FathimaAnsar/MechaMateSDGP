@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -10,11 +10,12 @@ import Button from 'react-bootstrap/Button';
 import ClickableCard from "./components/ClickableCard.js";
 import Stack from 'react-bootstrap/Stack';
 import CustomCarousel from "./components/CustomCarousel.js";
-
+import axios from 'axios';
 
 
 function Dashboard(props) {
   const [dropdownStates, setDropdownStates] = useState({});
+
   let firstName = "";
   let userProfile = props.app.getUserProfile();
   // console.log(userProfile);
@@ -177,11 +178,6 @@ function Dashboard(props) {
 
         </ul>
       </div>
-
-
-
-
-
 
     </>
   )
