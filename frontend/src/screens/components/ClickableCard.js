@@ -1,20 +1,23 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
-import camryImage from '../../images/vehicles/camry-2022.jpg';
-import vitzImage from '../../images/vehicles/vitz-2016.jpeg';
-import civicImage from '../../images/vehicles/civic-2019.jpg'
+import camryImage from '../../images/vehicles/camry.jpg';
+import vitzImage from '../../images/vehicles/vitz.jpg';
+import civicImage from '../../images/vehicles/civic.jpg'
+import defaultImage from '../../images/vehicles/default.jpg'
 import { Button } from 'react-bootstrap';
 
 function ClickableCard({ content, onClick }) {
-  const { title, regNo, description } = content;
+  const { registrationNumber, vehicleMake, vehicleModel } = content;
+
   const textColor = 'dark';
 
   const carImages = {
     'Camry': camryImage, // Assuming you've imported the image statically
     'Civic': civicImage,
     'Vitz': vitzImage,
+    'default' : defaultImage
   };
-  const imageUrl = carImages[title] || 'default_image_url.jpg';
+  const imageUrl = carImages[vehicleModel] || carImages['default'];
 
   const handleClick = () => {
     onClick(content);
@@ -41,9 +44,9 @@ function ClickableCard({ content, onClick }) {
 
       <Card.Img variant="top" src={imageUrl} style={{ maxWidth: '100%'}}/>
       <Card.Body>
-        <Card.Title>{description} {title}</Card.Title>
+        <Card.Title>{vehicleMake} {vehicleModel}</Card.Title>
         <Card.Text>
-        {regNo}
+        {registrationNumber}
         </Card.Text>
       </Card.Body>
       <Card.Footer>

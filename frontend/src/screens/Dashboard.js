@@ -1,37 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Pages } from "../Pages.js"
 import ConnectionManager from "../services/ConnectionManager.js"
 import Header from "./components/Header.js";
-import { main } from "../MechaMate.js";
-import Button from 'react-bootstrap/Button';
 import ClickableCard from "./components/ClickableCard.js";
 import Stack from 'react-bootstrap/Stack';
 import CustomCarousel from "./components/CustomCarousel.js";
+import { Button } from "react-bootstrap";
+import Spinner from 'react-bootstrap/Spinner';
 
 
 
 function Dashboard(props) {
-  const [dropdownStates, setDropdownStates] = useState({});
-  let firstName = "";
-  let userProfile = props.app.getUserProfile();
-  // console.log(userProfile);
-  if (userProfile !== null) {
-    // firstName = userProfile.firstName;
 
-    //   console.log(firstName); 
-  } else {
-    console.log('No object found in local storage with the specified key.');
-  }
-
-  const toggleDropdown = (id) => {
-    setDropdownStates(prevState => ({
-      ...prevState,
-      [id]: !prevState[id]
-    }));
-  }
+  const connection = new ConnectionManager();
+  const [vehicles, setVehicles] = useState(null);
 
   function generateGreeting() {
     var currentHour = new Date().getHours();
@@ -45,24 +30,32 @@ function Dashboard(props) {
     }
   }
 
-  const cars = [
-    { title: 'Camry', regNo: 'CBK-4567', description: 'Toyota' },
-    { title: 'Civic', regNo: 'CGK-4367', description: 'Honda' },
-    { title: 'Vitz', regNo: 'CEK-4567', description: 'Toyota' },
-    { title: 'Camry', regNo: 'CBK-4567', description: 'Toyota' },
-    { title: 'Civic', regNo: 'CGK-4367', description: 'Honda' },
-  ];
+  async function getVehicles() {
+    try {
+      const resp = await connection.getVehicleList();
+      const vehicles = JSON.parse(resp);
+      console.log(vehicles)
+      return vehicles;
 
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
+  async function fetchData() {
+    const vehicles = await getVehicles();
+    setVehicles(vehicles);
+  }
 
-  const handleCardClick = (car) => {
-    console.log(`Clicked on ${car.title}`);
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleCardClick = (vehicle) => {
+    console.log(`Clicked on ${vehicle.vehicleMake}`);
   };
 
-
-  const handleGoBack = () => { props.app.goBack(); }
   const handleClick = (page) => { props.app.changePage(page); }
-
 
   return (
 
@@ -86,28 +79,41 @@ function Dashboard(props) {
         <Row>
           <Col>
             <h2>Vehicles</h2>
-            <div style={{ marginTop:'15px', height: '100%', overflowY: 'auto' }}>
-              <Stack direction="horizontal" gap={4}>
-                {cars.map((car, index) => (
-                  <div className="">
-                    <ClickableCard key={index} content={car} onClick={handleCardClick} />
-                  </div>
-                ))}
-              </Stack>
+            <div style={{
+              height: '100%',
+              overflowY: 'auto',
+            }}>
+              {vehicles === null ? (
+                <div style={{display: 'flex',
+                justifyContent: 'center', 
+                width: '100%',
+                height:'100px',
+                alignItems: 'center'}}><Spinner animation="border" variant="secondary" /></div>
+              ) : vehicles.length > 0 ? (
+                <Stack direction="horizontal" gap={4} >
+                  {vehicles.map((vehicle, index) => (
+                    <div key={index}>
+                      <ClickableCard content={vehicle} onClick={handleCardClick} />
+                    </div>
+                  ))}
+                </Stack>
+              ) : ( // Render message and button if no vehicles are available
+                <div style={{width:'100%'}}>
+                  <p>You have not added any vehicles yet</p>
+                  <Button variant="dark" onClick={() => props.app.changePage(Pages.MyVehiclesUI)}>
+                    Add a Vehicle
+                  </Button>
+                </div>
+              )}
             </div>
           </Col>
         </Row>
 
       </Container>
 
-
-
-
+                    <br></br>
       <hr></hr>
-
-
-
-
+      <br></br><br></br>
       <div id="AutoMobSection">
         <h2>AutoMob Search</h2>
         <button onClick={() => { props.app.changePage(Pages.AutoMobSearchUI) }}>
