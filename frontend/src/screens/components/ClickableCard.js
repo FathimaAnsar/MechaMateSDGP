@@ -37,9 +37,7 @@ function ClickableCard({ content, onClick }) {
         border: 'none',
         borderRadius: '15px'
       }}
-
       className="text-center"
-      onClick={handleClick}
     >
 
       <Card.Img variant="top" src={imageUrl} style={{ maxWidth: '100%'}}/>
@@ -50,7 +48,7 @@ function ClickableCard({ content, onClick }) {
         </Card.Text>
       </Card.Body>
       <Card.Footer>
-        <Button variant='dark' style={{width:'100%'}}>View vehicle</Button>
+        <Button variant='dark' style={{width:'100%'}} onClick={handleClick}>View vehicle</Button>
       </Card.Footer>
     </Card>
 

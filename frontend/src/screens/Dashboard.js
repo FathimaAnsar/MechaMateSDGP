@@ -10,13 +10,13 @@ import Stack from 'react-bootstrap/Stack';
 import CustomCarousel from "./components/CustomCarousel.js";
 import { Button } from "react-bootstrap";
 import Spinner from 'react-bootstrap/Spinner';
-
+import ViewVehicle from "./ViewVehicle.js";
 
 
 function Dashboard(props) {
-
   const connection = new ConnectionManager();
   const [vehicles, setVehicles] = useState(null);
+  const [selectedVehicle, setSelectedVehicle] = useState(null);
 
   function generateGreeting() {
     var currentHour = new Date().getHours();
@@ -35,6 +35,7 @@ function Dashboard(props) {
       const resp = await connection.getVehicleList();
       const vehicles = JSON.parse(resp);
       console.log(vehicles)
+      props.app.setVehicleList(vehicles)
       return vehicles;
 
     } catch (error) {
@@ -52,8 +53,14 @@ function Dashboard(props) {
   }, []);
 
   const handleCardClick = (vehicle) => {
-    console.log(`Clicked on ${vehicle.vehicleMake}`);
+    // console.log(vehicle);
+    // props.app.changePage(Pages.ViewVehicle);
+    setSelectedVehicle(vehicle);
   };
+
+  if (selectedVehicle) {
+    return <ViewVehicle app={props.app} vehicle={selectedVehicle} />;
+  }
 
   const handleClick = (page) => { props.app.changePage(page); }
 

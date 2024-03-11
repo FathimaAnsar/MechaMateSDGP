@@ -38,4 +38,5 @@ export const Pages = {
 
     ParkingFinderUI: "parking-finder",
     ParkingInfoUI: "parking-info",
+    ViewVehicle: "view-vehicle"
 };
