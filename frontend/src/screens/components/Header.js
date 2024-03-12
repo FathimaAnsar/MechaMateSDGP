@@ -43,9 +43,10 @@ function Header(props) {
       <Navbar expand="lg" className="bg-body-tertiary" bg="primary" data-bs-theme="dark">
         <Container>
           <Navbar.Brand >MechaMate</Navbar.Brand>
-          <Button variant="dark"  class="navbar-toggler-icon" onClick={handleToggleOffcanvas}>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" /> 
-           </Button>
+          <Button variant="dark"  className="navbar-toggler-icon" onClick={handleToggleOffcanvas}>
+          </Button>
+ {/*           <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
+
           {/* <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={handleToggleOffcanvas} /> */}
           {/* Navbar.Collapse is moved inside the Offcanvas */}
         </Container>
