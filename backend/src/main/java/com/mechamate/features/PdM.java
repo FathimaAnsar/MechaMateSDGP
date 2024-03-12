@@ -20,18 +20,6 @@ import java.util.Scanner;
 public class PdM {
 
 
-    @Value("${mechamate.dataset.dir}")
-    private static String datasetDir = "../datasets/";
-
-    public double predict(double[] coefficients, double x) {
-        if (coefficients == null || coefficients.length != 2) {
-            throw new IllegalArgumentException("Coefficients array must be of length 2.");
-        }
-        double m = coefficients[0];
-        double c = coefficients[1];
-        return m * x + c;
-    }
-
 
     public PredictionModel getTrainedPredictionModel(String csvFileName, String name, String description,
                                                      List<Maintenance.MaintenanceType> appliedMaintenanceList) {
@@ -56,6 +44,10 @@ public class PdM {
         return predictionModel;
     }
 
+    
+    public double predict(double m, double c, double x) {
+        return m * x + c;
+    }
 
 
 

@@ -153,9 +153,6 @@ public class SuperUserController {
     }
 
 
-
-
-
     @PostMapping("/add-prediction-model")
     public ResponseEntity<?> addPredictionModel(HttpServletRequest request, HttpServletResponse response,
                                             @RequestBody(required = false) PredictionModelDTO predictionModelDTO,
@@ -209,7 +206,6 @@ public class SuperUserController {
                         lang.get("success.addpmodel.succeeded", userProfile.getLanguage()),
                         lang.get("success.addpmodel.succeeded.info", userProfile.getLanguage())),
                         HttpStatus.OK);
-
     }
 
 
