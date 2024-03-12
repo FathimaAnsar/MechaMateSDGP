@@ -44,7 +44,7 @@ public class PdM {
         return predictionModel;
     }
 
-    
+
     public double predict(double m, double c, double x) {
         return m * x + c;
     }

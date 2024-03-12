@@ -4,6 +4,7 @@ import com.mechamate.common.ApiToken;
 import com.mechamate.common.DeviceLocation;
 import com.mechamate.common.Validation;
 import com.mechamate.dto.ErrorDTO;
+import com.mechamate.entity.Maintenance;
 import com.mechamate.entity.UserProfile;
 import com.mechamate.entity.Vehicle;
 import com.mechamate.service.*;
@@ -234,7 +235,29 @@ public class FeatureController {
 
 
 
+    @GetMapping("/get-predicted-output")
+    public ResponseEntity<?> getPredictedOutput(HttpServletRequest request, HttpServletResponse response,
+                                                     @RequestParam(required = false) Maintenance.MaintenanceType maintenanceType,
+                                                     @RequestParam(required = false) String vehicleRegNo) {
+        Object obj = Validation.authenticate(request, response, sessionManager, lang);
+        if(!(obj instanceof UserProfile)) return (ResponseEntity<ErrorDTO>) (obj);
+        UserProfile userProfile = (UserProfile) obj;
 
+        if (vehicleRegNo == null) vehicleRegNo ="";
+        ResponseEntity<ErrorDTO> resp = Validation.validateVehicleRegNo(vehicleRegNo.trim().toUpperCase(),
+                lang, request.getSession());
+        if(resp != null) return resp;
+
+        if(maintenanceType == null)
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
+                            lang.get("error.mtype.is.missing", userProfile.getLanguage()),
+                            lang.get("error.mtype.is.missing.help", userProfile.getLanguage())),
+                            HttpStatus.OK);
+
+
+
+    }
 
 
 
