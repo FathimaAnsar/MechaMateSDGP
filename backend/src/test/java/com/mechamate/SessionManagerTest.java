@@ -52,12 +52,10 @@ public class SessionManagerTest {
 
     @Test
     public void testGetSessionValid() {
-        // Setup
         UserProfile mockUserProfile = mock(UserProfile.class);
         when(mockUserProfile.getUsername()).thenReturn("username");
         when(mockUserProfile.getPassword()).thenReturn("password");
 
-        // Simulate the session key creation in the actual method's style
         String baseString = "SKEY#>" + mockUserProfile.getUsername() + System.currentTimeMillis() + mockUserProfile.getPassword() + "<#";
         String sessionKey = Common.getSha256(baseString);
 
@@ -66,17 +64,14 @@ public class SessionManagerTest {
 
         when(request.getCookies()).thenReturn(cookies);
 
-        long validUntil = System.currentTimeMillis() + 3600000; // 1 hour ahead
+        long validUntil = System.currentTimeMillis() + 3600000;
         Session mockSession = new Session(validUntil, sessionKey, mockUserProfile);
 
-        // Define behavior to return the mock session and to simulate successful update
         when(databaseAbstractLayer.getSession(sessionKey)).thenReturn(mockSession);
         when(databaseAbstractLayer.updateSession(any(Session.class))).thenReturn(true);
 
-        // Execution
         Session resultSession = sessionManager.getSession(request, response);
 
-        // Verification
         assertNotNull(resultSession, "Session should not be null for a valid request");
         verify(databaseAbstractLayer, times(1)).getSession(sessionKey);
         verify(databaseAbstractLayer, times(1)).updateSession(any(Session.class));
@@ -84,19 +79,14 @@ public class SessionManagerTest {
 
 
 
-
     @Test
     public void testGetSessionNoCookies() {
-        // Setup
         when(request.getCookies()).thenReturn(null);
 
-        // Execution
         Session resultSession = sessionManager.getSession(request, response);
 
-        // Verification
         assertNull(resultSession, "Session should be null when no cookies are present");
     }
-
 
 
 }

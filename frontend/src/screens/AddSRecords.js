@@ -5,28 +5,63 @@ import axios from 'axios';
 import './styles/Form.css';
 
 function AddServiceRecordByServiceProvider(props) {
-    const [serviceType, setServiceType] = useState('');
+    const [services, setServices] = useState('');
     const [description, setDescription] = useState('');
     const [date, setDate] = useState(new Date());
     const [mileage, setMileage] = useState('');
 
     async function addSRecord(event) {
-        event.preventDefault();
-        try {
-          await axios.post("http://localhost:8080/api/v1/general/add-service-record", {
-            description: description,
-            date: date,
-            mileage: mileage
-          });
-          alert("Service Record Added Successfully");
-          setServiceType('');
-          setDescription('');
-          setDate(new Date());
-          setMileage('');
-        } catch (err) {
+      event.preventDefault();
+  
+      const requestBody = {
+          description: description,
+          date: date,
+          mileage: mileage
+      };
+  
+      try {
+          const response = await axios.post("http://localhost:8080/api/v1/general/add-service-record", requestBody);
+  
+          // Check if response is successful (status code 2xx)
+          if (response.status >= 200 && response.status < 300) {
+              alert("Service Record Added Successfully");
+              // Clear input fields after successful addition
+              clearInputFields();
+          } else {
+              throw new Error('Failed to add service record'); // Throw an error if response status is not in the success range
+          }
+      } catch (err) {
+          console.error('Error adding service record:', err);
           alert("Failed to Add Service Record");
-        }
       }
+  }
+  
+  function clearInputFields() {
+      // Clear input fields
+      setServices('');
+      setDescription('');
+      setDate(new Date());
+      setMileage('');
+  }
+  
+
+    // async function addSRecord(event) {
+    //     event.preventDefault();
+    //     try {
+    //       await axios.post("http://localhost:8080/api/v1/general/add-service-record", {
+    //         description: description,
+    //         date: date,
+    //         mileage: mileage
+    //       });
+    //       alert("Service Record Added Successfully");
+    //       setServiceType('');
+    //       setDescription('');
+    //       setDate(new Date());
+    //       setMileage('');
+    //     } catch (err) {
+    //       alert("Failed to Add Service Record");
+    //     }
+    //   }
 
 
   return (
@@ -35,7 +70,7 @@ function AddServiceRecordByServiceProvider(props) {
       <h2>Add Service Records Manually</h2>
       <div className="form-container">
       <Form>
-        <Form.Group controlId="serviceType">
+        <Form.Group controlId="services">
           <Form.Label>Service Type:</Form.Label>
           <Form.Control as="select">
             <option value="WheelAlignment">Wheel Alignment</option>

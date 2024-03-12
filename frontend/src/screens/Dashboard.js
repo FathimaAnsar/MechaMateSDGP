@@ -1,37 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Pages } from "../Pages.js"
 import ConnectionManager from "../services/ConnectionManager.js"
 import Header from "./components/Header.js";
-import { main } from "../MechaMate.js";
-import Button from 'react-bootstrap/Button';
 import ClickableCard from "./components/ClickableCard.js";
 import Stack from 'react-bootstrap/Stack';
 import CustomCarousel from "./components/CustomCarousel.js";
-
+import { Button } from "react-bootstrap";
+import Spinner from 'react-bootstrap/Spinner';
+import ViewVehicle from "./ViewVehicle.js";
 
 
 function Dashboard(props) {
-  const [dropdownStates, setDropdownStates] = useState({});
-  let firstName = "";
-  let userProfile = props.app.getUserProfile();
-  // console.log(userProfile);
-  if (userProfile !== null) {
-    // firstName = userProfile.firstName;
-
-    //   console.log(firstName); 
-  } else {
-    console.log('No object found in local storage with the specified key.');
-  }
-
-  const toggleDropdown = (id) => {
-    setDropdownStates(prevState => ({
-      ...prevState,
-      [id]: !prevState[id]
-    }));
-  }
+  const connection = new ConnectionManager();
+  const [vehicles, setVehicles] = useState(null);
+  const [selectedVehicle, setSelectedVehicle] = useState(null);
 
   function generateGreeting() {
     var currentHour = new Date().getHours();
@@ -45,22 +30,39 @@ function Dashboard(props) {
     }
   }
 
-  const cars = [
-    { title: 'Camry', regNo: 'CBK-4567', description: 'Toyota' },
-    { title: 'Civic', regNo: 'CGK-4367', description: 'Honda' },
-    { title: 'Vitz', regNo: 'CEK-4567', description: 'Toyota' },
-  ];
+  async function getVehicles() {
+    try {
+      const resp = await connection.getVehicleList();
+      const vehicles = JSON.parse(resp);
+      console.log(vehicles)
+      props.app.setVehicleList(vehicles)
+      return vehicles;
 
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
+  async function fetchData() {
+    const vehicles = await getVehicles();
+    setVehicles(vehicles);
+  }
 
-  const handleCardClick = (car) => {
-    console.log(`Clicked on ${car.title}`);
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleCardClick = (vehicle) => {
+    // console.log(vehicle);
+    // props.app.changePage(Pages.ViewVehicle);
+    setSelectedVehicle(vehicle);
   };
 
+  if (selectedVehicle) {
+    return <ViewVehicle app={props.app} vehicle={selectedVehicle} />;
+  }
 
-  const handleGoBack = () => { props.app.goBack(); }
   const handleClick = (page) => { props.app.changePage(page); }
-
 
   return (
 
@@ -71,42 +73,54 @@ function Dashboard(props) {
 
       <Container fluid >
 
+        <Row style={{ marginTop: '10px' }}>
+          <Col><h1 style={{ fontWeight: '700', fontFamily: 'sans-serif' }}>{generateGreeting()} {(props.app.getUserProfile() == null ? "<User>" : props.app.getUserProfile().firstName)}!</h1>
+          </Col>
+        </Row>
         <Row>
           <Col>
             <CustomCarousel />
           </Col>
         </Row>
-        <Row>
-          <Col><h1>{generateGreeting()} {(props.app.getUserProfile() == null ? "<User>" : props.app.getUserProfile().firstName)}!</h1>
-          </Col>
-        </Row>
-
 
         <Row>
           <Col>
-            <h2>My vehicles</h2>
-            <div style={{ height: '100%', overflowY: 'auto' }}>
-              <Stack direction="horizontal" gap={3}>
-                {cars.map((car, index) => (
-                  <div className="">
-                    <ClickableCard key={index} content={car} onClick={handleCardClick} />
-                  </div>
-                ))}
-              </Stack>
+            <h2>Vehicles</h2>
+            <div style={{
+              height: '100%',
+              overflowY: 'auto',
+            }}>
+              {vehicles === null ? (
+                <div style={{display: 'flex',
+                justifyContent: 'center', 
+                width: '100%',
+                height:'100px',
+                alignItems: 'center'}}><Spinner animation="border" variant="secondary" /></div>
+              ) : vehicles.length > 0 ? (
+                <Stack direction="horizontal" gap={4} >
+                  {vehicles.map((vehicle, index) => (
+                    <div key={index}>
+                      <ClickableCard content={vehicle} onClick={handleCardClick} />
+                    </div>
+                  ))}
+                </Stack>
+              ) : ( // Render message and button if no vehicles are available
+                <div style={{width:'100%'}}>
+                  <p>You have not added any vehicles yet</p>
+                  <Button variant="dark" onClick={() => props.app.changePage(Pages.MyVehiclesUI)}>
+                    Add a Vehicle
+                  </Button>
+                </div>
+              )}
             </div>
           </Col>
         </Row>
 
       </Container>
 
-
-
-
+                    <br></br>
       <hr></hr>
-
-
-
-
+      <br></br><br></br>
       <div id="AutoMobSection">
         <h2>AutoMob Search</h2>
         <button onClick={() => { props.app.changePage(Pages.AutoMobSearchUI) }}>
@@ -116,10 +130,10 @@ function Dashboard(props) {
       </div>
 
       <div id="PredictiveMaintenance">
-        <h2>Predictive Maintenance</h2>
+        <h2>Maintenance predictions</h2>
         <button onClick={() => { props.app.changePage(Pages.PredictMaintenanceUI) }}>
           <span style={{ marginRight: '5px' }}>🛠️</span> {/* Material Icon */}
-          Open Predictive Maintenance
+          Open Maintenance predictions
         </button>
       </div>
 
@@ -154,35 +168,6 @@ function Dashboard(props) {
           Open to Find a parking place
         </button>
       </div>
-
-      <Button size='sm' variant='dark' onClick={handleGoBack}>Go Back</Button>
-
-      <hr></hr>
-
-      <div id="myVehicle">
-        <h2>My vehicles</h2>
-        <ul>
-          <li>
-            <button onClick={() => toggleDropdown('desc1')}>Vehicle 1</button>
-            <div style={{ display: dropdownStates['desc1'] ? 'block' : 'none' }} className="dropdown-content">
-              Description for Vehicle 1.
-            </div>
-          </li>
-          <li>
-            <button onClick={() => toggleDropdown('desc2')}>Vehicle 2</button>
-            <div style={{ display: dropdownStates['desc2'] ? 'block' : 'none' }} className="dropdown-content">
-              Description for Vehicle 2.
-            </div>
-          </li>
-
-        </ul>
-      </div>
-
-
-
-
-
-
     </>
   )
 }

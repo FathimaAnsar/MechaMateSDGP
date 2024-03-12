@@ -92,16 +92,16 @@ function EnterCode(props) {
     return (
         <>
             <Card className="text-center" style={{ height: '100vh' }}>
-                <Card.Header className="d-flex justify-content-between align-items-center">
-                    <div>
+                <Card.Header >
+                    {/* <div>
                         <Button variant='primary' onClick={handleGoBack} className="btn btn-primary">Back</Button>
 
-                    </div>
-                    <div className="text-center">
+                    </div> */}
+                    {/* <div className="text-center"> */}
                         <img src={logo} style={{ width: '150px' }} alt="Logo" />
-                    </div>
+                    {/* </div> */}
                 </Card.Header>
-                <Card.Body className="f-column justify-content-center align-items-center " style={{marginTop: '35px'}}>
+                <Card.Body className="f-column justify-content-center align-items-center " style={{ marginTop: '35px' }}>
 
                     <Card.Title><h3>Activate your account</h3></Card.Title>
                     <Card.Text>

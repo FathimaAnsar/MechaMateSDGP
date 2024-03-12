@@ -128,7 +128,11 @@ function SignIn(props) {
 
 
             </div>
-            <SignUpModal show={modalShow} onHide={() => {setModalShow(false)}}/>
+            <SignUpModal app={props.app} show={modalShow} onHide={() => {setModalShow(false)
+            if (props.app.getUserProfile()) {
+                props.app.changePage(Pages.EnterCodeUI);
+              }
+            }}/>
 
 
             {/* <button onClick={() => { handleClick(Pages.SignUpUI) }}>Dont you have an account?</button>
