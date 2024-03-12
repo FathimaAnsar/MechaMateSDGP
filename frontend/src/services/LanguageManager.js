@@ -1,7 +1,22 @@
 
 const langList = ["default", "sinhala", "tamil"];
 
-export class LanguageManager {
+
+
+export const sinhala = [
+    {tag: "get-started-button", attribute: "", value: "මෙතනින් අරඹන්න"},
+    {tag: "user-name-txt", attribute: "", value: "ගැලරිය"},
+]; 
+
+export const tamil = [
+    {tag: "get-started-button", attribute: "", value: "මෙතනින් අරඹන්න"},
+    {tag: "user-name-txt", attribute: "", value: "ගැලරිය"},
+]; 
+
+
+
+
+class LanguageManager {
 
 
     constructor() {
@@ -13,14 +28,14 @@ export class LanguageManager {
         let langId = 0;
         try {
             langId = localStorage.getItem("locale");
-            if(!langList.includes(langId)) return langList[0];
+            if(!langId || !langList.includes(langId)) return langList[0];
             return langId; 
         } catch(exp) {
             return langList[0];
         }
     }
 
-    setLanguageId(langId) {
+    setLanguageId(langId) {        
         localStorage.setItem("locale", langId);
         this.activeLang = langId;
     }
@@ -52,3 +67,4 @@ export class LanguageManager {
 
 }
 
+export default LanguageManager;

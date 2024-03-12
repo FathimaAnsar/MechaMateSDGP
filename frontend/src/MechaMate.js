@@ -2,6 +2,7 @@
 import ConnectionManager from "./services/ConnectionManager.js"
 import { Pages } from "./Pages.js" 
 import { Navigate } from 'react-router-dom';
+//import LanguageManager from "./services/LanguageManager.js"
 
 class MechaMate {
 
@@ -12,6 +13,7 @@ class MechaMate {
         this.refreshStateCaller = null;
         this.connection = new ConnectionManager();
         this.appLoaded = false;
+     //   this.lang = new LanguageManager();
     }
 
     isAppLoaded() { return this.appLoaded; }
