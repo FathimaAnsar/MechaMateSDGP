@@ -9,7 +9,7 @@ class ConnectionManager {
         const errorMessage = document.getElementById("login-error");
 
         try {
-            const response = await axios.post('https://mechamate-backend.el.r.appspot.com/api/v1/auth/signin', {
+            const response = await axios.post('http://localhost:8080/api/v1/auth/signin', {
                 username: userName,
                 password: passWord,
                 keepMeSignedIn: rememberMe
@@ -45,7 +45,7 @@ class ConnectionManager {
 
     async signUp(formData) {
         try {
-            const response = await axios.post('https://mechamate-backend.el.r.appspot.com/api/v1/auth/signup', formData, {
+            const response = await axios.post('http://localhost:8080/api/v1/auth/signup', formData, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },

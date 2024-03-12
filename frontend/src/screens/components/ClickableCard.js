@@ -1,19 +1,23 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
-import camryImage from '../../images/vehicles/camry-2022.jpg';
-import vitzImage from '../../images/vehicles/vitz-2016.jpeg';
-import civicImage from '../../images/vehicles/civic-2019.jpg'
+import camryImage from '../../images/vehicles/camry.jpg';
+import vitzImage from '../../images/vehicles/vitz.jpg';
+import civicImage from '../../images/vehicles/civic.jpg'
+import defaultImage from '../../images/vehicles/default.jpg'
+import { Button } from 'react-bootstrap';
 
 function ClickableCard({ content, onClick }) {
-  const { title, regNo, description } = content;
-  const textColor =  'white';
+  const { registrationNumber, vehicleMake, vehicleModel } = content;
+
+  const textColor = 'dark';
 
   const carImages = {
     'Camry': camryImage, // Assuming you've imported the image statically
     'Civic': civicImage,
     'Vitz': vitzImage,
+    'default' : defaultImage
   };
-  const imageUrl = carImages[title] || 'default_image_url.jpg';
+  const imageUrl = carImages[vehicleModel] || carImages['default'];
 
   const handleClick = () => {
     onClick(content);
@@ -21,21 +25,41 @@ function ClickableCard({ content, onClick }) {
 
   return (
     <Card
-      bg='dark'
+      bg='light'
       text={textColor}
       style={{
         width: '16rem',
         cursor: 'pointer',
-        height: '8rem',
+        height: 'auto',
         overflow: 'hidden',
         boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
         outline: '0',
         border: 'none',
+        borderRadius: '15px'
       }}
-
       className="text-center"
-      onClick={handleClick}
     >
+
+      <Card.Img variant="top" src={imageUrl} style={{ maxWidth: '100%'}}/>
+      <Card.Body>
+        <Card.Title>{vehicleMake} {vehicleModel}</Card.Title>
+        <Card.Text>
+        {registrationNumber}
+        </Card.Text>
+      </Card.Body>
+      <Card.Footer>
+        <Button variant='dark' style={{width:'100%'}} onClick={handleClick}>View vehicle</Button>
+      </Card.Footer>
+    </Card>
+
+  );
+}
+
+export default ClickableCard;
+
+
+
+{/* <Card>
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
         <img
           src={imageUrl}
@@ -64,9 +88,5 @@ function ClickableCard({ content, onClick }) {
             
           </Card.Text>
         </Card.Body> */}
-      </Card.ImgOverlay>
-    </Card>
-  );
-}
-
-export default ClickableCard;
+    //   </Card.ImgOverlay>
+    // </Card > */}

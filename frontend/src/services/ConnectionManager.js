@@ -97,6 +97,10 @@ class ConnectionManager {
         return await this.getRequest("/api/v1/general/profile");
     }
 
+    async getVehicleList(){
+        return await this.getRequest("/api/v1/general/get-vehicles");
+    }
+
     async getDetailedUserProfile() {
         return await this.getRequest("/api/v1/general/detailed-profile");
     }

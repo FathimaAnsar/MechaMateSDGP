@@ -4,7 +4,7 @@ import { Pages } from "./Pages.js"
 import GetStarted from "./screens/GetStarted.js";
 import SignIn from "./screens/SignIn.js";
 import SignUp from "./screens/SignUp.js";
-import EnterCode from "./screens/EnterCode.js"; 
+import EnterCode from "./screens/EnterCode.js";
 import ForgotPassword from "./screens/ForgotPassword.js";
 import Dashboard from "./screens/Dashboard.js";
 import ResetPassword from "./screens/ResetPassword.js";
@@ -24,9 +24,10 @@ import AddServiceRecordByQR from "./screens/AddServiceRecordByQR.js";
 import AddServiceRecordByServiceProvider from "./screens/AddServiceRecordByServiceProvider.js";
 import ShowServiceRecordRequest from "./screens/ShowServiceRecordRequest.js";
 import ParkingFinder from "./screens/ParkingFinder.js";
-import ParkingInfo from "./screens/ParkingInfo.js"; 
+import ParkingInfo from "./screens/ParkingInfo.js";
 import './styles/App.css';
 import ThemeContext from './screens/components/ThemeContext.js';
+import ViewVehicle from "./screens/ViewVehicle.js";
 
 
 //main.reset();
@@ -42,28 +43,28 @@ function App() {
 
 
 
-  if(!main.getUserProfile()) {
-    if(main.currentPage != Pages.GetStartedUI &&
+  if (!main.getUserProfile()) {
+    if (main.currentPage != Pages.GetStartedUI &&
       main.currentPage != Pages.SignInUI &&
       main.currentPage != Pages.SignUpUI &&
       main.currentPage != Pages.ForgotPasswordUI &&
       main.currentPage != Pages.EnterCodeUI) {
-      if(main.isFirstRunDone()) {
-        if(main.isAppLoaded()) alert("Please sign in to continue!");
+      if (main.isFirstRunDone()) {
+        if (main.isAppLoaded()) alert("Please sign in to continue!");
         main.currentPage = Pages.SignInUI;
       } else {
         main.currentPage = Pages.GetStartedUI;
       }
     }
   } else {
-    if(main.currentPage === Pages.GetStartedUI || main.currentPage === Pages.SignUpUI) {
+    if (main.currentPage === Pages.GetStartedUI || main.currentPage === Pages.SignUpUI) {
       main.currentPage = Pages.DashboardUI;
-    } else if(main.currentPage === Pages.SignInUI) {
+    } else if (main.currentPage === Pages.SignInUI) {
 
     }
   }
 
-  if(!main.isAppLoaded()) main.setAppLoaded(true);
+  if (!main.isAppLoaded()) main.setAppLoaded(true);
 
   if (main.currentPage === Pages.GetStartedUI) return (<><GetStarted app={main} /></>);
 
@@ -104,11 +105,13 @@ function App() {
 
   if (main.currentPage === Pages.ParkingFinderUI) return (<><ParkingFinder app={main} /></>);
   if (main.currentPage === Pages.ParkingInfoUI) return (<><ParkingInfo app={main} /></>);
+  if (main.currentPage === Pages.ViewVehicle) return (<><ViewVehicle app={main} /></>);
+
 
   return (<div className={`App ${theme}`}>
     <><SignIn app={main} /></>
-    </div>
-    );
+  </div>
+  );
 
 }
 

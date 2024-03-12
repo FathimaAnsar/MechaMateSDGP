@@ -4,7 +4,6 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import ConnectionManager from '../services/ConnectionManager';
 import { Pages } from '../Pages';
-import { useState } from "react";
 
 function SignUpModal(props) {
   const connection = new ConnectionManager();
@@ -47,9 +46,15 @@ function SignUpModal(props) {
       } else {
         alert("Error: Unknown");
       }
-      
+      props.app.setFirstRunDone(true);
+      console.log("Success: " + response.message + "\n" + response.info);
+
+      const uProf = await connection.getUserProfile();
+      const userProfile = JSON.parse(uProf);
+
+      props.app.setUserProfile(userProfile);
       props.onHide();
-      
+
     } catch (error) {
       console.error("Signup failed:", error);
 
@@ -63,7 +68,7 @@ function SignUpModal(props) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
       scrollable='true'
-      // fullscreen='md-down'
+    // fullscreen='md-down'
     >
       <Modal.Header closeButton >
         <Modal.Title id="contained-modal-title-vcenter">
@@ -194,7 +199,7 @@ function SignUpModal(props) {
                 />
               </Form.Group>
               <Modal.Footer >
-                <Button variant='success' type="submit" style={{ width: '100%', fontSize: '12pt',marginBottom:'-10px', fontWeight: '500', borderRadius: '30px', padding: '8px' }}>
+                <Button variant='success' type="submit" style={{ width: '100%', fontSize: '12pt', marginBottom: '-10px', fontWeight: '500', borderRadius: '30px', padding: '8px' }}>
                   Sign Up</Button>
               </Modal.Footer>
             </Form>

@@ -30,6 +30,7 @@ class MechaMate {
         this.currentHistoryIndex = this.history.length - 1;
         this.currentPageInternal = newPage;
     }
+    
 
     async isAlreadySignedIn() {
         const resp = await this.connection.signin("username", "password", 0);
@@ -93,6 +94,7 @@ class MechaMate {
 
     clearSessionCache() {
         localStorage.removeItem("userProfile");
+        localStorage.removeItem("vehicleList");
     }
 
     reset() {
@@ -110,6 +112,20 @@ class MechaMate {
     setUserProfile(userProfile) {
         try {
             localStorage.setItem("userProfile", JSON.stringify(userProfile));
+        } catch(exp) {}
+    }
+
+    getVehicleList() {
+        try {
+            let vehicleList = JSON.parse(localStorage.getItem("vehicleList"));
+            return (vehicleList ? vehicleList : null);
+        } catch(exp) {}
+    }
+      
+
+    setVehicleList(vehicleList) {
+        try {
+            localStorage.setItem("vehicleList", JSON.stringify(vehicleList));
         } catch(exp) {}
     }
 
