@@ -29,7 +29,6 @@ public class SuperUserActionManager {
     private LanguageManager lang;
 
 
-
     public ResponseEntity<ErrorDTO> addMaintenance(Maintenance maintenance, UserProfile userProfile) {
 
         if(maintenance.get_id() != null && databaseAbstractLayer.isMaintenanceExists(maintenance)) {
@@ -50,7 +49,6 @@ public class SuperUserActionManager {
         return null;
     }
 
-
     public ResponseEntity<List<MaintenanceDTO>> getMaintenanceList() {
         List<MaintenanceDTO> maintenanceDTOS = new ArrayList<>();
         try {
@@ -65,8 +63,6 @@ public class SuperUserActionManager {
         } catch (Exception e) {}
         return new ResponseEntity<>(maintenanceDTOS, HttpStatus.OK);
     }
-
-
 
 
     public ResponseEntity<ErrorDTO> deleteMaintenance(Maintenance maintenance, UserProfile userProfile) {
@@ -88,17 +84,6 @@ public class SuperUserActionManager {
 
         return null;
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
     public ResponseEntity<ErrorDTO> addPredictionModel(PredictionModel predictionModel, UserProfile userProfile) {
@@ -137,8 +122,6 @@ public class SuperUserActionManager {
     }
 
 
-
-
     public ResponseEntity<ErrorDTO> deletePredictionModel(PredictionModel predictionModel, UserProfile userProfile) {
 
         if(predictionModel.get_id() == null || !databaseAbstractLayer.isPredictionModelExists(predictionModel)) {
@@ -158,7 +141,6 @@ public class SuperUserActionManager {
 
         return null;
     }
-
 
 
 }
