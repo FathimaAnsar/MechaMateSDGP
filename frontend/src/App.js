@@ -98,7 +98,7 @@ function App() {
 
   if (main.currentPage === Pages.ManageDocumentsUI) return (<><ManageDocuments app={main} /></>);
   if (main.currentPage === Pages.AddSRecordManualUI) return (<><AddSRecords app={main} /></>);
-  if (main.currentPage === Pages.AddSRecordQRUI) return (<><AddServiceRecordByQR app={main} /></>);
+  if (main.currentPage === Pages.QrUI) return (<><QrUi app={main} /></>);
   if (main.currentPage === Pages.AddRecordBySPUI) return (<><AddServiceRecordByServiceProvider app={main} /></>);
   if (main.currentPage === Pages.ShowRecordReqUI) return (<><ShowServiceRecordRequest app={main} /></>);
 
