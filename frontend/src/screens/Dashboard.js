@@ -86,7 +86,7 @@ function Dashboard(props) {
 
         <Row>
           <Col>
-            <h2>Vehicles</h2>
+            <h2 id="dash-vehicle-heading">Vehicles</h2>
             <div style={{
               height: '100%',
               overflowY: 'auto',
@@ -107,8 +107,8 @@ function Dashboard(props) {
                 </Stack>
               ) : ( // Render message and button if no vehicles are available
                 <div style={{width:'100%'}}>
-                  <p>You have not added any vehicles yet</p>
-                  <Button variant="dark" onClick={() => props.app.changePage(Pages.MyVehiclesUI)}>
+                  <p id="dash-vehicle-p1">You have not added any vehicles yet</p>
+                  <Button id="dash-add-vehi-btn" variant="dark" onClick={() => props.app.changePage(Pages.MyVehiclesUI)}>
                     Add a Vehicle
                   </Button>
                 </div>
@@ -123,48 +123,48 @@ function Dashboard(props) {
       <hr></hr>
       <br></br><br></br>
       <div id="AutoMobSection">
-        <h2>AutoMob Search</h2>
-        <button onClick={() => { props.app.changePage(Pages.AutoMobSearchUI) }}>
+        <h2 id="dash-autoS-heading">AutoMob Search</h2>
+        <button id="dash-autS_btn" onClick={() => { props.app.changePage(Pages.AutoMobSearchUI) }}>
           <span style={{ marginRight: '5px' }}></span> {/* Material Icon */}
           Search
         </button>
       </div>
 
       <div id="PredictiveMaintenance">
-        <h2>Maintenance predictions</h2>
-        <button onClick={() => { props.app.changePage(Pages.PredictMaintenanceUI) }}>
+        <h2 id="dash-pred-heading">Maintenance predictions</h2>
+        <button id="dash-pred_btn" onClick={() => { props.app.changePage(Pages.PredictMaintenanceUI) }}>
           <span style={{ marginRight: '5px' }}>🛠️</span> {/* Material Icon */}
           Open Maintenance predictions
         </button>
       </div>
 
       <div id="Track my vehicle">
-        <h2>Track my Vehicle</h2>
-        <button onClick={() => { props.app.changePage(Pages.TrackVehicleUI) }}>
+        <h2 id="dash-track-heading">Track my Vehicle</h2>
+        <button id="dash-track_btn" onClick={() => { props.app.changePage(Pages.TrackVehicleUI) }}>
           <span style={{ marginRight: '5px' }}></span> {/* Material Icon */}
           Open To Track my vehicle
         </button>
       </div>
 
       <div id="emergency assistence">
-        <h2>Emergency assistence</h2>
-        <button onClick={() => handleClick(Pages.EmergencyAssistUI)}>
+        <h2 id="dash-emergen-heading">Emergency assistence</h2>
+        <button id="dash-emergen_btn" onClick={() => handleClick(Pages.EmergencyAssistUI)}>
           <span style={{ marginRight: '5px' }}></span> {/* Material Icon */}
           Open Emergency assistence
         </button>
       </div>
 
       <div id="manage my documents">
-        <h2>Manage vehicle documents</h2>
-        <button onClick={() => { props.app.changePage(Pages.ManageDocumentsUI) }}>
+        <h2 id="dash-doc-heading">Manage vehicle documents</h2>
+        <button id="dash-doc_btn" onClick={() => { props.app.changePage(Pages.ManageDocumentsUI) }}>
           <span style={{ marginRight: '5px' }}></span> {/* Material Icon */}
           Open vehicle documents/sercice records
         </button>
       </div>
 
       <div id="parking finder">
-        <h2>Parking Finder</h2>
-        <button onClick={() => { props.app.changePage(Pages.ParkingFinderUI) }}>
+        <h2 id="dash-park-heading">Parking Finder</h2>
+        <button id="dash-park_btn" onClick={() => { props.app.changePage(Pages.ParkingFinderUI) }}>
           <span style={{ marginRight: '5px' }}></span> {/* Material Icon */}
           Open to Find a parking place
         </button>
