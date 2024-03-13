@@ -7,10 +7,10 @@ import { Navigate } from 'react-router-dom';
 class MechaMate {
 
     constructor() {
-        this.currentHistoryIndex = 0;
-        this.history = [Pages.DashboardUI];
-        this.currentPageInternal = Pages.DashboardUI;    
-        this.refreshStateCaller = null;
+     //   this.currentHistoryIndex = 0;
+     //   this.history = [Pages.DashboardUI];
+      //  this.currentPageInternal = Pages.DashboardUI;    
+       // this.refreshStateCaller = null;
         this.connection = new ConnectionManager();
         this.appLoaded = false;
      //   this.lang = new LanguageManager();
@@ -18,8 +18,9 @@ class MechaMate {
 
     isAppLoaded() { return this.appLoaded; }
     setAppLoaded(value) { this.appLoaded = value; }
-
+/*
     get currentPage() { return this.currentPageInternal; }
+
     set currentPage(newPage) { 
         if(this.history.length > 0) {
             if(this.currentHistoryIndex >= 0 && this.currentHistoryIndex < (this.history.length - 1)) {
@@ -34,6 +35,7 @@ class MechaMate {
         this.currentPageInternal = newPage;
     }
     
+*/
 
     async isAlreadySignedIn() {
         const resp = await this.connection.signin("username", "password", 0);
@@ -56,10 +58,10 @@ class MechaMate {
     isFirstRunDone() { return localStorage.getItem("isFirstRunDone") == 1; }
     setFirstRunDone(value) { localStorage.setItem("isFirstRunDone", (value ? 1 : 0)); }
 
+/*
     setRefreshCaller(refreshStateCaller) {
         this.refreshStateCaller = refreshStateCaller;
     }
-
     goBack() {
         window.history.back();
         return;
@@ -101,7 +103,7 @@ class MechaMate {
         window.location.href = this.currentPage;
 //        if(this.refreshStateCaller) this.refreshStateCaller();
     }
-
+*/
     clearSessionCache() {
         localStorage.removeItem("userProfile");
         localStorage.removeItem("vehicleList");
