@@ -34,7 +34,7 @@ function Dashboard(props) {
     try {
       const resp = await connection.getVehicleList();
       const vehicles = JSON.parse(resp);
-      console.log(vehicles)
+     // console.log(vehicles)
       props.app.setVehicleList(vehicles)
       return vehicles;
 
@@ -56,6 +56,7 @@ function Dashboard(props) {
     // console.log(vehicle);
     // props.app.changePage(Pages.ViewVehicle);
     setSelectedVehicle(vehicle);
+    window.history.pushState(null, "", Pages.DashboardUI);
   };
 
   if (selectedVehicle) {

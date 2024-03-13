@@ -25,8 +25,9 @@
 
 import React, { useEffect, useRef } from 'react';
 import QRCode from 'qrcode.react';
+import { Pages } from "../Pages";
 
-function AddServiceRecordByQR({ url }) {
+function QrUi({ url }) {
   const qrCodeRef = useRef(null);
 
   useEffect(() => {
@@ -53,4 +54,4 @@ function AddServiceRecordByQR({ url }) {
   return <div ref={qrCodeRef}></div>;
 }
 
-export default AddServiceRecordByQR;
+export default QrUi;
