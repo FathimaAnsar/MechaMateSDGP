@@ -5,6 +5,7 @@ import vitzImage from '../../images/vehicles/vitz.jpg';
 import civicImage from '../../images/vehicles/civic.jpg'
 import defaultImage from '../../images/vehicles/default.jpg'
 import { Button } from 'react-bootstrap';
+import '../styles/viewVehicle.css';
 
 function ClickableCard({ content, onClick }) {
   const { registrationNumber, vehicleMake, vehicleModel } = content;

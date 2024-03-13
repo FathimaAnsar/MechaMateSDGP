@@ -32,7 +32,7 @@ export const Pages = {
     
     ManageDocumentsUI: "documents",
     AddSRecordManualUI: "add-record",
-    AddSRecordQRUI: "add-record-qr",
+    QrUI: "qr-ui",
     AddRecordBySPUI: "add-record-sp",
     ShowRecordReqUI: "show-record-request", 
 

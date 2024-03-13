@@ -1,6 +1,8 @@
 
 import ConnectionManager from "./services/ConnectionManager.js"
 import { Pages } from "./Pages.js" 
+import { Navigate } from 'react-router-dom';
+//import LanguageManager from "./services/LanguageManager.js"
 
 class MechaMate {
 
@@ -11,6 +13,7 @@ class MechaMate {
         this.refreshStateCaller = null;
         this.connection = new ConnectionManager();
         this.appLoaded = false;
+     //   this.lang = new LanguageManager();
     }
 
     isAppLoaded() { return this.appLoaded; }
@@ -58,21 +61,27 @@ class MechaMate {
     }
 
     goBack() {
+        window.history.back();
+        return;
         if(this.currentHistoryIndex >= 0 && this.currentHistoryIndex < this.history.length) {
             if(this.currentHistoryIndex > 0) {
                 this.currentHistoryIndex--;
                 this.currentPage = this.history[this.currentHistoryIndex];
-                if(this.refreshStateCaller) this.refreshStateCaller();
+                window.location.href = this.currentPage;
+                //if(this.refreshStateCaller) this.refreshStateCaller();                
             }
         }        
     }
 
     goForward() {
+        window.history.forward();
+        return;
         if(this.currentHistoryIndex >= 0 && this.currentHistoryIndex < this.history.length) {
             if(this.currentHistoryIndex < this.history.length - 1) {
                 this.currentHistoryIndex++;
                 this.currentPage = this.history[this.currentHistoryIndex];
-                if(this.refreshStateCaller) this.refreshStateCaller();
+                window.location.href = this.currentPage;
+                //if(this.refreshStateCaller) this.refreshStateCaller();
             }
         }        
     }
@@ -89,7 +98,8 @@ class MechaMate {
         if(this.history.length > 10) this.history.splice(0, 1);
         this.currentHistoryIndex = this.history.length - 1;
         this.currentPage = newPage;
-        if(this.refreshStateCaller) this.refreshStateCaller();
+        window.location.href = this.currentPage;
+//        if(this.refreshStateCaller) this.refreshStateCaller();
     }
 
     clearSessionCache() {

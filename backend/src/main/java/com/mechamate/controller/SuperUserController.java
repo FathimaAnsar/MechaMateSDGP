@@ -7,6 +7,7 @@ import com.mechamate.dto.MaintenanceDTO;
 import com.mechamate.dto.PredictionModelDTO;
 import com.mechamate.dto.SuccessDTO;
 import com.mechamate.entity.*;
+import com.mechamate.features.PdM;
 import com.mechamate.service.LanguageManager;
 import com.mechamate.service.ProfileManager;
 import com.mechamate.service.SessionManager;
@@ -19,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -38,7 +40,8 @@ public class SuperUserController {
     @Autowired
     private LanguageManager lang;
 
-
+    @Autowired
+    private PdM predictiveMaintenance;
 
     @PostMapping("/add-maintenance")
     public ResponseEntity<?> addMaintenance(HttpServletRequest request, HttpServletResponse response,
@@ -150,12 +153,10 @@ public class SuperUserController {
     }
 
 
-
-
-
     @PostMapping("/add-prediction-model")
     public ResponseEntity<?> addPredictionModel(HttpServletRequest request, HttpServletResponse response,
-                                            @RequestBody(required = false) PredictionModelDTO predictionModelDTO) {
+                                            @RequestBody(required = false) PredictionModelDTO predictionModelDTO,
+                                            @RequestParam(required = false) String datasetFileName) {
         Object obj = Validation.authenticate(request, response, sessionManager, lang);
         if(!(obj instanceof UserProfile)) return (ResponseEntity<ErrorDTO>) (obj);
         UserProfile userProfile = (UserProfile) obj;
@@ -182,15 +183,20 @@ public class SuperUserController {
                 predictionModelDTO.setAppliedMaintenanceList(new ArrayList<>());
         } catch (Exception e) {}
 
-        PredictionModel predictionModel = new PredictionModel(predictionModelDTO.getName(), predictionModelDTO.getDescription(),
-                predictionModelDTO.getmValue(),
-                predictionModelDTO.getcValue(),
-                predictionModelDTO.getAppliedMaintenanceList());
+        File f = new File(System.getProperty("user.dir") + "/datasets/" + datasetFileName);
+        if(!f.exists() || f.isDirectory())
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
+                            lang.get("error.file.doesnt.exist", userProfile.getLanguage()),
+                            lang.get("error.file.doesnt.exist.help", userProfile.getLanguage())),
+                            HttpStatus.OK);
+
+        PredictionModel predictionModel = predictiveMaintenance.getTrainedPredictionModel(datasetFileName,
+                predictionModelDTO.getName(), predictionModelDTO.getDescription(), predictionModelDTO.getAppliedMaintenanceList());
 
         try {
             predictionModel.set_id(new ObjectId(predictionModelDTO.getModelId()));
         } catch (Exception e) {}
-
 
         ResponseEntity<ErrorDTO> resp = superUserActionManager.addPredictionModel(predictionModel, userProfile);
         if(resp != null) return resp;
@@ -200,7 +206,6 @@ public class SuperUserController {
                         lang.get("success.addpmodel.succeeded", userProfile.getLanguage()),
                         lang.get("success.addpmodel.succeeded.info", userProfile.getLanguage())),
                         HttpStatus.OK);
-
     }
 
 
