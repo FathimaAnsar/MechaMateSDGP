@@ -2,11 +2,15 @@ import React, { useState }  from 'react';
 import ConnectionManager from '../../services/ConnectionManager';
 import { Pages } from "../../Pages.js";
 import { Navbar, Container, Nav, Offcanvas, Button } from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
 
 
 
 
 function Header(props) {
+
+  const navigate = useNavigate();
+
   const [showOffcanvas, setShowOffcanvas] = useState(false);
 
   const handleToggleOffcanvas = () => setShowOffcanvas(!showOffcanvas);
@@ -19,17 +23,17 @@ function Header(props) {
 
     if(!response) {
       alert("Please check your springboot localhost is running");
-      props.app.changePage(Pages.SignInUI);
+      navigate("/" + Pages.SignInUI);
       return;
     }
 
 
     if(response.error) {
-        props.app.changePage(Pages.SignInUI);
-        // alert("Error occured: " + response.message + "\n" + response.help);
+      navigate("/" + Pages.SignInUI);
+              // alert("Error occured: " + response.message + "\n" + response.help);
     } else if(response.status) {
         alert("Success: " + response.message + "\n" + response.info);
-        props.app.changePage(Pages.SignInUI);
+        navigate("/" + Pages.SignInUI);
     } else {
         alert("Error: Unknown");
     }
@@ -59,17 +63,17 @@ function Header(props) {
         <Offcanvas.Body>
           {/* Your offcanvas menu items go here */}
           <Nav className="flex-column">
-          <Button variant='link' onClick={() =>{props.app.changePage(Pages.DashboardUI)}}>Home</Button>
-          <Button variant='link' onClick={() =>{props.app.changePage(Pages.MyVehiclesUI)}}>Add Vehicle</Button>
-          <Button variant='link' onClick={() =>{props.app.changePage(Pages.AddSRecordManualUI)}}>Add Service Record</Button>
-          <Button variant='link' onClick={() =>{props.app.changePage(Pages.ParkingFinderUI)}}>Parking Finder</Button>
-          <Button variant='link' onClick={() =>{props.app.changePage(Pages.ManageDocumentsUI)}}>Documents</Button>
-          <Button variant='link' onClick={() =>{props.app.changePage(Pages.EmergencyAssistUI)}}>Emergency Assistance</Button>
-          <Button variant='link' onClick={() =>{props.app.changePage(Pages.TrackVehicleUI)}}>Vehicle Tracker</Button>
-          <Button variant='link' onClick={() =>{props.app.changePage(Pages.AutoMobSearchUI)}}>Find Mechanic</Button>
-          <Button variant='link' onClick={() =>{props.app.changePage(Pages.PredictMaintenanceUI)}}>Predict</Button>
-          <Button variant='link' onClick={() =>{props.app.changePage(Pages.SettingsUI)}}>Settings</Button>
-          <Button variant='link' onClick={() =>{props.app.changePage(Pages.AboutUsUI)}}>About Us</Button>
+          <Button variant='link' onClick={() =>{navigate("/" + Pages.DashboardUI)}}>Home</Button>
+          <Button variant='link' onClick={() =>{navigate("/" + Pages.MyVehiclesUI)}}>Add Vehicle</Button>
+          <Button variant='link' onClick={() =>{navigate("/" + Pages.AddSRecordManualUI)}}>Add Service Record</Button>
+          <Button variant='link' onClick={() =>{navigate("/" + Pages.ParkingFinderUI)}}>Parking Finder</Button>
+          <Button variant='link' onClick={() =>{navigate("/" + Pages.ManageDocumentsUI)}}>Documents</Button>
+          <Button variant='link' onClick={() =>{navigate("/" + Pages.EmergencyAssistUI)}}>Emergency Assistance</Button>
+          <Button variant='link' onClick={() =>{navigate("/" + Pages.TrackVehicleUI)}}>Vehicle Tracker</Button>
+          <Button variant='link' onClick={() =>{navigate("/" + Pages.AutoMobSearchUI)}}>Find Mechanic</Button>
+          <Button variant='link' onClick={() =>{navigate("/" + Pages.PredictMaintenanceUI)}}>Predict</Button>
+          <Button variant='link' onClick={() =>{navigate("/" + Pages.SettingsUI)}}>Settings</Button>
+          <Button variant='link' onClick={() =>{navigate("/" + Pages.AboutUsUI)}}>About Us</Button>
           <Button variant='link' onClick={handleSignout}>Sign Out</Button>
             {/* Add more Nav.Link items as needed */}
           </Nav>

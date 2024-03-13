@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import React from "react";
 import { Container, Button, Row, Col, Card, Stack } from "react-bootstrap";
 import Header from "./components/Header";
@@ -16,17 +16,6 @@ import {
 import defaultImage from "../images/vehicles/camry-side.jpeg";
 import { useState } from "react";
 import "./styles/viewVehicle.css";
-=======
-import React from 'react'
-import defaultImage from '../images/vehicles/camry-side.jpeg'
-import { Container, Button, Row, Col, Card } from 'react-bootstrap'
-import Header from './components/Header'
-import Image, { propTypes } from 'react-bootstrap/esm/Image'
-import { FaBatteryFull, FaTools, FaOilCan, FaCar, FaGasPump, FaBuilding, FaCalendarAlt, FaClipboardList } from 'react-icons/fa';
-import { useState } from 'react'
-import './styles/viewVehicle.css';
-
->>>>>>> origin/main
 
 export default function ViewVehicle(props) {
   const {

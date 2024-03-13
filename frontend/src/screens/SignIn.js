@@ -4,12 +4,17 @@ import ConnectionManager from "../services/ConnectionManager.js";
 import logo from '../images/logo-black.png';
 import './styles/signIn.css';
 import SignUpModal from "./SignUpModal.js";
-
+import { useNavigate } from "react-router-dom";
 
 function SignIn(props) {
+
+    const navigate = useNavigate();
     const [modalShow, setModalShow] = useState(false);
 
-    const handleClick = (page) => { props.app.changePage(page); }
+    const handleClick = (page) => { 
+        navigate("/" + page);
+     }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -56,7 +61,7 @@ function SignIn(props) {
 
             if (userProfile.error) {
                 if (userProfile.error === "ErrorPendingActivation") {
-                    props.app.changePage(Pages.EnterCodeUI);
+                    navigate("/" + Pages.EnterCodeUI);
                 } else {
                     alert(userProfile.message + "\n" + userProfile.help);
                 }
@@ -66,7 +71,7 @@ function SignIn(props) {
                 errorMessage.innerHTML=response.message;
                 errorMessage.style.height = 'auto';
                 props.app.setUserProfile(userProfile);
-                props.app.changePage(Pages.DashboardUI);
+                navigate("/" + Pages.DashboardUI);
             }
         } else {
             alert("Error: Unknown");
@@ -86,7 +91,7 @@ function SignIn(props) {
         
                 if (userProfile.error) {
                     if (userProfile.error === "ErrorPendingActivation") {
-                        props.app.changePage(Pages.EnterCodeUI);
+                        navigate("/" + Pages.EnterCodeUI);
                     } else if (userProfile.error === "ErrorNotSignedIn") {
                         //
                     } else {
@@ -95,7 +100,7 @@ function SignIn(props) {
                     }
                 } else {
                     props.app.setUserProfile(userProfile);
-                    props.app.changePage(Pages.DashboardUI);
+                    navigate("/" + Pages.DashboardUI);
                 }
             });
         } catch (exp) { }
@@ -130,7 +135,7 @@ function SignIn(props) {
             </div>
             <SignUpModal app={props.app} show={modalShow} onHide={() => {setModalShow(false)
             if (props.app.getUserProfile()) {
-                props.app.changePage(Pages.EnterCodeUI);
+                navigate("/" + Pages.EnterCodeUI);
               }
             }}/>
 
