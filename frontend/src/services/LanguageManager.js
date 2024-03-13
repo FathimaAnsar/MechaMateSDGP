@@ -1,12 +1,38 @@
 
 const langList = ["default", "sinhala", "tamil"];
 
-
+//Sinhala translations
 
 export const sinhala = [
     {tag: "get-started-button", attribute: "", value: "මෙතනින් අරඹන්න"},
     {tag: "user-name-txt", attribute: "", value: "ගැලරිය"},
+
+    //dashboard 
+    {tag: "dash-vehicle-heading", attribute: "", value: "වාහන"},
+    {tag: "dash-vehicle-p1", attribute: "", value: "ඔබ තවම වාහන කිසිවක් එකතු කර නැත"},
+    {tag: "dash-add-vehi-btn", attribute: "", value: "වාහනයක් එකතු කරන්න"},
+
+    {tag: "dash-autoS-heading", attribute: "", value: "අලුත් වැඩියා ස්ථානයක් "},
+    {tag: "dash-autS_btn", attribute: "", value: "සොයන්න"},
+
+    {tag: "dash-pred-heading", attribute: "", value: "නඩත්තු අනාවැකිය"},
+    {tag: "dash-pred_btn", attribute: "", value: "අනාවැකිය බලන්න"},
+
+    {tag: "dash-track-heading", attribute: "", value: "වාහනය නිරීක්ෂණය"},
+    {tag: "dash-track_btn", attribute: "", value: "වාහනය නිරීක්ෂණය කරන්න "},
+
+    {tag: "dash-emergen-heading", attribute: "", value: "ආපදා සහකරු"},
+    {tag: "dash-emergen_btn", attribute: "", value: "ආපදා සහකරු ක්‍රියාත්මක කරන්න"},
+
+    {tag: "dash-doc-heading", attribute: "", value: "වාහන ලේඛන කළමනාකරණය"},
+    {tag: "dash-doc_btn", attribute: "", value: "ලේඛන විවෘත කරන්න"},
+
+    {tag: "dash-park-heading", attribute: "", value: "රථ ගාලක් සොයන්න"},
+    {tag: "dash-park_btn", attribute: "", value: "සෙවීමට පිවිසෙන්න"},
 ]; 
+
+
+//Tamil Translations
 
 export const tamil = [
     {tag: "get-started-button", attribute: "", value: "මෙතනින් අරඹන්න"},

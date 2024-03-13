@@ -3,7 +3,10 @@
 
 package com.mechamate.service;
 
+import com.mechamate.MechaMate;
 import jakarta.mail.internet.MimeMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -23,6 +26,7 @@ public class NotificationManager {
     @Value("${spring.config.server.address}")
     private String hostname;
 
+    private static final Logger logger = LoggerFactory.getLogger(MechaMate.class);
     public boolean sendActivationEmail(UserProfile userProfile) {
 
         String emailTemplate = """
@@ -346,7 +350,16 @@ public class NotificationManager {
                 </html>                
                 """;
         emailTemplate = emailTemplate.replace("[REPLACE1]", userProfile.getFirstname());
-        return sendEmail(emailTemplate, userProfile, "Password Reset Confirmation");
+        if(sendEmail(emailTemplate, userProfile, "Password Reset Confirmation")){
+            logger.warn("");
+            return true;
+
+        }
+        else{
+            logger.error("");
+            return false;
+        }
+
     }
 
 
