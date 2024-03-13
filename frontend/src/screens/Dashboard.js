@@ -12,6 +12,7 @@ import { Button } from "react-bootstrap";
 import Spinner from "react-bootstrap/Spinner";
 import ViewVehicle from "./ViewVehicle.js";
 import { useNavigate } from "react-router-dom";
+import LoadingScreen from "./components/LoadingScreen.js";
 
 function Dashboard(props) {
   const navigate = useNavigate();
