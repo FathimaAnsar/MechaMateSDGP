@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from "react";
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import { Pages } from "../Pages.js"
-import ConnectionManager from "../services/ConnectionManager.js"
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import { Pages } from "../Pages.js";
+import ConnectionManager from "../services/ConnectionManager.js";
 import Header from "./components/Header.js";
 import ClickableCard from "./components/ClickableCard.js";
-import Stack from 'react-bootstrap/Stack';
+import Stack from "react-bootstrap/Stack";
 import CustomCarousel from "./components/CustomCarousel.js";
 import { Button } from "react-bootstrap";
-import Spinner from 'react-bootstrap/Spinner';
+import Spinner from "react-bootstrap/Spinner";
 import ViewVehicle from "./ViewVehicle.js";
-
+import { useNavigate } from "react-router-dom";
+import LoadingScreen from "./components/LoadingScreen.js";
 
 function Dashboard(props) {
+  const navigate = useNavigate();
   const connection = new ConnectionManager();
   const [vehicles, setVehicles] = useState(null);
-  const [selectedVehicle, setSelectedVehicle] = useState(null);
 
   function generateGreeting() {
     var currentHour = new Date().getHours();
@@ -34,10 +35,9 @@ function Dashboard(props) {
     try {
       const resp = await connection.getVehicleList();
       const vehicles = JSON.parse(resp);
-     // console.log(vehicles)
-      props.app.setVehicleList(vehicles)
+      // console.log(vehicles)
+      props.app.setVehicleList(vehicles);
       return vehicles;
-
     } catch (error) {
       console.error(error);
     }
@@ -52,30 +52,32 @@ function Dashboard(props) {
     fetchData();
   }, []);
 
-  const handleCardClick = (vehicle) => {
-    // console.log(vehicle);
-    // props.app.changePage(Pages.ViewVehicle);
-    setSelectedVehicle(vehicle);
-    window.history.pushState(null, "", Pages.DashboardUI);
+  const handleCardClick = (index) => {
+    navigate(`/${Pages.ViewVehicle}?vehicle=${index}`);
   };
 
-  if (selectedVehicle) {
-    return <ViewVehicle app={props.app} vehicle={selectedVehicle} />;
-  }
-
-  const handleClick = (page) => { props.app.changePage(page); }
+  const handleClick = (page) => {
+    props.app.changePage(page);
+  };
 
   return (
-
     <>
-      <div style={{ position: 'sticky', top: '0', width: '100vw', zIndex: '5' }}>
+      <div
+        style={{ position: "sticky", top: "0", width: "100vw", zIndex: "5" }}
+      >
         <Header app={props.app} />
       </div>
 
-      <Container fluid >
-
-        <Row style={{ marginTop: '10px' }}>
-          <Col><h1 style={{ fontWeight: '700', fontFamily: 'sans-serif' }}>{generateGreeting()} {(props.app.getUserProfile() == null ? "<User>" : props.app.getUserProfile().firstName)}!</h1>
+      <Container fluid>
+        <Row style={{ marginTop: "10px" }}>
+          <Col>
+            <h1 style={{ fontWeight: "700", fontFamily: "sans-serif" }}>
+              {generateGreeting()}{" "}
+              {props.app.getUserProfile() == null
+                ? "<User>"
+                : props.app.getUserProfile().firstName}
+              !
+            </h1>
           </Col>
         </Row>
         <Row>
@@ -86,29 +88,45 @@ function Dashboard(props) {
 
         <Row>
           <Col>
-            <h2 id="dash-vehicle-heading">Vehicles</h2>
-            <div style={{
-              height: '100%',
-              overflowY: 'auto',
-            }}>
+            <h2>Vehicles</h2>
+            <div
+              style={{
+                height: "100%",
+                overflowY: "auto",
+              }}
+            >
               {vehicles === null ? (
-                <div style={{display: 'flex',
-                justifyContent: 'center', 
-                width: '100%',
-                height:'100px',
-                alignItems: 'center'}}><Spinner animation="border" variant="secondary" /></div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    width: "100%",
+                    height: "100px",
+                    alignItems: "center",
+                  }}
+                >
+                  <Spinner animation="border" variant="secondary" />
+                </div>
               ) : vehicles.length > 0 ? (
-                <Stack direction="horizontal" gap={4} >
+                <Stack direction="horizontal" gap={4}>
                   {vehicles.map((vehicle, index) => (
                     <div key={index}>
-                      <ClickableCard content={vehicle} onClick={handleCardClick} />
+                      <ClickableCard
+                        content={vehicle}
+                        onClick={handleCardClick}
+                        index={index}
+                      />
                     </div>
                   ))}
                 </Stack>
-              ) : ( // Render message and button if no vehicles are available
-                <div style={{width:'100%'}}>
-                  <p id="dash-vehicle-p1">You have not added any vehicles yet</p>
-                  <Button id="dash-add-vehi-btn" variant="dark" onClick={() => props.app.changePage(Pages.MyVehiclesUI)}>
+              ) : (
+                // Render message and button if no vehicles are available
+                <div style={{ width: "100%" }}>
+                  <p>You have not added any vehicles yet</p>
+                  <Button
+                    variant="dark"
+                    onClick={() => navigate("/" + Pages.MyVehiclesUI)}
+                  >
                     Add a Vehicle
                   </Button>
                 </div>
@@ -116,61 +134,85 @@ function Dashboard(props) {
             </div>
           </Col>
         </Row>
-
       </Container>
 
-                    <br></br>
+      <br></br>
       <hr></hr>
-      <br></br><br></br>
+      <br></br>
+      <br></br>
       <div id="AutoMobSection">
-        <h2 id="dash-autoS-heading">AutoMob Search</h2>
-        <button id="dash-autS_btn" onClick={() => { props.app.changePage(Pages.AutoMobSearchUI) }}>
-          <span style={{ marginRight: '5px' }}></span> {/* Material Icon */}
+        <h2>AutoMob Search</h2>
+        <button
+          onClick={() => {
+            navigate("/" + Pages.AutoMobSearchUI);
+          }}
+        >
+          <span style={{ marginRight: "5px" }}></span> {/* Material Icon */}
           Search
         </button>
       </div>
 
       <div id="PredictiveMaintenance">
-        <h2 id="dash-pred-heading">Maintenance predictions</h2>
-        <button id="dash-pred_btn" onClick={() => { props.app.changePage(Pages.PredictMaintenanceUI) }}>
-          <span style={{ marginRight: '5px' }}>🛠️</span> {/* Material Icon */}
+        <h2>Maintenance predictions</h2>
+        <button
+          onClick={() => {
+            navigate("/" + Pages.PredictMaintenanceUI);
+          }}
+        >
+          <span style={{ marginRight: "5px" }}>🛠️</span> {/* Material Icon */}
           Open Maintenance predictions
         </button>
       </div>
 
       <div id="Track my vehicle">
-        <h2 id="dash-track-heading">Track my Vehicle</h2>
-        <button id="dash-track_btn" onClick={() => { props.app.changePage(Pages.TrackVehicleUI) }}>
-          <span style={{ marginRight: '5px' }}></span> {/* Material Icon */}
+        <h2>Track my Vehicle</h2>
+        <button
+          onClick={() => {
+            navigate("/" + Pages.TrackVehicleUI);
+          }}
+        >
+          <span style={{ marginRight: "5px" }}></span> {/* Material Icon */}
           Open To Track my vehicle
         </button>
       </div>
 
       <div id="emergency assistence">
-        <h2 id="dash-emergen-heading">Emergency assistence</h2>
-        <button id="dash-emergen_btn" onClick={() => handleClick(Pages.EmergencyAssistUI)}>
-          <span style={{ marginRight: '5px' }}></span> {/* Material Icon */}
+        <h2>Emergency assistence</h2>
+        <button
+          onClick={() => {
+            navigate("/" + Pages.EmergencyAssistUI);
+          }}
+        >
+          <span style={{ marginRight: "5px" }}></span> {/* Material Icon */}
           Open Emergency assistence
         </button>
       </div>
 
       <div id="manage my documents">
-        <h2 id="dash-doc-heading">Manage vehicle documents</h2>
-        <button id="dash-doc_btn" onClick={() => { props.app.changePage(Pages.ManageDocumentsUI) }}>
-          <span style={{ marginRight: '5px' }}></span> {/* Material Icon */}
+        <h2>Manage vehicle documents</h2>
+        <button
+          onClick={() => {
+            navigate("/" + Pages.ManageDocumentsUI);
+          }}
+        >
+          <span style={{ marginRight: "5px" }}></span> {/* Material Icon */}
           Open vehicle documents/sercice records
         </button>
       </div>
 
       <div id="parking finder">
-        <h2 id="dash-park-heading">Parking Finder</h2>
-        <button id="dash-park_btn" onClick={() => { props.app.changePage(Pages.ParkingFinderUI) }}>
-          <span style={{ marginRight: '5px' }}></span> {/* Material Icon */}
+        <h2>Parking Finder</h2>
+        <button
+          onClick={() => {
+            navigate("/" + Pages.ParkingFinderUI);
+          }}
+        >
+          <span style={{ marginRight: "5px" }}></span> {/* Material Icon */}
           Open to Find a parking place
         </button>
       </div>
     </>
-  )
+  );
 }
 
-export default Dashboard
+export default Dashboard;

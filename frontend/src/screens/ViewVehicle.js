@@ -10,13 +10,24 @@ import {
   FaGasPump,
   FaBuilding,
   FaCalendarAlt,
-  FaClipboardList,
 } from "react-icons/fa";
 import defaultImage from "../images/vehicles/camry-side.jpeg";
 import { useState } from "react";
 import "./styles/viewVehicle.css";
+import { useLocation } from "react-router-dom";
 
 export default function ViewVehicle(props) {
+  const location = useLocation();
+  const index = new URLSearchParams(location.search).get("vehicle");
+  let vehicle = null;
+
+  if (index !== null && index !== "") {
+    const vehicleList = props.app.getVehicleList();
+    if (vehicleList && index >= 0 && index < vehicleList.length) {
+      vehicle = vehicleList[index];
+    }
+  }
+
   const {
     registrationNumber,
     vehicleType,
@@ -28,7 +39,7 @@ export default function ViewVehicle(props) {
     regExpDate,
     currentMileage,
     serviceRecords,
-  } = props.vehicle;
+  } = vehicle;
 
   const fuelCapacity = "Remaining: 89%";
   const battery = "30%";
@@ -42,8 +53,6 @@ export default function ViewVehicle(props) {
     const differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24));
     return differenceInDays;
   };
-
-  // Example component
 
   const [maintenanceRecords] = useState([
     {
