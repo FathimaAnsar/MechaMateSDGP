@@ -26,12 +26,12 @@
 
   .shadow-glow-success{
     border-radius: 13px;
-    box-shadow: 0 0 3px 0 rgba(0, 255, 0, 0.8);
+    box-shadow: 0 0 5px 0 rgba(0, 255, 0, 0.8);
   }
 
   .shadow-glow-danger{
     border-radius: 13px;
-    box-shadow: 0 0 10px 0 rgba(255, 0, 0, 0.8);
+    box-shadow: 0 0 5px 0 rgba(255, 0, 0, 0.8);
   }
 
   
