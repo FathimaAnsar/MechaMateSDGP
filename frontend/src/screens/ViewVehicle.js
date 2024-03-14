@@ -108,18 +108,21 @@ export default function ViewVehicle(props) {
               <h2>
                 {vehicle.vehicleMake} {vehicle.vehicleModel}
               </h2>
-              <text>
-                {2021} {vehicle.registrationNumber} {vehicle.fuelType}
-              </text>
+              <p style={{ color: "gray", marginTop: "-10px" }}>
+                {2024} • {vehicle.fuelType}
+              </p>
             </Row>
-            <Row>
-              <Image src={imageUrl} alt="car" fluid />
+            <Row className="d-flex align-items-center">
+              <Image style={{ width: "100%" }} src={imageUrl} alt="car" />
+            </Row>
+            <Row className="text-center">
+              <p style={{ color: "gray" }}>{vehicle.registrationNumber}</p>
             </Row>
 
             <Row>
               <h3>Status</h3>
             </Row>
-            <Row xs={2} md={3} className="g-2">
+            <Row xs={2} md={3}>
               <Col>
                 <Card className="shadow-glow-success">
                   <Card.Body className="card-body-with-icon">
@@ -202,7 +205,7 @@ export default function ViewVehicle(props) {
             <Row>
               <h3>Recent Activity</h3>
             </Row>
-            <Row xs={1} md={1} className="g-2">
+            <Row xs={1} md={1}>
               {maintenanceRecords.map((record) => (
                 <Col key={record.id}>
                   <Card className="shadow-glow-blue">
@@ -226,7 +229,7 @@ export default function ViewVehicle(props) {
             <Row>
               <h3>Other</h3>
             </Row>
-            <Row xs={2} md={3} className="g-2">
+            <Row xs={2} md={3}>
               <Col>
                 <Card className="shadow-glow-blue">
                   <Card.Body className="card-body-with-icon">
