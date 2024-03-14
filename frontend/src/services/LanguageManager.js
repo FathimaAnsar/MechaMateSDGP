@@ -29,6 +29,25 @@ export const sinhala = [
 
     {tag: "dash-park-heading", attribute: "", value: "රථ ගාලක් සොයන්න"},
     {tag: "dash-park_btn", attribute: "", value: "සෙවීමට පිවිසෙන්න"},
+
+    //signup
+    {tag: "signup-heading", attribute: "", value: "ලියාපදිංචි වෙන්න"},
+    {tag: "signup-fname", attribute: "", value: "මුල් නම"},
+
+    {tag: "signup-lname", attribute: "", value: "අග නම"},
+    {tag: "signup-username", attribute: "", value: "පරිශීලක නාමය"},
+
+    {tag: "signup-username", attribute: "Username", value: "පරිශීලක නාමය"},
+    {tag: "signup-password", attribute: "", value: "මුරපදය"},
+
+    {tag: "signup-confpassword", attribute: "", value: "මුරපදය තහවුරු කරන්න"},
+    {tag: "signup-email", attribute: "", value: "ඊ-මේල් ලිපිනය"},
+
+    {tag: "signup-telephone", attribute: "", value: "දුරකථන අංකය"},
+    {tag: "validationFormikTerms", attribute: "label", value: "නියමයන් සහ කොන්දේසි වලට එකඟ වන්න"},
+
+   
+
 ]; 
 
 
