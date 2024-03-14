@@ -10,7 +10,7 @@ import {
   Spinner,
   Image,
 } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../images/logo-white.png";
 
 function Header(props) {
@@ -54,11 +54,13 @@ function Header(props) {
       >
         <Container>
           <Navbar.Brand>
-            <Image
-              src={logo}
-              alt="MechaMate Logo"
-              style={{ maxHeight: "25px" }}
-            />
+            <Link to="/dashboard">
+              <Image
+                src={logo}
+                alt="MechaMate Logo"
+                style={{ maxHeight: "25px" }}
+              />
+            </Link>
           </Navbar.Brand>
           <Button
             variant="dark"

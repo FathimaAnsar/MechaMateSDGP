@@ -1,11 +1,13 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
-import camryImage from "../../images/vehicles/camry.jpg";
+import camryImage from "../../images/vehicles/camry-side.jpg";
 import vitzImage from "../../images/vehicles/vitz.jpg";
-import civicImage from "../../images/vehicles/civic.jpg";
+import civicImage from "../../images/vehicles/civic-side.jpg";
 import defaultImage from "../../images/vehicles/default.jpg";
+import corollaImage from "../../images/vehicles/corolla-side.jpg";
 import { Button } from "react-bootstrap";
 import "../styles/viewVehicle.css";
+import { FaAngleRight } from "react-icons/fa";
 
 function ClickableCard({ content, onClick, index }) {
   const { registrationNumber, vehicleMake, vehicleModel } = content;
@@ -13,9 +15,10 @@ function ClickableCard({ content, onClick, index }) {
   const textColor = "dark";
 
   const carImages = {
-    Camry: camryImage, // Assuming you've imported the image statically
+    Camry: camryImage,
     Civic: civicImage,
     Vitz: vitzImage,
+    Corolla: corollaImage,
     default: defaultImage,
   };
   const imageUrl = carImages[vehicleModel] || carImages["default"];
@@ -26,68 +29,29 @@ function ClickableCard({ content, onClick, index }) {
 
   return (
     <Card
-      bg="light"
-      text={textColor}
-      style={{
-        width: "16rem",
-        cursor: "pointer",
-        height: "auto",
-        overflow: "hidden",
-        boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
-        outline: "0",
-        border: "none",
-        borderRadius: "15px",
-      }}
-      className="text-center"
+      className="d-flex flex-row align-items-center"
+      style={{ height: "120px", overflow: "hidden" }}
     >
-      <Card.Img variant="top" src={imageUrl} style={{ maxWidth: "100%" }} />
-      <Card.Body>
-        <Card.Title>
-          {vehicleMake} {vehicleModel}
-        </Card.Title>
-        <Card.Text>{registrationNumber}</Card.Text>
+      <Card.Img
+        variant="left"
+        src={imageUrl}
+        style={{ maxWidth: "50%", height: "auto", objectFit: "contain" }}
+      />
+      <Card.Body className="d-flex flex-column justify-content-between">
+        <div>
+          <Card.Title>
+            {vehicleMake} {vehicleModel}
+          </Card.Title>
+          <Card.Text>{registrationNumber}</Card.Text>
+        </div>
+        <FaAngleRight
+          className="align-self-end"
+          style={{ fontSize: "24px", cursor: "pointer" }}
+          onClick={handleClick}
+        />
       </Card.Body>
-      <Card.Footer>
-        <Button variant="dark" style={{ width: "100%" }} onClick={handleClick}>
-          View vehicle
-        </Button>
-      </Card.Footer>
     </Card>
   );
 }
 
 export default ClickableCard;
-
-{
-  /* <Card>
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-        <img
-          src={imageUrl}
-          alt={`${title} Image`}
-          style={{ maxWidth: '100%', opacity: '0.5' }}
-        />
-      </div>
-      <Card.ImgOverlay>
-
-        <Card.Body>
-          <Card.Title>{description} {title}</Card.Title>
-          <Card.Text>
-            {regNo}
-          </Card.Text>
-
-
-        </Card.Body>
-
-        {/* 
-        <Card.Body>
-        <Card.Title >
-        {description} {title}
-          </Card.Title>
-          <span style={{ fontSize: '10pt' }}>{regNo}</span>
-          <Card.Text>
-            
-          </Card.Text>
-        </Card.Body> */
-}
-//   </Card.ImgOverlay>
-// </Card > */}
