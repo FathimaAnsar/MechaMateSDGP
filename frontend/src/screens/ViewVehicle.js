@@ -10,12 +10,10 @@ import {
   FaGasPump,
   FaBuilding,
   FaCalendarAlt,
-  FaClipboardList,
 } from "react-icons/fa";
 import defaultImage from "../images/vehicles/camry-side.jpeg";
 import { useState } from "react";
 import "./styles/viewVehicle.css";
-import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 export default function ViewVehicle(props) {
