@@ -8,8 +8,10 @@ import {
   Offcanvas,
   Button,
   Spinner,
+  Image,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import logo from "../../images/logo-white.png";
 
 function Header(props) {
   const navigate = useNavigate();
@@ -51,7 +53,13 @@ function Header(props) {
         data-bs-theme="dark"
       >
         <Container>
-          <Navbar.Brand>MechaMate</Navbar.Brand>
+          <Navbar.Brand>
+            <Image
+              src={logo}
+              alt="MechaMate Logo"
+              style={{ maxHeight: "25px" }}
+            />
+          </Navbar.Brand>
           <Button
             variant="dark"
             className="navbar-toggler-icon"
