@@ -85,7 +85,7 @@ function SignUpModal(props) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-center">
-          <h3>Sign Up</h3>
+          <h3 id="signup-heading">Sign Up</h3>
           {/* <p style={{ fontSize: '10pt', marginBottom: '-10px' }}>It's quick and easy</p> */}
         </Modal.Title>
       </Modal.Header>
@@ -113,7 +113,7 @@ function SignUpModal(props) {
                   controlId="validationFormik01"
                   hasValidation
                 >
-                  <Form.Label>First name</Form.Label>
+                  <Form.Label id="signup-fname">First name</Form.Label>
                   <Form.Control
                     type="text"
                     name="firstName"
@@ -121,7 +121,7 @@ function SignUpModal(props) {
                     onChange={handleChange}
                     isValid={touched.firstName && !errors.firstName}
                   />
-                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                  <Form.Control.Feedback >Looks good!</Form.Control.Feedback>
                   <Form.Control.Feedback type="invalid">
                     {errors.firstName}
                   </Form.Control.Feedback>
@@ -132,7 +132,7 @@ function SignUpModal(props) {
                   controlId="validationFormik02"
                   hasValidation
                 >
-                  <Form.Label>Last name</Form.Label>
+                  <Form.Label id="signup-lname">Last name</Form.Label>
                   <Form.Control
                     type="text"
                     name="lastName"
@@ -153,7 +153,7 @@ function SignUpModal(props) {
                   controlId="validationFormikUsername"
                   hasValidation
                 >
-                  <Form.Label>Username</Form.Label>
+                  <Form.Label id="signup-username">Username</Form.Label>
                   <InputGroup>
                     <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
                     <Form.Control
@@ -178,7 +178,7 @@ function SignUpModal(props) {
                   controlId="validationFormikPassword"
                   hasValidation
                 >
-                  <Form.Label>Password</Form.Label>
+                  <Form.Label id="signup-password">Password</Form.Label>
                   <Form.Control
                     type="password"
                     name="password"
@@ -196,7 +196,7 @@ function SignUpModal(props) {
                   controlId="validationFormikConfirmPassword"
                   hasValidation
                 >
-                  <Form.Label>Confirm password</Form.Label>
+                  <Form.Label id="signup-confpassword">Confirm password</Form.Label>
                   <Form.Control
                     type="password"
                     name="confirmpassword"
@@ -216,7 +216,7 @@ function SignUpModal(props) {
                   controlId="validationFormikEmail"
                   hasValidation
                 >
-                  <Form.Label>Email</Form.Label>
+                  <Form.Label id="signup-email">Email</Form.Label>
                   <Form.Control
                     type="email"
                     name="email"
@@ -234,7 +234,7 @@ function SignUpModal(props) {
                   controlId="validationFormikTelephone"
                   hasValidation
                 >
-                  <Form.Label>Telephone</Form.Label>
+                  <Form.Label id="signup-telephone">Telephone</Form.Label>
                   <Form.Control
                     type="text"
                     name="telephone"
@@ -248,7 +248,7 @@ function SignUpModal(props) {
                 </Form.Group>
               </Row>
               <Form.Group className="mb-3">
-                <Form.Check
+                <Form.Check 
                   required
                   name="terms"
                   label="Agree to terms and conditions"
