@@ -1,13 +1,12 @@
-
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function PaymentSuccess() {
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const handleGoHome = () => {
-        history.push('/');
+        navigate('/');
     };
 
     return (
