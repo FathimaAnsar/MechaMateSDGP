@@ -2,16 +2,10 @@ package com.mechamate.controller;
 
 import com.mechamate.common.Common;
 import com.mechamate.common.Validation;
-import com.mechamate.dto.ErrorDTO;
-import com.mechamate.dto.MaintenanceDTO;
-import com.mechamate.dto.PredictionModelDTO;
-import com.mechamate.dto.SuccessDTO;
+import com.mechamate.dto.*;
 import com.mechamate.entity.*;
 import com.mechamate.features.PdM;
-import com.mechamate.service.LanguageManager;
-import com.mechamate.service.ProfileManager;
-import com.mechamate.service.SessionManager;
-import com.mechamate.service.SuperUserActionManager;
+import com.mechamate.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.bson.types.ObjectId;
@@ -19,10 +13,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.File;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/super")
@@ -35,6 +35,9 @@ public class SuperUserController {
     private ProfileManager profileManager;
 
     @Autowired
+    private APIManager apiManager;
+
+    @Autowired
     private SuperUserActionManager superUserActionManager;
 
     @Autowired
@@ -42,6 +45,11 @@ public class SuperUserController {
 
     @Autowired
     private PdM predictiveMaintenance;
+    private final String merchantId = "1226081";
+    private final String merchantSecret = "MzA4ODI0OTY4NTM2NzgzNTA0ODUxMDM0ODQ3MDk0MTgyNzA1NzU3NQ==";
+    private final String returnUrl = "https://mechamate-413916.el.r.appspot.com/";
+    private final String cancelUrl = "https://mechamate-413916.el.r.appspot.com/";
+    private final String notifyUrl = "https://mechamate-413916.el.r.appspot.com/";
 
     @PostMapping("/add-maintenance")
     public ResponseEntity<?> addMaintenance(HttpServletRequest request, HttpServletResponse response,
@@ -270,8 +278,57 @@ public class SuperUserController {
     }
 
 
+    @PostMapping("/process-payment")
+    public RedirectView processPayment(@RequestBody PaymentInfoDTO paymentInfoDTO) throws NoSuchAlgorithmException {
+        DecimalFormat df = new DecimalFormat("0.00");
+        String amountFormatted = df.format(Double.parseDouble(paymentInfoDTO.getAmount()));
+        String hash = getMd5(merchantId + paymentInfoDTO.getOrderId() + amountFormatted + paymentInfoDTO.getCurrency() + "2" + getMd5(merchantSecret).toUpperCase()).toUpperCase();
 
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("https://sandbox.payhere.lk/pay/checkout")
+                .queryParam("merchant_id", merchantId)
+                .queryParam("return_url", returnUrl)
+                .queryParam("cancel_url", cancelUrl)
+                .queryParam("notify_url", notifyUrl)
+                .queryParam("order_id", paymentInfoDTO.getOrderId())
+                .queryParam("items", paymentInfoDTO.getItems())
+                .queryParam("currency", paymentInfoDTO.getCurrency())
+                .queryParam("amount", amountFormatted)
+                .queryParam("first_name", paymentInfoDTO.getFirstName())
+                .queryParam("last_name", paymentInfoDTO.getLastName())
+                .queryParam("email", paymentInfoDTO.getEmail())
+                .queryParam("phone", paymentInfoDTO.getPhone())
+                .queryParam("address", paymentInfoDTO.getAddress())
+                .queryParam("city", paymentInfoDTO.getCity())
+                .queryParam("country", paymentInfoDTO.getCountry())
+                .queryParam("hash", hash);
 
+        return new RedirectView(builder.toUriString());
+    }
+
+    public static String getMd5(String input) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        byte[] messageDigest = md.digest(input.getBytes());
+        BigInteger no = new BigInteger(1, messageDigest);
+        String hashtext = no.toString(16);
+        while (hashtext.length() < 32) {
+            hashtext = "0" + hashtext;
+        }
+        return hashtext.toUpperCase();
+    }
+    @PostMapping("/payment-notification")
+    public ResponseEntity<?> handlePaymentNotification(@RequestBody Map<String, Object> payload) {
+        boolean isProcessed = apiManager.processPaymentNotification(payload);
+
+        if (isProcessed) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing payment notification");
+        }
+    }
 
 }
+
+
+
+
 

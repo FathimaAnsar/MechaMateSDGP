@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Form, Card, Alert } from 'react-bootstrap';
-import { Pages } from "../Pages.js"
+import PaymentForm from './PaymentForm';  // Ensure this path is correct based on your file structure
+import { Pages } from "../Pages.js";
 import ConnectionManager from '../services/ConnectionManager';
 import Header from "./components/Header";
 
@@ -11,14 +12,13 @@ function AutoMobSearch(props) {
     const [selectedMapUri, setSelectedMapUri] = useState("");
     const [error, setError] = useState("");
     const [expandedInfo, setExpandedInfo] = useState({});
+    const [showPaymentForm, setShowPaymentForm] = useState(false);
 
     useEffect(() => {
         props.app.getCurrentLocation().then(location => {
-            console.log("Current location obtained: ", location);
             setCurrentLocation(location);
             setSelectedMapUri(`https://maps.google.com/maps?q=${location.latitude},${location.longitude}&z=15&output=embed`);
         }).catch(exp => {
-            console.error("Failed to get location: ", exp);
             setError(exp.message || "Failed to get location information");
             props.app.changePage(Pages.DashboardUI);
         });
@@ -26,34 +26,25 @@ function AutoMobSearch(props) {
 
     const handleGoBack = () => {
         props.app.goBack();
-    }
+    };
 
     const showOnMap = (location) => {
-        if (location && location.latitude && location.longitude) {
-            const mapsUrl = `https://maps.google.com/maps?q=${location.latitude},${location.longitude}&z=15&output=embed`;
-            setSelectedMapUri(mapsUrl);
-        } else {
-            console.error("Invalid location data for map: ", location);
-            setError("Invalid location data for map.");
-        }
+        const mapsUrl = `https://maps.google.com/maps?q=${location.latitude},${location.longitude}&z=15&output=embed`;
+        setSelectedMapUri(mapsUrl);
     };
 
     const handleClick = async () => {
         setError("");
         setVarCap("Loading...");
-        setAutoShops([]);
         const limit = document.getElementById('limit').value;
         const radius = document.getElementById('radius').value;
 
-        // Input validation
         if (!limit || !radius) {
-            console.error("Invalid input: Limit or radius is missing.");
             setError("Please select both a limit and a radius.");
             return;
         }
 
         if (!currentLocation) {
-            console.error("No current location available.");
             setError("Current location is not available.");
             return;
         }
@@ -64,27 +55,21 @@ function AutoMobSearch(props) {
             const response = JSON.parse(resp);
 
             if (response.error) {
-                console.error("Error from server: ", response.message);
                 setError(`Error occurred: ${response.message}`);
                 setVarCap("");
-                setAutoShops([]);
             } else if (response.places && Array.isArray(response.places)) {
-                console.log("Auto shops retrieved: ", response.places);
                 setVarCap("Automobile Shops");
                 setAutoShops(response.places);
             } else {
-                console.error("Invalid response format: ", response);
                 setError("Invalid response format.");
                 setVarCap("");
-                setAutoShops([]);
             }
         } catch (error) {
-            console.error("Exception when calling getNearbyAutoShops: ", error);
-            setError("An error occurred while trying to fetch auto shops. Please check your network connection and try again.");
+            setError("An error occurred while trying to fetch auto shops.");
             setVarCap("");
-            setAutoShops([]);
         }
     };
+
     const toggleAdditionalInfo = (index) => {
         setExpandedInfo(prevState => ({
             ...prevState,
@@ -97,7 +82,6 @@ function AutoMobSearch(props) {
             <Header app={props.app} />
             <Container>
                 {error && <Alert variant="danger">{error}</Alert>}
-
                 <Row>
                     <Col>
                         <h2 className="text-center">Finding Spare Parts for Your Vehicle!</h2>
@@ -128,7 +112,6 @@ function AutoMobSearch(props) {
                                 <option value="10">Show only 10 results</option>
                                 <option value="15">Show only 15 results</option>
                                 <option value="20">Show only 20 results</option>
-                                {/*/!*<option value="25">Show only 25 results</option>*!/ committed due to   Internal API connection failed*/}
                             </Form.Control>
                         </Form.Group>
                     </Col>
@@ -145,15 +128,19 @@ function AutoMobSearch(props) {
                         </Form.Group>
                     </Col>
                 </Row>
-
                 <Row className="my-3">
                     <Col>
                         <Button variant="primary" onClick={handleClick}>Show Me Spare Part Shops</Button>
                     </Col>
                 </Row>
-
-
-
+                <Row className="my-3">
+                    {autoShops.length > 0 && (
+                        <Button variant="success" onClick={() => setShowPaymentForm(!showPaymentForm)}>
+                            {showPaymentForm ? 'Hide Payment Form' : 'Proceed to Payment'}
+                        </Button>
+                    )}
+                    {showPaymentForm && <PaymentForm />}
+                </Row>
                 <Row className="my-3">
                     {autoShops.length ? autoShops.map((shop, index) => (
                         <Col key={index} sm={12} md={6} lg={4} className="mb-3">
@@ -168,7 +155,6 @@ function AutoMobSearch(props) {
                                             'No number available'
                                         )}
                                     </Card.Text>
-
                                     <Card.Text>Rating: {shop.rating}</Card.Text>
                                     {shop.location && (
                                         <Button variant="primary" onClick={() => showOnMap(shop.location)}>View on Map</Button>
@@ -181,7 +167,6 @@ function AutoMobSearch(props) {
                                             <Card.Text>{shop.formattedAddress}</Card.Text>
                                         </div>
                                     )}
-
                                 </Card.Body>
                             </Card>
                         </Col>
