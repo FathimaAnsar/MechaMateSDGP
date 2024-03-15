@@ -39,7 +39,7 @@
     "start": "react-scripts start",
     "buildToServer": "cross-env BUILD_PATH=../backend/src/main/resources/static react-scripts build",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest selenium-tests",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -61,9 +61,7 @@
     ]
   },
   "jest": {
-    "transform": {
-      "^.+\\.js$": "babel-jest"
-    }
+    "testEnvironment": "node"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.23.3",

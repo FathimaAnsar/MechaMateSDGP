@@ -1,29 +1,33 @@
 const { Builder, By, Key, until } = require('selenium-webdriver');
 
-async function clickParkingFinderButton() {
-    // Create a new instance of the WebDriver
+async function dashboardTest() {
     let driver = await new Builder().forBrowser('chrome').build();
-    
     try {
-        // Open the dashboard page
+        // Navigate to the dashboard page
         await driver.get('http://localhost:3000/dashboard');
 
-        // Wait until the button with the text "Parking Finder" is visible
-        await driver.wait(until.elementLocated(By.xpath("//button[contains(text(), 'Parking Finder')]")), 10000);
+        // Wait for the button to be clickable
+        await driver.wait(until.elementLocated(By.id('dash-park_btn')), 5000);
 
-        // Find the button by its text
-        const parkingFinderButton = await driver.findElement(By.xpath("//button[contains(text(), 'Parking Finder')]"));
+       
+        // Wait for the button to be located
+        const button = await driver.wait(until.elementLocated(By.id('dash-park_btn')), 5000);
 
-        // Click the button
-        await parkingFinderButton.click();
+        // Click on the button
+        await button.click();
 
-        // Wait for a brief moment to allow any actions triggered by the button click to complete
-        await driver.sleep(2000);
+        // Wait for the parking-finder page to load
+        await driver.wait(until.urlIs('http://localhost:3000/parking-finder'), 5000);
+
+        console.log("Button clicked successfully. Navigated to the parking-finder page.");
+    } catch (error) {
+        console.error("An error occurred:", error);
     } finally {
+        
         // Close the browser
         await driver.quit();
     }
 }
 
-// Call the function to execute the test
-clickParkingFinderButton();
+// Execute the test function
+dashboardTest();

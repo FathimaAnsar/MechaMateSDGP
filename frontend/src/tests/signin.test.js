@@ -1,8 +1,9 @@
-const { By } = require('selenium-webdriver');
+const {  Builder, By } = require('selenium-webdriver');
 const webdriver = require('./webdriver');
 
 // Define the test function
 async function signInTest() {
+    let driver = await new Builder().forBrowser('chrome').build();
     try {
         // Navigate to the sign-in page
         await webdriver.get('http://localhost:3000/signin');
@@ -38,6 +39,9 @@ async function signInTest() {
         await webdriver.quit();
     } catch (error) {
         console.error('An error occurred:', error);
+    }finally {
+        // Close the browser
+        await driver.quit();
     }
 }
 
