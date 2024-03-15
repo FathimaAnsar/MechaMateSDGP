@@ -29,6 +29,8 @@ import "./styles/App.css";
 import ThemeContext from "./screens/components/ThemeContext.js";
 import ViewVehicle from "./screens/ViewVehicle.js";
 import { Routes, Route, Navigate } from "react-router-dom";
+import PaymentSuccess from "./screens/PaymentSuccess";
+import PaymentCancelled from "./screens/PaymentCancelled";
 
 // main.reset();
 
@@ -146,6 +148,8 @@ function App() {
       />
       <Route path={Pages.ParkingInfoUI} element={<ParkingInfo app={main} />} />
       <Route path={Pages.ViewVehicle} element={<ViewVehicle app={main} />} />
+        <Route path="/payment-success" element={<PaymentSuccess />} />
+        <Route path="/payment-cancelled" element={<PaymentCancelled />} />
       <Route path="*" element={<GetStarted app={main} />} />
     </Routes>
   );
