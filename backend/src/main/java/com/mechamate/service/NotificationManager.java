@@ -17,16 +17,21 @@ import com.mechamate.entity.UserProfile;
 @Service
 public class NotificationManager {
 
+    // Autowiring JavaMailSender to send emails
     @Autowired
     private JavaMailSender mailClient;
 
+    // Retrieving sender's email address from application properties
     @Value("${spring.mail.username}")
     private String sender;
 
+    // Retrieving hostname from configuration server address
     @Value("${spring.config.server.address}")
     private String hostname;
 
     private static final Logger logger = LoggerFactory.getLogger(MechaMate.class);
+
+    // Method to send activation email
     public boolean sendActivationEmail(UserProfile userProfile) {
 
         String emailTemplate = """
@@ -90,7 +95,7 @@ public class NotificationManager {
         return sendEmail(emailTemplate, userProfile, "MechaMate Account Activation");
     }
 
-
+    // Method to send welcome email
     public boolean sendWelcomeEmail(UserProfile userProfile) {
 
         String emailTemplate = """
@@ -157,7 +162,7 @@ public class NotificationManager {
     }
 
 
-
+    // Method to send login alert email
     public boolean sendLoginAlert(UserProfile userProfile) {
         String emailTemplate = """
                 <!DOCTYPE html>
@@ -227,7 +232,7 @@ public class NotificationManager {
     }
 
 
-
+    // Method to send password recovery email
     public boolean sendRecoveryEmail(UserProfile userProfile) {
         String emailTemplate = """
                 <!DOCTYPE html>
@@ -293,7 +298,7 @@ public class NotificationManager {
         return sendEmail(emailTemplate, userProfile, "MechaMate Password Reset");
     }
 
-
+    // Method to send password reset confirmation email
     public boolean sendResetConfirmEmail(UserProfile userProfile) {
         String emailTemplate = """
                 <!DOCTYPE html>
@@ -362,7 +367,7 @@ public class NotificationManager {
 
     }
 
-
+    // Method to send email
     private boolean sendEmail(String emailTemplate, UserProfile userProfile, String subject) {
         try {
             MimeMessage mimeMessage = mailClient.createMimeMessage();

@@ -39,7 +39,7 @@ public class ProfileManager {
 
 
 
-
+//Creates a new user profile.
     public ResponseEntity<ErrorDTO> createUserProfile(HttpServletRequest request, UserProfile userProfile) {
 
         if(databaseAbstractLayer.isUserExists(userProfile.getUsername())) {
@@ -102,7 +102,7 @@ public class ProfileManager {
 
 
 
-
+//Activates a user profile.
     public ResponseEntity<ErrorDTO> activateUserProfile(HttpServletRequest request, String key,
                                                         UserProfile userProfile) {
 
@@ -144,7 +144,7 @@ public class ProfileManager {
 
 
 
-
+//Handles user sign-in process.
     public ResponseEntity<ErrorDTO> signin(HttpServletRequest request, String username, String password,
                                            UserProfile userProfile) {
 
@@ -198,7 +198,7 @@ public class ProfileManager {
     }
 
 
-
+//Handles user sign-out process.
     public ResponseEntity<ErrorDTO> signout(HttpServletRequest request, UserProfile userProfile) {
         // Future use: Anything to clean or set before signing out?
         return null;
@@ -207,7 +207,7 @@ public class ProfileManager {
 
 
 
-
+//Initiates password recovery process for a user profile.
     public ResponseEntity<ErrorDTO> recoverPassword(HttpServletRequest request, UserProfile userProfile) {
 
         ResponseEntity<ErrorDTO> resp = Validation.profileOperationAllowed(userProfile, false, true,
@@ -238,7 +238,7 @@ public class ProfileManager {
     }
 
 
-
+//Resets the password for a user profile.
     public ResponseEntity<ErrorDTO> resetPassword(HttpServletRequest request, String password,
                                                   UserProfile userProfile) {
 
@@ -279,7 +279,7 @@ public class ProfileManager {
 
 
 
-
+//Updates user profile information.
     public ResponseEntity<ErrorDTO> updateUserProfile(UserProfile userProfile) {
 
 
@@ -298,11 +298,12 @@ public class ProfileManager {
 
 
 
-
+//Retrieves a user profile by email.
     public UserProfile getUserProfileByEmail(String email) {
         return databaseAbstractLayer.isEmailExists(email) ? databaseAbstractLayer.getUserProfileByEmail(email) : null;
     }
 
+    //Retrieves a user profile by username.
     public UserProfile getUserProfileByUsername(String username) {
         return databaseAbstractLayer.isUserExists(username) ? databaseAbstractLayer.getUserProfile(username) : null;
     }
