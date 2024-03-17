@@ -16,7 +16,6 @@ import PredictMaintenance from "./screens/PredictMaintenance.js";
 import ShowPredictions from "./screens/ShowPredictions.js";
 import TrackVehicle from "./screens/TrackVehicle.js";
 import AutoMobSearch from "./screens/AutoMobSearch.js";
-import AutoMobDetails from "./screens/AutoMobDetails.js";
 import EmergencyAssistance from "./screens/EmergencyAssistance.js";
 import ManageDocuments from "./screens/ManageDocuments.js";
 import AddSRecords from "./screens/AddSRecords.js";
@@ -125,10 +124,7 @@ function App() {
                 path={Pages.AutoMobSearchUI}
                 element={<AutoMobSearch app={main}/>}
             />
-            <Route
-                path={Pages.AutoMobDetailsUI}
-                element={<AutoMobDetails app={main}/>}
-            />
+
             <Route
                 path={Pages.EmergencyAssistUI}
                 element={<EmergencyAssistance app={main}/>}
@@ -145,7 +141,6 @@ function App() {
                 path={Pages.ParkingFinderUI}
                 element={<ParkingFinder app={main}/>}
             />
-            <Route path={Pages.ParkingInfoUI} element={<ParkingInfo app={main}/>}/>
             <Route path={Pages.ViewVehicle} element={<ViewVehicle app={main}/>}/>
             <Route path="*" element={<GetStarted app={main}/>}/>
 
