@@ -11,6 +11,8 @@ function ParkingFinder(props) {
     const [loading, setLoading] = useState(false);
     const [alertInfo, setAlertInfo] = useState({ show: false, message: '' });
     const [selectedMapUri, setSelectedMapUri] = useState("");
+    const [expandedInfo, setExpandedInfo] = useState({});
+
 
     useEffect(() => {
         props.app.getCurrentLocation().then(location => {
@@ -51,9 +53,9 @@ function ParkingFinder(props) {
         }
     };
 
-    const handleGoBack = () => {
-        props.app.goBack();
-    };
+    // const handleGoBack = () => {
+    //     props.app.goBack();
+    // };
 
     // const showOnMap = (uri) => {
     //     console.log("Displaying map for URI:", uri);
@@ -78,6 +80,13 @@ function ParkingFinder(props) {
         } else {
             displayAlert("Location data for start or destination is missing.");
         }
+    };
+
+    const toggleDetails = (index) => {
+        setExpandedInfo(prevState => ({
+            ...prevState,
+            [index]: !prevState[index]
+        }));
     };
 
 
@@ -155,17 +164,19 @@ function ParkingFinder(props) {
                             <Card>
                                 <Card.Body>
                                     <Card.Title>{parking.displayName.text}</Card.Title>
-                                    <Card.Text>
-                                        {/*NEEDS TO ADD OPEN TIME */}
-                                        {/*{parking.formattedAddress}*/}
-                                    </Card.Text>
-                                    <Button variant="primary" onClick={() => props.app.setCurrentParking(parking)}>
-                                        Show Details
+                                    {expandedInfo[index] && (
+                                        <div>
+                                            <Card.Text>
+                                                Address: {parking.formattedAddress}
+                                            </Card.Text>
+                                        </div>
+                                    )}
+                                    <Button variant="primary" onClick={() => toggleDetails(index)}>
+                                        {expandedInfo[index] ? 'Hide Details' : 'Show Details'}
                                     </Button>
                                     <Button variant="primary" onClick={() => showOnMap(parking.location)}>
                                         View on Map
                                     </Button>
-                                    {/*this button for testing*/}
                                     <Button variant="primary" onClick={() => getDirections(parking.location)}>
                                         Get Directions
                                     </Button>
@@ -174,12 +185,11 @@ function ParkingFinder(props) {
                         </Col>
                     ))}
                 </Row>
-
-                <Row className="my-3">
-                    <Col>
-                        <Button variant="secondary" onClick={handleGoBack}>Go Back</Button>
-                    </Col>
-                </Row>
+                {/*<Row className="my-3">*/}
+                {/*    <Col>*/}
+                {/*        <Button variant="secondary" onClick={handleGoBack}>Go Back</Button>*/}
+                {/*    </Col>*/}
+                {/*</Row>*/}
             </Container>
         </>
     );
