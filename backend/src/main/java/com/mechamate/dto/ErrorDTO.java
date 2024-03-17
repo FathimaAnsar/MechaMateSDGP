@@ -1,8 +1,8 @@
 package com.mechamate.dto;
 
-
 public class ErrorDTO {
 
+    // Enum to defining various error statuses
     public enum ErrorStatus {
         InternalError,
         ErrorInvalidRequest,
@@ -15,25 +15,30 @@ public class ErrorDTO {
         ErrorUsernameNotAllowed,
         ErrorLoginFailed,
         ErrorMaxAttemptCountExceeded,
-
         ErrorUnauthorized,
         ErrorVehicleExists,
         ErrorOperationFailed,
         ErrorPendingActivation,
         ErrorNotSignedIn
-
     }
 
+    // Error status indicating the type of error
     private ErrorStatus error;
+
+    // Error message providing details about the error
     private String message;
+
+    // Help information to assist in resolving the error
     private String help;
 
+    // Constructor for ErrorDTO class
     public ErrorDTO(ErrorStatus error, String message, String help) {
         this.error = error;
         this.message = message;
         this.help = help;
     }
 
+    // Getters and setters
     public ErrorStatus getError() {
         return error;
     }
@@ -58,5 +63,5 @@ public class ErrorDTO {
         this.help = help;
     }
 
-
 }
+

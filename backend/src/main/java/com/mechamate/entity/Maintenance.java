@@ -8,9 +8,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
+// Annotation to specify this class as a document in MongoDB
 @Document(collection = "Maintenance")
 public class Maintenance {
 
+    // Enum to represent different types of maintenance
     public enum MaintenanceType {
         Default,
         WheelAlignment,
@@ -23,17 +25,26 @@ public class Maintenance {
         PistonChange,
         DieselFilterChange,
         VipersChange
-
     }
 
+    // MongoDB ID field
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private ObjectId _id;
+
+    // Type of maintenance
     private MaintenanceType maintenanceType;
+
+    // Name of the maintenance
     private String name;
+
+    // Description of the maintenance
     private String description;
+
+    // List of prediction models associated with this maintenance
     private List<ObjectId> predictionModels;
 
+    // Constructor
     public Maintenance(MaintenanceType maintenanceType, String name, String description, List<ObjectId> predictionModels) {
         this.maintenanceType = maintenanceType;
         this.name = name;
@@ -41,6 +52,7 @@ public class Maintenance {
         this.predictionModels = predictionModels;
     }
 
+    // Getters and setters
     public ObjectId get_id() {
         return _id;
     }
@@ -82,4 +94,3 @@ public class Maintenance {
     }
 
 }
-

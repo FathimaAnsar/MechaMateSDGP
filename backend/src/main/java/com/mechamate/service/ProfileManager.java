@@ -33,12 +33,6 @@ public class ProfileManager {
     private LanguageManager lang;
 
 
-
-
-
-
-
-
 //Creates a new user profile.
     public ResponseEntity<ErrorDTO> createUserProfile(HttpServletRequest request, UserProfile userProfile) {
 

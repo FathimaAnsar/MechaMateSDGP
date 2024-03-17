@@ -1,17 +1,31 @@
 package com.mechamate.dto;
 
-import org.bson.types.ObjectId;
-
 public class ProfileDTO {
+    // Unique identifier for the user
     private String userId;
+
+    // Username of the user
     private String username;
+
+    // Email address of the user
     private String email;
+
+    // Telephone number of the user
     private String telephone;
+
+    // First name of the user
     private String firstName;
+
+    // Last name of the user
     private String lastName;
+
+    // Language preference of the user
     private String language;
+
+    // Number of vehicles associated with the user
     private long vehicleCount;
 
+    // Constructor for ProfileDTO class
     public ProfileDTO(String userId, String username, String email, String telephone, String firstName, String lastName, String language, long vehicleCount) {
         this.userId = userId;
         this.username = username;
@@ -23,6 +37,7 @@ public class ProfileDTO {
         this.vehicleCount = vehicleCount;
     }
 
+    // Getters and setters
     public String getUserId() {
         return userId;
     }

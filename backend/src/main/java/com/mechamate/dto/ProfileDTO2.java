@@ -1,12 +1,22 @@
 package com.mechamate.dto;
 
 public class ProfileDTO2 {
+    // Password of the user
     private String password;
+
+    // Telephone number of the user
     private String telephone;
+
+    // First name of the user
     private String firstName;
+
+    // Last name of the user
     private String lastName;
+
+    // Language preference of the user
     private String language;
 
+    // Constructor for ProfileDTO2 class
     public ProfileDTO2(String password, String telephone, String firstName, String lastName, String language) {
         this.password = password;
         this.telephone = telephone;
@@ -15,6 +25,7 @@ public class ProfileDTO2 {
         this.language = language;
     }
 
+    // Getters and setters
     public String getPassword() {
         return password;
     }

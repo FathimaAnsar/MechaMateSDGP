@@ -10,10 +10,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+// Annotation to specify this interface as a repository
 @Repository("PredictionModels")
 public interface PredictionModelRepo extends MongoRepository<PredictionModel, ObjectId> {
+
+    // Custom query to find prediction models by maintenance type
     @Query("{'appliedMaintenanceList': {$elemMatch: {$eq: ?0}}}")
     public List<PredictionModel> findByMaintenanceType(Maintenance.MaintenanceType maintenanceType);
-
 }
 
