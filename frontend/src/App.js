@@ -1,6 +1,6 @@
-import React, {useState, useContext} from "react";
-import {main} from "./MechaMate.js";
-import {Pages} from "./Pages.js";
+import React, { useState, useContext } from "react";
+import { main } from "./MechaMate.js";
+import { Pages } from "./Pages.js";
 import GetStarted from "./screens/GetStarted.js";
 import SignIn from "./screens/SignIn.js";
 import SignUp from "./screens/SignUp.js";
@@ -22,18 +22,20 @@ import AddSRecords from "./screens/AddSRecords.js";
 //import AddServiceRecordByQR from "./screens/AddServiceRecordByQR.js";
 //import AddServiceRecordByServiceProvider from "./screens/AddServiceRecordByServiceProvider.js";
 //import ShowServiceRecordRequest from "./screens/ShowServiceRecordRequest.js";
+
 import ParkingFinder from "./screens/ParkingFinder.js";
 import ThemeContext from "./screens/components/ThemeContext.js";
 import ViewVehicle from "./screens/ViewVehicle.js";
-import {Routes, Route, Navigate} from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import PaymentSuccess from "./screens/PaymentSuccess";
 import PaymentCancelled from "./screens/PaymentCancelled";
 import "./styles/App.css";
+import QrPage from "./screens/QrUi.js";
 
 // main.reset();
 
 function App() {
-    const {theme} = useContext(ThemeContext);
+    const { theme } = useContext(ThemeContext);
     main.currentPage =
         window.location.pathname.length > 1
             ? window.location.pathname.substring(1)
@@ -52,14 +54,14 @@ function App() {
                 main.currentPage = Pages.SignInUI;
                 return (
                     <>
-                        <Navigate to={main.currentPage}/>
+                        <Navigate to={main.currentPage} />
                     </>
                 );
             } else {
                 main.currentPage = Pages.GetStartedUI;
                 return (
                     <>
-                        <Navigate to={main.currentPage}/>
+                        <Navigate to={main.currentPage} />
                     </>
                 );
             }
@@ -72,7 +74,7 @@ function App() {
             main.currentPage = Pages.DashboardUI;
             return (
                 <>
-                    <Navigate to={main.currentPage}/>
+                    <Navigate to={main.currentPage} />
                 </>
             );
         } else if (main.currentPage === Pages.SignInUI) {
@@ -84,69 +86,76 @@ function App() {
 
     return (
         <Routes>
-            <Route path={Pages.GetStartedUI} element={<GetStarted app={main}/>}/>
-            <Route path={Pages.SignInUI} element={<SignIn app={main}/>}/>
-            <Route path={Pages.SignUpUI} element={<SignUp app={main}/>}/>
-            <Route path={Pages.EnterCodeUI} element={<EnterCode app={main}/>}/>
+            <Route path={Pages.GetStartedUI} element={<GetStarted app={main} />} />
+            <Route path={Pages.SignInUI} element={<SignIn app={main} />} />
+            <Route path={Pages.SignUpUI} element={<SignUp app={main} />} />
+            <Route path={Pages.EnterCodeUI} element={<EnterCode app={main} />} />
             <Route
                 path={Pages.ForgotPasswordUI}
-                element={<ForgotPassword app={main}/>}
+                element={<ForgotPassword app={main} />}
             />
             <Route
                 path={Pages.ResetPasswordUI}
-                element={<ResetPassword app={main}/>}
+                element={<ResetPassword app={main} />}
             />
-            <Route path={Pages.DashboardUI} element={<Dashboard app={main}/>}/>
-            <Route path={Pages.SettingsUI} element={<Settings app={main}/>}/>
+            <Route path={Pages.DashboardUI} element={<Dashboard app={main} />} />
+            <Route path={Pages.SettingsUI} element={<Settings app={main} />} />
             <Route
                 path={Pages.NotificationsUI}
-                element={<Notifications app={main}/>}
+                element={<Notifications app={main} />}
             />
-            <Route path={Pages.AboutUsUI} element={<AboutUs app={main}/>}/>
-            <Route path={Pages.MyVehiclesUI} element={<MyVehicles app={main}/>}/>
+            <Route path={Pages.AboutUsUI} element={<AboutUs app={main} />} />
+            <Route path={Pages.MyVehiclesUI} element={<MyVehicles app={main} />} />
             <Route
                 path={Pages.PredictMaintenanceUI}
-                element={<PredictMaintenance app={main}/>}
+                element={<PredictMaintenance app={main} />}
             />
             <Route
                 path={Pages.ShowPredictionsUI}
-                element={<ShowPredictions app={main}/>}
+                element={<ShowPredictions app={main} />}
             />
             <Route
                 path={Pages.TrackVehicleUI}
-                element={<TrackVehicle app={main}/>}
+                element={<TrackVehicle app={main} />}
             />
             <Route
                 path={Pages.ShowPredictionsUI}
-                element={<ShowPredictions app={main}/>}
+                element={<ShowPredictions app={main} />}
             />
             <Route
                 path={Pages.AutoMobSearchUI}
-                element={<AutoMobSearch app={main}/>}
+                element={<AutoMobSearch app={main} />}
             />
 
             <Route
                 path={Pages.EmergencyAssistUI}
-                element={<EmergencyAssistance app={main}/>}
+                element={<EmergencyAssistance app={main} />}
             />
             <Route
                 path={Pages.ManageDocumentsUI}
-                element={<ManageDocuments app={main}/>}
+                element={<ManageDocuments app={main} />}
             />
             <Route
                 path={Pages.AddSRecordManualUI}
-                element={<AddSRecords app={main}/>}
+                element={<AddSRecords app={main} />}
             />
             <Route
                 path={Pages.ParkingFinderUI}
-                element={<ParkingFinder app={main}/>}
+                element={<ParkingFinder app={main} />}
             />
-            <Route path={Pages.ViewVehicle} element={<ViewVehicle app={main}/>}/>
-            <Route path="*" element={<GetStarted app={main}/>}/>
+
+            <Route
+                path={Pages.QrUI}
+                element={<QrPage app={main} />}
+            />
+
+            <Route path={Pages.ViewVehicle} element={<ViewVehicle app={main} />} />
+            <Route path="*" element={<GetStarted app={main} />} />
+
 
             {/*these two for testing payhere*/}
-            <Route path="/payment-success" element={<PaymentSuccess/>}/>
-            <Route path="/payment-cancelled" element={<PaymentCancelled/>}/>
+            <Route path="/payment-success" element={<PaymentSuccess />} />
+            <Route path="/payment-cancelled" element={<PaymentCancelled />} />
 
 
         </Routes>

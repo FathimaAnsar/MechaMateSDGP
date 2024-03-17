@@ -1,19 +1,20 @@
 
 import React from 'react';
 import QRCode from 'qrcode.react'; 
+import { useLocation } from "react-router-dom";
 
-function QrUI(props) {
-  const { qrUrl } = props;
-
+function QrPage() {
+  
+  const {state} = useLocation();
   return (
     <div>
       <h2>QR Code</h2>
-      <QRCode value={qrUrl} />
+      <QRCode value={state.qrurl} />
     </div>
   );
 }
 
-export default QrUI;
+export default QrPage;
 
 
 
