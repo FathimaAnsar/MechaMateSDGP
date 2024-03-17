@@ -141,6 +141,13 @@ class ConnectionManager {
         limit
     );
   }
+
+// Define a method to fetch QR URL from the server
+async getRequestForQR() {
+  return await this.getRequest("/api/v1/get-qr-url"); 
+}
+
+
 }
 
 export default ConnectionManager;
