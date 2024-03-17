@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Form, Card, Alert } from 'react-bootstrap';
-import PaymentForm from './PaymentForm';  // Ensure this path is correct based on your file structure
 import { Pages } from "../Pages.js";
 import ConnectionManager from '../services/ConnectionManager';
 import Header from "./components/Header";
@@ -12,7 +11,6 @@ function AutoMobSearch(props) {
     const [selectedMapUri, setSelectedMapUri] = useState("");
     const [error, setError] = useState("");
     const [expandedInfo, setExpandedInfo] = useState({});
-    const [showPaymentForm, setShowPaymentForm] = useState(false);
 
     useEffect(() => {
         props.app.getCurrentLocation().then(location => {
@@ -23,10 +21,6 @@ function AutoMobSearch(props) {
             props.app.changePage(Pages.DashboardUI);
         });
     }, [props.app]);
-
-    const handleGoBack = () => {
-        props.app.goBack();
-    };
 
     const showOnMap = (location) => {
         const mapsUrl = `https://maps.google.com/maps?q=${location.latitude},${location.longitude}&z=15&output=embed`;
@@ -40,12 +34,12 @@ function AutoMobSearch(props) {
         const radius = document.getElementById('radius').value;
 
         if (!limit || !radius) {
-            setError("Please select both a limit and a radius.");
+            setError("Please select both a limit and a radius");
             return;
         }
 
         if (!currentLocation) {
-            setError("Current location is not available.");
+            setError("Current location is not available");
             return;
         }
 
@@ -134,14 +128,6 @@ function AutoMobSearch(props) {
                     </Col>
                 </Row>
                 <Row className="my-3">
-                    {autoShops.length > 0 && (
-                        <Button variant="success" onClick={() => setShowPaymentForm(!showPaymentForm)}>
-                            {showPaymentForm ? 'Hide Payment Form' : 'Proceed to Payment'}
-                        </Button>
-                    )}
-                    {showPaymentForm && <PaymentForm />}
-                </Row>
-                <Row className="my-3">
                     {autoShops.length ? autoShops.map((shop, index) => (
                         <Col key={index} sm={12} md={6} lg={4} className="mb-3">
                             <Card>
@@ -171,11 +157,6 @@ function AutoMobSearch(props) {
                             </Card>
                         </Col>
                     )) : <Col><p className="text-center">{varCap}</p></Col>}
-                </Row>
-                <Row className="my-3">
-                    <Col>
-                        <Button variant="secondary" onClick={handleGoBack}>Go Back</Button>
-                    </Col>
                 </Row>
             </Container>
         </>
