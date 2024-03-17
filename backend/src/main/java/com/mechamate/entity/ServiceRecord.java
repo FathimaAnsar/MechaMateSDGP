@@ -10,17 +10,31 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Date;
 import java.util.List;
 
+// Annotation to specify this class as a document in MongoDB
 @Document(collection = "ServiceRecords")
 public class ServiceRecord {
+
+    // MongoDB ID field
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private ObjectId _id;
+
+    // Vehicle registration number
     private String vehicleRegNo;
+
+    // Description of the service record
     private String description;
+
+    // Date of the service record
     private Date date;
+
+    // Mileage of the vehicle at the time of service
     private long mileage;
+
+    // List of service details associated with this service record
     private List<ServiceDTO> services;
 
+    // Constructor
     public ServiceRecord(String vehicleRegNo, String description, Date date, long mileage, List<ServiceDTO> services) {
         this.vehicleRegNo = vehicleRegNo;
         this.description = description;
@@ -29,6 +43,7 @@ public class ServiceRecord {
         this.services = services;
     }
 
+    // Getters and setters
     public ObjectId get_id() {
         return _id;
     }
@@ -77,4 +92,3 @@ public class ServiceRecord {
         this.services = services;
     }
 }
-

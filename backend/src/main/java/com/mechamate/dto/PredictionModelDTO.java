@@ -34,62 +34,51 @@ public class PredictionModelDTO {
         this.appliedMaintenanceList = appliedMaintenanceList;
     }
 
-    // Getter method for modelId
+    // Getters and setters
     public String getModelId() {
         return modelId;
     }
 
-    // Setter method for modelId
     public void setModelId(String modelId) {
         this.modelId = modelId;
     }
 
-    // Getter method for name
     public String getName() {
         return name;
     }
 
-    // Setter method for name
     public void setName(String name) {
         this.name = name;
     }
 
-    // Getter method for description
     public String getDescription() {
         return description;
     }
 
-    // Setter method for description
     public void setDescription(String description) {
         this.description = description;
     }
 
-    // Getter method for mValue
     public double getmValue() {
         return mValue;
     }
 
-    // Setter method for mValue
     public void setmValue(double mValue) {
         this.mValue = mValue;
     }
 
-    // Getter method for cValue
     public double getcValue() {
         return cValue;
     }
 
-    // Setter method for cValue
     public void setcValue(double cValue) {
         this.cValue = cValue;
     }
 
-    // Getter method for appliedMaintenanceList
     public List<Maintenance.MaintenanceType> getAppliedMaintenanceList() {
         return appliedMaintenanceList;
     }
 
-    // Setter method for appliedMaintenanceList
     public void setAppliedMaintenanceList(List<Maintenance.MaintenanceType> appliedMaintenanceList) {
         this.appliedMaintenanceList = appliedMaintenanceList;
     }

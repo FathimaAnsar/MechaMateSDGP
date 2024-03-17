@@ -4,7 +4,7 @@ import com.mechamate.entity.Maintenance;
 
 public class ServiceDTO {
 
-    // Enumeration defining service quality levels
+    // Enum for defining service quality levels
     public enum ServiceQualityEnum {
         Low,
         Medium,
@@ -35,52 +35,43 @@ public class ServiceDTO {
         this.archived = archived;
     }
 
-    // Getter method for description
+    // Getters and setters
     public String getDescription() {
         return description;
     }
 
-    // Setter method for description
     public void setDescription(String description) {
         this.description = description;
     }
 
-    // Getter method for appliedMaintenanceId
     public Maintenance.MaintenanceType getAppliedMaintenanceId() {
         return appliedMaintenanceId;
     }
 
-    // Setter method for appliedMaintenanceId
     public void setAppliedMaintenanceId(Maintenance.MaintenanceType appliedMaintenanceId) {
         this.appliedMaintenanceId = appliedMaintenanceId;
     }
 
-    // Getter method for nextServiceInKMs
     public long getNextServiceInKMs() {
         return nextServiceInKMs;
     }
 
-    // Setter method for nextServiceInKMs
     public void setNextServiceInKMs(long nextServiceInKMs) {
         this.nextServiceInKMs = nextServiceInKMs;
     }
 
-    // Getter method for serviceQuality
     public ServiceQualityEnum getServiceQuality() {
         return serviceQuality;
     }
 
-    // Setter method for serviceQuality
     public void setServiceQuality(ServiceQualityEnum serviceQuality) {
         this.serviceQuality = serviceQuality;
     }
 
-    // Getter method for archived
     public boolean isArchived() {
         return archived;
     }
 
-    // Setter method for archived
     public void setArchived(boolean archived) {
         this.archived = archived;
     }

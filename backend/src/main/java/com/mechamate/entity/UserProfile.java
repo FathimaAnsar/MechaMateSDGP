@@ -11,13 +11,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 import java.util.Random;
 
+// Annotation to specify this class as a document in MongoDB
 @Document(collection = "UserProfiles")
 public class UserProfile {
 
-    public UserProfile() {
-
-    }
-
+    // Enum to represent different user status
     public enum Status {
         StatusActive,
         StatusInactive,
@@ -26,26 +24,55 @@ public class UserProfile {
         StatusDeleted
     }
 
+    // MongoDB ID field
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private ObjectId _id;
+
+    // Status of the user profile
     private Status status;
+
+    // Username of the user
     private String username;
+
+    // Password of the user
     private String password;
+
+    // Email of the user
     private String email;
+
+    // Telephone number of the user
     private String telephone;
+
+    // First name of the user
     private String firstname;
+
+    // Last name of the user
     private String lastname;
+
+    // Language preference of the user
     private String language;
+
+    // Activation key for the user's account
     private String activationKey;
+
+    // Number of unsuccessful login attempts
     private int unsuccessfulLoginAttempts;
+
+    // Timestamp of the last login attempt
     private long lastLoginAttemptTime;
+
+    // Recovery key for the user's account
     private String recoveryKey;
+
+    // Flag indicating if the user is a super user
     private boolean superUser;
 
+    // Reference to the subscription associated with the user
     @DBRef
     private Subscription subscription;
 
+    // Constructor
     public UserProfile(Status status, String username, String password, String email, String telephone, String firstname, String lastname, String language, Subscription subscription) {
         this.status = status;
         this.username = username;
@@ -63,6 +90,8 @@ public class UserProfile {
         this.subscription = subscription;
     }
 
+
+    // Getters and setters
     public ObjectId get_id() {
         return _id;
     }
@@ -143,6 +172,7 @@ public class UserProfile {
         this.activationKey = activationKey;
     }
 
+    // Method to create an activation key for the user's account
     public void createActivationKey() {
         Random random = new Random();
         Integer code = random.nextInt(900000) + 100000;
@@ -150,6 +180,7 @@ public class UserProfile {
         this.status = Status.StatusPendingActivation;
     }
 
+    // Method to clear the activation key and set the user status
     public void clearActivationKey(UserProfile.Status status) {
         this.activationKey = "";
         this.status = status;
@@ -163,11 +194,13 @@ public class UserProfile {
         this.recoveryKey = recoveryKey;
     }
 
+    // Method to create a recovery key for the user's account
     public void createRecoveryKey() {
         this.recoveryKey = Common.getSha256("RECV#>>(" + username + System.currentTimeMillis() + email + password + ")<<#");
         this.status = Status.StatusPendingActivation;
     }
 
+    // Method to clear the recovery key
     public void clearRecoveryKey() {
         this.recoveryKey = "";
     }

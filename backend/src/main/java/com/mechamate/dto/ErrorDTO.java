@@ -2,7 +2,7 @@ package com.mechamate.dto;
 
 public class ErrorDTO {
 
-    // Enumeration defining various error statuses
+    // Enum to defining various error statuses
     public enum ErrorStatus {
         InternalError,
         ErrorInvalidRequest,
@@ -38,32 +38,27 @@ public class ErrorDTO {
         this.help = help;
     }
 
-    // Getter method for error status
+    // Getters and setters
     public ErrorStatus getError() {
         return error;
     }
 
-    // Setter method for error status
     public void setError(ErrorStatus error) {
         this.error = error;
     }
 
-    // Getter method for error message
     public String getMessage() {
         return message;
     }
 
-    // Setter method for error message
     public void setMessage(String message) {
         this.message = message;
     }
 
-    // Getter method for help information
     public String getHelp() {
         return help;
     }
 
-    // Setter method for help information
     public void setHelp(String help) {
         this.help = help;
     }

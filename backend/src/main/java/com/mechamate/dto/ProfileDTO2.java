@@ -25,52 +25,43 @@ public class ProfileDTO2 {
         this.language = language;
     }
 
-    // Getter method for password
+    // Getters and setters
     public String getPassword() {
         return password;
     }
 
-    // Setter method for password
     public void setPassword(String password) {
         this.password = password;
     }
 
-    // Getter method for telephone
     public String getTelephone() {
         return telephone;
     }
 
-    // Setter method for telephone
     public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 
-    // Getter method for firstName
     public String getFirstName() {
         return firstName;
     }
 
-    // Setter method for firstName
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    // Getter method for lastName
     public String getLastName() {
         return lastName;
     }
 
-    // Setter method for lastName
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    // Getter method for language
     public String getLanguage() {
         return language;
     }
 
-    // Setter method for language
     public void setLanguage(String language) {
         this.language = language;
     }
