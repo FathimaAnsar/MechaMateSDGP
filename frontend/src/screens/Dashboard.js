@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     Button,
-    Card,
+    Image,
     Col,
     Container,
     Row,
     Spinner,
-    Stack
+    Accordion
 } from 'react-bootstrap';
 import { Pages } from '../Pages.js';
 import ConnectionManager from '../services/ConnectionManager.js';
@@ -16,7 +16,7 @@ import ClickableCard from './components/ClickableCard.js';
 import CustomCarousel from './components/CustomCarousel.js';
 import ViewVehicle from './ViewVehicle.js';
 import LoadingScreen from './components/LoadingScreen.js';
-
+import corollaImage from "../images/vehicles/corolla-side.jpg";
 
 function Dashboard(props) {
   const navigate = useNavigate();
@@ -74,147 +74,192 @@ function Dashboard(props) {
         <Header app={props.app} />
       </div>
 
-      <Container fluid>
-        <Row style={{ marginTop: "10px" }}>
-          <Col>
-            <h2 style={{ fontWeight: "500" }}>
-              {generateGreeting()}{" "}
-              {props.app.getUserProfile() == null
-                ? "<User>"
-                : props.app.getUserProfile().firstName}
-              !
-            </h2>
-          </Col>
-        </Row>
-        {/* <Row>
+        <Container fluid>
+            <Row style={{marginTop: "10px"}}>
+                <Col>
+                    <h2 style={{fontWeight: "500"}}>
+                        {generateGreeting()}{" "}
+                        {props.app.getUserProfile() == null
+                            ? "<User>"
+                            : props.app.getUserProfile().firstName}
+                        !
+                    </h2>
+                </Col>
+            </Row>
+            {/* <Row>
           <Col>
             <CustomCarousel />
           </Col>
         </Row> */}
-
-        <Row>
-          <Col md={12}>
-            <h3 id="dash-vehicle-heading">My Vehicles</h3>
-          </Col>
-          <Col md={12}>
-            <div
-              style={{
-                height: "100%", // Consider removing this
-                overflowY: "auto",
-              }}
-            >
-              {loading || vehicles == null ? (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    width: "100%",
-                    height: "100px",
-                    alignItems: "center",
-                  }}
-                >
-                  <Spinner animation="border" variant="secondary" />
-                </div>
-              ) : vehicles.length > 0 ? (
-                <Row>
-                  {" "}
-                  {/* Add a Row here */}
-                  {vehicles.map((vehicle, index) => (
-                    <Col key={index} sm={12} md={6} xxl={4}>
-                      <div>
-                        <ClickableCard
-                          content={vehicle}
-                          onClick={handleCardClick}
-                          index={index}
-                        />
-                      </div>
-                    </Col>
-                  ))}
-                </Row>
-              ) : (
-                <div style={{ width: "100%" }}>
-                  <p id="dash-vehicle-p1">
-                    You have not added any vehicles yet
-                  </p>
-                  <Button
-                    id="dash-add-vehi-btn"
-                    variant="dark"
-                    onClick={() => navigate("/" + Pages.MyVehiclesUI)}
-                  >
-                    Add a Vehicle
-                  </Button>
-                </div>
-              )}
-            </div>
-          </Col>
-        </Row>
-      </Container>
-
-      <br></br>
-      <hr></hr>
-      <br></br>
-      <br></br>
-
-        <Row>
-            <Col md={4}>
-                <Card>
-                    <Card.Body>
-                        <Card.Title>AutoMob Search</Card.Title>
-                        <Button variant="primary" onClick={() => navigate("/" + Pages.AutoMobSearchUI)}>Search</Button>
-                    </Card.Body>
-                </Card>
-            </Col>
-
-            <Col md={4}>
-                <Card>
-                    <Card.Body>
-                        <Card.Title>Maintenance Predictions</Card.Title>
-                        <Button variant="primary" onClick={() => navigate("/" + Pages.PredictMaintenanceUI)}>
-                            Open Maintenance Predictions
-                        </Button>
-                    </Card.Body>
-                </Card>
-            </Col>
-
-            <Col md={4}>
-                <Card>
-                    <Card.Body>
-                        <Card.Title>Track My Vehicle</Card.Title>
-                        <Button variant="primary" onClick={() => navigate("/" + Pages.TrackVehicleUI)}>Track Vehicle</Button>
-                    </Card.Body>
-                </Card>
-            </Col>
-
-            <Col md={4}>
-                <Card>
-                    <Card.Body>
-                        <Card.Title>Emergency Assistance</Card.Title>
-                        <Button variant="primary" onClick={() => navigate("/" + Pages.EmergencyAssistUI)}>Emergency Assistance</Button>
-                    </Card.Body>
-                </Card>
-            </Col>
-
-            <Col md={4}>
-                <Card>
-                    <Card.Body>
-                        <Card.Title>Manage Vehicle Documents</Card.Title>
-                        <Button variant="primary" onClick={() => navigate("/" + Pages.ManageDocumentsUI)}>
-                            Manage Documents
-                        </Button>
-                    </Card.Body>
-                </Card>
-            </Col>
-
-            <Col md={4}>
-                <Card>
-                    <Card.Body>
-                        <Card.Title>Parking Finder</Card.Title>
-                        <Button variant="primary" onClick={() => navigate("/" + Pages.ParkingFinderUI)}>Find Parking</Button>
-                    </Card.Body>
-                </Card>
-            </Col>
-        </Row>
-
+            <Row>
+                <Col md={12}>
+                    <h3 id="dash-vehicle-heading">My Vehicles</h3>
+                </Col>
+                <Col md={12}>
+                    <div
+                        style={{
+                            height: "100%", // Consider removing this
+                            overflowY: "auto",
+                        }}
+                    >
+                        {loading || vehicles == null ? (
+                            <div
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    width: "100%",
+                                    height: "100px",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <Spinner animation="border" variant="secondary"/>
+                            </div>
+                        ) : vehicles.length > 0 ? (
+                            <Row>
+                                {" "}
+                                {/* Add a Row here */}
+                                {vehicles.map((vehicle, index) => (
+                                    <Col key={index} sm={12} md={6} xxl={4}>
+                                        <div>
+                                            <ClickableCard
+                                                content={vehicle}
+                                                onClick={handleCardClick}
+                                                index={index}
+                                            />
+                                        </div>
+                                    </Col>
+                                ))}
+                            </Row>
+                        ) : (
+                            <div style={{width: "100%"}}>
+                                <p id="dash-vehicle-p1">
+                                    You have not added any vehicles yet
+                                </p>
+                                <Button
+                                    id="dash-add-vehi-btn"
+                                    variant="dark"
+                                    onClick={() => navigate("/" + Pages.MyVehiclesUI)}
+                                >
+                                    Add a Vehicle
+                                </Button>
+                            </div>
+                        )}
+                    </div>
+                </Col>
+            </Row>
+            <br/>
+            <Accordion defaultActiveKey="0">
+                <Accordion.Item eventKey="0">
+                    <Accordion.Header style={{fontWeight: 'bold', fontSize: '20px'}}>
+                        Predictive Maintenance
+                    </Accordion.Header>
+                    <Accordion.Body>
+                        <Row className="justify-content-center text-center">
+                            <Col xs={12} md={8}>
+                                <Image style={{width: "80%"}} src={corollaImage} alt="car"/>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                                </p>
+                                <Button variant="primary" style={{width: "80%"}}
+                                        onClick={() => navigate("/" + Pages.PredictMaintenanceUI)}>Predictive Now</Button>
+                            </Col>
+                        </Row>
+                    </Accordion.Body>
+                </Accordion.Item>
+                <Accordion.Item eventKey="1">
+                    <Accordion.Header style={{fontWeight: 'bold', fontSize: '20px'}}>
+                        AutoMob Search
+                    </Accordion.Header>
+                    <Accordion.Body>
+                        <Row className="justify-content-center text-center">
+                            <Col xs={12} md={8}>
+                                <Image style={{width: "80%"}} src={corollaImage} alt="car"/>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                                </p>
+                                <Button variant="primary" style={{width: "80%"}}
+                                        onClick={() => navigate("/" + Pages.AutoMobSearchUI)}>Search Now</Button>
+                            </Col>
+                        </Row>
+                    </Accordion.Body>
+                </Accordion.Item>
+                <Accordion.Item eventKey="2">
+                    <Accordion.Header style={{fontWeight: 'bold', fontSize: '20px'}}>
+                        Emergency Assistance
+                    </Accordion.Header>
+                    <Accordion.Body>
+                        <Row className="justify-content-center text-center">
+                            <Col xs={12} md={8}>
+                                <Image style={{width: "80%"}} src={corollaImage} alt="car"/>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                                </p>
+                                <Button variant="primary" style={{width: "80%"}}
+                                        onClick={() => navigate("/" + Pages.EmergencyAssistUI)}>Need Assistance</Button>
+                            </Col>
+                        </Row>
+                    </Accordion.Body>
+                </Accordion.Item>
+                <Accordion.Item eventKey="3">
+                    <Accordion.Header style={{fontWeight: 'bold', fontSize: '20px'}}>
+                        Track My Vehicle
+                    </Accordion.Header>
+                    <Accordion.Body>
+                        <Row className="justify-content-center text-center">
+                            <Col xs={12} md={8}>
+                                <Image style={{width: "80%"}} src={corollaImage} alt="car"/>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                                </p>
+                                <Button variant="primary" style={{width: "80%"}}
+                                        onClick={() => navigate("/" + Pages.TrackVehicleUI)}>Search Now</Button>
+                            </Col>
+                        </Row>
+                    </Accordion.Body>
+                </Accordion.Item>
+                <Accordion.Item eventKey="4">
+                    <Accordion.Header style={{fontWeight: 'bold', fontSize: '20px'}}>
+                        Manage Vehicle Documents
+                    </Accordion.Header>
+                    <Accordion.Body>
+                        <Row className="justify-content-center text-center">
+                            <Col xs={12} md={8}>
+                                <Image style={{width: "80%"}} src={corollaImage} alt="car"/>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                                </p>
+                                <Button variant="primary" style={{width: "80%"}}
+                                        onClick={() => navigate("/" + Pages.ManageDocumentsUI)}>Manage Now</Button>
+                            </Col>
+                        </Row>
+                    </Accordion.Body>
+                </Accordion.Item>
+                <Accordion.Item eventKey="5">
+                    <Accordion.Header style={{fontWeight: 'bold', fontSize: '20px'}}>
+                        Parking Finder
+                    </Accordion.Header>
+                    <Accordion.Body>
+                        <Row className="justify-content-center text-center">
+                            <Col xs={12} md={8}>
+                                <Image style={{width: "80%"}} src={corollaImage} alt="car"/>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                                </p>
+                                <Button variant="primary" style={{width: "80%"}}
+                                        onClick={() => navigate("/" + Pages.ParkingFinderUI)}>Search Parking
+                                    Now</Button>
+                            </Col>
+                        </Row>
+                    </Accordion.Body>
+                </Accordion.Item>
+            </Accordion>
+        </Container>
     </>
   );
 }
