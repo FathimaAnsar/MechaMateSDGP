@@ -1,18 +1,22 @@
-import React, { useState, useEffect } from "react";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { Pages } from "../Pages.js";
-import ConnectionManager from "../services/ConnectionManager.js";
-import Header from "./components/Header.js";
-import ClickableCard from "./components/ClickableCard.js";
-import Stack from "react-bootstrap/Stack";
-import CustomCarousel from "./components/CustomCarousel.js";
-import { Button } from "react-bootstrap";
-import Spinner from "react-bootstrap/Spinner";
-import ViewVehicle from "./ViewVehicle.js";
-import { useNavigate } from "react-router-dom";
-import LoadingScreen from "./components/LoadingScreen.js";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import {
+    Button,
+    Card,
+    Col,
+    Container,
+    Row,
+    Spinner,
+    Stack
+} from 'react-bootstrap';
+import { Pages } from '../Pages.js';
+import ConnectionManager from '../services/ConnectionManager.js';
+import Header from './components/Header.js';
+import ClickableCard from './components/ClickableCard.js';
+import CustomCarousel from './components/CustomCarousel.js';
+import ViewVehicle from './ViewVehicle.js';
+import LoadingScreen from './components/LoadingScreen.js';
+
 
 function Dashboard(props) {
   const navigate = useNavigate();
@@ -150,83 +154,67 @@ function Dashboard(props) {
       <hr></hr>
       <br></br>
       <br></br>
-      <div id="AutoMobSection">
-        <h2 id="dash-autoS-heading">AutoMob Search</h2>
-        <button
-          id="dash-autS_btn"
-          onClick={() => {
-            navigate("/" + Pages.AutoMobSearchUI);
-          }}
-        >
-          <span style={{ marginRight: "5px" }}></span> {/* Material Icon */}
-          Search
-        </button>
-      </div>
 
-      <div id="PredictiveMaintenance">
-        <h2 id="dash-pred-heading">Maintenance predictions</h2>
-        <button
-          id="dash-pred_btn"
-          onClick={() => {
-            navigate("/" + Pages.PredictMaintenanceUI);
-          }}
-        >
-          <span style={{ marginRight: "5px" }}>🛠️</span> {/* Material Icon */}
-          Open Maintenance predictions
-        </button>
-      </div>
+        <Row>
+            <Col md={4}>
+                <Card>
+                    <Card.Body>
+                        <Card.Title>AutoMob Search</Card.Title>
+                        <Button variant="primary" onClick={() => navigate("/" + Pages.AutoMobSearchUI)}>Search</Button>
+                    </Card.Body>
+                </Card>
+            </Col>
 
-      <div id="Track my vehicle">
-        <h2 id="dash-track-heading">Track my Vehicle</h2>
-        <button
-          id="dash-track_btn"
-          onClick={() => {
-            navigate("/" + Pages.TrackVehicleUI);
-          }}
-        >
-          <span style={{ marginRight: "5px" }}></span> {/* Material Icon */}
-          Open To Track my vehicle
-        </button>
-      </div>
+            <Col md={4}>
+                <Card>
+                    <Card.Body>
+                        <Card.Title>Maintenance Predictions</Card.Title>
+                        <Button variant="primary" onClick={() => navigate("/" + Pages.PredictMaintenanceUI)}>
+                            Open Maintenance Predictions
+                        </Button>
+                    </Card.Body>
+                </Card>
+            </Col>
 
-      <div id="emergency assistence">
-        <h2 id="dash-emergen-heading">Emergency assistence</h2>
-        <button
-          id="dash-emergen_btn"
-          onClick={() => {
-            navigate("/" + Pages.EmergencyAssistUI);
-          }}
-        >
-          <span style={{ marginRight: "5px" }}></span> {/* Material Icon */}
-          Open Emergency assistence
-        </button>
-      </div>
+            <Col md={4}>
+                <Card>
+                    <Card.Body>
+                        <Card.Title>Track My Vehicle</Card.Title>
+                        <Button variant="primary" onClick={() => navigate("/" + Pages.TrackVehicleUI)}>Track Vehicle</Button>
+                    </Card.Body>
+                </Card>
+            </Col>
 
-      <div id="manage my documents">
-        <h2 id="dash-doc-heading">Manage vehicle documents</h2>
-        <button
-          id="dash-doc_btn"
-          onClick={() => {
-            navigate("/" + Pages.ManageDocumentsUI);
-          }}
-        >
-          <span style={{ marginRight: "5px" }}></span> {/* Material Icon */}
-          Open vehicle documents/sercice records
-        </button>
-      </div>
+            <Col md={4}>
+                <Card>
+                    <Card.Body>
+                        <Card.Title>Emergency Assistance</Card.Title>
+                        <Button variant="primary" onClick={() => navigate("/" + Pages.EmergencyAssistUI)}>Emergency Assistance</Button>
+                    </Card.Body>
+                </Card>
+            </Col>
 
-      <div id="parking finder">
-        <h2 id="dash-park-heading">Parking Finder</h2>
-        <button
-          id="dash-park_btn"
-          onClick={() => {
-            navigate("/" + Pages.ParkingFinderUI);
-          }}
-        >
-          <span style={{ marginRight: "5px" }}></span> {/* Material Icon */}
-          Open to Find a parking place
-        </button>
-      </div>
+            <Col md={4}>
+                <Card>
+                    <Card.Body>
+                        <Card.Title>Manage Vehicle Documents</Card.Title>
+                        <Button variant="primary" onClick={() => navigate("/" + Pages.ManageDocumentsUI)}>
+                            Manage Documents
+                        </Button>
+                    </Card.Body>
+                </Card>
+            </Col>
+
+            <Col md={4}>
+                <Card>
+                    <Card.Body>
+                        <Card.Title>Parking Finder</Card.Title>
+                        <Button variant="primary" onClick={() => navigate("/" + Pages.ParkingFinderUI)}>Find Parking</Button>
+                    </Card.Body>
+                </Card>
+            </Col>
+        </Row>
+
     </>
   );
 }
