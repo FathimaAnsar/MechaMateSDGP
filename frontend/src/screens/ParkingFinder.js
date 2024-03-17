@@ -52,19 +52,6 @@ function ParkingFinder(props) {
             setLoading(false);
         }
     };
-
-    // const handleGoBack = () => {
-    //     props.app.goBack();
-    // };
-
-    // const showOnMap = (uri) => {
-    //     console.log("Displaying map for URI:", uri);
-    //     const embedUri = `${uri}&z=15&output=embed`;
-    //     console.log("Attempting to display map for URI:", embedUri);
-    //     setSelectedMapUri(embedUri);
-    //     setSelectedMapUri(uri);
-    // };
-
     const showOnMap = (location) => {
         if (location && location.latitude && location.longitude) {
             const mapsUrl = `https://maps.google.com/maps?q=${location.latitude},${location.longitude}&z=15&output=embed`;
@@ -122,7 +109,6 @@ function ParkingFinder(props) {
                                 <option value="10">Show only 10 results</option>
                                 <option value="15">Show only 15 results</option>
                                 <option value="20">Show only 20 results</option>
-                                <option value="25">Show only 25 results</option>
                             </Form.Control>
                         </Form.Group>
                     </Col>
@@ -185,11 +171,6 @@ function ParkingFinder(props) {
                         </Col>
                     ))}
                 </Row>
-                {/*<Row className="my-3">*/}
-                {/*    <Col>*/}
-                {/*        <Button variant="secondary" onClick={handleGoBack}>Go Back</Button>*/}
-                {/*    </Col>*/}
-                {/*</Row>*/}
             </Container>
         </>
     );
