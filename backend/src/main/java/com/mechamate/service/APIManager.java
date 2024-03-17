@@ -398,9 +398,7 @@ public class APIManager {
         }
     }
 
-//    public String googleMapJs(){
-//        return "https://maps.googleapis.com/maps/api/js?key=" + apiKey + "&callback=initMap";
-//    };
+
 
     public DeviceLocation getDeviceLocation(ApiToken apiToken, Vehicle vehicle) {
         logger.info("enter to the getDeviceLocation");
@@ -495,10 +493,6 @@ public class APIManager {
         logger.info("exit from the getDeviceDetails");
         return deviceDetails;
     }
-
-
-
-
 
 
 
