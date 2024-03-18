@@ -15,6 +15,10 @@ import java.util.Random;
 @Document(collection = "UserProfiles")
 public class UserProfile {
 
+    public UserProfile() {
+
+    }
+
     // Enum to represent different user status
     public enum Status {
         StatusActive,
