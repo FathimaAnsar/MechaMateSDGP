@@ -42,7 +42,17 @@ function ClickableCard({ content, onClick, index }) {
           <Card.Title>
             {vehicleMake} {vehicleModel}
           </Card.Title>
-          <Card.Text>{registrationNumber}</Card.Text>
+          <Card.Text>
+            <span
+              style={{
+                borderRadius: "4px",
+                border: "solid 1px grey",
+                padding: "4px 5px",
+              }}
+            >
+              {registrationNumber}
+            </span>
+          </Card.Text>
         </div>
         <FaAngleRight
           className="align-self-end"
