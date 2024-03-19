@@ -1,0 +1,11 @@
+.form-container {
+    max-width: 20rem;
+    margin: auto auto;
+    padding: 20px;
+    border: 2px solid black; /* Add border */
+    border-radius: 10px; /* Add rounded corners */
+    display: flex; /* Set display to flex */
+    justify-content: center; /* Center content horizontally */
+    flex-direction: column;
+  }
+  

@@ -1,0 +1,167 @@
+*{
+  padding: 0;
+  border: 0;
+}
+
+
+
+#about-header {
+    background-color: #1f0888;
+    color : white;
+    padding: 100px;
+    text-align: center ; 
+  }
+
+ 
+
+#container1 {
+  display: flex; 
+}
+
+.sub-div {
+  flex: 1;
+ 
+}
+
+@media (max-width: 768px) {
+  .flex-container {
+    flex-direction: column; 
+  }
+
+  .sub-div {
+    flex: none; 
+    width: 100%; 
+  }
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 0 auto;
+}
+
+.card {
+  margin-bottom: 20px;
+}
+
+
+
+.container{
+
+  padding: 0px;
+  margin:0px;
+}
+
+
+.carousel-content{
+  margin:0px 150px 50px;
+
+
+}
+
+
+.carousel-content {
+  display: flex;
+  flex-direction: row; 
+}
+
+.carousel-content .image-container,
+.carousel-content .inner-div {
+  flex: 1; 
+}
+
+.carousel-content img {
+  max-width: 100%; 
+}
+
+/* Media query for mobile screens */
+@media (max-width: 767px) {
+  .carousel-content {
+    flex-direction: column; 
+    margin:0px 0px 50px ;
+  }
+
+  .image-container img{
+
+    padding:0px 55px 0px;
+  }
+}
+
+
+#team-section h2 {
+  color: rgb(255, 255, 255);
+  padding-top: 50px;
+  text-align: center;
+  font-size: 24px;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#team-section h4 {
+  color: #ffffff;
+  text-align: center;
+  font-size: 18px;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#team-section{
+ background-color: #000000;
+}
+
+
+.inner-div {
+  background-color: rgba(0, 0, 0, 0.8); 
+  color: white; 
+  padding: 20px; 
+  margin: 0 auto; 
+  max-width: 600px; 
+}
+
+.person-info h4 {
+  color: white; 
+}
+
+.person-info h5 {
+  padding-top: 30px;
+  color: white; 
+}
+
+
+
+
+
+
+
+
+
+
+
