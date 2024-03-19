@@ -82,13 +82,13 @@ public class ProfileManager {
         }
 
         userProfile.set_id(testUProf.get_id());
-//        if(!notificationManager.sendActivationEmail(userProfile)) {
-//            return new ResponseEntity<>
-//                    (new ErrorDTO(ErrorDTO.ErrorStatus.InternalError,
-//                            lang.get("error.internal.send.actemail.failed", userProfile.getLanguage()),
-//                            lang.get("error.internal.send.actemail.failed.help", userProfile.getLanguage())),
-//                            HttpStatus.OK);
-//        }
+        if(!notificationManager.sendActivationEmail(userProfile)) {
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.InternalError,
+                            lang.get("error.internal.send.actemail.failed", userProfile.getLanguage()),
+                            lang.get("error.internal.send.actemail.failed.help", userProfile.getLanguage())),
+                            HttpStatus.OK);
+        }
 
         return null;
     }
