@@ -19,8 +19,4 @@ public class MechaMate {
 	public static void main(String[] args) {
   		SpringApplication.run(MechaMate.class, args);
 	}
-
 }
-
-
-
