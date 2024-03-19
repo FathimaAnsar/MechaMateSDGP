@@ -12,7 +12,6 @@ public class CorsConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins(
                         "http://localhost:3000", // For local development
-                        "https://mechamate-413916.el.r.appspot.com", // production server
                         "capacitor://localhost", // iOS capacitor,
                         "http://localhost") // android capacitor
                 .allowCredentials(true);
