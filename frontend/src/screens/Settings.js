@@ -9,7 +9,7 @@ function Settings(props) {
   const [newUsername, setNewUsername] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
-  const handleGoBack = () => { props.app.goBack(); }
+  
 
   const handleFirstNameChange = (event) => {
     setFirstName(event.target.value);
@@ -82,7 +82,7 @@ function Settings(props) {
         <br />
         <button type="submit">Save Changes</button>
       </form>
-      <button onClick={handleGoBack}>Go Back</button>
+   
 
     </div>
   );

@@ -85,6 +85,7 @@ function App() {
     if (!main.isAppLoaded()) main.setAppLoaded(true);
 
     return (
+        <div className={`App ${theme}`}>
         <Routes>
             <Route path={Pages.GetStartedUI} element={<GetStarted app={main} />} />
             <Route path={Pages.SignInUI} element={<SignIn app={main} />} />
@@ -159,6 +160,7 @@ function App() {
 
 
         </Routes>
+        </div>
     );
 }
 

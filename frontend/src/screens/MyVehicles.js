@@ -22,7 +22,6 @@ function MyVehicles(props) {
   const [regExpDate, setRegExpDate] = useState(new Date());
   const [insNo, setInsNo] = useState(null);
   const [insExpDate, setInsExpDate] = useState(new Date());
-  const handleGoBack = () => { props.app.goBack(); }
 
 
   async function addVehicle(event) {
@@ -147,9 +146,7 @@ function clearInputFields() {
 
   <Button variant="primary" onClick={addVehicle} >Save</Button> 
   </Form>
-     </div>  <Button variant="secondary" onClick={handleGoBack}>Go Back</Button>{' '}
-
-
+     </div> 
   </div>  
  
   )
