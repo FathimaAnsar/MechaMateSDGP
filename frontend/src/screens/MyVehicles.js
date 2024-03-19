@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
 import './styles/Form.css';
-//import ConnectionManager from "../services/ConnectionManager.js"
+import { API_BASE_URL } from "../Common.js";
 
 
 
@@ -39,7 +39,7 @@ function MyVehicles(props) {
     };
 
     try {
-        const response = await axios.post("http://localhost:8080/api/v1/general/add-vehicle", requestBody, {
+        const response = await axios.post(`${API_BASE_URL}/api/v1/general/add-vehicle`, requestBody, {
             headers: {
                 'Content-Type': 'application/json'
             },

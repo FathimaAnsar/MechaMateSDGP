@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Header from "./components/Header";
 import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
+import { API_BASE_URL } from "../Common.js";
 import './styles/Form.css';
 
 function AddServiceRecordByServiceProvider(props) {
@@ -20,8 +21,8 @@ function AddServiceRecordByServiceProvider(props) {
       };
   
       try {
-          const response = await axios.post("http://localhost:8080/api/v1/general/add-service-record", requestBody);
-  
+          const response = await axios.post( `${API_BASE_URL}/api/v1/general/add-service-record`, requestBody);
+         
           // Check if response is successful (status code 2xx)
           if (response.status >= 200 && response.status < 300) {
               alert("Service Record Added Successfully");
@@ -43,25 +44,6 @@ function AddServiceRecordByServiceProvider(props) {
       setDate(new Date());
       setMileage('');
   }
-  
-
-    // async function addSRecord(event) {
-    //     event.preventDefault();
-    //     try {
-    //       await axios.post("http://localhost:8080/api/v1/general/add-service-record", {
-    //         description: description,
-    //         date: date,
-    //         mileage: mileage
-    //       });
-    //       alert("Service Record Added Successfully");
-    //       setServiceType('');
-    //       setDescription('');
-    //       setDate(new Date());
-    //       setMileage('');
-    //     } catch (err) {
-    //       alert("Failed to Add Service Record");
-    //     }
-    //   }
 
 
   return (
