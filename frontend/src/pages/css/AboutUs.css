@@ -6,7 +6,7 @@
 
 
 #about-header {
-    background-color: #333;
+    background-color: #1f0888;
     color : white;
     padding: 100px;
     text-align: center ; 
@@ -89,7 +89,20 @@
 }
 
 
+#team-section h2 {
+  color: rgb(255, 255, 255);
+  padding-top: 50px;
+  text-align: center;
+  font-size: 24px;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
 
+#team-section h4 {
+  color: #ffffff;
+  text-align: center;
+  font-size: 18px;
+  font-family:Arial, Helvetica, sans-serif;
+}
 
 
 
@@ -121,10 +134,26 @@
 
 
 #team-section{
- background-color: #020215;
+ background-color: #000000;
 }
 
 
+.inner-div {
+  background-color: rgba(0, 0, 0, 0.8); 
+  color: white; 
+  padding: 20px; 
+  margin: 0 auto; 
+  max-width: 600px; 
+}
+
+.person-info h4 {
+  color: white; 
+}
+
+.person-info h5 {
+  padding-top: 30px;
+  color: white; 
+}
 
 
 
