@@ -49,8 +49,9 @@ function Header(props) {
       <Navbar
         expand="lg"
         className="bg-body-tertiary"
-        bg="primary"
+        bg="dark"
         data-bs-theme="dark"
+        sticky="top"
       >
         <Container>
           <Navbar.Brand>

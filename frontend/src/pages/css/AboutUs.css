@@ -1,3 +1,10 @@
+*{
+  padding: 0;
+  border: 0;
+}
+
+
+
 #about-header {
     background-color: #333;
     color : white;
@@ -37,3 +44,95 @@
 .card {
   margin-bottom: 20px;
 }
+
+
+
+.container{
+
+  padding: 0px;
+  margin:0px;
+}
+
+
+.carousel-content{
+  margin:0px 150px 50px;
+
+
+}
+
+
+.carousel-content {
+  display: flex;
+  flex-direction: row; 
+}
+
+.carousel-content .image-container,
+.carousel-content .inner-div {
+  flex: 1; 
+}
+
+.carousel-content img {
+  max-width: 100%; 
+}
+
+/* Media query for mobile screens */
+@media (max-width: 767px) {
+  .carousel-content {
+    flex-direction: column; 
+    margin:0px 0px 50px ;
+  }
+
+  .image-container img{
+
+    padding:0px 55px 0px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#team-section{
+ background-color: #020215;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
