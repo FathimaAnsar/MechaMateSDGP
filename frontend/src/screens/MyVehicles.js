@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
 import './styles/Form.css';
-//import ConnectionManager from "../services/ConnectionManager.js"
+import { API_BASE_URL } from "../Common.js";
 
 
 
@@ -22,7 +22,6 @@ function MyVehicles(props) {
   const [regExpDate, setRegExpDate] = useState(new Date());
   const [insNo, setInsNo] = useState(null);
   const [insExpDate, setInsExpDate] = useState(new Date());
-  const handleGoBack = () => { props.app.goBack(); }
 
 
   async function addVehicle(event) {
@@ -40,7 +39,7 @@ function MyVehicles(props) {
     };
 
     try {
-        const response = await axios.post("http://localhost:8080/api/v1/general/add-vehicle", requestBody, {
+        const response = await axios.post(`${API_BASE_URL}/api/v1/general/add-vehicle`, requestBody, {
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -147,9 +146,7 @@ function clearInputFields() {
 
   <Button variant="primary" onClick={addVehicle} >Save</Button> 
   </Form>
-     </div>  <Button variant="secondary" onClick={handleGoBack}>Go Back</Button>{' '}
-
-
+     </div> 
   </div>  
  
   )

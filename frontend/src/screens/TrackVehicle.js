@@ -52,6 +52,7 @@ import { Container, Row, Col, Button, Alert, Modal } from 'react-bootstrap';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import Header from "./components/Header";
 
 const userIcon = new L.Icon({
     iconUrl: '../images/user.png',
@@ -82,7 +83,7 @@ const UpdateMap = ({ userLocation, vehicleLocation }) => {
     return null;
 };
 
-const TrackMyVehicle = () => {
+const TrackMyVehicle = (props) => {
     const [userLocation, setUserLocation] = useState(null);
     const [vehicleLocation, setVehicleLocation] = useState(null);
     const [isTracking, setIsTracking] = useState(false);
@@ -129,6 +130,9 @@ const TrackMyVehicle = () => {
     };
 
     return (
+<>
+        <Header app={props.app} />
+
         <Container>
             {error && <Alert variant="danger">{error}</Alert>}
             <Row className="my-4">
@@ -177,6 +181,7 @@ const TrackMyVehicle = () => {
                 </Modal.Footer>
             </Modal>
         </Container>
+        </>
     );
 };
 

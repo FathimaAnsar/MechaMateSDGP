@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import Header from "./components/Header";
+import { Form, Button } from 'react-bootstrap';
 import ToggleThemeButton from "./components/ToggleThemeButton";
+import './styles/Form.css';
+
 function Settings(props) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -9,7 +12,7 @@ function Settings(props) {
   const [newUsername, setNewUsername] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
-  const handleGoBack = () => { props.app.goBack(); }
+  
 
   const handleFirstNameChange = (event) => {
     setFirstName(event.target.value);
@@ -41,50 +44,44 @@ function Settings(props) {
   };
 
   return (
-    <div>
-      <Header app ={props.app}/>
-    
-      <h2>Settings</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          First Name:
-          <input type="text" value={firstName} onChange={handleFirstNameChange} />
-        </label>
-        <br />
-        <label>
-          Last Name:
-          <input type="text" value={lastName} onChange={handleLastNameChange} />
-        </label>
-        <br />
-        <label>
-          Theme:
-          <ToggleThemeButton/>
-        </label>
-        <br />
-        <label>
-          Language:
-          <select value={language} onChange={handleLanguageChange}>
-            <option value="english">English</option>
-            <option value="sinhala">Sinhala</option>
-            <option value="tamil">Tamil</option>
-          </select>
-        </label>
-        <br />
-        <label>
-          New Username:
-          <input type="text" value={newUsername} onChange={handleNewUsernameChange} />
-        </label>
-        <br />
-        <label>
-          New Password:
-          <input type="password" value={newPassword} onChange={handleNewPasswordChange} />
-        </label>
-        <br />
-        <button type="submit">Save Changes</button>
-      </form>
-      <button onClick={handleGoBack}>Go Back</button>
-
-    </div>
+   <div>
+    <Header app={props.app} />
+    <div className="form-container">
+   
+   <h2>Settings</h2>
+   <Form onSubmit={handleSubmit} className="settings-form">
+     <Form.Group controlId="firstName">
+       <Form.Label>First Name:</Form.Label>
+       <Form.Control type="text" value={firstName} onChange={handleFirstNameChange} />
+     </Form.Group>
+     <Form.Group controlId="lastName">
+       <Form.Label>Last Name:</Form.Label>
+       <Form.Control type="text" value={lastName} onChange={handleLastNameChange} />
+     </Form.Group>
+     <Form.Group controlId="theme">
+       <Form.Label>Theme:</Form.Label>
+       <ToggleThemeButton />
+     </Form.Group>
+     <Form.Group controlId="language">
+       <Form.Label>Language:</Form.Label>
+       <Form.Select value={language} onChange={handleLanguageChange}>
+         <option value="english">English</option>
+         <option value="sinhala">Sinhala</option>
+         <option value="tamil">Tamil</option>
+       </Form.Select>
+     </Form.Group>
+     <Form.Group controlId="newUsername">
+       <Form.Label>New Username:</Form.Label>
+       <Form.Control type="text" value={newUsername} onChange={handleNewUsernameChange} />
+     </Form.Group>
+     <Form.Group controlId="newPassword">
+       <Form.Label>New Password:</Form.Label>
+       <Form.Control type="password" value={newPassword} onChange={handleNewPasswordChange} />
+     </Form.Group>
+     <Button type="submit">Save Changes</Button>
+   </Form>
+ </div>
+ </div>
   );
 }
 
