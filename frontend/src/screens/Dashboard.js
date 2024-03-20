@@ -182,7 +182,7 @@ function Dashboard(props) {
         <br />
 
         <Accordion>
-          {/* 
+
           <Accordion.Item eventKey="0">
             <Accordion.Header style={{ fontWeight: "bold", fontSize: "20px" }}>
               Predict Maintenance
@@ -190,16 +190,6 @@ function Dashboard(props) {
             <Accordion.Body>
               <Row className="justify-content-center text-center">
                 <Col xs={12} md={8}>
-                  <Image
-                    style={{ width: "80%" }}
-                    src={corollaImage}
-                    alt="car"
-                  />
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad
-                  </p>
                   <Button
                     variant="primary"
                     style={{ width: "80%" }}
@@ -210,147 +200,7 @@ function Dashboard(props) {
                 </Col>
               </Row>
             </Accordion.Body>
-          </Accordion.Item> 
-          <Accordion.Item eventKey="1">
-            <Accordion.Header style={{ fontWeight: "bold", fontSize: "20px" }}>
-              AutoMob Search
-            </Accordion.Header>
-            <Accordion.Body>
-              <Row className="justify-content-center text-center">
-                <Col xs={12} md={8}>
-                  <Image
-                    style={{ width: "80%" }}
-                    src={corollaImage}
-                    alt="car"
-                  />
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad
-                  </p>
-                  <Button
-                    variant="primary"
-                    style={{ width: "80%" }}
-                    onClick={() => navigate("/" + Pages.AutoMobSearchUI)}
-                  >
-                    Search Now
-                  </Button>
-                </Col>
-              </Row>
-            </Accordion.Body>
           </Accordion.Item>
-          <Accordion.Item eventKey="2">
-            <Accordion.Header style={{ fontWeight: "bold", fontSize: "20px" }}>
-              Emergency Assistance
-            </Accordion.Header>
-            <Accordion.Body>
-              <Row className="justify-content-center text-center">
-                <Col xs={12} md={8}>
-                  <Image
-                    style={{ width: "80%" }}
-                    src={corollaImage}
-                    alt="car"
-                  />
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad
-                  </p>
-                  <Button
-                    variant="primary"
-                    style={{ width: "80%" }}
-                    onClick={() => navigate("/" + Pages.EmergencyAssistUI)}
-                  >
-                    Need Assistance
-                  </Button>
-                </Col>
-              </Row>
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="3">
-            <Accordion.Header style={{ fontWeight: "bold", fontSize: "20px" }}>
-              Track My Vehicle
-            </Accordion.Header>
-            <Accordion.Body>
-              <Row className="justify-content-center text-center">
-                <Col xs={12} md={8}>
-                  <Image
-                    style={{ width: "80%" }}
-                    src={corollaImage}
-                    alt="car"
-                  />
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad
-                  </p>
-                  <Button
-                    variant="primary"
-                    style={{ width: "80%" }}
-                    onClick={() => navigate("/" + Pages.TrackVehicleUI)}
-                  >
-                    Search Now
-                  </Button>
-                </Col>
-              </Row>
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="4">
-            <Accordion.Header style={{ fontWeight: "bold", fontSize: "20px" }}>
-              Manage Vehicle Documents
-            </Accordion.Header>
-            <Accordion.Body>
-              <Row className="justify-content-center text-center">
-                <Col xs={12} md={8}>
-                  <Image
-                    style={{ width: "80%" }}
-                    src={corollaImage}
-                    alt="car"
-                  />
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad
-                  </p>
-                  <Button
-                    variant="primary"
-                    style={{ width: "80%" }}
-                    onClick={() => navigate("/" + Pages.ManageDocumentsUI)}
-                  >
-                    Manage Now
-                  </Button>
-                </Col>
-              </Row>
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="5">
-            <Accordion.Header style={{ fontWeight: "bold", fontSize: "20px" }}>
-              Parking Finder
-            </Accordion.Header>
-            <Accordion.Body>
-              <Row className="justify-content-center text-center">
-                <Col xs={12} md={8}>
-                  <Image
-                    style={{ width: "80%" }}
-                    src={corollaImage}
-                    alt="car"
-                  />
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad
-                  </p>
-                  <Button
-                    variant="primary"
-                    style={{ width: "80%" }}
-                    onClick={() => navigate("/" + Pages.ParkingFinderUI)}
-                  >
-                    Search Parking Now
-                  </Button>
-                </Col>
-              </Row>
-            </Accordion.Body>
-          </Accordion.Item>*/}
         </Accordion>
       </Container>
     </>
