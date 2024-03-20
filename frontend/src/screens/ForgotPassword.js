@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { Pages } from "../Pages.js"
 import ConnectionManager from "../services/ConnectionManager.js"
+import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 
 
 function ForgotPassword(props) {
@@ -29,20 +30,24 @@ function ForgotPassword(props) {
         }
     }
     return(
-        <>
-            <button onClick={handleGoBack}>Go Back</button>
+        <Container className="mt-5">
+            <Row className="justify-content-md-center">
+                <Col md={6}>
 
-            <h1>Password Recovery</h1>
-            <p>Please enter your email address </p>
-            <form action="#" method="post">
-                <label htmlFor="email">Email:</label><br></br>
-                <input type="text" id="email" name="email"/><br></br>
-                <br></br>
-                <button onClick={handleSubmit}>Request Password Reset Link</button>
-            </form>
+                    <h1 className="text-center mb-3">Password Recovery</h1>
+                    <p>Please enter your email address below:</p>
 
-
-        </>
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group controlId="email">
+                            <Form.Control type="email" placeholder="Enter email" required />
+                        </Form.Group>
+                        <Button variant="primary" type="submit" className="mt-3">
+                            Request Password Reset Link
+                        </Button>
+                    </Form>
+                </Col>
+            </Row>
+        </Container>
     );
 
 
