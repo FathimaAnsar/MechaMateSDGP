@@ -59,7 +59,7 @@ function Header(props) {
               <Image
                 src={logo}
                 alt="MechaMate Logo"
-                style={{ maxHeight: "25px" }}
+                style={{  width: "100px", height: "25px"}}
               />
             </Link>
           </Navbar.Brand>

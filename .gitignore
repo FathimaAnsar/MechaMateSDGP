@@ -1,6 +1,6 @@
 ### VS Code ###
 .vscode/
-**/logs/
+logs/
 
 ### DS Store ###
 **/.DS_Store

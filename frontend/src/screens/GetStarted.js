@@ -1,17 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
-  Container,
   Button,
   Card,
-  CardFooter,
-  CardImg,
-  CardText,
 } from "react-bootstrap";
 import logo from "../images/logo-white.png";
 import { Pages } from "../Pages.js";
 import { useNavigate } from "react-router-dom";
 
-function GetStarted(props) {
+function GetStarted() {
   const navigate = useNavigate();
 
   const handleClick = (page) => {

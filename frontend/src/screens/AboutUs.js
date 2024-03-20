@@ -1,7 +1,5 @@
 import React from "react";
 import "../screens/styles/AboutUs.css";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
 import p1 from "../images/p1.jpg";
 import p2 from "../images/p2.jpg";
 import p3 from "../images/p3.jpg";
@@ -9,11 +7,6 @@ import p4 from "../images/p4.jpg";
 import p5 from "../images/p5.jpg";
 import Header from "./components/Header";
 import Carousel from "react-bootstrap/Carousel";
-
-import Col from "react-bootstrap/Col";
-import Container from "react-bootstrap/Container";
-import Image from "react-bootstrap/Image";
-import Row from "react-bootstrap/Row";
 
 function AboutUs(props) {
   return (

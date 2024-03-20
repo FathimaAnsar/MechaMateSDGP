@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Button,
-  Image,
   Col,
   Container,
   Row,
@@ -14,7 +13,9 @@ import ConnectionManager from "../services/ConnectionManager.js";
 import Header from "./components/Header.js";
 import ClickableCard from "./components/ClickableCard.js";
 import CustomCarousel from "./components/CustomCarousel.js";
-import LoadingScreen from "./components/LoadingScreen.js";
+// import ViewVehicle from "./ViewVehicle.js";
+// import LoadingScreen from "./components/LoadingScreen.js";
+// import corollaImage from "../images/vehicles/corolla-side.jpg";
 import DashboardCard from "./components/DashboardCard.js";
 
 function Dashboard(props) {
@@ -65,16 +66,17 @@ function Dashboard(props) {
     props.app.changePage(page);
   };
 
-  const services = [
+  const emergencyAssist = [
     { title: "Manage Documents", path: "/" + Pages.ManageDocumentsUI },
-    { title: "Breakdown Assistance", path: "/" + Pages.BreakdownAssistUI },
+    { title: "Breakdown Assistance", path: "/" + Pages.EmergencyAssistUI },
     { title: "AutoMob Search", path: "/" + Pages.AutoMobSearchUI },
     {
       title: "Track My Vehicle",
       path: "/" + Pages.EmergencTrackVehicleUIyAssistUI,
     },
+
     { title: "Parking Finder", path: "/" + Pages.ParkingFinderUI },
-    { title: "Accident Assistance", path: "/" + Pages.EmergencyAssistUI },
+    { title: "Accident Assistance", path: "/" + Pages.AccidentAssistUi },
   ];
 
   const handleOptionClick = () => {
@@ -84,7 +86,6 @@ function Dashboard(props) {
   return (
     <>
       <Header app={props.app} />
-      {loading && <LoadingScreen />}
       <Container fluid style={{ padding: "5px 15px" }}>
         <Row style={{ marginTop: "10px" }}>
           <Col>
@@ -111,7 +112,7 @@ function Dashboard(props) {
           <Col md={12}>
             <div
               style={{
-                height: "100%",
+                height: "100%", // Consider removing this
                 overflowY: "auto",
               }}
             >
@@ -125,7 +126,7 @@ function Dashboard(props) {
                     alignItems: "center",
                   }}
                 >
-                  {/* <Spinner animation="border" variant="secondary" /> */}
+                  <Spinner animation="border" variant="secondary" />
                 </div>
               ) : vehicles.length > 0 ? (
                 <Row>
@@ -167,12 +168,12 @@ function Dashboard(props) {
             <h3>Services</h3>
           </Col>
 
-          {services.map((service, index) => (
+          {emergencyAssist.map((option, index) => (
             <Col key={index} xs={6} sm={6} md={4} lg={3}>
               <div>
                 <DashboardCard
-                  content={service}
-                  onClick={() => navigate(service.path)}
+                  content={option}
+                  onClick={() => navigate(option.path)}
                 />
               </div>
             </Col>

@@ -20,9 +20,6 @@ function EnterCode(props) {
     navigate("/" + Pages.DashboardUI);
   };
 
-  const handleShow = () => setShow(true);
-  const handleGoBack = () => props.app.goBack();
-
   useEffect(() => {
     try {
       let connection = new ConnectionManager();

@@ -21,13 +21,13 @@
 
 /* general theme change */
 .App.light {
-  height: 100vh;
+  min-height: 100vh;
   background-color: #fff !important;
   color: #333 !important;
 }
 
 .App.dark {
-  height: 100vh;
+  min-height: 100vh;
   background-color: #222 !important;
   color: #fff !important;
 }
