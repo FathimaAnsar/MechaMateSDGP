@@ -40,8 +40,8 @@
     display: none;
     font-weight: 600;
     font-size: 10pt;
-    padding: 4px 10px;
-    height: 8vh;
+    padding: 5px 10px;
+    height: auto;
     width: 100vw;
     background-color: #e00000;
     color: white;
@@ -71,7 +71,8 @@
 
 
 .login-container input[type="text"],
-.login-container input[type="password"] {
+.login-container input[type="password"],
+#username-signin {
     margin: 8px 0;
     width: 100%;
     padding: 10px;
@@ -102,18 +103,18 @@
 
 
 
-.login-container input[type="checkbox"] {
-    margin-right: 10px;
+
+#sign-in-check{
+    display: flex;
+    justify-content: space-around;
 }
 
-
-.login-container label {
-    margin: px;
+#already_signed_in label {
     font-size: 10pt;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* border: 1px solid black; */
+    
 }
 
 .login-container input:focus {
@@ -131,7 +132,7 @@
     background-color: #085bd4;
     color: white;
     border: none;
-    margin: 10px 0 5px 0;
+    margin: 0 0 5px 0;
     border-radius: 30px;
     padding: 6px;
     cursor: pointer;
@@ -296,7 +297,7 @@
 #signup-modal-form input[type="password"],
 #signup-modal-form input[type="email"]{
     /* border: #000000 solid 1px; */
-    color: rgb(113, 113, 113);
+    /* color: rgb(113, 113, 113); */
         font-weight: 400;
         font-size: 15px;
 }

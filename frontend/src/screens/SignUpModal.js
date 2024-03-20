@@ -120,7 +120,7 @@ function SignUpModal(props) {
                   />
 
                   <Form.Control.Feedback type="invalid">
-                    {errors.firstName}
+                    First name is a required field
                   </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={Col} md="6" hasValidation>
@@ -136,7 +136,7 @@ function SignUpModal(props) {
                   />
 
                   <Form.Control.Feedback type="invalid">
-                    {errors.lastName}
+                    Last name is a required field
                   </Form.Control.Feedback>
                 </Form.Group>
               </Row>
@@ -261,7 +261,7 @@ function SignUpModal(props) {
                   isInvalid={touched.terms && errors.terms}
                 />
                 <Form.Control.Feedback type="invalid">
-                  {errors.confirmpassword}
+                  {errors.terms}
                 </Form.Control.Feedback>
               </Form.Group>
 

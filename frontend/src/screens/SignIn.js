@@ -6,36 +6,28 @@ import "./styles/signIn.css";
 import SignUpModal from "./SignUpModal.js";
 import { useNavigate } from "react-router-dom";
 import LoadingScreen from "./components/LoadingScreen.js";
+import { Formik } from "formik";
+import * as yup from "yup";
+import { Form, Col, InputGroup, Alert, Button, Modal } from "react-bootstrap";
+import CustomAlert from "./components/CustomAlert.js";
 
 function SignIn(props) {
   const navigate = useNavigate();
   const [modalShow, setModalShow] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [error, setError] = useState({ message: "", heading: "" });
 
-  const handleClick = (page) => {
-    navigate("/" + page);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-    const keepMeSignedIn = document.getElementById("keep-me-signed-in").checked;
-
+  const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     const errorMessage = document.getElementById("login-error");
-    const loginContainer = document.getElementById("login-container");
-
-    // Validate inputs
-    // If failed to validate, return here
+    setLoading(true);
 
     let connection = new ConnectionManager();
 
     const resp = await connection.signin(
-      username,
-      password,
-      keepMeSignedIn ? 1 : 0
+      values.username,
+      values.password,
+      values.keepMeSignedIn[0] ? 1 : 0
     );
     const response = JSON.parse(resp);
 
@@ -47,7 +39,18 @@ function SignIn(props) {
     if (response.error) {
       if (response.error == "ErrorUserDoesntExist") {
         errorMessage.style.display = "block";
+        setErrors({ username: " ", password: " " });
+      } else if (response.error == "ErrorLoginFailed") {
+        setErrors({ password: "Incorrect Password" });
+      } else if (response.error == "ErrorMaxAttemptCountExceeded") {
+        setError({
+          message: response.help,
+          heading: "Too Many Login Attempts",
+        });
+        setShowAlert(true);
+        setErrors({ username: " ", password: " " });
       }
+
       console.log("Error occured: " + response.message + "\n" + response.help);
     } else if (response.status) {
       props.app.setFirstRunDone(true);
@@ -107,6 +110,21 @@ function SignIn(props) {
       });
     } catch (exp) {}
   }, []);
+  const schema = yup.object().shape({
+    username: yup
+      .string()
+      .required("Username is required")
+      .matches(/^[a-zA-Z0-9_.]{5,20}$/, "Invalid Username!"),
+    password: yup.string().required("Password is required").matches(
+      "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#!)(|}{?><,/.:;\"'$%^&+=])(?=\\S+$).{6,}$",
+
+      "Invalid Password!"
+    ),
+  });
+
+  const handleClose = () => {
+    setShowAlert(false);
+  };
 
   return (
     <>
@@ -118,36 +136,91 @@ function SignIn(props) {
       <div className="login-container">
         <img src={logo} alt="logo"></img>
 
-        <form action="#" method="post">
-          <input
-            type="text"
-            id="username"
-            name="username"
-            placeholder="Username"
-          />
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Password"
-          />
+        <Formik
+          validationSchema={schema}
+          onSubmit={handleSubmit}
+          initialValues={{
+            username: "",
+            password: "",
+            keepMeSignedIn: false,
+          }}
+        >
+          {({
+            handleSubmit,
+            handleChange,
+            values,
+            touched,
+            errors,
+            setErrors,
+          }) => (
+            <Form noValidate onSubmit={handleSubmit} id="signup-modal-form">
+              <Form.Group as={Col} md="12" hasValidation>
+                <InputGroup>
+                  <Form.Control
+                    id="username-signin"
+                    type="text"
+                    placeholder="Username"
+                    aria-describedby="inputGroupPrepend"
+                    name="username"
+                    value={values.username}
+                    onChange={handleChange}
+                    isValid={touched.username && !errors.username}
+                    isInvalid={touched.username && errors.username}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.username}
+                  </Form.Control.Feedback>
+                </InputGroup>
+              </Form.Group>
 
-          <label htmlFor="keep-me-signed-in">
-            <input
-              type="checkbox"
-              id="keep-me-signed-in"
-              name="already_signed_in"
-            />
-            Keep Me Signed In
-          </label>
+              <Form.Group
+                as={Col}
+                md="12"
+                controlId="validationFormikPassword"
+                hasValidation
+              >
+                {/* <Form.Label id="signup-password">Password</Form.Label> */}
+                <Form.Control
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  value={values.password}
+                  onChange={handleChange}
+                  isValid={touched.password && !errors.password}
+                  isInvalid={touched.password && errors.password}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.password}
+                </Form.Control.Feedback>
+              </Form.Group>
 
-          <button onClick={handleSubmit}>Sign In</button>
-        </form>
+              <Form.Group className="mb-3 g-3" id="sign-in-check">
+                <Form.Check
+                  required
+                  name="keepMeSignedIn"
+                  label="Keep Me Signed In"
+                  onChange={handleChange}
+                  id="keep-me-signed-in"
+                  isValid={touched.terms && !errors.terms}
+                  isInvalid={touched.terms && errors.terms}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.terms}
+                </Form.Control.Feedback>
+              </Form.Group>
+
+              <button type="submit" onClick={handleSubmit}>
+                Sign In
+              </button>
+            </Form>
+          )}
+        </Formik>
+
         <div className="forget-password">
           <a
             style={{ color: "#085bd4" }}
             onClick={() => {
-              handleClick(Pages.ForgotPasswordUI);
+              navigate(Pages.ForgotPasswordUI);
             }}
           >
             Forgotten password?
@@ -170,10 +243,8 @@ function SignIn(props) {
           }
         }}
       />
-      {/* <button onClick={() => { handleClick(Pages.SignUpUI) }}>Dont you have an account?</button>
-            <br></br>
-            <button onClick={() => { handleClick(Pages.ForgotPasswordUI) }}>Forgot Password?</button>
-            <br></br> */}
+      <CustomAlert show={showAlert} handleClose={handleClose} error={error} />
+
       <div className="login-footer">
         <div className="languages">
           <button
