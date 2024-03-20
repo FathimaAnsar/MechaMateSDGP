@@ -53,6 +53,9 @@
     text-decoration: wavy;
 
 }
+.error-message a:hover{
+    text-decoration: underline;
+}
 
 .sign-up-screen-logo {
     width: 50%;

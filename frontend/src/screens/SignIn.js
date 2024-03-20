@@ -111,16 +111,9 @@ function SignIn(props) {
   return (
     <>
       {loading && <LoadingScreen />}
-
       <div id="login-error" className="error-message">
         The login details that you've entered doesn't match any account.{" "}
-        <a
-          onClick={() => {
-            handleClick(Pages.SignUpUI);
-          }}
-        >
-          Sign up for an new account
-        </a>
+        <a onClick={() => setModalShow(true)}>Sign up for an new account</a>
       </div>
       <div className="login-container">
         <img src={logo} alt="logo"></img>

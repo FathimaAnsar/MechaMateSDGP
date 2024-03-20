@@ -36,7 +36,7 @@ function DashboardCard({ content, onClick }) {
         </div>
 
         <Card.Body>
-          <Card.Title style={{ fontSize: "16px" }}>{title}</Card.Title>
+          <Card.Title style={{ fontSize: "18px" }}>{title}</Card.Title>
         </Card.Body>
       </Card>
     </Link>

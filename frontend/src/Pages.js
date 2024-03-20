@@ -1,42 +1,46 @@
-
 export const Pages = {
-    GetStartedUI: "get-started",//
+  GetStartedUI: "get-started", //
 
-    SignInUI: "signin",//
-    SignUpUI: "signup",//
+  SignInUI: "signin", //
+  SignUpUI: "signup", //
 
-    EnterCodeUI: "enter-code",//
+  EnterCodeUI: "enter-code", //
 
-    ForgotPasswordUI: "forgot-password",//
-    ResetPasswordUI: "reset-password",//
+  ForgotPasswordUI: "forgot-password", //
+  ResetPasswordUI: "reset-password", //
 
-    DashboardUI: "dashboard",//
+  DashboardUI: "dashboard", //
 
-    SettingsUI: "settings",//
+  SettingsUI: "settings", //
 
-    NotificationsUI: "notifications",//
-    
-    AboutUsUI: "about-us",//
+  NotificationsUI: "notifications", //
 
-    MyVehiclesUI: "my-vehicles",//
+  AboutUsUI: "about-us", //
 
-    PredictMaintenanceUI: "predict-maintenance",//
-    ShowPredictionsUI: "show-predictions",//
+  MyVehiclesUI: "my-vehicles", //
 
-    TrackVehicleUI: "track-vehicle",//
+  PredictMaintenanceUI: "predict-maintenance", //
+  ShowPredictionsUI: "show-predictions", //
 
-    AutoMobSearchUI: "automob-search",
-    AutoMobDetailsUI: "automob-details",
+  TrackVehicleUI: "track-vehicle", //
 
-    EmergencyAssistUI: "emergency-assistance",
-    
-    ManageDocumentsUI: "documents",
-    AddSRecordManualUI: "add-record",
-    QrUI: "qr-ui",
-    AddRecordBySPUI: "add-record-sp",
-    ShowRecordReqUI: "show-record-request", 
+  AutoMobSearchUI: "automob-search",
+  AutoMobDetailsUI: "automob-details",
 
-    ParkingFinderUI: "parking-finder",
-    ParkingInfoUI: "parking-info",
-    ViewVehicle: "view-vehicle"
+  BreakdownAssistUI: "breakdown-assistance",
+  EmergencyAssistUI: "emergency-assistance",
+
+  ManageDocumentsUI: "documents",
+  AddSRecordManualUI: "add-record",
+  QrUI: "qr-ui",
+  AddRecordBySPUI: "add-record-sp",
+  ShowRecordReqUI: "show-record-request",
+
+  ParkingFinderUI: "parking-finder",
+  ParkingInfoUI: "parking-info",
+  ViewVehicle: "view-vehicle",
+
+  PrivacyPolicyUI: "privacy-policy",
+  CookiesPolicyUI: "coockies-policy",
+  TermsUI: "terms",
 };

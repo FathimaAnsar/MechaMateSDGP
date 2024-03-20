@@ -15,7 +15,9 @@ class ConnectionManager {
       const data = await response.json();
       document.body.style.cursor = "default";
       return JSON.stringify(data);
-    } catch (error) {}
+    } catch (error) {
+      alert(error);
+    }
     document.body.style.cursor = "default";
     return null;
   }
@@ -142,13 +144,11 @@ class ConnectionManager {
     );
   }
 
-// Define a method to fetch QR URL from the server
-getRequestForQR() {
-  // return await this.getRequest("/api/v1/get-qr-url"); 
-  return "{\"url\":\"https://mechamate.site/add-service-record?key=ab5ca5bfa28aeadc8791eb46daec17b52eaa6712fe4322ec96aef0bab31b6540\"}";
-}
-
-
+  // Define a method to fetch QR URL from the server
+  getRequestForQR() {
+    // return await this.getRequest("/api/v1/get-qr-url");
+    return '{"url":"https://mechamate.site/add-service-record?key=ab5ca5bfa28aeadc8791eb46daec17b52eaa6712fe4322ec96aef0bab31b6540"}';
+  }
 }
 
 export default ConnectionManager;
