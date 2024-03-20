@@ -1,7 +1,7 @@
 
 import ConnectionManager from "./services/ConnectionManager.js"
-import { Pages } from "./Pages.js" 
-import { Navigate } from 'react-router-dom';
+// import { Pages } from "./Pages.js" 
+// import { Navigate } from 'react-router-dom';
 //import LanguageManager from "./services/LanguageManager.js"
 
 class MechaMate {

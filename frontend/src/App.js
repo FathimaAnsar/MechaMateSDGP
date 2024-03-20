@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { main } from "./MechaMate.js";
 import { Pages } from "./Pages.js";
 import GetStarted from "./screens/GetStarted.js";
@@ -29,7 +29,7 @@ import AddSRecords from "./screens/AddSRecords.js";
 import ParkingFinder from "./screens/ParkingFinder.js";
 import ThemeContext from "./screens/components/ThemeContext.js";
 import ViewVehicle from "./screens/ViewVehicle.js";
-import { Routes, Route, Navigate } from "react-router-dom";
+import {  Routes, Route, Navigate } from "react-router-dom";
 import PaymentSuccess from "./screens/PaymentSuccess";
 import PaymentCancelled from "./screens/PaymentCancelled";
 import "./styles/App.css";
@@ -89,6 +89,7 @@ function App() {
   if (!main.isAppLoaded()) main.setAppLoaded(true);
 
   return (
+    <div className={`App ${theme}`}>
     <Routes>
       <Route path={Pages.GetStartedUI} element={<GetStarted app={main} />} />
       <Route path={Pages.SignInUI} element={<SignIn app={main} />} />
@@ -160,6 +161,7 @@ function App() {
       <Route path="/payment-cancelled" element={<PaymentCancelled />} />
       <Route path="*" element={<Dashboard app={main} />} />
     </Routes>
+    </div>
   );
 }
 

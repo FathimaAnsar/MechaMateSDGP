@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Header from "./components/Header";
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -13,7 +13,6 @@ import { API_BASE_URL } from "../Common.js";
 
 
 function MyVehicles(props) {
-  const [_id, setId] =useState(null);
   const [vehicleType, setVehicleType] = useState('Car');
   const [fuelType, setFuelType] = useState(null);
   const [vehicleMake, setVehicleMake] = useState(null);

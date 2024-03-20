@@ -1,7 +1,5 @@
 
-import React, { useState } from "react";
-import { Pages } from "../Pages.js" 
-
+import React from "react";
 
 function ReplaceMe(props) {
 

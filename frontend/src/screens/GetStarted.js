@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import React, { useState, useEffect } from "react";
 import {
   Container,
@@ -9,6 +10,12 @@ import {
 } from "react-bootstrap";
 import logo from "../images/logo-white.png";
 import { Pages } from "../Pages.js";
+=======
+import React, { useEffect } from "react";
+import { Button, Card, CardText } from 'react-bootstrap';
+import logo from '../images/logo-white.png';
+import { Pages } from "../Pages.js"
+>>>>>>> Stashed changes
 import { useNavigate } from "react-router-dom";
 
 function GetStarted(props) {
