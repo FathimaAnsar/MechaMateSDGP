@@ -1,23 +1,19 @@
-import React from 'react';
-import '../pages/css/AboutUs.css';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import p1 from '../images/p1.jpg';
-import p2 from '../images/p2.jpg';
-import p3 from '../images/p3.jpg';
-import p4 from '../images/p4.jpg';
-import p5 from '../images/p5.jpg';
+import React from "react";
+import "../screens/styles/AboutUs.css";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import p1 from "../images/p1.jpg";
+import p2 from "../images/p2.jpg";
+import p3 from "../images/p3.jpg";
+import p4 from "../images/p4.jpg";
+import p5 from "../images/p5.jpg";
 import Header from "./components/Header";
-import Carousel from 'react-bootstrap/Carousel';
+import Carousel from "react-bootstrap/Carousel";
 
-
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-import Image from 'react-bootstrap/Image';
-import Row from 'react-bootstrap/Row';
-
-
-
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Image from "react-bootstrap/Image";
+import Row from "react-bootstrap/Row";
 
 function AboutUs(props) {
   return (
@@ -30,14 +26,11 @@ function AboutUs(props) {
       </header>
 
       <section className="" id="team-section">
-
         <h2>Meet Our Team</h2>
         <h4 className="">Developers and Board of Directors</h4>
 
         <Carousel>
-
-          <Carousel.Item interval={null} >
-
+          <Carousel.Item interval={null}>
             <div className="carousel-content">
               <div className="image-container">
                 <img src={p1} alt="First slide" />
@@ -47,13 +40,22 @@ function AboutUs(props) {
                 <div class="person-info">
                   <h4>Gihan Jayawickrama</h4>
                   <h5>FINANCIAL CONSULTANT</h5>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Duis aute irure dolor in reprehenderit in voluptate velit
+                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                    occaecat cupidatat non proident, sunt in culpa qui officia
+                    deserunt mollit anim id est laborum.
+                  </p>
                 </div>
               </div>
             </div>
           </Carousel.Item>
 
-          <Carousel.Item interval={null} >
+          <Carousel.Item interval={null}>
             <div className="carousel-content">
               <div className="image-container">
                 <img src={p2} alt="First slide" />
@@ -63,7 +65,16 @@ function AboutUs(props) {
                 <div class="person-info">
                   <h4>fathima Ansar</h4>
                   <h5>Web designer</h5>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Duis aute irure dolor in reprehenderit in voluptate velit
+                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                    occaecat cupidatat non proident, sunt in culpa qui officia
+                    deserunt mollit anim id est laborum.
+                  </p>
                 </div>
               </div>
             </div>
@@ -80,12 +91,20 @@ function AboutUs(props) {
                   <h4>Chamath Jayasanka</h4>
 
                   <h5>Project manager</h5>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Duis aute irure dolor in reprehenderit in voluptate velit
+                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                    occaecat cupidatat non proident, sunt in culpa qui officia
+                    deserunt mollit anim id est laborum.
+                  </p>
                 </div>
               </div>
             </div>
           </Carousel.Item>
-
 
           <Carousel.Item interval={null}>
             <div className="carousel-content">
@@ -97,7 +116,16 @@ function AboutUs(props) {
                 <div class="person-info">
                   <h4>Radeesh Mayadunne</h4>
                   <h5>Tech lead</h5>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Duis aute irure dolor in reprehenderit in voluptate velit
+                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                    occaecat cupidatat non proident, sunt in culpa qui officia
+                    deserunt mollit anim id est laborum.
+                  </p>
                 </div>
               </div>
             </div>
@@ -113,21 +141,23 @@ function AboutUs(props) {
                 <div class="person-info">
                   <h4>Hansila Kodagoda</h4>
                   <h5>Network Administrator</h5>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Duis aute irure dolor in reprehenderit in voluptate velit
+                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                    occaecat cupidatat non proident, sunt in culpa qui officia
+                    deserunt mollit anim id est laborum.
+                  </p>
                 </div>
               </div>
             </div>
           </Carousel.Item>
-
         </Carousel>
-
-
-
-
       </section>
-
     </>
-
 
     // <>
     // <Header app ={props.app}/>
@@ -135,7 +165,6 @@ function AboutUs(props) {
     //     {/* <img src="./img1.jpg" alt="About Us Image" /> */}
     //     <h1>About Us</h1>
     //   </header>
-
 
     //   <div className="card-container">
     //     <Card style={{ width: '18rem' }}>
@@ -194,9 +223,6 @@ function AboutUs(props) {
     //     </Card>
     //   </div>
 
-
-
-
     /* 
       <div id="container1" className="flex-container">
         <div className='sub-div sub1'>
@@ -206,8 +232,6 @@ function AboutUs(props) {
           <p>MechaMate isn't just a vehicle maintenance assistant—it's a reliable partner dedicated to ensuring the safety, efficiency, and peace of mind of every vehicle owner in Sri Lanka, a forward-thinking software service provider in Sri Lanka. With a primary focus on predictive maintenance, MechaMate harnesses the power of AI and machine learning to forecast maintenance needs accurately, ensuring optimal vehicle health and minimizing unexpected breakdowns. This innovative solution addresses the common challenges faced by novice drivers, new vehicle owners, and especially women vehicle owners in Sri Lanka who may lack awareness about proper maintenance practices. MechaMate not only educates users about maintenance requirements but also assists them in finding authorized service providers, sourcing quality spare parts, and managing documentation and service records effortlessly.</p>
         </div>
       </div> */
-
-
 
     /* <Container style={{ marginTop: '20px' }}>
           <Row>
@@ -237,24 +261,6 @@ function AboutUs(props) {
             </Col>
           </Row>
         </Container> */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // <div>
     //   <h2>Our Team</h2>
