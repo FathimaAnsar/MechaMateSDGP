@@ -20,6 +20,7 @@ function SignIn(props) {
 
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     const errorMessage = document.getElementById("login-error");
+    errorMessage.style.display = "none";
     setLoading(true);
 
     let connection = new ConnectionManager();
@@ -32,7 +33,11 @@ function SignIn(props) {
     const response = JSON.parse(resp);
 
     if (!response) {
-      alert("Please check your springboot localhost is running");
+      setError({
+        message: "Please check your springboot localhost is running",
+        heading: "Error!",
+      });
+      setShowAlert(true);
       return;
     }
 
@@ -60,7 +65,11 @@ function SignIn(props) {
       const userProfile = JSON.parse(uProf);
 
       if (!userProfile) {
-        alert("Please check your springboot localhost is running");
+        setError({
+          message: "Please check your springboot localhost is running",
+          heading: "Error!",
+        });
+        setShowAlert(true);
         return;
       }
 
@@ -91,7 +100,11 @@ function SignIn(props) {
         const userProfile = JSON.parse(uProf);
 
         if (!userProfile) {
-          alert("Please check your springboot localhost is running");
+          setError({
+            message: "Please check your springboot localhost is running",
+            heading: "Error!",
+          });
+          setShowAlert(true);
           return;
         }
 
@@ -115,11 +128,13 @@ function SignIn(props) {
       .string()
       .required("Username is required")
       .matches(/^[a-zA-Z0-9_.]{5,20}$/, "Invalid Username!"),
-    password: yup.string().required("Password is required").matches(
-      "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#!)(|}{?><,/.:;\"'$%^&+=])(?=\\S+$).{6,}$",
-
-      "Invalid Password!"
-    ),
+    password: yup
+      .string()
+      .required("Password is required")
+      .matches(
+        "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#!)(|}{?><,/.:;\"'$%^&+=])(?=\\S+$).{6,}$",
+        "Invalid Password!"
+      ),
   });
 
   const handleClose = () => {
@@ -220,7 +235,7 @@ function SignIn(props) {
           <a
             style={{ color: "#085bd4" }}
             onClick={() => {
-              navigate(Pages.ForgotPasswordUI);
+              navigate("/" + Pages.ForgotPasswordUI);
             }}
           >
             Forgotten password?

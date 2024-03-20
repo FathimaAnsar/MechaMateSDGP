@@ -1,4 +1,5 @@
 import { API_BASE_URL } from "../Common.js";
+import CustomAlert from "../screens/components/CustomAlert.js";
 
 class ConnectionManager {
   constructor() {}
@@ -16,7 +17,12 @@ class ConnectionManager {
       document.body.style.cursor = "default";
       return JSON.stringify(data);
     } catch (error) {
-      alert(error);
+      return (
+        <CustomAlert
+          show={true}
+          error={{ heading: "Error!", message: error }}
+        />
+      );
     }
     document.body.style.cursor = "default";
     return null;

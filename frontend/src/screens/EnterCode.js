@@ -6,10 +6,15 @@ import Card from "react-bootstrap/Card";
 import logo from "../images/logo-black.png";
 import Modal from "react-bootstrap/Modal";
 import { useNavigate } from "react-router-dom";
+import { Container } from "react-bootstrap";
+import CustomAlert from "./components/CustomAlert.js";
 
 function EnterCode(props) {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [error, setError] = useState({ message: "", heading: "" });
+
   const handleClose = () => {
     setShow(false);
     navigate("/" + Pages.DashboardUI);
@@ -57,7 +62,11 @@ function EnterCode(props) {
       }
 
       if (response.error) {
-        alert("Error occurred: " + response.message + "\n" + response.help);
+        setError({
+          message: response.help,
+          heading: response.message,
+        });
+        setShowAlert(true);
       } else if (response.status) {
         setShow(true);
         // alert("Success: " + response.message + "\n" + response.info);
@@ -81,57 +90,72 @@ function EnterCode(props) {
     } catch (error) {
       console.error("Error:", error);
     }
+    const handleClose = () => {
+      setShowAlert(false);
+    };
   };
-
   return (
     <>
-      <Card className="text-center" style={{ height: "100vh" }}>
-        <Card.Header>
-          {/* <div>
-                        <Button variant='primary' onClick={handleGoBack} className="btn btn-primary">Back</Button>
-
-                    </div> */}
-          {/* <div className="text-center"> */}
-          <img src={logo} style={{ width: "150px" }} alt="Logo" />
-          {/* </div> */}
-        </Card.Header>
-        <Card.Body
-          className="f-column justify-content-center align-items-center "
-          style={{ marginTop: "35px" }}
-        >
-          <Card.Title>
-            <h3>Activate your account</h3>
-          </Card.Title>
-          <Card.Text>
-            Please enter the 6-digit OTP we sent to your email
-          </Card.Text>
-          <OtpInput length={6} onOtpSubmit={onOtpSubmit} />
-        </Card.Body>
-        <Card.Footer
-          className="text-muted"
+      <Container fluid>
+        <Modal
+          size="md"
+          show={true}
+          centered
+          className="text-center"
           style={{
-            width: "100vw",
-
-            borderTop: "0",
-            backgroundColor: "transparent",
+            variant: "light",
           }}
         >
-          <div className="copyright">MechaMate © 2024</div>
-        </Card.Footer>
-      </Card>
-      <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Account activated</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          Welcome to MechaMate! Now you can use MechaMate features
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={handleClose}>
-            Continue
-          </Button>
-        </Modal.Footer>
-      </Modal>
+          <Modal.Header className="f-column justify-content-center ">
+            <img
+              src={logo}
+              style={{
+                width: "150px",
+              }}
+              alt="Logo"
+            />
+          </Modal.Header>
+
+          <Card.Body
+            className="f-column justify-content-center align-items-center "
+            style={{ height: "100%" }}
+          >
+            <Card.Title style={{ marginTop: "20px" }}>
+              <h3>Activate your account</h3>
+            </Card.Title>
+            <Card.Text>
+              Please enter the 6-digit OTP we sent to your email
+            </Card.Text>
+            <OtpInput length={6} onOtpSubmit={onOtpSubmit} />
+
+            <Button id="resend-otp-btn" variant="dark">
+              Resend OTP
+            </Button>
+          </Card.Body>
+          <Card.Footer
+            className="text-muted"
+            style={{
+              borderTop: "100px",
+              backgroundColor: "transparent",
+            }}
+          >
+            <div id="entercode-copyright">MechaMate © 2024</div>
+          </Card.Footer>
+        </Modal>
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Account activated</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Welcome to MechaMate! Now you can use MechaMate features
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="success">Continue</Button>
+          </Modal.Footer>
+        </Modal>
+
+        <CustomAlert show={showAlert} handleClose={handleClose} error={error} />
+      </Container>
     </>
   );
 }
