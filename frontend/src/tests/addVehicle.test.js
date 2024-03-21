@@ -6,7 +6,7 @@ async function myVehiclesTest() {
 
     try {
         // Navigate to the MyVehicles page
-        await driver.get('http://localhost:3000/my-vehicles');
+        await driver.get('http://localhost:3000/add-vehicles');
 
         // Find the input fields and enter values
         await driver.findElement(By.css('input[type="text"][placeholder="Toyota"]')).sendKeys('Toyota');

@@ -11,7 +11,7 @@ import ResetPassword from "./screens/ResetPassword.js";
 import Settings from "./screens/Settings.js";
 import Notifications from "./screens/Notifications.js";
 import AboutUs from "./screens/AboutUs.js";
-import MyVehicles from "./screens/MyVehicles.js";
+import AddVehicles from "./screens/AddVehicles.js";
 import PredictMaintenance from "./screens/PredictMaintenance.js";
 import ShowPredictions from "./screens/ShowPredictions.js";
 import TrackVehicle from "./screens/TrackVehicle.js";
@@ -110,7 +110,7 @@ function App() {
         element={<Notifications app={main} />}
       />
       <Route path={Pages.AboutUsUI} element={<AboutUs app={main} />} />
-      <Route path={Pages.MyVehiclesUI} element={<MyVehicles app={main} />} />
+      <Route path={Pages.AddVehiclesUI} element={<AddVehicles app={main} />} />
       <Route
         path={Pages.PredictMaintenanceUI}
         element={<PredictMaintenance app={main} />}

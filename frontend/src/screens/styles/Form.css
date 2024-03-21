@@ -8,4 +8,10 @@
     justify-content: center; /* Center content horizontally */
     flex-direction: column;
   }
+  .form-group {
+    margin-bottom: 20px; /* Add space below each form group */
+  }
   
+  .form-control {
+    margin-bottom: 10px; /* Add space below each form control */
+  }
