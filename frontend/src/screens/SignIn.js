@@ -169,7 +169,11 @@ function SignIn(props) {
             setErrors,
           }) => (
             <Form noValidate onSubmit={handleSubmit} id="signup-modal-form">
-              <Form.Group as={Col} md="12" hasValidation>
+              <Form.Group
+                as={Col}
+                md="12"
+                // hasValidation
+              >
                 <InputGroup>
                   <Form.Control
                     id="username-signin"
@@ -192,7 +196,7 @@ function SignIn(props) {
                 as={Col}
                 md="12"
                 controlId="validationFormikPassword"
-                hasValidation
+                // hasValidation
               >
                 {/* <Form.Label id="signup-password">Password</Form.Label> */}
                 <Form.Control

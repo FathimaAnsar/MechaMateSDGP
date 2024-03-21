@@ -45,10 +45,6 @@ function App() {
       ? window.location.pathname.substring(1)
       : Pages.GetStartedUI;
 
-
-
-
-
   if (!main.getUserProfile()) {
     if (
       main.currentPage != Pages.GetStartedUI &&
@@ -60,11 +56,20 @@ function App() {
       if (main.isFirstRunDone()) {
         if (main.isAppLoaded()) alert("Please sign in to continue!");
         main.currentPage = Pages.SignInUI;
-
-
+        return (
+          <>
+            <SignIn app={main} />
+            {/* <Navigate to={main.currentPage} /> */}
+          </>
+        );
       } else {
         main.currentPage = Pages.GetStartedUI;
-
+        return (
+          <>
+            <GetStarted app={main} />
+            {/* <Navigate to={main.currentPage} /> */}
+          </>
+        );
       }
     }
   } else {
@@ -73,8 +78,14 @@ function App() {
       main.currentPage === Pages.SignUpUI
     ) {
       main.currentPage = Pages.DashboardUI;
-
-
+      return (
+        <>
+          <Dashboard app={main} />
+          {/* <Navigate to={main.currentPage} /> */}
+        </>
+      );
+    } else if (main.currentPage === Pages.SignInUI) {
+      //
     }
   }
 
@@ -102,7 +113,10 @@ function App() {
           element={<Notifications app={main} />}
         />
         <Route path={Pages.AboutUsUI} element={<AboutUs app={main} />} />
-        <Route path={Pages.AddVehiclesUI} element={<AddVehicles app={main} />} />
+        <Route
+          path={Pages.AddVehiclesUI}
+          element={<AddVehicles app={main} />}
+        />
         <Route
           path={Pages.PredictMaintenanceUI}
           element={<PredictMaintenance app={main} />}
@@ -153,7 +167,6 @@ function App() {
         <Route path="/payment-cancelled" element={<PaymentCancelled />} />
         <Route path="*" element={<Dashboard app={main} />} />
       </Routes>
-      <Navigate to={main.currentPage} />
     </div>
   );
 }
