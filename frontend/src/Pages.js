@@ -17,7 +17,7 @@ export const Pages = {
 
   AboutUsUI: "about-us", //
 
-  MyVehiclesUI: "my-vehicles", //
+  AddVehiclesUI: "add-vehicles", //
 
   PredictMaintenanceUI: "predict-maintenance", //
   ShowPredictionsUI: "show-predictions", //

@@ -59,7 +59,7 @@ function Settings(props) {
        <Form.Control type="text" value={lastName} onChange={handleLastNameChange} />
      </Form.Group>
      <Form.Group controlId="theme">
-       <Form.Label>Theme:</Form.Label>
+       <Form.Label>Theme:  .</Form.Label>
        <ToggleThemeButton />
      </Form.Group>
      <Form.Group controlId="language">

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Header from "./components/Header";
+import Header from "./components/Header.js";
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import DatePicker from "react-datepicker"; 
@@ -8,7 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
 import './styles/Form.css';
 import { API_BASE_URL } from "../Common.js";
-
+import ConnectionManager from "../services/ConnectionManager";
 
 
 
@@ -21,8 +21,41 @@ function MyVehicles(props) {
   const [regExpDate, setRegExpDate] = useState(new Date());
   const [insNo, setInsNo] = useState(null);
   const [insExpDate, setInsExpDate] = useState(new Date());
-
-
+ 
+  // const connection = new ConnectionManager();
+  // async function addVehicle(event) {
+  //   event.preventDefault();
+  
+  //   const requestBody = {
+  //     registrationNumber: registrationNumber,
+  //     vehicleType: vehicleType,
+  //     fuelType: fuelType,
+  //     vehicleMake: vehicleMake,
+  //     vehicleModel: vehicleModel,
+  //     insNo: insNo,
+  //     insExpDate: insExpDate,
+  //     regExpDate: regExpDate
+  //   };
+  
+  //   try {
+  //     const response = await connection.addVehicle(requestBody);
+  
+  //     // Check if response is successful (status code 2xx)
+  //     if (response) {
+  //       alert(`Vehicle Registration Successful: ${JSON.stringify(response)}`);
+  //       // Clear input fields after successful registration
+  //       clearInputFields();
+  //       return response; // Returning data might be useful if you need it elsewhere
+  //     } else {
+  //       throw new Error('Failed to register vehicle'); // Throw an error if response is null
+  //     }
+  //   } catch (error) {
+  //     alert("Vehicle registration failed:");
+  //     console.error('Error registering vehicle:', error);
+  //   }
+  // }
+//----------------------------------------------------------------
+  
   async function addVehicle(event) {
     event.preventDefault();
 
@@ -44,19 +77,19 @@ function MyVehicles(props) {
             },
             withCredentials: true // Use withCredentials instead of credentials
         });
-
         // Check if response is successful (status code 2xx)
         if (response.status >= 200 && response.status < 300) {
-            const data = response.data;
-            alert("Vehicle Registration Successful");
+            const responseData = response.data;
+            const message = responseData.message;
+            alert(`Registration Status: ${message}`);
             // Clear input fields after successful registration
             clearInputFields();
-            return data; // Returning data might be useful if you need it elsewhere
+            return responseData; // Returning data might be useful if you need it elsewhere
         } else {
             throw new Error('Failed to register vehicle'); // Throw an error if response status is not in the success range
         }
     } catch (error) {
-        alert("Vehicle Registration Failed");
+        alert("Vehicle registration failed");
         console.error('Error registering vehicle:', error);
     }
 }
@@ -72,9 +105,6 @@ function clearInputFields() {
     setInsExpDate("");
     setRegExpDate("");
 }
-
-
-
   return (
     <div>
     <Header app ={props.app}/>

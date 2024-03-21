@@ -98,7 +98,7 @@ function Header(props) {
             <Button
               variant="light"
               onClick={() => {
-                navigate("/" + Pages.MyVehiclesUI);
+                navigate("/" + Pages.AddVehiclesUI);
               }}
             >
               Add Vehicle
