@@ -42,7 +42,7 @@ function App() {
   const { theme } = useContext(ThemeContext);
   main.currentPage = window.location.pathname.length > 1 ? window.location.pathname.substring(1) : Pages.GetStartedUI;
   if (!main.getUserProfile()) {
-    if (main.currentPage != Pages.GetStartedUI && main.currentPage != Pages.SignInUI && main.currentPage != Pages.SignUpUI && main.currentPage != Pages.ForgotPasswordUI && main.currentPage != Pages.EnterCodeUI) {
+    if ((main.currentPage != Pages.GetStartedUI && main.currentPage != Pages.SignInUI && main.currentPage != Pages.SignUpUI && main.currentPage != Pages.ForgotPasswordUI && main.currentPage != Pages.EnterCodeUI) || window.location.pathname.length < 2) {
       if (main.isFirstRunDone()) {
         if (main.isAppLoaded()) alert("Please sign in to continue!");
         main.currentPage = Pages.SignInUI;
@@ -53,10 +53,6 @@ function App() {
         window.location.href = "/" + main.currentPage;
         return(<></>);
       }
-    } else if(window.location.pathname.length < 2) {
-      main.currentPage = Pages.SignInUI;
-      window.location.href = "/" + main.currentPage;
-      return(<></>);
     }
   } else {
     if (main.currentPage === Pages.GetStartedUI || main.currentPage === Pages.SignUpUI) {
@@ -68,6 +64,9 @@ function App() {
     }
   }
 
+
+
+  
   if (!main.isAppLoaded()) main.setAppLoaded(true);
 
   return (
