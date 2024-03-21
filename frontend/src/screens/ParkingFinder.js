@@ -35,7 +35,7 @@ function ParkingFinder(props) {
       .catch((exp) => {
         displayAlert(exp.message || "Failed to get location information");
         //props.app.changePage(Pages.DashboardUI);
-        navigate(Pages.DashboardUI);
+        navigate("/" + Pages.DashboardUI);
       });
   }, [props.app]);
 
