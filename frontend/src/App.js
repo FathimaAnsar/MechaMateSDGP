@@ -53,6 +53,10 @@ function App() {
         window.location.href = "/" + main.currentPage;
         return(<></>);
       }
+    } else if(window.location.pathname.length < 2) {
+      main.currentPage = Pages.SignInUI;
+      window.location.href = "/" + main.currentPage;
+      return(<></>);
     }
   } else {
     if (main.currentPage === Pages.GetStartedUI || main.currentPage === Pages.SignUpUI) {
