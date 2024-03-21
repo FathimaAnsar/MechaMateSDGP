@@ -25,10 +25,10 @@ function ManageDocuments(props) {
   }
 
   if (response.error) {
-   console.log("11111111111111111111111111111111111111")
+    
     
   } else if (response.url) {
-    console.log("222222222222222222222")
+    
     // Navigate to QR UI page and pass the QR URL as a parameter
     navigate("/" + Pages.QrUI,{state:{qrurl:response.url}});
 
