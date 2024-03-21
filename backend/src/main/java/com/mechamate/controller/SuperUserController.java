@@ -279,10 +279,13 @@ public class SuperUserController {
 
 
     @PostMapping("/process-payment")
-    public RedirectView processPayment(@RequestBody PaymentInfoDTO paymentInfoDTO) throws NoSuchAlgorithmException {
+    public RedirectView processPayment(@RequestBody PaymentInfoDTO paymentInfoDTO) {
         DecimalFormat df = new DecimalFormat("0.00");
         String amountFormatted = df.format(Double.parseDouble(paymentInfoDTO.getAmount()));
-        String hash = getMd5(merchantId + paymentInfoDTO.getOrderId() + amountFormatted + paymentInfoDTO.getCurrency() + "2" + getMd5(merchantSecret).toUpperCase()).toUpperCase();
+        String hash = "";
+        try {
+            hash = getMd5(merchantId + paymentInfoDTO.getOrderId() + amountFormatted + paymentInfoDTO.getCurrency() + "2" + getMd5(merchantSecret).toUpperCase()).toUpperCase();
+        } catch(Exception ignore) {}
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("https://sandbox.payhere.lk/pay/checkout")
                 .queryParam("merchant_id", merchantId)
@@ -322,7 +325,7 @@ public class SuperUserController {
         if (isProcessed) {
             return ResponseEntity.ok().build();
         } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing payment notification");
+            return ResponseEntity.status(HttpStatus.OK).body("Error processing payment notification");
         }
     }
 

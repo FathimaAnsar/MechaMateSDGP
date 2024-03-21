@@ -21,10 +21,7 @@ public class Maintenance {
         BrakeCaliperChange,
         CoolantChange,
         TireChange,
-        PistonRingsChange,
-        PistonChange,
-        DieselFilterChange,
-        VipersChange
+        PistonChange
     }
 
     // MongoDB ID field
