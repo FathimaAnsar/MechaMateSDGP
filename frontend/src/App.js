@@ -34,7 +34,6 @@ import PaymentSuccess from "./screens/PaymentSuccess";
 import PaymentCancelled from "./screens/PaymentCancelled";
 import "./styles/App.css";
 import QrPage from "./screens/QrUi.js";
-import NotFound from "./NotFound.js";
 
 // main.reset();
 

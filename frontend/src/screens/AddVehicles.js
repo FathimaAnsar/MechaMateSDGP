@@ -8,7 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
 import './styles/Form.css';
 import { API_BASE_URL } from "../Common.js";
-import ConnectionManager from "../services/ConnectionManager";
+//import ConnectionManager from "../services/ConnectionManager";
 
 
 
