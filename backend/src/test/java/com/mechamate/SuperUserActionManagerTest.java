@@ -6,7 +6,7 @@
 //import com.mechamate.service.*;
 //import org.bson.types.ObjectId;
 //import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.com.mechamate.Test;
 //import org.mockito.InjectMocks;
 //import org.mockito.Mock;
 //import org.mockito.MockitoAnnotations;
@@ -38,7 +38,7 @@
 //        MockitoAnnotations.openMocks(this);
 //    }
 //
-//    @Test
+//    @com.mechamate.Test
 //    void testAddMaintenance_withExistingMaintenance_returnsErrorDTO() {
 //
 //        Maintenance maintenance = new Maintenance();
@@ -56,7 +56,7 @@
 //        assertEquals(ErrorDTO.ErrorStatus.ErrorInvalidRequest, response.getBody().getError());
 //
 //    }
-//    @Test
+//    @com.mechamate.Test
 //    void testDeletePredictionModel_withExistingModel_returnsNull() {
 //        PredictionModel predictionModel = new PredictionModel();
 //        predictionModel.set_id(new ObjectId());
