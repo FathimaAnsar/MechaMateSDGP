@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class CacheManager {
-    private static final Logger logger = LoggerFactory.getLogger(MechaMate.class);
+    private static final Logger logger = LoggerFactory.getLogger(CacheManager.class);
     private final ConcurrentHashMap<String, UserProfile> userProfileCache = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, Session> sessionCache = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, Vehicle> vehicleCache = new ConcurrentHashMap<>();
