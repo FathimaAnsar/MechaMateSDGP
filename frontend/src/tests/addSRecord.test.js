@@ -15,7 +15,8 @@ async function testAddServiceRecord() {
         await driver.findElement(By.id('mileage')).sendKeys('50000');
 
         // Submit the form
-        await driver.findElement(By.tagName('button')).click();
+        await driver.findElement(By.xpath('//button')).click();
+
 
         // Wait for success alert
         await driver.wait(until.elementLocated(By.xpath('//div[contains(text(), "Service Record Added Successfully")]')), 5000);
