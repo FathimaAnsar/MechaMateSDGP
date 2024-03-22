@@ -209,7 +209,8 @@
     background-color: white;
 }
 
-.login-footer .copyright {
+.login-footer .copyright,
+#entercode-copyright {
     font-size: 9pt;
     color: #7a7a7a;
     margin: 3px 0 5px 0;
@@ -217,21 +218,25 @@
 }
 
 .otpInput {
-    width: 35px;
+    width: 37px;
     height: 40px;
-    margin: 7px;
+    margin: 4px;
     text-align: center;
     font-size: 1em;
     border-radius: 8px;
-    border: #7a7a7a 1px solid;
+    border: #737373e1 1px solid;
   }
 
 .otpInput:focus {
-    outline: none;
     border: #0750be 2px solid;
-
 }
 
+#resend-otp-btn{
+    margin: 16px 0 17px 0;
+    border-radius: 30px;
+    font-size: 13px;
+    padding: 6px 20px ;
+}
 
 
 
@@ -270,20 +275,9 @@
 }
 
 
-
-
-.form-check-label {
-    font-size: 14px;
-    color: 'grey';
-}
-
 #inputGroupPrepend{
     height: auto;
     
-}
-
-#inputGroupUsername{
-    border-radius: 0 5px 5px 0;
 }
 
 #signup-heading-text{
@@ -300,4 +294,8 @@
     /* color: rgb(113, 113, 113); */
         font-weight: 400;
         font-size: 15px;
+       padding: 10px;
+       border-radius: 10px;
+        
 }
+

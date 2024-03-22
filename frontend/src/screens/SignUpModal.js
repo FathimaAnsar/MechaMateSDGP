@@ -20,7 +20,7 @@ function SignUpModal(props) {
   const connection = new ConnectionManager();
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     setLoading(true);
     try {
       const resp = await connection.signup(
@@ -41,20 +41,23 @@ function SignUpModal(props) {
       }
 
       if (response.error) {
-        alert("Error occurred: " + response.message + "\n" + response.help);
+        if (response.error == "ErrorUserExists") {
+          setErrors({ username: "This username is already taken" });
+        } else if (response.error == "ErrorEmailExists") {
+          setErrors({ email: "Email is already in use" });
+        }
       } else if (response.status) {
         props.app.setFirstRunDone(true);
-        // alert("Success: " + response.message + "\n" + response.info);
         navigate("/" + Pages.EnterCodeUI);
+        props.onHide();
       } else {
-        alert("Error: Unknown");
+        console.log(response.error);
       }
       props.app.setFirstRunDone(true);
       console.log("Success: " + response.message + "\n" + response.info);
 
       const uProf = await connection.getUserProfile();
       const userProfile = JSON.parse(uProf);
-      props.onHide();
     } catch (error) {
       console.error("Signup failed:", error);
     }
@@ -62,16 +65,49 @@ function SignUpModal(props) {
   };
 
   const schema = yup.object().shape({
-    firstName: yup.string().required(),
-    lastName: yup.string().required(),
-    username: yup.string().required(),
-    password: yup.string().required(),
+    firstName: yup
+      .string()
+      .required("First name is required")
+      .matches("^[a-zA-Z]*$", "Invalid Username"),
+    lastName: yup
+      .string()
+      .required("Lastname is required")
+      .matches("^[a-zA-Z]*$", "Invalid Lastname"),
+    username: yup
+      .string()
+      .required("Username is required")
+      .matches(
+        "^(?=.{5,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$",
+        "Invalid Username"
+      ),
+    password: yup
+      .string()
+      .required("Password is required")
+      .matches(
+        "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#!)(|}{?><,/.:;\"'$%^&+=])(?=\\S+$).{6,}$",
+        "Invalid Password!"
+      ),
+
     confirmpassword: yup
       .string()
-      .required()
+      .required("Required field")
       .oneOf([yup.ref("password"), null], "Passwords must match"),
-    email: yup.string().email().required(),
-    telephone: yup.string().required().min(9),
+    email: yup
+      .string()
+      .email()
+      .required("Email is required")
+      .matches(
+        "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}(?:\\.[a-zA-Z]{2,})?$",
+        "Invalid Email!"
+      ),
+    telephone: yup
+      .string()
+      .required("Telephone is required")
+      .matches(
+        "\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}",
+        "Invalid telephone number!"
+      ),
+
     terms: yup.boolean().oneOf([true], "Terms must be accepted").required(),
   });
 
@@ -105,10 +141,17 @@ function SignUpModal(props) {
             terms: false,
           }}
         >
-          {({ handleSubmit, handleChange, values, touched, errors }) => (
+          {({
+            handleSubmit,
+            handleChange,
+            values,
+            touched,
+            errors,
+            setErrors,
+          }) => (
             <Form noValidate onSubmit={handleSubmit} id="signup-modal-form">
               <Row className="mb-3 g-3">
-                <Form.Group as={Col} md="6" hasValidation>
+                <Form.Group as={Col} sm="6" hasValidation>
                   <Form.Control
                     type="text"
                     name="firstName"
@@ -123,7 +166,7 @@ function SignUpModal(props) {
                     First name is a required field
                   </Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group as={Col} md="6" hasValidation>
+                <Form.Group as={Col} sm="6" hasValidation>
                   {/* <Form.Label id="signup-lname">Last name</Form.Label> */}
                   <Form.Control
                     placeholder="Last Name"
@@ -144,8 +187,14 @@ function SignUpModal(props) {
                 <Form.Group as={Col} md="12" hasValidation>
                   {/* <Form.Label id="signup-username">Username</Form.Label> */}
                   <InputGroup>
-                    <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
+                    <InputGroup.Text
+                      id="inputGroupPrepend"
+                      style={{ borderRadius: "10px 0 0 10px" }}
+                    >
+                      @
+                    </InputGroup.Text>
                     <Form.Control
+                      style={{ borderRadius: "0 10px 10px 0" }}
                       id="inputGroupUsername"
                       type="text"
                       placeholder="Username"
@@ -165,7 +214,7 @@ function SignUpModal(props) {
               <Row className="mb-3 g-3">
                 <Form.Group
                   as={Col}
-                  md="6"
+                  sm="6"
                   controlId="validationFormikPassword"
                   hasValidation
                 >
@@ -185,7 +234,7 @@ function SignUpModal(props) {
                 </Form.Group>
                 <Form.Group
                   as={Col}
-                  md="6"
+                  sm="6"
                   controlId="validationFormikConfirmPassword"
                   hasValidation
                 >
@@ -211,7 +260,7 @@ function SignUpModal(props) {
               <Row className="mb-3 g-3">
                 <Form.Group
                   as={Col}
-                  md="6"
+                  sm="6"
                   controlId="validationFormikEmail"
                   hasValidation
                 >
@@ -231,7 +280,7 @@ function SignUpModal(props) {
                 </Form.Group>
                 <Form.Group
                   as={Col}
-                  md="6"
+                  sm="6"
                   controlId="validationFormikTelephone"
                   hasValidation
                 >

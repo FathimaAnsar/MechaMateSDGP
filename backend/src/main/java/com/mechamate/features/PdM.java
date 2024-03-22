@@ -1,18 +1,19 @@
 package com.mechamate.features;
 
+import com.mechamate.common.Validation;
 import com.mechamate.dto.ErrorDTO;
-import com.mechamate.entity.Maintenance;
-import com.mechamate.entity.PredictionModel;
-import com.mechamate.entity.UserProfile;
-import com.mechamate.entity.Vehicle;
+import com.mechamate.entity.*;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -50,6 +51,35 @@ public class PdM {
     }
 
 
+    public ArrayList<ServiceRecord> getServiceRecordsFiltered(Maintenance.MaintenanceType maintenanceType,
+                                                       String vehicleRegNo) {
+        return null;
+    }
+
+    public ArrayList<PredictionModel> getFilteredPredictionModels(Maintenance.MaintenanceType maintenanceType) {
+        return null;
+    }
+
+    public ArrayList<TrackingInfo> collectTrackingData(Maintenance.MaintenanceType maintenanceType) {
+        return null;
+    }
+
+    public double processPrediction(ArrayList<PredictionModel> predictionModels,
+                                               ArrayList<TrackingInfo> trackingInfos,
+                                               ArrayList<ServiceRecord> serviceRecords) {
+
+
+        return 0.0;
+    }
+
+
+
+    // 1. Filter service records of vehicle by maintenance
+    // 2. Filter prediction models by maintenance
+    // 3. Collect tracking data by vehicle reg no
+    // 4. Loop through tracking data and calculate the predicted output recursively using trained prediction models
+    // 5. Find the difference between the last maintenance KMs against current KMs. (ie: (givenKMs - predictedKMs) )
+    // 6. return the predicted output
 
 
 

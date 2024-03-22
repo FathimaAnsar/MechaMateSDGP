@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { main } from "./MechaMate.js";
 import { Pages } from "./Pages.js";
 import GetStarted from "./screens/GetStarted.js";
@@ -29,7 +29,7 @@ import AddSRecords from "./screens/AddSRecords.js";
 import ParkingFinder from "./screens/ParkingFinder.js";
 import ThemeContext from "./screens/components/ThemeContext.js";
 import ViewVehicle from "./screens/ViewVehicle.js";
-import {  Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import PaymentSuccess from "./screens/PaymentSuccess";
 import PaymentCancelled from "./screens/PaymentCancelled";
 import "./styles/App.css";
@@ -39,127 +39,109 @@ import QrPage from "./screens/QrUi.js";
 
 function App() {
   const { theme } = useContext(ThemeContext);
-  main.currentPage =
-    window.location.pathname.length > 1
-      ? window.location.pathname.substring(1)
-      : Pages.GetStartedUI;
-
+  main.currentPage = window.location.pathname.length > 1 ? window.location.pathname.substring(1) : Pages.GetStartedUI;
   if (!main.getUserProfile()) {
-    if (
-      main.currentPage != Pages.GetStartedUI &&
-      main.currentPage != Pages.SignInUI &&
-      main.currentPage != Pages.SignUpUI &&
-      main.currentPage != Pages.ForgotPasswordUI &&
-      main.currentPage != Pages.EnterCodeUI
-    ) {
+    if ((main.currentPage != Pages.GetStartedUI && main.currentPage != Pages.SignInUI && main.currentPage != Pages.SignUpUI && main.currentPage != Pages.ForgotPasswordUI && main.currentPage != Pages.EnterCodeUI) || window.location.pathname.length < 2) {
       if (main.isFirstRunDone()) {
         if (main.isAppLoaded()) alert("Please sign in to continue!");
         main.currentPage = Pages.SignInUI;
-        return (
-          <>
-            <Navigate to={main.currentPage} />
-          </>
-        );
+        window.location.href = "/" + main.currentPage;
+        return(<></>);
       } else {
         main.currentPage = Pages.GetStartedUI;
-        return (
-          <>
-            <Navigate to={main.currentPage} />
-          </>
-        );
+        window.location.href = "/" + main.currentPage;
+        return(<></>);
       }
     }
   } else {
-    if (
-      main.currentPage === Pages.GetStartedUI ||
-      main.currentPage === Pages.SignUpUI
-    ) {
+    if (main.currentPage === Pages.GetStartedUI || main.currentPage === Pages.SignUpUI) {
       main.currentPage = Pages.DashboardUI;
-      return (
-        <>
-          <Navigate to={main.currentPage} />
-        </>
-      );
-    } else if (main.currentPage === Pages.SignInUI) {
+      window.location.href = "/" + main.currentPage;
+      return(<></>);
+  } else if (main.currentPage === Pages.SignInUI) {
       //
     }
   }
 
+
+
+  
   if (!main.isAppLoaded()) main.setAppLoaded(true);
 
   return (
     <div className={`App ${theme}`}>
-    <Routes>
-      <Route path={Pages.GetStartedUI} element={<GetStarted app={main} />} />
-      <Route path={Pages.SignInUI} element={<SignIn app={main} />} />
-      <Route path={Pages.SignUpUI} element={<SignUp app={main} />} />
-      <Route path={Pages.EnterCodeUI} element={<EnterCode app={main} />} />
-      <Route
-        path={Pages.ForgotPasswordUI}
-        element={<ForgotPassword app={main} />}
-      />
-      <Route
-        path={Pages.ResetPasswordUI}
-        element={<ResetPassword app={main} />}
-      />
-      <Route path={Pages.DashboardUI} element={<Dashboard app={main} />} />
-      <Route path={Pages.SettingsUI} element={<Settings app={main} />} />
-      <Route
-        path={Pages.NotificationsUI}
-        element={<Notifications app={main} />}
-      />
-      <Route path={Pages.AboutUsUI} element={<AboutUs app={main} />} />
-      <Route path={Pages.AddVehiclesUI} element={<AddVehicles app={main} />} />
-      <Route
-        path={Pages.PredictMaintenanceUI}
-        element={<PredictMaintenance app={main} />}
-      />
-      <Route
-        path={Pages.ShowPredictionsUI}
-        element={<ShowPredictions app={main} />}
-      />
-      <Route
-        path={Pages.TrackVehicleUI}
-        element={<TrackVehicle app={main} />}
-      />
-      <Route
-        path={Pages.ShowPredictionsUI}
-        element={<ShowPredictions app={main} />}
-      />
-      <Route
-        path={Pages.AutoMobSearchUI}
-        element={<AutoMobSearch app={main} />}
-      />
-      <Route
-        path={Pages.EmergencyAssistUI}
-        element={<EmergencyAssist app={main} />}
-      />
-      <Route
-        path={Pages.BreakdownAssistUI}
-        element={<BreakdownAssist app={main} />}
-      />
-      <Route
-        path={Pages.ManageDocumentsUI}
-        element={<ManageDocuments app={main} />}
-      />
-      <Route
-        path={Pages.AddSRecordManualUI}
-        element={<AddSRecords app={main} />}
-      />
-      <Route
-        path={Pages.ParkingFinderUI}
-        element={<ParkingFinder app={main} />}
-      />
-      <Route path={Pages.QrUI} element={<QrPage app={main} />} />
-      <Route path={Pages.ViewVehicle} element={<ViewVehicle app={main} />} />
-      <Route path={Pages.PrivacyPolicyUI} element={<PrivacyPolicy />} />
-      <Route path={Pages.CookiesPolicyUI} element={<CookiesPolicy />} />
-      <Route path={Pages.TermsUI} element={<Terms />} />
-      {/*these two for testing payhere*/}
-      <Route path="/payment-success" element={<PaymentSuccess />} />
-      <Route path="/payment-cancelled" element={<PaymentCancelled />} />
-      <Route path="*" element={<Dashboard app={main} />} />
-    </Routes>
+      <Routes>
+        <Route path={Pages.GetStartedUI} element={<GetStarted app={main} />} />
+        <Route path={Pages.SignInUI} element={<SignIn app={main} />} />
+        <Route path={Pages.SignUpUI} element={<SignUp app={main} />} />
+        <Route path={Pages.EnterCodeUI} element={<EnterCode app={main} />} />
+        <Route
+          path={Pages.ForgotPasswordUI}
+          element={<ForgotPassword app={main} />}
+        />
+        <Route
+          path={Pages.ResetPasswordUI}
+          element={<ResetPassword app={main} />}
+        />
+        <Route path={Pages.DashboardUI} element={<Dashboard app={main} />} />
+        <Route path={Pages.SettingsUI} element={<Settings app={main} />} />
+        <Route
+          path={Pages.NotificationsUI}
+          element={<Notifications app={main} />}
+        />
+        <Route path={Pages.AboutUsUI} element={<AboutUs app={main} />} />
+        <Route
+          path={Pages.AddVehiclesUI}
+          element={<AddVehicles app={main} />}
+        />
+        <Route
+          path={Pages.PredictMaintenanceUI}
+          element={<PredictMaintenance app={main} />}
+        />
+        <Route
+          path={Pages.ShowPredictionsUI}
+          element={<ShowPredictions app={main} />}
+        />
+        <Route
+          path={Pages.TrackVehicleUI}
+          element={<TrackVehicle app={main} />}
+        />
+        <Route
+          path={Pages.ShowPredictionsUI}
+          element={<ShowPredictions app={main} />}
+        />
+        <Route
+          path={Pages.AutoMobSearchUI}
+          element={<AutoMobSearch app={main} />}
+        />
+        <Route
+          path={Pages.EmergencyAssistUI}
+          element={<EmergencyAssist app={main} />}
+        />
+        <Route
+          path={Pages.BreakdownAssistUI}
+          element={<BreakdownAssist app={main} />}
+        />
+        <Route
+          path={Pages.ManageDocumentsUI}
+          element={<ManageDocuments app={main} />}
+        />
+        <Route
+          path={Pages.AddSRecordManualUI}
+          element={<AddSRecords app={main} />}
+        />
+        <Route
+          path={Pages.ParkingFinderUI}
+          element={<ParkingFinder app={main} />}
+        />
+        <Route path={Pages.QrUI} element={<QrPage app={main} />} />
+        <Route path={Pages.ViewVehicle} element={<ViewVehicle app={main} />} />
+        <Route path={Pages.PrivacyPolicyUI} element={<PrivacyPolicy />} />
+        <Route path={Pages.CookiesPolicyUI} element={<CookiesPolicy />} />
+        <Route path={Pages.TermsUI} element={<Terms />} />
+        {/*these two for testing payhere*/}
+        <Route path="*" element={<Dashboard app={main} />} />
+      </Routes>
     </div>
   );
 }

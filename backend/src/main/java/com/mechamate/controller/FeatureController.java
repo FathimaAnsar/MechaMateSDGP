@@ -16,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/features")
@@ -235,7 +237,7 @@ public class FeatureController {
 
 
 
-    @GetMapping("/get-predicted-output")
+    @GetMapping("/get-maintenance-prediction")
     public ResponseEntity<?> getPredictedOutput(HttpServletRequest request, HttpServletResponse response,
                                                      @RequestParam(required = false) Maintenance.MaintenanceType maintenanceType,
                                                      @RequestParam(required = false) String vehicleRegNo) {
@@ -247,6 +249,18 @@ public class FeatureController {
         ResponseEntity<ErrorDTO> resp = Validation.validateVehicleRegNo(vehicleRegNo.trim().toUpperCase(),
                 lang, request.getSession());
         if(resp != null) return resp;
+
+
+
+
+        // 1. Filter service records of vehicle by maintenance
+        // 2. Filter prediction models by maintenance
+        // 3. Collect tracking data by vehicle reg no
+        // 4. Loop through tracking data and calculate the predicted output recursively using trained prediction models
+        // 5. Find the difference between the last maintenance KMs against current KMs. (ie: (givenKMs - predictedKMs) )
+        // 6. return the predicted output
+
+
 
         if(maintenanceType == null)
             return new ResponseEntity<>
@@ -260,17 +274,18 @@ public class FeatureController {
     }
 
 
-
-
     @GetMapping("/get-service-record-qr")
     public ResponseEntity<?> getPredictedOutput(HttpServletRequest request, HttpServletResponse response) {
         Object obj = Validation.authenticate(request, response, sessionManager, lang);
         if(!(obj instanceof UserProfile)) return (ResponseEntity<ErrorDTO>) (obj);
         UserProfile userProfile = (UserProfile) obj;
 
+        Map<String, Object> responseObject = new HashMap<>();
+        responseObject.put("url", "https://mechamate.site/add-service-record?key=ab5ca5bfa28aeadc8791eb46daec17b52eaa6712fe4322ec96aef0bab31b6540");
+
         //if(maintenanceType == null)
             return new ResponseEntity<>
-                    (new String("{ \"url\": \"https://mechamate.site/add-service-record?key=ab5ca5bfa28aeadc8791eb46daec17b52eaa6712fe4322ec96aef0bab31b6540\" }"),
+                    (responseObject,
                             HttpStatus.OK);
 
 //        return null;
@@ -279,5 +294,3 @@ public class FeatureController {
 
 
 }
-
-

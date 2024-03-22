@@ -12,6 +12,7 @@ import ConnectionManager from "../services/ConnectionManager";
 import { Pages } from "../Pages";
 import Header from "./components/Header";
 import "./styles/ParkingFinder.css";
+import { useNavigate } from "react-router-dom";
 
 function ParkingFinder(props) {
   const [currentLocation, setCurrentLocation] = useState(null);
@@ -22,6 +23,9 @@ function ParkingFinder(props) {
   const [selectedMapUri, setSelectedMapUri] = useState("");
   const [expandedInfo, setExpandedInfo] = useState({});
 
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     props.app
       .getCurrentLocation()
@@ -30,7 +34,8 @@ function ParkingFinder(props) {
       })
       .catch((exp) => {
         displayAlert(exp.message || "Failed to get location information");
-        props.app.changePage(Pages.DashboardUI);
+        //props.app.changePage(Pages.DashboardUI);
+        navigate("/" + Pages.DashboardUI);
       });
   }, [props.app]);
 

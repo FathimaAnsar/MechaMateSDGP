@@ -8,31 +8,25 @@ function ManageDocuments(props) {
 
   const navigate = useNavigate();
 
- 
-  
-
   const handleQRButtonClick = async () => {
 
-    let connection = new ConnectionManager();
+  let connection = new ConnectionManager();
 
-  const resp =  connection.getRequestForQR( );
+  const resp =  await connection.getRequestForQR();
   const response = JSON.parse(resp);
 
   if (!response) {
-    
     alert("Please check your springboot localhost is running");
     return;
   }
 
   if (response.error) {
-   console.log("11111111111111111111111111111111111111")
-    
+
   } else if (response.url) {
-    console.log("222222222222222222222")
+
     // Navigate to QR UI page and pass the QR URL as a parameter
     navigate("/" + Pages.QrUI,{state:{qrurl:response.url}});
 
-    
   } else {
     alert("Error: Unknown");
   }
@@ -44,7 +38,7 @@ function ManageDocuments(props) {
       <Header app ={props.app}/>
       <h2>Manage Documents</h2>
       {/* Button to add service record manually */}
-      <button onClick={() =>{props.app.changePage(Pages.AddSRecordManualUI)}}>Add Service Record Manually</button>
+      <button onClick={() =>{ navigate("/" + Pages.AddSRecordManualUI)}}>Add Service Record Manually</button>
       {/* Button to add service record with a QR code */}
       <button onClick={handleQRButtonClick}>Add Service Record by QR Code</button>
     </div>
