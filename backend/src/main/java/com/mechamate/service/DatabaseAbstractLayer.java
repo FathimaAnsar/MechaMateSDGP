@@ -20,10 +20,10 @@ import java.util.Optional;
 
 @Service
 public class DatabaseAbstractLayer {
-    private static final Logger logger = LoggerFactory.getLogger(MechaMate.class);
+    private static final Logger logger = LoggerFactory.getLogger(DatabaseAbstractLayer.class);
 
     @Autowired
-    private  CacheManager cacheManager;
+    private CacheManager cacheManager;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -52,23 +52,6 @@ public class DatabaseAbstractLayer {
     @Autowired
     private TrackingInfoRepo trackingInfoRepo;
 
-
-
-
-        /*
-    USERPROFILE SECTION
-        */
-
-    public boolean isUserExists(String username) {
-        return userProfileRepo.existsByUsername(username);
-    }
-    public boolean isEmailExists(String email) {
-        return userProfileRepo.existsByEmail(email);
-    }
-    public boolean isRecoveryKeyExists(String key) {
-        return userProfileRepo.existsByRecoveryKey(key);
-    }
-
 //    public UserProfile getUserProfileDTO(UserProfile userProfile) {
 //        try {
 //            if(userProfile == null) return null;
@@ -85,17 +68,38 @@ public class DatabaseAbstractLayer {
 //        return null;
 //    }
 
+        /*
+    USERPROFILE SECTION
+        */
 
-// user profiles
+    public boolean isUserExists(String username) {
+        boolean exists = false;
+        if (username == null || username.isEmpty()) {
+            logger.warn("isUserExists called with null or empty username");
+            return exists;
+        }
+        try {
+            if (cacheManager.isUserExistInCache(username)) {
+                logger.info("found userprofile in cache for user name for {}", username);
+                exists = true;
+            } else {
+                exists = userProfileRepo.existsByUsername(username);
+                logger.info("user existence for {},", username);
+            }
+        } catch (Exception e) {
+            logger.error("exception occurred while checking UserProfile for username: {}. Exception: {}", username, e.toString());
+        }
+        return exists;
+    }
 
     public boolean addUserProfile(UserProfile userProfile) {
         try {
             if (userProfile == null) {
-                logger.warn("Attempted to add a null UserProfile.");
+                logger.warn("try to attempted to add a null UserProfile.");
                 return false;
             }
             if (isUserExists(userProfile.getUsername())) {
-                logger.info("Attempted to add a UserProfile for an existing user: {}. Operation aborted.", userProfile.getUsername());
+                logger.info("Attempted to add a UserProfile for an existing user: {}. Operation aborted", userProfile.getUsername());
                 return false;
             }
             userProfileRepo.save(userProfile);
@@ -133,9 +137,87 @@ public class DatabaseAbstractLayer {
                 return null;
             }
         } catch (Exception e) {
-            logger.error("exception occurred while retrieving UserProfile for username: {}. Exception: {}", username, e.toString());
+            logger.error("exception occurred while retrieving UserProfile for username: {} Exception: {}", username, e.toString());
             return null;
         }
+    }
+
+    public boolean updateUserProfile(UserProfile userProfile) {
+        if (userProfile == null) {
+            return false;
+        }
+        if (!isUserExists(userProfile.getUsername())) {
+            return false;
+        }
+        try {
+            cacheManager.deleteFromUserProfileCache(userProfile.getUsername());
+            userProfileRepo.save(userProfile);
+            cacheManager.putInUserProfileCache(userProfile.getUsername(), userProfile);
+            logger.info("Updated UserProfile in database and cache for username: {}", userProfile.getUsername());
+            return true;
+        } catch (Exception e) {
+            logger.error("Error updating UserProfile for username: {}", userProfile.getUsername(), e);
+        }
+        return false;
+    }
+
+    public boolean deleteUserProfile(UserProfile userProfile) {
+        try {
+            if (userProfile == null) {
+                logger.warn("Attempted to delete a null UserProfile.");
+                return false;
+            }
+            if (!isUserExists(userProfile.getUsername())) {
+                logger.info("Attempted to delete a UserProfile for a non-existing user: {}. No action needed.", userProfile.getUsername());
+                return true;
+            }
+            cacheManager.deleteFromUserProfileCache(userProfile.getUsername());
+
+            userProfileRepo.delete(userProfile);
+
+            logger.info("UserProfile deleted and cache invalidated for user: {}", userProfile.getUsername());
+            return true;
+        } catch (Exception e) {
+            logger.error("error deleting UserProfile for user: {}", userProfile.getUsername(), e);
+            return false;
+        }
+    }
+
+    //    public boolean isEmailExists(String email) {
+//        return userProfileRepo.existsByEmail(email);
+//    }
+    public boolean isEmailExists(String email) {
+        boolean exists = false;
+        if (email == null || email.isEmpty()) {
+            logger.warn("isEmailExists called with null or empty email");
+            return exists;
+        }
+        try {
+            exists = userProfileRepo.existsByEmail(email);
+            logger.info("retrieve email {} ", email);
+        } catch (Exception e) {
+            logger.error("exception occurred while checking email: {}. Exception: {}", email, e.toString());
+        }
+        return exists;
+    }
+
+//    public boolean isRecoveryKeyExists(String key) {
+//        return userProfileRepo.existsByRecoveryKey(key);
+//    }
+
+    public boolean isRecoveryKeyExists(String key) {
+        boolean exists = false;
+        if (key == null || key.isEmpty()) {
+            logger.warn("isRecoveryKeyExists called with null or empty RecoveryKey");
+            return exists;
+        }
+        try {
+            exists = userProfileRepo.existsByRecoveryKey(key);
+            logger.info("retrieve RecoveryKey {} ", key);
+        } catch (Exception e) {
+            logger.error("exception occurred while checking RecoveryKey: {}. Exception: {}", key, e.toString());
+        }
+        return exists;
     }
 
     public UserProfile getUserProfileByEmail(String email) {
@@ -166,7 +248,6 @@ public class DatabaseAbstractLayer {
             return null;
         }
 
-
         try {
             Optional<UserProfile> userProfileOptional = userProfileRepo.findByRecoveryKey(key);
             if (userProfileOptional.isPresent()) {
@@ -183,68 +264,28 @@ public class DatabaseAbstractLayer {
         }
     }
 
-    public boolean updateUserProfile(UserProfile userProfile) {
-        if (userProfile == null) {
-            return false;
-        }
-        if (!isUserExists(userProfile.getUsername())) {
-            return false;
-        }
-        try {
-            userProfileRepo.save(userProfile);
-
-            cacheManager.putInUserProfileCache(userProfile.getUsername(), userProfile);
-
-            logger.info("Updated UserProfile in database and cache for username: {}", userProfile.getUsername());
-            return true;
-        } catch (Exception e) {
-            logger.error("Error updating UserProfile for username: {}", userProfile.getUsername(), e);
-        }
-        return false;
-    }
-
-
-    public boolean deleteUserProfile(UserProfile userProfile) {
-        try {
-            if (userProfile == null) {
-                logger.warn("Attempted to delete a null UserProfile.");
-                return false;
-            }
-            if (!isUserExists(userProfile.getUsername())) {
-                logger.info("Attempted to delete a UserProfile for a non-existing user: {}. No action needed.", userProfile.getUsername());
-                return true;
-            }
-            userProfileRepo.delete(userProfile);
-            cacheManager.deleteFromUserProfileCache(userProfile.getUsername());
-            logger.info("UserProfile deleted and cache invalidated for user: {}", userProfile.getUsername());
-            return true;
-        } catch (Exception e) {
-            logger.error("error deleting UserProfile for user: {}", userProfile.getUsername(), e);
-            return false;
-        }
-    }
-
-
-
     /*
     SESSION SECTION
     */
-
 
     public boolean isSessionExists(String sessionKey) {
         logger.info("Check session: {}", sessionKey);
 
         if (sessionKey == null || sessionKey.trim().isEmpty()) {
-            logger.warn("Session key empty. Assume no session.");
+            logger.warn("Session key empty. Assume no session");
             return false;
         }
 
         try {
+            if (cacheManager.isSessionExistInCache(sessionKey)) {
+                logger.info("Session found in cache for key: {}", sessionKey);
+                return true;
+            }
             boolean exists = sessionRepo.existsBySessionKey(sessionKey);
-            logger.info("Session exists: {}", exists);
+            logger.info("Session checked in database for key: {}, exists: {}", sessionKey, exists);
             return exists;
         } catch (Exception e) {
-            logger.error("Error checking session.", e);
+            logger.error("Error checking session for key: {}", sessionKey, e);
             return false;
         }
     }
@@ -252,24 +293,21 @@ public class DatabaseAbstractLayer {
     public boolean addSession(Session session) {
         logger.info("Adding session");
 
-        if (session == null) {
-            logger.warn("No session to add");
+        if (session == null || session.getSessionKey() == null || session.getSessionKey().trim().isEmpty()) {
+            logger.warn("Session or session key is null/empty");
             return false;
         }
 
-        if (session.getSessionKey() == null || session.getSessionKey().trim().isEmpty()) {
-            logger.warn("Session key missing");
-            return false;
-        }
 
         if (isSessionExists(session.getSessionKey())) {
-            logger.info("Session exists. Cannot add.");
+            logger.info("Session already exists cannot add");
             return false;
         }
 
         try {
             sessionRepo.save(session);
-            logger.info("Session added");
+            cacheManager.putInSessionCache(session.getSessionKey(), session);
+            logger.info("Session added and cached for key: {}", session.getSessionKey());
             return true;
         } catch (Exception e) {
             logger.error("Error adding session", e);
@@ -278,33 +316,42 @@ public class DatabaseAbstractLayer {
     }
 
     public Session getSession(String sessionKey) {
-        logger.info("Getting session.");
+        logger.info("Getting session");
 
         if (sessionKey == null || sessionKey.trim().isEmpty()) {
-            logger.warn("Session key is null or empty. Return null.");
+            logger.warn("Session key is null or empty.return null");
             return null;
+        }
+        Session sessionCache = cacheManager.getFromSessionCache(sessionKey);
+        if (sessionCache != null) {
+            logger.info("session retrieved from cache key {}", sessionKey);
+            return sessionCache;
         }
 
         try {
-            Optional<Session> session = sessionRepo.findBySessionKey(sessionKey);
-            if (!session.isPresent()) {
-                logger.info("Session not found.");
+            Optional<Session> sessionOptional = sessionRepo.findBySessionKey(sessionKey);
+            if (sessionOptional.isPresent()) {
+
+                Session session = sessionOptional.get();
+                cacheManager.putInSessionCache(sessionKey, session);
+                logger.info("session retrieved from db and then cache for key {}", sessionKey);
+                return session;
+            } else {
+                logger.info("session not found in database for key {}", sessionKey);
                 return null;
             }
-
-            logger.info("Session found.");
-            return session.get();
         } catch (Exception e) {
-            logger.error("Get session failed", e);
+            logger.error("error retrieving session for key {}", sessionKey, e);
             return null;
         }
     }
 
+
     public boolean updateSession(Session session) {
         logger.info("updating session");
 
-        if (session == null) {
-            logger.warn("session is null not updated");
+        if (session == null || session.getSessionKey() == null || session.getSessionKey().trim().isEmpty()) {
+            logger.warn("session or session key is null or empty");
             return false;
         }
 
@@ -314,11 +361,15 @@ public class DatabaseAbstractLayer {
         }
 
         try {
+            cacheManager.deleteFromSessionCache(session.getSessionKey());
+
             sessionRepo.save(session);
-            logger.info("session updated");
+
+            cacheManager.putInSessionCache(session.getSessionKey(),session);
+            logger.info("session updated in db and cache for key {}",session.getSessionKey());
             return true;
         } catch (Exception e) {
-            logger.error("update session failed", e);
+            logger.error("error on updating session ", e);
             return false;
         }
     }
@@ -326,19 +377,20 @@ public class DatabaseAbstractLayer {
     public boolean deleteSession(Session session) {
         logger.info("deleting session");
 
-        if (session == null) {
-            logger.warn("session is null not deleted");
+        if (session == null || session.getSessionKey() == null || session.getSessionKey().trim().isEmpty()) {
+            logger.warn("session or session key null or empty");
             return false;
         }
 
         if (!isSessionExists(session.getSessionKey())) {
-            logger.info("session does not exist considered deleted");
+            logger.info("session does not exist and consider as deleted");
             return true;
         }
 
         try {
+            cacheManager.deleteFromSessionCache(session.getSessionKey());
             sessionRepo.delete(session);
-            logger.info("session deleted");
+            logger.info("session deleted from database and cache for key {}",session.getSessionKey());
             return true;
         } catch (Exception e) {
             logger.error("delete session failed", e);
@@ -369,6 +421,7 @@ public class DatabaseAbstractLayer {
             return false;
         }
     }
+
     public boolean isVehicleExistsByOwner(ObjectId owner) {
         logger.info("checking if vehicle exists by owner");
 
@@ -569,7 +622,6 @@ public class DatabaseAbstractLayer {
     }
 
 
-
     public boolean isServiceRecordExistsByVehicle(String vehicleRegNo) {
         logger.info("checking if service record exists by vehicle registration number");
 
@@ -759,6 +811,7 @@ public class DatabaseAbstractLayer {
             return false;
         }
     }
+
     public boolean addMaintenance(Maintenance maintenance) {
         logger.info("adding maintenance");
 
@@ -823,6 +876,7 @@ public class DatabaseAbstractLayer {
             return new ArrayList<>();
         }
     }
+
     public boolean deleteMaintenance(Maintenance maintenance) {
         logger.info("deleting maintenance");
 
@@ -936,7 +990,8 @@ public class DatabaseAbstractLayer {
         }
     }
 
-    public List<PredictionModel> getPredictionModelListByMaintenance(Maintenance.MaintenanceType maintenanceType) {
+    public List<PredictionModel> getPredictionModelListByMaintenance(Maintenance.MaintenanceType
+                                                                             maintenanceType) {
         logger.info("retrieving prediction models by maintenance type");
 
         if (maintenanceType == null) {
@@ -1030,6 +1085,7 @@ public class DatabaseAbstractLayer {
             return false;
         }
     }
+
     public boolean deleteToken(Token token) {
         logger.info("deleting token");
 
@@ -1052,7 +1108,6 @@ public class DatabaseAbstractLayer {
             return false;
         }
     }
-
 
 
     public Token getToken(String tokenName) {
