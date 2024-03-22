@@ -26,7 +26,7 @@ function DashboardCard({ content, onClick }) {
 
   return (
     <Link to={path} style={{ textDecoration: "none" }}>
-      <Card className="text-center" shadow style={{ height: "220px" }}>
+      <Card className="text-center" style={{ height: "220px" }}>
         <div>
           <Card.Img
             variant="top"

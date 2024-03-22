@@ -72,7 +72,7 @@ function Dashboard(props) {
     { title: "AutoMob Search", path: "/" + Pages.AutoMobSearchUI },
     {
       title: "Track My Vehicle",
-      path: "/" + Pages.EmergencTrackVehicleUIyAssistUI,
+      path: "/" + Pages.TrackVehicleUI,
     },
 
     { title: "Parking Finder", path: "/" + Pages.ParkingFinderUI },

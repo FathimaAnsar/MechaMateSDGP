@@ -19,6 +19,7 @@ public class UserProfile {
 
     }
 
+
     // Enum to represent different user status
     public enum Status {
         StatusActive,

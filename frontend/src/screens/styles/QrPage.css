@@ -1,0 +1,41 @@
+.qr-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f8ff; 
+    font-family: Arial, sans-serif; 
+  }
+  
+  .qr-content {
+    text-align: center;
+  }
+  
+  .qr-topic {
+    margin-bottom: 20px;
+    font-size: 24px; 
+    color: #333; 
+  }
+  
+  .qr-instruction {
+    font-size: 16px; 
+  }
+  
+  .qr-container {
+    margin-top: 20px;
+    width: 250px;
+    height: 250px;
+    background-color: #bfefff; 
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .qr-code-wrapper {
+    border-radius: 10px;
+    overflow: hidden; 
+  }
+  

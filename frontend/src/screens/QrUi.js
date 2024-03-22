@@ -1,20 +1,76 @@
 
+// import React from 'react';
+// import QRCode from 'qrcode.react'; 
+// import { useLocation } from "react-router-dom";
+
+// function QrPage() {
+  
+//   const {state} = useLocation();
+//   return (
+//     <div>
+//       <h2>QR Code</h2>
+//       <QRCode value={state.qrurl} />
+//     </div>
+//   );
+// }
+
+// export default QrPage;
+
+
+
+
+import Header from "./components/Header";
 import React from 'react';
 import QRCode from 'qrcode.react'; 
 import { useLocation } from "react-router-dom";
+import './styles/QrPage.css'; 
 
-function QrPage() {
-  
-  const {state} = useLocation();
+function QrPage(props) {
+  const { state } = useLocation();
+
   return (
-    <div>
-      <h2>QR Code</h2>
-      <QRCode value={state.qrurl} />
+    
+    <>
+    <Header app ={props.app}/>
+    <div className="qr-page-container">
+      <div className="qr-content">
+        <h2 className="qr-topic">Scan to Open and Add Service Details</h2>
+        <p className="qr-instruction">Scan this QR code to open the service record form.</p>
+      </div>
+      <div className="qr-container">
+        <QRCode value={state.qrurl} size={200} />
+      </div>
     </div>
+    </>
   );
 }
 
 export default QrPage;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
