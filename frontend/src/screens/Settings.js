@@ -7,10 +7,10 @@ import './styles/Form.css';
 function Settings(props) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [theme, setTheme] = useState('light');
   const [language, setLanguage] = useState('english');
-  const [newUsername, setNewUsername] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [confirmUsername, setConfirmUsername] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('')
 
   
 
@@ -22,21 +22,25 @@ function Settings(props) {
     setLastName(event.target.value);
   };
 
-  const handleThemeChange = (event) => {
-    setTheme(event.target.value);
-  };
-
   const handleLanguageChange = (event) => {
     setLanguage(event.target.value);
   };
-
-  const handleNewUsernameChange = (event) => {
-    setNewUsername(event.target.value);
-  };
+  const handleConfirmUsername =(event) => {
+    setConfirmUsername(event.target.value);
+  }
 
   const handleNewPasswordChange = (event) => {
     setNewPassword(event.target.value);
   };
+  const handleConfirmPassword =(event) => {
+    setConfirmPassword(event.target.value);
+     
+    if (newPassword !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+  }
+
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -59,7 +63,7 @@ function Settings(props) {
        <Form.Control type="text" value={lastName} onChange={handleLastNameChange} />
      </Form.Group>
      <Form.Group controlId="theme">
-       <Form.Label>Theme:  .</Form.Label>
+       <Form.Label>Theme:  :</Form.Label>
        <ToggleThemeButton />
      </Form.Group>
      <Form.Group controlId="language">
@@ -70,13 +74,17 @@ function Settings(props) {
          <option value="tamil">Tamil</option>
        </Form.Select>
      </Form.Group>
-     <Form.Group controlId="newUsername">
-       <Form.Label>New Username:</Form.Label>
-       <Form.Control type="text" value={newUsername} onChange={handleNewUsernameChange} />
+     <Form.Group controlId="ConfirmUsername">
+       <Form.Label>Confirm Username:</Form.Label>
+       <Form.Control type="text" value={confirmUsername} onChange={handleConfirmUsername}/>
      </Form.Group>
      <Form.Group controlId="newPassword">
        <Form.Label>New Password:</Form.Label>
        <Form.Control type="password" value={newPassword} onChange={handleNewPasswordChange} />
+     </Form.Group>
+     <Form.Group controlId="conPassword">
+       <Form.Label>Confirm Password:</Form.Label>
+       <Form.Control type="password" value={confirmPassword} onChange={handleConfirmPassword} />
      </Form.Group>
      <Button type="submit">Save Changes</Button>
    </Form>
