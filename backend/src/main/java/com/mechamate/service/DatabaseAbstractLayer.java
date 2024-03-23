@@ -587,7 +587,8 @@ public class DatabaseAbstractLayer {
                         v.getInsNo(),
                         v.getInsExpDate(),
                         v.getRegExpDate(),
-                        new ArrayList<>(),
+                        getServiceRecordDTOs(v.getRegNo()),
+                        /*new ArrayList<>(),*/
                         v.getCurrentMileage());
                 vehicleDTOS.add(vDTO);
             }
@@ -778,7 +779,9 @@ public class DatabaseAbstractLayer {
             }
 
             for (ServiceRecord s : serviceRecords) {
-                ServiceRecordDTO sDTO = new ServiceRecordDTO(s.get_id().toHexString(), s.getDescription(), s.getDate(), s.getMileage(), new ArrayList<>());
+                ServiceRecordDTO sDTO = new ServiceRecordDTO(s.get_id().toHexString(), s.getDescription(), s.getDate(), s.getMileage(),
+                        s.getServices());
+
                 serviceRecordDTOS.add(sDTO);
             }
 

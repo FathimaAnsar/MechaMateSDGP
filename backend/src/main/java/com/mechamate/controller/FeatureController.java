@@ -300,8 +300,6 @@ public class FeatureController {
         // 5. Find the difference between the last maintenance KMs against current KMs. (ie: (givenKMs - predictedKMs) )
         // 6. return the predicted output
 
-
-
         if(maintenanceType == null)
             return new ResponseEntity<>
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,

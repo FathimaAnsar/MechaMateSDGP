@@ -201,8 +201,9 @@ public class UserProfile {
 
     // Method to create a recovery key for the user's account
     public void createRecoveryKey() {
-        this.recoveryKey = Common.getSha256("RECV#>>(" + username + System.currentTimeMillis() + email + password + ")<<#");
-        this.status = Status.StatusPendingActivation;
+        Random random = new Random();
+        Integer code = random.nextInt(900000) + 100000;
+        this.recoveryKey = code.toString();
     }
 
     // Method to clear the recovery key

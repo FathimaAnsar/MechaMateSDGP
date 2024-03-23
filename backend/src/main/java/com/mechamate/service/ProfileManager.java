@@ -211,7 +211,7 @@ public class ProfileManager {
                 false, lang.getLanguage(request.getSession()), lang);
         if(resp != null) return resp;
 
-        if(userProfile.getRecoveryKey().length() != 64) {
+        if(userProfile.getRecoveryKey().length() != 6) {
             userProfile.createRecoveryKey();
             if (!databaseAbstractLayer.updateUserProfile(userProfile)) {
                 return new ResponseEntity<>
