@@ -12,6 +12,7 @@ import {
 } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../images/logo-white.png";
+import ToggleThemeButton from './ToggleThemeButton.js'
 
 function Header(props) {
   const navigate = useNavigate();
@@ -59,7 +60,7 @@ function Header(props) {
               <Image
                 src={logo}
                 alt="MechaMate Logo"
-                style={{  width: "100px", height: "25px"}}
+                style={{ height: "25px" }}
               />
             </Link>
           </Navbar.Brand>
@@ -68,11 +69,9 @@ function Header(props) {
             className="navbar-toggler-icon"
             onClick={handleToggleOffcanvas}
           ></Button>
-          {/*           <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
 
-          {/* <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={handleToggleOffcanvas} /> */}
-          {/* Navbar.Collapse is moved inside the Offcanvas */}
         </Container>
+
       </Navbar>
 
       <Offcanvas
@@ -82,7 +81,8 @@ function Header(props) {
         style={{ backgroundColor: "#f4f8fa" }}
       >
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title> Menu</Offcanvas.Title>
+          {/* <Offcanvas.Title> Menu</Offcanvas.Title> */}
+          <ToggleThemeButton />
         </Offcanvas.Header>
         <Offcanvas.Body>
           {/* Your offcanvas menu items go here */}
@@ -115,6 +115,14 @@ function Header(props) {
               variant="light"
               onClick={() => {
                 navigate("/" + Pages.ParkingFinderUI);
+              }}
+            >
+             AutoMob Search
+            </Button>
+            <Button
+              variant="light"
+              onClick={() => {
+                navigate("/" + Pages.AutoMobSearchUI);
               }}
             >
               Parking Finder

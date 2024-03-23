@@ -53,7 +53,8 @@
     text-decoration: wavy;
 
 }
-.error-message a:hover{
+
+.error-message a:hover {
     text-decoration: underline;
 }
 
@@ -104,7 +105,7 @@
 
 
 
-#sign-in-check{
+#sign-in-check {
     display: flex;
     justify-content: space-around;
 }
@@ -114,7 +115,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
 }
 
 .login-container input:focus {
@@ -128,7 +129,8 @@
 }
 
 .login-container button,
-.signup-btn, .get-started-btn{
+.signup-btn,
+.get-started-btn {
     background-color: #085bd4;
     color: white;
     border: none;
@@ -225,17 +227,17 @@
     font-size: 1em;
     border-radius: 8px;
     border: #737373e1 1px solid;
-  }
+}
 
 .otpInput:focus {
     border: #0750be 2px solid;
 }
 
-#resend-otp-btn{
+#resend-otp-btn {
     margin: 16px 0 17px 0;
     border-radius: 30px;
     font-size: 13px;
-    padding: 6px 20px ;
+    padding: 6px 20px;
 }
 
 
@@ -275,12 +277,13 @@
 }
 
 
-#inputGroupPrepend{
+#inputGroupPrepend {
     height: auto;
-    
+    margin: 0;
+    font-size: 15px;
 }
 
-#signup-heading-text{
+#signup-heading-text {
     font-size: 10pt;
     margin-bottom: -10px;
     color: rgb(113, 113, 113);
@@ -289,13 +292,12 @@
 
 #signup-modal-form input[type="text"],
 #signup-modal-form input[type="password"],
-#signup-modal-form input[type="email"]{
+#signup-modal-form input[type="email"] {
     /* border: #000000 solid 1px; */
     /* color: rgb(113, 113, 113); */
-        font-weight: 400;
-        font-size: 15px;
-       padding: 10px;
-       border-radius: 10px;
-        
-}
+    font-weight: 400;
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 10px;
 
+}

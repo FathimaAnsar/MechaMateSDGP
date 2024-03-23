@@ -189,7 +189,7 @@ function SignUpModal(props) {
                   <InputGroup>
                     <InputGroup.Text
                       id="inputGroupPrepend"
-                      style={{ borderRadius: "10px 0 0 10px" }}
+                      style={{ borderRadius: "10px 0 0 10px", height: 'auto'}}
                     >
                       @
                     </InputGroup.Text>

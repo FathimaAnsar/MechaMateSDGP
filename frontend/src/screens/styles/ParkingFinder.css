@@ -11,9 +11,9 @@
     box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
 }
 
-.card-body button {
-    margin-right: 0.5rem;
-    margin-bottom: 0.5rem;
+.card-body {
+    display: flex;
+    flex-direction: column;
 }
 
 .card-title {
@@ -25,3 +25,40 @@
     color: #5c5c5c;
 }
 
+.detail-container {
+    margin-bottom: 1rem;
+}
+
+.button-group {
+    display: flex;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.button-group button {
+    margin-top: 0.5rem;
+    flex: 1;
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .button-group button {
+        flex-basis: 100%;
+        flex-grow: 0;
+    }
+}
+
+.address-details.hide {
+    display: none;
+}
+
+.address-details.show {
+    display: block;
+}
+
+.fixed-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
