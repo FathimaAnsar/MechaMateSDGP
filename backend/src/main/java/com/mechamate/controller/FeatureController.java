@@ -277,9 +277,9 @@ public class FeatureController {
 //    }
 
 
+
     @GetMapping("/get-maintenance-prediction")
     public ResponseEntity<?> getPredictedOutput(HttpServletRequest request, HttpServletResponse response,
-                                                     @RequestParam(required = false) Maintenance.MaintenanceType maintenanceType,
                                                      @RequestParam(required = false) String vehicleRegNo) {
         Object obj = Validation.authenticate(request, response, sessionManager, lang);
         if(!(obj instanceof UserProfile)) return (ResponseEntity<ErrorDTO>) (obj);
@@ -291,6 +291,7 @@ public class FeatureController {
         if(resp != null) return resp;
 
 
+        responseObject.put("exist", profileManager.isQrLinkExist(key));
 
 
         // 1. Filter service records of vehicle by maintenance
@@ -300,15 +301,15 @@ public class FeatureController {
         // 5. Find the difference between the last maintenance KMs against current KMs. (ie: (givenKMs - predictedKMs) )
         // 6. return the predicted output
 
-        if(maintenanceType == null)
-            return new ResponseEntity<>
-                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
-                            lang.get("error.mtype.is.missing", userProfile.getLanguage()),
-                            lang.get("error.mtype.is.missing.help", userProfile.getLanguage())),
-                            HttpStatus.OK);
-
-
-        return null;
+//        if(maintenanceType == null)
+//            return new ResponseEntity<>
+//                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
+//                            lang.get("error.mtype.is.missing", userProfile.getLanguage()),
+//                            lang.get("error.mtype.is.missing.help", userProfile.getLanguage())),
+//                            HttpStatus.OK);
+//
+//
+//        return null;
     }
 
 
