@@ -180,14 +180,16 @@ class ConnectionManager {
         limit
     );
   }
-
-
+  async getVehicleLocation(vehicleRegNo){
+    return await this.getRequest(
+        "/api/v1/features/get-device-location?vehicleRegNo="+vehicleRegNo
+    );
+  }
 
   async getRequestForQR() {
     return await this.getRequest(
       "/api/v1/features/get-service-record-qr");
   }
-
 
 }
 
