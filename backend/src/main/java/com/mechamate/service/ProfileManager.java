@@ -11,6 +11,7 @@ import com.mechamate.entity.UserProfile;
 import com.mechamate.entity.Vehicle;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -610,8 +611,6 @@ public class ProfileManager {
 
 
 
-
-
     public ResponseEntity<ErrorDTO> addQrLink(QrLink qrLink, UserProfile userProfile) {
         if(databaseAbstractLayer.isQrLinkExists(qrLink.getQrKey())) databaseAbstractLayer.deleteQrLink(qrLink);
         if(!databaseAbstractLayer.addQrLink(qrLink))
@@ -625,6 +624,10 @@ public class ProfileManager {
     }
 
 
+    public boolean isQrLinkExist(String qrKey) {
+        if(qrKey.isEmpty()) return false;
+        return databaseAbstractLayer.isQrLinkExists(qrKey);
+    }
 
 
 

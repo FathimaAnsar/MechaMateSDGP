@@ -13,6 +13,7 @@ import com.mechamate.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +41,8 @@ public class FeatureController {
     @Autowired
     private APIManager apiManager;
 
+    @Value("${spring.config.server.address}")
+    private String hostname;
 
     @GetMapping("/get-features-list")
     public ResponseEntity<?> getFeaturesList(HttpServletRequest request, HttpServletResponse response) {
@@ -290,12 +293,22 @@ public class FeatureController {
         if(resp != null) return resp;
 
         Map<String, Object> responseObject = new HashMap<>();
-        responseObject.put("url", "https://mechamate.site/add-service-record?key=" + qrKey);
+        responseObject.put("url", hostname + "/add-service-record?key=" + qrKey);
         return new ResponseEntity<>(responseObject, HttpStatus.OK);
     }
 
 
-    
+    @GetMapping("/check-service-record-qr")
+    public ResponseEntity<?> checkServiceRecordQR(HttpServletRequest request, HttpServletResponse response,
+                                                  @RequestParam(required = false) String key) {
+
+        if (key == null) key = "";
+        Map<String, Object> responseObject = new HashMap<>();
+        responseObject.put("exist", profileManager.isQrLinkExist(key));
+        return new ResponseEntity<>(responseObject, HttpStatus.OK);
+    }
+
+
 
 
 }
