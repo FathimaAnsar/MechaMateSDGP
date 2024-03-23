@@ -1,15 +1,13 @@
-
-
-
 /* header css */
-.bg-body-tertiary{
+.bg-body-tertiary {
   background-color: #085bd4 !important;
   position: sticky;
   top: 0;
-  z-index: 1000; /* Ensure the header appears above other content */
+  z-index: 1000;
+  /* Ensure the header appears above other content */
 }
 
-.loader-container{
+.loader-container {
   text-align: center;
   background-color: #ffffffc5;
   display: flex;
@@ -33,11 +31,11 @@
 }
 
 body {
-  min-height: 100vh; 
+  min-height: 100vh;
 }
 
 
 
-.circle{
+.circle {
   border-radius: 50%;
 }

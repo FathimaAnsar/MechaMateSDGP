@@ -6,31 +6,31 @@
 
 
 #about-header {
-    background-color: #1f0888;
-    color : white;
-    padding: 100px;
-    text-align: center ; 
-  }
+  background-color: #1f0888;
+  color: white;
+  padding: 100px;
+  text-align: center;
+}
 
- 
+
 
 #container1 {
-  display: flex; 
+  display: flex;
 }
 
 .sub-div {
   flex: 1;
- 
+
 }
 
 @media (max-width: 768px) {
   .flex-container {
-    flex-direction: column; 
+    flex-direction: column;
   }
 
   .sub-div {
-    flex: none; 
-    width: 100%; 
+    flex: none;
+    width: 100%;
   }
 }
 
@@ -47,15 +47,15 @@
 
 
 
-.container{
+.container {
 
   padding: 0px;
-  margin:0px;
+  margin: 0px;
 }
 
 
-.carousel-content{
-  margin:0px 150px 50px;
+.carousel-content {
+  margin: 0px 150px 50px;
 
 
 }
@@ -63,28 +63,28 @@
 
 .carousel-content {
   display: flex;
-  flex-direction: row; 
+  flex-direction: row;
 }
 
 .carousel-content .image-container,
 .carousel-content .inner-div {
-  flex: 1; 
+  flex: 1;
 }
 
 .carousel-content img {
-  max-width: 100%; 
+  max-width: 100%;
 }
 
 /* Media query for mobile screens */
 @media (max-width: 767px) {
   .carousel-content {
-    flex-direction: column; 
-    margin:0px 0px 50px ;
+    flex-direction: column;
+    margin: 0px 0px 50px;
   }
 
-  .image-container img{
+  .image-container img {
 
-    padding:0px 55px 0px;
+    padding: 0px 55px 0px;
   }
 }
 
@@ -94,14 +94,14 @@
   padding-top: 50px;
   text-align: center;
   font-size: 24px;
-  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 #team-section h4 {
   color: #ffffff;
   text-align: center;
   font-size: 18px;
-  font-family:Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 
@@ -133,35 +133,24 @@
 
 
 
-#team-section{
- background-color: #000000;
+#team-section {
+  background-color: #000000;
 }
 
 
 .inner-div {
-  background-color: rgba(0, 0, 0, 0.8); 
-  color: white; 
-  padding: 20px; 
-  margin: 0 auto; 
-  max-width: 600px; 
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 600px;
 }
 
 .person-info h4 {
-  color: white; 
+  color: white;
 }
 
 .person-info h5 {
   padding-top: 30px;
-  color: white; 
+  color: white;
 }
-
-
-
-
-
-
-
-
-
-
-

@@ -8,16 +8,24 @@ import Modal from "react-bootstrap/Modal";
 import { useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import CustomAlert from "./components/CustomAlert.js";
+import LoadingScreen from "./components/LoadingScreen.js";
+
 
 function EnterCode(props) {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
+  const[mainModelShow, setMainModelShow] = useState(true)
+  
   const [showAlert, setShowAlert] = useState(false);
   const [error, setError] = useState({ message: "", heading: "" });
 
-  const handleClose = () => {
+  const handleModalClose = () => {
     setShow(false);
     navigate("/" + Pages.DashboardUI);
+  };
+  const handleClose = () => {
+    setShowAlert(false);
   };
 
   useEffect(() => {
@@ -47,6 +55,7 @@ function EnterCode(props) {
   }, []);
 
   const onOtpSubmit = async (otp) => {
+     setLoading(true);
     // Call the activation logic here using the OTP
     try {
       let connection = new ConnectionManager();
@@ -65,6 +74,7 @@ function EnterCode(props) {
         });
         setShowAlert(true);
       } else if (response.status) {
+        setMainModelShow(false);
         setShow(true);
         // alert("Success: " + response.message + "\n" + response.info);
         const uProf = await connection.getUserProfile();
@@ -87,16 +97,15 @@ function EnterCode(props) {
     } catch (error) {
       console.error("Error:", error);
     }
-    const handleClose = () => {
-      setShowAlert(false);
-    };
+     setLoading(false);
   };
   return (
     <>
+    {loading && <LoadingScreen />}
       <Container fluid>
         <Modal
           size="md"
-          show={true}
+          show={mainModelShow}
           centered
           className="text-center"
           style={{
@@ -139,17 +148,12 @@ function EnterCode(props) {
             <div id="entercode-copyright">MechaMate © 2024</div>
           </Card.Footer>
         </Modal>
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Account activated</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            Welcome to MechaMate! Now you can use MechaMate features
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="success">Continue</Button>
-          </Modal.Footer>
-        </Modal>
+        
+        <CustomAlert show={show} handleClose={handleModalClose} error={{
+          heading: "Account activated",
+          message: "Welcome to MechaMate! Now you can use MechaMate features",
+        }} variant="success"/>
+
 
         <CustomAlert show={showAlert} handleClose={handleClose} error={error} />
       </Container>
