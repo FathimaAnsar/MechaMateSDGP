@@ -200,7 +200,9 @@ public class SuperUserController {
                             HttpStatus.OK);
 
         PredictionModel predictionModel = predictiveMaintenance.getTrainedPredictionModel(datasetFileName,
-                predictionModelDTO.getName(), predictionModelDTO.getDescription(), predictionModelDTO.getAppliedMaintenanceList());
+                predictionModelDTO.getName(), predictionModelDTO.getDescription(), predictionModelDTO.getModelType(),
+                predictionModelDTO.getAppliedMaintenanceList());
+
 
         try {
             predictionModel.set_id(new ObjectId(predictionModelDTO.getModelId()));
@@ -260,7 +262,7 @@ public class SuperUserController {
 
         if (predictionModelDTO.getModelId() == null || predictionModelDTO.getModelId().isEmpty()) predictionModelDTO.setModelId("");
 
-        PredictionModel predictionModel = new PredictionModel("", "",0, 0, null);
+        PredictionModel predictionModel = new PredictionModel("", "", null, null);
 
         try {
             predictionModel.set_id(new ObjectId(predictionModelDTO.getModelId()));
