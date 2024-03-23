@@ -42,7 +42,7 @@ function Settings(props) {
     setPasswordsMatch(newPassword === confirmPassword);
   };
 
-  }
+  
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -94,7 +94,7 @@ function Settings(props) {
  </div>
  </div>
   );
-
+}
 
 export default Settings;
 

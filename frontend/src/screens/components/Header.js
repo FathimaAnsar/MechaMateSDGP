@@ -117,6 +117,14 @@ function Header(props) {
                 navigate("/" + Pages.ParkingFinderUI);
               }}
             >
+             AutoMob Search
+            </Button>
+            <Button
+              variant="light"
+              onClick={() => {
+                navigate("/" + Pages.AutoMobSearchUI);
+              }}
+            >
               Parking Finder
             </Button>
             <Button
