@@ -482,6 +482,16 @@ public class APIManager {
                         deviceDetails.setStatus(result.get("status").toString());
                         deviceDetails.setImei(result.get("imei").toString());
                         deviceDetails.setVehicleIcon(result.get("vehicleIcon").toString());
+
+                        try {
+                            deviceDetails.setVehicleIcon(result.get("mileage").toString());
+                        } catch (Exception e) {
+
+                        }
+
+
+
+
                     }
                 }
             } catch (Exception e) {
@@ -493,7 +503,6 @@ public class APIManager {
         logger.info("exit from the getDeviceDetails");
         return deviceDetails;
     }
-
 
 
 
@@ -522,16 +531,11 @@ public class APIManager {
             }
 
             try {
-
                 if(!ret.isEmpty()) {
-
-
-
                     JSONParser parser = new JSONParser();
                     JSONObject json = (JSONObject) parser.parse(ret);
                     JSONObject result = (JSONObject) json.get("result");
                     if(result != null) {
-
                         token = new ApiToken();
                         token.setAccessToken(result.get("accessToken").toString());
                         token.setRefreshToken(result.get("refreshToken").toString());
@@ -540,13 +544,9 @@ public class APIManager {
                         Token dbToken = new Token("jimiToken", token);
 
                         if(databaseAbstractLayer.isTokenExists("jimiToken")) {
-
                             databaseAbstractLayer.updateToken(dbToken);
-
                         } else {
-
                             databaseAbstractLayer.addToken(dbToken);
-
                         }
                     }
                 }
@@ -559,9 +559,6 @@ public class APIManager {
         logger.info("exit from the getJimiRefreshToken");
         return token;
     }
-
-
-
 
 
 
@@ -631,6 +628,7 @@ public class APIManager {
     }
 
 
+
     private String getRequestParams(String method, Map<String, String> additional) {
         logger.info("Entering getRequestParams with method: {}", method);
 
@@ -675,6 +673,7 @@ public class APIManager {
             logger.info("Exiting getRequestParams");
         }
     }
+
 
     public boolean processPaymentNotification(Map<String, Object> notificationData) {
         System.out.println("Processing payment notification: " + notificationData);

@@ -1,12 +1,22 @@
 package com.mechamate.features;
 
+import com.mechamate.dto.PredictionDTO;
+import com.mechamate.dto.ServiceDTO;
+import com.mechamate.dto.ServiceRecordDTO;
+import com.mechamate.dto.VehicleDTO;
 import com.mechamate.entity.*;
 import com.mechamate.service.DatabaseAbstractLayer;
+import com.mechamate.service.LanguageManager;
+import com.mechamate.service.NotificationManager;
+import com.mechamate.service.SessionManager;
+import org.apache.catalina.User;
 import org.apache.commons.math3.fitting.PolynomialCurveFitter;
 import org.apache.commons.math3.fitting.WeightedObservedPoints;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -27,6 +37,19 @@ import org.slf4j.LoggerFactory;
 public class PdM {
 
     private static final Logger logger = LoggerFactory.getLogger(DatabaseAbstractLayer.class);
+
+    @Autowired
+    private DatabaseAbstractLayer databaseAbstractLayer;
+
+    @Autowired
+    private NotificationManager notificationManager;
+
+    @Autowired
+    private SessionManager sessionManager;
+
+    @Autowired
+    private LanguageManager lang;
+
 
     public PredictionModel getTrainedPredictionModel(String csvFileName, String name, String description,
                                                      PredictionModel.modelType modelType,
@@ -136,10 +159,86 @@ public class PdM {
         return 0.0;
     }
 
-    // 1. Filter service records of vehicle by maintenance
-    // 2. Filter prediction models by maintenance
-    // 3. Collect tracking data by vehicle reg no
-    // 4. Loop through tracking data and calculate the predicted output recursively using trained prediction models
-    // 5. Find the difference between the last maintenance KMs against current KMs. (ie: (givenKMs - predictedKMs) )
-    // 6. return the predicted output
+
+
+    public ResponseEntity<?> getPredictions(List<PredictionDTO> predictionDTOS, UserProfile userProfile,
+                                            List<VehicleDTO> vehicles) {
+
+        List<Maintenance.MaintenanceType> maintenanceTypes = new ArrayList<>();
+
+        maintenanceTypes.add(Maintenance.MaintenanceType.EngineOilChange);
+        maintenanceTypes.add(Maintenance.MaintenanceType.CoolantChange);
+        maintenanceTypes.add(Maintenance.MaintenanceType.PistonChange);
+        maintenanceTypes.add(Maintenance.MaintenanceType.TireChange);
+        maintenanceTypes.add(Maintenance.MaintenanceType.BrakeCaliperChange);
+        maintenanceTypes.add(Maintenance.MaintenanceType.BrakeFluidChange);
+        maintenanceTypes.add(Maintenance.MaintenanceType.WheelAlignment);
+
+        for (VehicleDTO v : vehicles) {
+            List<ServiceRecordDTO> serviceRecordDTOS = v.getServiceRecords();
+            for(Maintenance.MaintenanceType mType : maintenanceTypes) {
+                if(serviceRecordDTOS.isEmpty()) {
+                    predictionDTOS.add(new PredictionDTO(mType, PredictionDTO.PredictionStatus.InfoNotFound,
+                            0, 0, false));
+                    continue;
+                }
+                long addedDate = 0; ServiceDTO serviceDTO = null; long serviceMileage = 0;
+                for(ServiceRecordDTO svcRec : serviceRecordDTOS) {
+                    if(svcRec.getServices().isEmpty()) continue;
+                    List<ServiceDTO> svDTOS = svcRec.getServices();
+                    for(ServiceDTO svDTO : svDTOS) {
+                        if(svDTO.getAppliedMaintenanceId() == mType) {
+                            if(svDTO.getAddedDate() > addedDate && !svDTO.isDone()) {
+                                addedDate = svDTO.getAddedDate();
+                                serviceDTO = svDTO;
+                                serviceMileage = svcRec.getMileage();
+                            }
+                        }
+                    }
+                }
+                if(serviceDTO == null) {
+                    predictionDTOS.add(new PredictionDTO(mType, PredictionDTO.PredictionStatus.InfoNotFound,
+                            0, 0, false));
+                    continue;
+                }
+
+
+            //    long actualKMsRemaining = ;
+
+                List<PredictionModel> predictionModels = databaseAbstractLayer.getPredictionModelList();
+                if(predictionModels.isEmpty()) {
+                    predictionDTOS.add(new PredictionDTO(mType, PredictionDTO.PredictionStatus.Actual,
+                            (serviceDTO.getNextServiceInKMs() - (/*currentMileage -*/ serviceMileage)),
+                            0, false));
+                    continue;
+                }
+
+
+                List<TrackingInfo> trackInfo = databaseAbstractLayer.getTrackingInfo(v.getRegistrationNumber());
+
+
+
+
+
+
+            }
+        }
+
+        return null;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
