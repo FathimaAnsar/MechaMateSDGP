@@ -240,6 +240,41 @@ public class FeatureController {
     }
 
 
+    @GetMapping("/get-service-record-qr")
+    public ResponseEntity<?> getServiceRecordQR(HttpServletRequest request, HttpServletResponse response) {
+        Object obj = Validation.authenticate(request, response, sessionManager, lang);
+        if(!(obj instanceof UserProfile)) return (ResponseEntity<ErrorDTO>) (obj);
+        UserProfile userProfile = (UserProfile) obj;
+
+        String qrKey = Common.getSha256("QRKEY#>>(" + userProfile.getUsername() +
+                System.currentTimeMillis() + userProfile.getEmail() + ")<<#");
+        QrLink qrLink = new QrLink(qrKey, userProfile);
+
+        ResponseEntity<ErrorDTO> resp = profileManager.addQrLink(qrLink, userProfile);
+        if(resp != null) return resp;
+
+        Map<String, Object> responseObject = new HashMap<>();
+        responseObject.put("url", hostname + "/add-service-record?key=" + qrKey);
+        return new ResponseEntity<>(responseObject, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/check-service-record-qr")
+    public ResponseEntity<?> checkServiceRecordQR(@RequestParam(required = false) String key) {
+        if (key == null) key = "";
+        Map<String, Object> responseObject = new HashMap<>();
+        responseObject.put("exist", profileManager.isQrLinkExist(key));
+        return new ResponseEntity<>(responseObject, HttpStatus.OK);
+    }
+
+
+//    @GetMapping("/submit-service-record")
+//    public ResponseEntity<?> submitServiceRecord(HttpServletRequest request, HttpServletResponse response,
+//                                                 @RequestParam(required = false) String key) {
+//        if (key == null) key = "";
+//
+//        return new ResponseEntity<>(responseObject, HttpStatus.OK);
+//    }
 
 
     @GetMapping("/get-maintenance-prediction")
@@ -278,35 +313,6 @@ public class FeatureController {
         return null;
     }
 
-
-    @GetMapping("/get-service-record-qr")
-    public ResponseEntity<?> getServiceRecordQR(HttpServletRequest request, HttpServletResponse response) {
-        Object obj = Validation.authenticate(request, response, sessionManager, lang);
-        if(!(obj instanceof UserProfile)) return (ResponseEntity<ErrorDTO>) (obj);
-        UserProfile userProfile = (UserProfile) obj;
-
-        String qrKey = Common.getSha256("QRKEY#>>(" + userProfile.getUsername() +
-                System.currentTimeMillis() + userProfile.getEmail() + ")<<#");
-        QrLink qrLink = new QrLink(qrKey, userProfile);
-
-        ResponseEntity<ErrorDTO> resp = profileManager.addQrLink(qrLink, userProfile);
-        if(resp != null) return resp;
-
-        Map<String, Object> responseObject = new HashMap<>();
-        responseObject.put("url", hostname + "/add-service-record?key=" + qrKey);
-        return new ResponseEntity<>(responseObject, HttpStatus.OK);
-    }
-
-
-    @GetMapping("/check-service-record-qr")
-    public ResponseEntity<?> checkServiceRecordQR(HttpServletRequest request, HttpServletResponse response,
-                                                  @RequestParam(required = false) String key) {
-
-        if (key == null) key = "";
-        Map<String, Object> responseObject = new HashMap<>();
-        responseObject.put("exist", profileManager.isQrLinkExist(key));
-        return new ResponseEntity<>(responseObject, HttpStatus.OK);
-    }
 
 
 

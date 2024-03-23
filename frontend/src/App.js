@@ -62,8 +62,6 @@ function App() {
     }
   }
 
-
-
   
   if (!main.isAppLoaded()) main.setAppLoaded(true);
 
