@@ -1,0 +1,72 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f8f9fa;
+  }
+  .container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+  }
+  h2 {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  form {
+    max-width: 100%;
+  }
+  .form-group {
+    margin-bottom: 20px;
+  }
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  select, textarea, input[type="date"], input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 20px;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .primary-btn {
+    background-color: #007bff;
+    color: #fff;
+  }
+  .secondary-btn {
+    background-color: #6c757d;
+    color: #fff;
+  }
+  @media (min-width: 768px) {
+    .container {
+      max-width: 800px;
+    }
+    form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .form-group {
+      margin-bottom: 0;
+    }
+    button {
+      width: auto;
+      margin-bottom: 0;
+    }
+  }
