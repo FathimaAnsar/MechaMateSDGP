@@ -5,7 +5,7 @@ import slide1 from "../../images/slides/1.jpg";
 import slide2 from "../../images/slides/2.jpg";
 import slide3 from "../../images/slides/3.jpg";
 
-function CustomCarousel({}) {
+function CustomCarousel({ }) {
   const slides = [
     {
       interval: 2000,

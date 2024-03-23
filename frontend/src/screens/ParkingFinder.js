@@ -1,12 +1,10 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Container, Row, Col, Button, Form, Card } from "react-bootstrap";
 import ConnectionManager from "../services/ConnectionManager";
 import Header from "./components/Header";
 import CustomAlert from "./components/CustomAlert";
-import BounceLoader from "react-spinners/BounceLoader";
-import "./styles/ParkingFinder.css";
 import { useNavigate } from "react-router-dom";
-import {ClipLoader} from "react-spinners";
+import { ClipLoader } from "react-spinners";
 
 function ParkingFinder(props) {
     const [currentLocation, setCurrentLocation] = useState(null);
