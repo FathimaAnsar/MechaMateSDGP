@@ -5,6 +5,7 @@ package com.mechamate.service;
 import com.mechamate.common.Common;
 import com.mechamate.common.Validation;
 import com.mechamate.dto.*;
+import com.mechamate.entity.QrLink;
 import com.mechamate.entity.ServiceRecord;
 import com.mechamate.entity.UserProfile;
 import com.mechamate.entity.Vehicle;
@@ -606,5 +607,42 @@ public class ProfileManager {
 
         return null;
     }
+
+
+
+
+
+    public ResponseEntity<ErrorDTO> addQrLink(QrLink qrLink, UserProfile userProfile) {
+        if(databaseAbstractLayer.isQrLinkExists(qrLink.getQrKey())) databaseAbstractLayer.deleteQrLink(qrLink);
+        if(!databaseAbstractLayer.addQrLink(qrLink))
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorOperationFailed,
+                            lang.get("error.qrlink.add.failed", userProfile.getLanguage()),
+                            lang.get("error.qrlink.add.failed.help", userProfile.getLanguage())),
+                            HttpStatus.OK);
+
+        return null;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
