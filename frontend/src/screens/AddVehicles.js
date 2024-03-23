@@ -4,6 +4,7 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import CustomAlert from "./components/CustomAlert.js";
 
 import axios from 'axios';
 import { API_BASE_URL } from "../Common.js";
@@ -21,6 +22,15 @@ function MyVehicles(props) {
   const [insNo, setInsNo] = useState(null);
   const [insExpDate, setInsExpDate] = useState(new Date());
 
+  const [showAlert, setShowAlert] = useState(false);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false)
+  const [error, setError] = useState({ message: "", heading: "" });
+
+
+
+  const handleClose = () => {
+    setShowAlert(false);
+  };
   // const connection = new ConnectionManager();
   // async function addVehicle(event) {
   //   event.preventDefault();
@@ -77,19 +87,25 @@ function MyVehicles(props) {
         withCredentials: true // Use withCredentials instead of credentials
       });
       // Check if response is successful (status code 2xx)
-      if (response.status >= 200 && response.status < 300) {
+      if (response.data.error) {
+        setError({
+          message: response.data.help,
+          heading: response.data.message,
+        });
+        setShowAlert(true);
+
+      } else if (response.data) {
         const responseData = response.data;
         const message = responseData.message;
-        alert(`Registration Status: ${message}`);
-        // Clear input fields after successful registration
+        return responseData;
         clearInputFields();
-        return responseData; // Returning data might be useful if you need it elsewhere
-      } else {
-        throw new Error('Failed to register vehicle'); // Throw an error if response status is not in the success range
       }
     } catch (error) {
       alert("Vehicle registration failed");
+
       console.error('Error registering vehicle:', error);
+
+
     }
   }
 
@@ -108,6 +124,9 @@ function MyVehicles(props) {
 
     <div>
       <Header app={props.app} />
+
+      <CustomAlert show={showAlert} handleClose={handleClose} error={error} />
+
 
       <Container fluid='sm' style={{ maxWidth: '400px', marginTop: '20px' }}>
         <Form>

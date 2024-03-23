@@ -11,7 +11,6 @@ import {
 import ConnectionManager from "../services/ConnectionManager";
 import { Pages } from "../Pages";
 import Header from "./components/Header";
-import "./styles/ParkingFinder.css";
 import { useNavigate } from "react-router-dom";
 
 function BreakdownAssist(props) {
@@ -114,10 +113,8 @@ function BreakdownAssist(props) {
           title="map"
           src={
             selectedMapUri ||
-            `https://maps.google.com/maps?q=${
-              currentLocation ? currentLocation.latitude : ""
-            },${
-              currentLocation ? currentLocation.longitude : ""
+            `https://maps.google.com/maps?q=${currentLocation ? currentLocation.latitude : ""
+            },${currentLocation ? currentLocation.longitude : ""
             }&z=15&output=embed`
           }
           style={{
