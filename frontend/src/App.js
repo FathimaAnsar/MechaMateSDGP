@@ -3,7 +3,6 @@ import { main } from "./MechaMate.js";
 import { Pages } from "./Pages.js";
 import GetStarted from "./screens/GetStarted.js";
 import SignIn from "./screens/SignIn.js";
-import SignUp from "./screens/SignUp.js";
 import EnterCode from "./screens/EnterCode.js";
 import ForgotPassword from "./screens/ForgotPassword.js";
 import Dashboard from "./screens/Dashboard.js";
@@ -41,7 +40,7 @@ function App() {
   const { theme } = useContext(ThemeContext);
   main.currentPage = window.location.pathname.length > 1 ? window.location.pathname.substring(1) : Pages.GetStartedUI;
   if (!main.getUserProfile()) {
-    if ((main.currentPage != Pages.GetStartedUI && main.currentPage != Pages.SignInUI && main.currentPage != Pages.SignUpUI && main.currentPage != Pages.ForgotPasswordUI && main.currentPage != Pages.EnterCodeUI) || window.location.pathname.length < 2) {
+    if ((main.currentPage != Pages.GetStartedUI && main.currentPage != Pages.SignInUI  && main.currentPage != Pages.ForgotPasswordUI && main.currentPage != Pages.EnterCodeUI) || window.location.pathname.length < 2) {
       if (main.isFirstRunDone()) {
         if (main.isAppLoaded()) alert("Please sign in to continue!");
         main.currentPage = Pages.SignInUI;
@@ -54,7 +53,7 @@ function App() {
       }
     }
   } else {
-    if (main.currentPage === Pages.GetStartedUI || main.currentPage === Pages.SignUpUI) {
+    if (main.currentPage === Pages.GetStartedUI) {
       main.currentPage = Pages.DashboardUI;
       window.location.href = "/" + main.currentPage;
       return(<></>);
@@ -73,7 +72,6 @@ function App() {
       <Routes>
         <Route path={Pages.GetStartedUI} element={<GetStarted app={main} />} />
         <Route path={Pages.SignInUI} element={<SignIn app={main} />} />
-        <Route path={Pages.SignUpUI} element={<SignUp app={main} />} />
         <Route path={Pages.EnterCodeUI} element={<EnterCode app={main} />} />
         <Route
           path={Pages.ForgotPasswordUI}
