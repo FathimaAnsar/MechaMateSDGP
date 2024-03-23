@@ -17,6 +17,7 @@ function ParkingFinder(props) {
     const [expandedInfo, setExpandedInfo] = useState({});
     const navigate = useNavigate();
     const mapRef = useRef(null);
+    const [locationHeaderText, setLocationHeaderText] = useState("You are here!");
     useEffect(() => {
         props.app.getCurrentLocation().then(location => {
             setCurrentLocation(location);
@@ -87,9 +88,10 @@ function ParkingFinder(props) {
         } finally {
             setLoading(false);
         }
+        setLocationHeaderText("You are here!");
     };
 
-    const showOnMap = (location) => {
+    const showOnMap = (location, isCurrentLocation = false) => {
         if (!currentLocation || !location) {
             setAlertInfo({
                 show: true,
@@ -102,6 +104,12 @@ function ParkingFinder(props) {
         }
         setSelectedMapUri(`https://maps.google.com/maps?q=${location.latitude},${location.longitude}&z=15&output=embed`);
         mapRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        if (isCurrentLocation) {
+            setLocationHeaderText("You are here!");
+        } else {
+            setLocationHeaderText("Your destination is here!");
+        }
     };
 
 
@@ -130,7 +138,7 @@ function ParkingFinder(props) {
                 <Row className="mt-3">
                     <Col className="text-center">
                         <h2 className="mb-4">Finding a parking place!</h2>
-                        <h4 className="text-secondary mb-3">You are here!</h4>
+                        <h4 className="text-secondary mb-3">{locationHeaderText}</h4>
                         {loading ? (
                             <div className="sweet-loading d-flex justify-content-center align-items-center" style={{ height: "300px" }}>
                                 <ClipLoader color="#007bff" size={150} />
