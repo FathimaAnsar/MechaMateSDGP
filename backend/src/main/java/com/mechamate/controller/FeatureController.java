@@ -291,8 +291,12 @@ public class FeatureController {
         if(resp != null) return resp;
 
 
-//        responseObject.put("exist", profileManager.isQrLinkExist(key));
+//       responseObject.put("exist", profileManager.isQrLinkExist(key));
+
 return null;
+
+
+
 
         // 1. Filter service records of vehicle by maintenance
         // 2. Filter prediction models by maintenance
@@ -309,7 +313,7 @@ return null;
 //                            HttpStatus.OK);
 //
 //
-//        return null;
+
     }
 
 
