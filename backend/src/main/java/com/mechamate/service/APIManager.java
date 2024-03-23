@@ -674,7 +674,6 @@ public class APIManager {
         }
     }
 
-
     public boolean processPaymentNotification(Map<String, Object> notificationData) {
         System.out.println("Processing payment notification: " + notificationData);
         return true;
