@@ -24,15 +24,19 @@ public class ServiceDTO {
     private ServiceQualityEnum serviceQuality;
 
     // Flag indicating whether the service is archived or not
-    private boolean archived;
+    private boolean isDone;
+
+    private long addedDate;
+
 
     // Constructor for ServiceDTO class
-    public ServiceDTO(String description, Maintenance.MaintenanceType appliedMaintenanceId, long nextServiceInKMs, ServiceQualityEnum serviceQuality, boolean archived) {
+    public ServiceDTO(String description, Maintenance.MaintenanceType appliedMaintenanceId, long nextServiceInKMs, ServiceQualityEnum serviceQuality, boolean isDone, long addedDate) {
         this.description = description;
         this.appliedMaintenanceId = appliedMaintenanceId;
         this.nextServiceInKMs = nextServiceInKMs;
         this.serviceQuality = serviceQuality;
-        this.archived = archived;
+        this.isDone = isDone;
+        this.addedDate = addedDate;
     }
 
     // Getters and setters
@@ -68,11 +72,20 @@ public class ServiceDTO {
         this.serviceQuality = serviceQuality;
     }
 
-    public boolean isArchived() {
-        return archived;
+    public boolean isDone() {
+        return isDone;
     }
 
-    public void setArchived(boolean archived) {
-        this.archived = archived;
+    public void setDone(boolean done) {
+        isDone = done;
     }
+
+    public long getAddedDate() {
+        return addedDate;
+    }
+
+    public void setAddedDate(long addedDate) {
+        this.addedDate = addedDate;
+    }
+
 }

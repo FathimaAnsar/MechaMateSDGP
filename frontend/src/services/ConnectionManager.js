@@ -2,7 +2,7 @@ import { API_BASE_URL } from "../Common.js";
 import CustomAlert from "../screens/components/CustomAlert.js";
 
 class ConnectionManager {
-  constructor() {}
+  constructor() { }
 
   async postParamRequest(apiEndPoint, postParams) {
     document.body.style.cursor = "wait";
@@ -40,7 +40,7 @@ class ConnectionManager {
       const data = await response.json();
       document.body.style.cursor = "default";
       return JSON.stringify(data);
-    } catch (error) {}
+    } catch (error) { }
     document.body.style.cursor = "default";
     return null;
   }
@@ -49,11 +49,10 @@ class ConnectionManager {
     document.body.style.cursor = "wait";
     try {
       const response = await fetch(
-        `${
-          API_BASE_URL +
-          (urlEncodedData == null
-            ? apiEndPoint
-            : apiEndPoint + "?" + urlEncodedData)
+        `${API_BASE_URL +
+        (urlEncodedData == null
+          ? apiEndPoint
+          : apiEndPoint + "?" + urlEncodedData)
         }`,
         {
           method: "GET",
@@ -63,7 +62,7 @@ class ConnectionManager {
       const data = await response.json();
       document.body.style.cursor = "default";
       return JSON.stringify(data);
-    } catch (error) {}
+    } catch (error) { }
     document.body.style.cursor = "default";
     return null;
   }
@@ -130,23 +129,23 @@ class ConnectionManager {
 
   async getPrediction(vehicleRegNo) {
     await this.sleep(5000);
-    return [ 
-      { 
+    return [
+      {
         "type": "TireChange",
         "ActualKMs": 1000,
         "PredictedKMs": 900
       },
-      { 
+      {
         "type": "EngineOilChange",
         "ActualKMs": 1000,
         "PredictedKMs": 900
       },
-      { 
+      {
         "type": "TireChange",
         "ActualKMs": 1000,
         "PredictedKMs": 900
       },
-      { 
+      {
         "type": "TireChange",
         "ActualKMs": 1000,
         "PredictedKMs": 900
@@ -158,31 +157,31 @@ class ConnectionManager {
   async getNearbyParking(lat, lng, radius, limit) {
     return await this.getRequest(
       "/api/v1/features/get-nearby-parking?lat=" +
-        lat +
-        "&lng=" +
-        lng +
-        "&radius=" +
-        radius +
-        "&limit=" +
-        limit
+      lat +
+      "&lng=" +
+      lng +
+      "&radius=" +
+      radius +
+      "&limit=" +
+      limit
     );
   }
 
   async getNearbyAutoShops(lat, lng, radius, limit) {
     return await this.getRequest(
       "/api/v1/features/get-nearby-spare-part-shops?lat=" +
-        lat +
-        "&lng=" +
-        lng +
-        "&radius=" +
-        radius +
-        "&limit=" +
-        limit
+      lat +
+      "&lng=" +
+      lng +
+      "&radius=" +
+      radius +
+      "&limit=" +
+      limit
     );
   }
-  async getVehicleLocation(vehicleRegNo){
+  async getVehicleLocation(vehicleRegNo) {
     return await this.getRequest(
-        "/api/v1/features/get-device-location?vehicleRegNo="+vehicleRegNo
+      "/api/v1/features/get-device-location?vehicleRegNo=" + vehicleRegNo
     );
   }
 

@@ -74,6 +74,14 @@ export default function ViewVehicle(props) {
       description: "Balanced all 4 wheels and replaced a bearing.",
       date: "2024-03-10", // Example date (YYYY-MM-DD format)
     },
+
+    //     description "descpriyjfnd"
+    // appliedMaintenanceId
+    // "WheelAlignment"
+    // nextServiceInKMs
+    // 1000
+    // serviceQuality
+    // "High"
     {
       id: 2,
       title: "Engine Tune-Up",

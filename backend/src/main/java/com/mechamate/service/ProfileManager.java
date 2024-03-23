@@ -476,6 +476,13 @@ public class ProfileManager {
                             HttpStatus.OK);
         }
 
+        if(!serviceRecord.getServices().isEmpty()) {
+            List<ServiceDTO> svcDTOs = serviceRecord.getServices();
+            for(ServiceDTO svDTO : svcDTOs) {
+                svDTO.setAddedDate(System.currentTimeMillis());
+            }
+        }
+
         if(!databaseAbstractLayer.addServiceRecord(serviceRecord))
             return new ResponseEntity<>
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorOperationFailed,
