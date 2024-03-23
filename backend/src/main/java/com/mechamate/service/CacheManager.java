@@ -20,6 +20,7 @@ public class CacheManager {
     private final ConcurrentHashMap<String, Token> tokenCache = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, TrackingInfo> trackingInfoCache = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, QrLink> qrLinkCache = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, SimulatedData> simulatedDataCache = new ConcurrentHashMap<>();
             /*
     USERPROFILE SECTION
         */
@@ -700,16 +701,78 @@ public class CacheManager {
     }
 
 
+    public boolean isSimulatedKeyExistInCache(String key) {
+        boolean isExist = false;
+        if (key == null) {
+            logger.warn("try to check  simulated data cache with a null key.");
+            return false;
+        }
 
+        try {
+            isExist = simulatedDataCache.containsKey(key);
+            if (isExist) {
+                logger.info("found SimulatedData for key {}", key);
+            } else {
+                logger.info("no SimulatedData found for key {}", key);
+            }
+        } catch (Exception e) {
+            logger.error("exception happens checking SimulatedData in cache for key {} Exception {}", key, e.toString());
+        }
+        return isExist;
+    }
 
+    public void putInSimulatedDataCache(String key, SimulatedData simulatedData) {
+        if (key == null || simulatedData == null) {
+            logger.warn("try to put a null key or SimulatedData into the cache Key {}, SimulatedData {}", key, simulatedData);
+            return;
+        }
 
+        try {
+            simulatedDataCache.put(key, simulatedData);
+            logger.info("SimulatedData put into cache under key: {}", key);
+        } catch (Exception e) {
+            logger.error("exception happens  putting SimulatedData into cache Key {}, Exception {}", key, e.toString());
+        }
+    }
 
+    public SimulatedData getFromSimulatedDataCache(String key) {
+        if (key == null) {
+            logger.warn("try to get a SimulatedData with a null key.");
+            return null;
+        }
 
+        try {
+            SimulatedData simulatedData = simulatedDataCache.get(key);
+            if (simulatedData == null) {
+                logger.info("cache miss for SimulatedData key {}", key);
+                return null;
+            } else {
+                logger.info("found SimulatedData for key {}", key);
+                return simulatedData;
+            }
+        } catch (Exception e) {
+            logger.error("exception happens getting SimulatedData from cache for key {}. Exception {}", key, e.toString());
+            return null;
+        }
+    }
 
+    public void deleteFromSimulatedDataCache(String key) {
+        if (key == null) {
+            logger.warn("try to delete SimulatedData from cache with null key");
+            return;
+        }
 
-
-
-
+        try {
+            if (!simulatedDataCache.containsKey(key)) {
+                logger.info("try to delete a non existing SimulatedData key from cache {}", key);
+                return;
+            }
+            simulatedDataCache.remove(key);
+            logger.info("SimulatedData removed from cache  key is {}", key);
+        } catch (Exception e) {
+            logger.error("exception happens delete SimulatedData from cache Key {}, Exception {}", key, e.toString());
+        }
+    }
 }
 
 

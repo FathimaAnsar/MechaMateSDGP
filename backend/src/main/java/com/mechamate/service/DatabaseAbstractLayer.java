@@ -55,6 +55,9 @@ public class DatabaseAbstractLayer {
     @Autowired
     private QrLinkRepo qrLinkRepo;
 
+    @Autowired
+    private SimulatedRepo simulatedRepo;
+
 //    public UserProfile getUserProfileDTO(UserProfile userProfile) {
 //        try {
 //            if(userProfile == null) return null;
@@ -1305,8 +1308,75 @@ public class DatabaseAbstractLayer {
     }
 
 
+/////////////////////SimulatedData Section////////////////////////
+    public boolean isSimulatedDataExists(String simulatedKey) {
+        if (simulatedKey == null || simulatedKey.trim().isEmpty()) {
+            return false;
+        }
+        try {
+            if (cacheManager.isSimulatedKeyExistInCache(simulatedKey)) {
+                return true;
+            }
+            return simulatedRepo.existsBySimulatedKey(simulatedKey);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean addSimulatedData(SimulatedData simulatedData) {
+        if (simulatedData == null || simulatedData.getSimulatedKey().trim().isEmpty()) {
+            return false;
+        }
+        if (isQrLinkExists(simulatedData.getSimulatedKey())) {
+            return false;
+        }
+        try {
+            simulatedRepo.save(simulatedData);
+            cacheManager.putInSimulatedDataCache(simulatedData.getSimulatedKey(), simulatedData);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public SimulatedData getSimulatedData(String simulatedKey ) {
+        if (simulatedKey == null || simulatedKey.trim().isEmpty()) {
+            return null;
+        }
+        SimulatedData simulatedData = cacheManager.getFromSimulatedDataCache(simulatedKey);
+        if (simulatedData != null) {
+            return simulatedData;
+        }
+
+        try {
+            Optional<SimulatedData> simulatedDataOptional = simulatedRepo.findBySimulatedKey(simulatedKey);
+            if (simulatedDataOptional.isPresent()) {
+
+                SimulatedData simulatedData2 = simulatedDataOptional.get();
+                cacheManager.putInSimulatedDataCache(simulatedKey, simulatedData2);
+                return simulatedData2;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
 
-
-
+    public boolean deleteSimulatedData(SimulatedData simulatedData) {
+        if (simulatedData == null) {
+            return false;
+        }
+        if (!isSimulatedDataExists(simulatedData.getSimulatedKey())) {
+            return true;
+        }
+        try {
+            cacheManager.deleteFromSimulatedDataCache(simulatedData.getSimulatedKey());
+            simulatedRepo.delete(simulatedData);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
