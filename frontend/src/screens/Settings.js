@@ -9,9 +9,8 @@ function Settings(props) {
   const [lastName, setLastName] = useState('');
   const [language, setLanguage] = useState('english');
   const [newPassword, setNewPassword] = useState('');
-  const [confirmUsername, setConfirmUsername] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('')
-
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
   
 
   const handleFirstNameChange = (event) => {
@@ -31,14 +30,17 @@ function Settings(props) {
 
   const handleNewPasswordChange = (event) => {
     setNewPassword(event.target.value);
+    checkPasswordsMatch(event.target.value, confirmPassword);
   };
-  const handleConfirmPassword =(event) => {
+
+  const handleConfirmPasswordChange = (event) => {
     setConfirmPassword(event.target.value);
-     
-    if (newPassword !== confirmPassword) {
-      alert("Passwords do not match");
-      return;
-  }
+    checkPasswordsMatch(newPassword, event.target.value);
+  };
+
+  const checkPasswordsMatch = (newPassword, confirmPassword) => {
+    setPasswordsMatch(newPassword === confirmPassword);
+  };
 
   }
 
@@ -78,20 +80,21 @@ function Settings(props) {
        <Form.Label>Confirm Username:</Form.Label>
        <Form.Control type="text" value={confirmUsername} onChange={handleConfirmUsername}/>
      </Form.Group>
-     <Form.Group controlId="newPassword">
-       <Form.Label>New Password:</Form.Label>
-       <Form.Control type="password" value={newPassword} onChange={handleNewPasswordChange} />
-     </Form.Group>
-     <Form.Group controlId="conPassword">
-       <Form.Label>Confirm Password:</Form.Label>
-       <Form.Control type="password" value={confirmPassword} onChange={handleConfirmPassword} />
-     </Form.Group>
+      <Form.Group controlId="newPassword">
+        <Form.Label>New Password:</Form.Label>
+        <Form.Control type="password" value={newPassword} onChange={handleNewPasswordChange} />
+      </Form.Group>
+      <Form.Group controlId="conPassword">
+        <Form.Label>Confirm Password:</Form.Label>
+        <Form.Control type="password" value={confirmPassword} onChange={handleConfirmPasswordChange} />
+      </Form.Group>
+      {!passwordsMatch && <Alert variant="danger">Passwords do not match!</Alert>}
      <Button type="submit">Save Changes</Button>
    </Form>
  </div>
  </div>
   );
-}
+
 
 export default Settings;
 

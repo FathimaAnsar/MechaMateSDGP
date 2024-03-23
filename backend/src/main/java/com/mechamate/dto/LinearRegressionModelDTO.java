@@ -6,29 +6,29 @@ import com.mechamate.entity.PredictionModel;
 import java.util.List;
 
 public class LinearRegressionModelDTO extends PredictionModelDTO{
-    private double slope;
-    private double intercept;
+    private double mValue;
+    private double cValue;
 
-    public LinearRegressionModelDTO(String modelId, String name, String description, PredictionModel.modelType modelType, double slope,
-                                    double intercept, List<Maintenance.MaintenanceType> appliedMaintenanceList) {
+    public LinearRegressionModelDTO(String modelId, String name, String description, PredictionModel.modelType modelType,
+                                    double mValue, double cValue, List<Maintenance.MaintenanceType> appliedMaintenanceList) {
         super(modelId, name, description, modelType, appliedMaintenanceList);
-        this.slope = slope;
-        this.intercept = intercept;
+        this.mValue = mValue;
+        this.cValue = cValue;
     }
 
-    public double getSlope() {
-        return slope;
+    public double getmValue() {
+        return mValue;
     }
 
-    public void setSlope(double slope) {
-        this.slope = slope;
+    public void setmValue(double mValue) {
+        this.mValue = mValue;
     }
 
-    public double getIntercept() {
-        return intercept;
+    public double getcValue() {
+        return cValue;
     }
 
-    public void setIntercept(double intercept) {
-        this.intercept = intercept;
+    public void setcValue(double cValue) {
+        this.cValue = cValue;
     }
 }

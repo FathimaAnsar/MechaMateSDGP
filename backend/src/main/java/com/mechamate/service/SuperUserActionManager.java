@@ -159,15 +159,17 @@ public class SuperUserActionManager {
                     m = new LinearRegressionModelDTO(model.get_id().toHexString(), model.getName(),
                             model.getDescription(),
                             model.getModelType(),
-                            linearModel.getSlope(),
-                            linearModel.getIntercept(),
+                            linearModel.getmValue(),
+                            linearModel.getcValue(),
                             model.getAppliedMaintenanceList());
                 } else if (model instanceof PolynomialRegressionModel) {
                     PolynomialRegressionModel polynomialModel = (PolynomialRegressionModel) model;
                     m = new PolynomialRegressionModelDTO(model.get_id().toHexString(), model.getName(),
                             model.getDescription(),
                             model.getModelType(),
-                            polynomialModel.getCoefficients(),
+                            polynomialModel.getAValue(),
+                            polynomialModel.getBValue(),
+                            polynomialModel.getCValue(),
                             model.getAppliedMaintenanceList());
                 }
                 if (m != null) {

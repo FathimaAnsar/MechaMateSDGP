@@ -40,8 +40,8 @@ public class PdM {
                                     appliedMaintenanceList);
         } else if (modelType == PredictionModel.modelType.polynomial) {
             Double[] trainedData = trainPolynomialmodel(csvFileName);
-            predictionModel = new PolynomialRegressionModel(name, description, modelType, trainedData,
-                    appliedMaintenanceList);
+            predictionModel = new PolynomialRegressionModel(name, description, modelType, trainedData[0], trainedData[1],
+                    trainedData[2], appliedMaintenanceList);
         } else {
             logger.error("Failed to train model");
         }
