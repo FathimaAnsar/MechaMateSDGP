@@ -1,40 +1,40 @@
 .card-body-with-icon {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .card-title {
-    font-size: 14px;
-  }
-  
-  .card-text {
-    
-    font-size: 12px;
-  }
-  
-  .shadow-glow-blue {
-    
-    border-radius: 13px;
-    box-shadow: 0 0 5px 0 rgba(36, 92, 176, 0.2);
-  }
-  
-  .shadow-glow-warning{
-    border-radius: 13px;
-    box-shadow: 0 0 5px 0 rgba(255, 140, 0, 0.8);
-  }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  .shadow-glow-success{
-    border-radius: 13px;
-    box-shadow: 0 0 5px 0 rgba(0, 255, 0, 0.8);
-  }
+.card-title {
+  font-size: 14px;
+}
 
-  .shadow-glow-danger{
-    border-radius: 13px;
-    box-shadow: 0 0 5px 0 rgba(255, 0, 0, 0.8);
-  }
+.card-text {
+  font-size: 12px;
+}
 
-  
-  /* .shadow-glow-blue:hover {
+.shadow-glow-blue {
+
+  border-radius: 13px;
+  box-shadow: 0 0 6px 0 rgba(3, 30, 70, 0.2);
+}
+
+.shadow-glow-warning {
+  border-radius: 13px;
+  box-shadow: 0 0 6px 0 rgba(255, 140, 0, 0.5);
+
+}
+
+.shadow-glow-success {
+  border-radius: 13px;
+  box-shadow: 0 0 6px 0 rgba(0, 255, 0, 0.5);
+}
+
+.shadow-glow-danger {
+  border-radius: 13px;
+  box-shadow: 0 0 6px 0 rgba(255, 0, 0, 0.5);
+}
+
+
+/* .shadow-glow-blue:hover {
     box-shadow: 0 0 6px 0 rgba(0, 123, 255, 0.8);
   } */
