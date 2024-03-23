@@ -35,7 +35,7 @@ class MechaMateTests {
 //	}
 
 //
-//	@Test
+//	@com.mechamate.Test
 //	void Signup_InputValidation() {
 //
 //

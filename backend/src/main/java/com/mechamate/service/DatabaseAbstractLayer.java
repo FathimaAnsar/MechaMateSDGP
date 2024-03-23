@@ -52,6 +52,9 @@ public class DatabaseAbstractLayer {
     @Autowired
     private TrackingInfoRepo trackingInfoRepo;
 
+    @Autowired
+    private QrLinkRepo qrLinkRepo;
+
 //    public UserProfile getUserProfileDTO(UserProfile userProfile) {
 //        try {
 //            if(userProfile == null) return null;
@@ -1225,4 +1228,82 @@ public class DatabaseAbstractLayer {
             return null;
         }
     }
+
+
+
+    public boolean isQrLinkExists(String qrKey) {
+        if (qrKey == null || qrKey.trim().isEmpty()) {
+            return false;
+        }
+        try {
+            if (cacheManager.isQrLinkExistInCache(qrKey)) {
+                return true;
+            }
+            return qrLinkRepo.existsByQrKey(qrKey);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean addQrLink(QrLink qrLink) {
+        if (qrLink == null || qrLink.getQrKey().trim().isEmpty()) {
+            return false;
+        }
+        if (isQrLinkExists(qrLink.getQrKey())) {
+            return false;
+        }
+        try {
+            qrLinkRepo.save(qrLink);
+            cacheManager.putInQrLinkCache(qrLink.getQrKey(), qrLink);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public QrLink getQrLink(String qrKey) {
+        if (qrKey == null || qrKey.trim().isEmpty()) {
+            return null;
+        }
+        QrLink qrLink = cacheManager.getFromQrLinkCache(qrKey);
+        if (qrLink != null) {
+            return qrLink;
+        }
+
+        try {
+            Optional<QrLink> qrLinkOptional = qrLinkRepo.findByQrKey(qrKey);
+            if (qrLinkOptional.isPresent()) {
+
+                QrLink qrLink2 = qrLinkOptional.get();
+                cacheManager.putInQrLinkCache(qrKey, qrLink2);
+                return qrLink2;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+
+    public boolean deleteQrLink(QrLink qrLink) {
+        if (qrLink == null) {
+            return false;
+        }
+        if (!isQrLinkExists(qrLink.getQrKey())) {
+            return true;
+        }
+        try {
+            qrLinkRepo.delete(qrLink);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
+
+
+
+
 }

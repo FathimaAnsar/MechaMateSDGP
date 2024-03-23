@@ -1,9 +1,7 @@
 package com.mechamate.service;
 
 import com.mechamate.MechaMate;
-import com.mechamate.dto.ErrorDTO;
-import com.mechamate.dto.MaintenanceDTO;
-import com.mechamate.dto.PredictionModelDTO;
+import com.mechamate.dto.*;
 import com.mechamate.entity.*;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
@@ -118,6 +116,7 @@ public class SuperUserActionManager {
 
     // Method to add prediction model
     public ResponseEntity<ErrorDTO> addPredictionModel(PredictionModel predictionModel, UserProfile userProfile) {
+        logger.info("Adding prediction model");
         // Check if prediction model already exists
         if(predictionModel.get_id() != null && databaseAbstractLayer.isPredictionModelExists(predictionModel)) {
             // Log error message
@@ -153,11 +152,27 @@ public class SuperUserActionManager {
             // Get list of prediction models from database
             List<PredictionModel> predictionModels = databaseAbstractLayer.getPredictionModelList();
             // Convert each prediction model to DTO
-            for(PredictionModel m: predictionModels) {
-                predictionModelDTOS.add(new PredictionModelDTO(m.get_id().toHexString(), m.getName(), m.getDescription(),
-                        m.getmValue(),
-                        m.getcValue(),
-                        m.getAppliedMaintenanceList()));
+            for(PredictionModel model: predictionModels) {
+                PredictionModelDTO m = null;
+                if (model instanceof LinearRegressionModel) {
+                    LinearRegressionModel linearModel = (LinearRegressionModel) model;
+                    m = new LinearRegressionModelDTO(model.get_id().toHexString(), model.getName(),
+                            model.getDescription(),
+                            model.getModelType(),
+                            linearModel.getSlope(),
+                            linearModel.getIntercept(),
+                            model.getAppliedMaintenanceList());
+                } else if (model instanceof PolynomialRegressionModel) {
+                    PolynomialRegressionModel polynomialModel = (PolynomialRegressionModel) model;
+                    m = new PolynomialRegressionModelDTO(model.get_id().toHexString(), model.getName(),
+                            model.getDescription(),
+                            model.getModelType(),
+                            polynomialModel.getCoefficients(),
+                            model.getAppliedMaintenanceList());
+                }
+                if (m != null) {
+                    predictionModelDTOS.add(m);
+                }
             }
         } catch (Exception e) {// Log exception if any
             logger.error("Error while getting prediction model list", e);

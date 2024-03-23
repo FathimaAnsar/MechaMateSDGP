@@ -11,7 +11,7 @@
 //import com.mechamate.service.SessionManager;
 //import jakarta.servlet.http.HttpSession;
 //import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.com.mechamate.Test;
 //import org.mockito.InjectMocks;
 //import org.mockito.Mock;
 //import org.mockito.MockitoAnnotations;
@@ -43,7 +43,7 @@
 //        MockitoAnnotations.openMocks(this);
 //    }
 //
-//    @Test
+//    @com.mechamate.Test
 //    public void testSignin_userAlreadySignedIn() {
 //        HttpServletRequest request = mock(HttpServletRequest.class);
 //        HttpServletResponse response = mock(HttpServletResponse.class);
@@ -65,7 +65,7 @@
 //        assertEquals(ErrorDTO.ErrorStatus.InternalError, errorDTO.getError());
 //    }
 //
-//    @Test
+//    @com.mechamate.Test
 //    public void testSignout_userSignedOutSuccessfully() {
 //        HttpServletRequest request = mock(HttpServletRequest.class);
 //        HttpServletResponse response = mock(HttpServletResponse.class);
