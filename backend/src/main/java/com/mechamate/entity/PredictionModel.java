@@ -16,6 +16,16 @@ public class PredictionModel {
         polynomial,
         linear,
     }
+
+    public enum ParameterType {
+        EngineTemp,
+        Temp,
+        Vibration,
+        DrivingPattern,
+        RPM,
+        HourOfTheDay
+    }
+
     // MongoDB ID field
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,15 +39,19 @@ public class PredictionModel {
 
     private modelType modelType;
 
+    private ParameterType paramType;
+
     // List of maintenance types applied by this prediction model
     private List<Maintenance.MaintenanceType> appliedMaintenanceList;
 
     // Constructor
-    public PredictionModel(String name, String description, PredictionModel.modelType modelType,  List<Maintenance.MaintenanceType> appliedMaintenanceList) {
+    public PredictionModel(String name, String description, PredictionModel.modelType modelType,
+                           List<Maintenance.MaintenanceType> appliedMaintenanceList, ParameterType paramType) {
         this.name = name;
         this.description = description;
         this.modelType = modelType;
         this.appliedMaintenanceList = appliedMaintenanceList;
+        this.paramType = paramType;
     }
 
     // Getters and setters
@@ -79,6 +93,14 @@ public class PredictionModel {
 
     public void setAppliedMaintenanceList(List<Maintenance.MaintenanceType> appliedMaintenanceList) {
         this.appliedMaintenanceList = appliedMaintenanceList;
+    }
+
+    public ParameterType getParamType() {
+        return paramType;
+    }
+
+    public void setParamType(ParameterType paramType) {
+        this.paramType = paramType;
     }
 
 }
