@@ -174,6 +174,9 @@ public class PdM {
         maintenanceTypes.add(Maintenance.MaintenanceType.BrakeFluidChange);
         maintenanceTypes.add(Maintenance.MaintenanceType.WheelAlignment);
 
+
+        long currentMileage = 10000;
+
         for (VehicleDTO v : vehicles) {
             List<ServiceRecordDTO> serviceRecordDTOS = v.getServiceRecords();
             for(Maintenance.MaintenanceType mType : maintenanceTypes) {
@@ -202,21 +205,32 @@ public class PdM {
                     continue;
                 }
 
+                long actualKMsRemaining = (serviceDTO.getNextServiceInKMs() - (currentMileage - serviceMileage));
 
-            //    long actualKMsRemaining = ;
-
-                List<PredictionModel> predictionModels = databaseAbstractLayer.getPredictionModelList();
+                List<PredictionModel> predictionModels = databaseAbstractLayer.getPredictionModelListByMaintenance(mType);
                 if(predictionModels.isEmpty()) {
                     predictionDTOS.add(new PredictionDTO(mType, PredictionDTO.PredictionStatus.Actual,
-                            (serviceDTO.getNextServiceInKMs() - (/*currentMileage -*/ serviceMileage)),
-                            0, false));
+                            actualKMsRemaining, actualKMsRemaining, false));
                     continue;
                 }
 
-
                 List<TrackingInfo> trackInfo = databaseAbstractLayer.getTrackingInfo(v.getRegistrationNumber());
+                if(trackInfo.isEmpty()) {
+                    predictionDTOS.add(new PredictionDTO(mType, PredictionDTO.PredictionStatus.Actual,
+                            actualKMsRemaining, actualKMsRemaining, false));
+                    continue;
+                }
+
+                double totalWeight = 0; TrackingInfo prevTrackInfo = null;
 
 
+                for(TrackingInfo tInfo : trackInfo) {
+
+
+
+
+
+                }
 
 
 

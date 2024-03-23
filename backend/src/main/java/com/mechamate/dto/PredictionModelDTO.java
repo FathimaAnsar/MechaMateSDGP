@@ -19,16 +19,19 @@ public class PredictionModelDTO {
     // Type of the prediction model
     private PredictionModel.modelType modelType;
 
+    private PredictionModel.ParameterType paramType;
+
     // List of maintenance types to which this prediction model is applied
     private List<Maintenance.MaintenanceType> appliedMaintenanceList;
 
     // Constructor for PredictionModelDTO class
-    public PredictionModelDTO(String modelId, String name, String description,PredictionModel.modelType modelType, List<Maintenance.MaintenanceType> appliedMaintenanceList) {
+    public PredictionModelDTO(String modelId, String name, String description,PredictionModel.modelType modelType, List<Maintenance.MaintenanceType> appliedMaintenanceList, PredictionModel.ParameterType paramType) {
         this.modelId = modelId;
         this.name = name;
         this.description = description;
         this.modelType = modelType;
         this.appliedMaintenanceList = appliedMaintenanceList;
+        this.paramType = paramType;
     }
 
     // Getters and setters
@@ -71,4 +74,13 @@ public class PredictionModelDTO {
     public void setAppliedMaintenanceList(List<Maintenance.MaintenanceType> appliedMaintenanceList) {
         this.appliedMaintenanceList = appliedMaintenanceList;
     }
+
+    public PredictionModel.ParameterType getParamType() {
+        return paramType;
+    }
+
+    public void setParamType(PredictionModel.ParameterType paramType) {
+        this.paramType = paramType;
+    }
+
 }
