@@ -10,7 +10,9 @@ import {
   FaGasPump,
   FaBuilding,
   FaCalendarAlt,
+  FaWrench, FaExclamationTriangle, FaTint, FaCogs
 } from "react-icons/fa";
+
 import { useState } from "react";
 import "./styles/viewVehicle.css";
 import { useLocation } from "react-router-dom";
@@ -20,12 +22,17 @@ import vitzImage from "../images/vehicles/vitz.jpg";
 import civicImage from "../images/vehicles/civic-side.jpg";
 import defaultImage from "../images/vehicles/default.jpg";
 import corollaImage from "../images/vehicles/corolla-side.jpg";
+import ConnectionManager from "../services/ConnectionManager";
 
 export default function ViewVehicle(props) {
   const location = useLocation();
   const index = new URLSearchParams(location.search).get("vehicle");
   const [vehicle, setVehicle] = useState(null);
   const [vehicleList, setVehicleList] = useState([]);
+  const [maintenanceData, setMaintenanceData] = useState(null);
+
+  const connection = new ConnectionManager();
+
 
   const carImages = {
     Camry: camryImage, // Assuming you've imported the image statically
@@ -35,20 +42,64 @@ export default function ViewVehicle(props) {
     default: defaultImage,
   };
 
-  useEffect(() => {
-    const storedVehicleList = JSON.parse(localStorage.getItem("vehicleList"));
+  const maintenanceIcons = {
+    WheelAlignment: FaCogs,
+    EngineOilChange: FaOilCan,
+    BrakeFluidChange: FaExclamationTriangle,
+    BrakeCaliperChange: FaTools,
+    CoolantChange: FaTint,
+    TireChange: FaCar
+  };
+
+  const maintenanceTypes = {
+    WheelAlignment: "Wheel Alignment",
+    EngineOilChange: "Engine Oil Change",
+    BrakeFluidChange: "Brake Fluid Change",
+    BrakeCaliperChange: "Brake Caliper Change",
+    CoolantChange: "Coolant Change",
+    TireChange: "Tire Change"
+  };
+
+  console.log(maintenanceTypes);
+
+
+
+  const fetchStoredVehicleList = async () => {
+    const storedVehicleList = await JSON.parse(localStorage.getItem("vehicleList"));
     if (storedVehicleList) {
       setVehicleList(storedVehicleList);
     }
-  }, []);
+  };
 
   useEffect(() => {
-    if (index !== null && index !== "") {
+    fetchStoredVehicleList();
+  }, []);
+  useEffect(() => {
+    if (index !== null && index !== "" && vehicleList.length > 0) {
       if (index >= 0 && index < vehicleList.length) {
         setVehicle(vehicleList[index]);
       }
     }
   }, [index, vehicleList]);
+
+  const fetchPrediction = async () => {
+    try {
+      const data = await connection.getPrediction(vehicle.registrationNumber);
+      setMaintenanceData(data);
+
+      console.log(data)
+    } catch (error) {
+      console.error("Error fetching maintenance prediction:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (vehicle && vehicle.registrationNumber) {
+      fetchPrediction();
+    }
+  }, [vehicle]);
+
+
 
   const imageUrl = vehicle
     ? carImages[vehicle.vehicleModel] || carImages["default"]
@@ -75,13 +126,6 @@ export default function ViewVehicle(props) {
       date: "2024-03-10", // Example date (YYYY-MM-DD format)
     },
 
-    //     description "descpriyjfnd"
-    // appliedMaintenanceId
-    // "WheelAlignment"
-    // nextServiceInKMs
-    // 1000
-    // serviceQuality
-    // "High"
     {
       id: 2,
       title: "Engine Tune-Up",
@@ -105,12 +149,14 @@ export default function ViewVehicle(props) {
     },
   ]);
 
+
+
   return (
     <>
       <Header app={props.app} />
       {/* <Button variant='dark' onClick={() => props.app.goBack()}>Go Back</Button> */}
       <div>
-        {vehicle && (
+        {vehicle && maintenanceData && (
           <Container style={{ marginTop: "20px" }}>
             <Row className="text-center">
               <h2>
@@ -127,13 +173,61 @@ export default function ViewVehicle(props) {
               <p style={{ color: "gray" }}>{vehicle.registrationNumber}</p>
             </Row>
 
-            <Row>
-              <h3>Status</h3>
+
+            <Row><h3>Vehicle Status</h3></Row>
+            <Row xs={1} md={2} className="g-2">
+
+
+              {maintenanceData.map((maintenance, index) => {
+                // Determine the icon component based on the maintenance type
+                const IconComponent = maintenanceIcons[maintenance.type];
+
+                // Determine the class name for the label glow effect based on the predicted value
+                let shadowGlowClass;
+                if (maintenance.PredictedKMs == null) {
+                  shadowGlowClass = 'shadow';
+
+                }
+                else if (maintenance.PredictedKMs < 100) {
+                  shadowGlowClass = 'shadow-glow-danger';
+                } else if (maintenance.PredictedKMs < 500) {
+                  shadowGlowClass = 'shadow-glow-warning';
+                } else {
+                  shadowGlowClass = 'shadow-glow-success';
+                }
+
+                return (
+                  <Col key={index}>
+                    <Card className={`${shadowGlowClass} `}>
+                      <Card.Body className="card-body-with-icon">
+                        <div>
+                          <Card.Title className="card-title">
+                            {maintenanceTypes[maintenance.type]}
+                          </Card.Title>
+                          <Card.Text className="card-text">
+                            {/* Predicted: {maintenance.PredictedKMs}km <br /> */}
+                            Actual: {maintenance.ActualKMs}km
+                          </Card.Text>
+                          {/* <Card.Text className="card-text">
+                            
+                          </Card.Text> */}
+                        </div>
+                        {/* Render the icon */}
+                        <div>
+                          <IconComponent className="icon me-1" />
+                          {" "}{maintenance.PredictedKMs}km
+                        </div>
+
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                );
+              })}
             </Row>
             <Row xs={2} md={3}>
               <Col>
-                <Card className="shadow-glow-success">
-                  <Card.Body className="card-body-with-icon">
+                <Card>
+                  <Card.Body className="card-body-with-icon shadow">
                     <div>
                       <Card.Title className="card-title">Fuel </Card.Title>
                       <Card.Text className="card-text">
@@ -145,8 +239,8 @@ export default function ViewVehicle(props) {
                 </Card>
               </Col>
               <Col>
-                <Card className="shadow-glow-warning">
-                  <Card.Body className="card-body-with-icon">
+                <Card>
+                  <Card.Body className="card-body-with-icon shadow">
                     <div>
                       <Card.Title className="card-title">Battery</Card.Title>
                       <Card.Text className="card-text">{battery}</Card.Text>
@@ -156,37 +250,13 @@ export default function ViewVehicle(props) {
                 </Card>
               </Col>
               <Col>
-                <Card className="shadow-glow-success">
-                  <Card.Body className="card-body-with-icon">
+                <Card>
+                  <Card.Body className="card-body-with-icon shadow">
                     <div>
-                      <Card.Title className="card-title">
-                        Maintenance
+                      <Card.Title className="card-title ">
+                        Mileage
                       </Card.Title>
-                      <Card.Text className="card-text">{maintenance}</Card.Text>
-                    </div>
-                    <FaTools className="icon me-1" />
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col>
-                <Card className="shadow-glow-danger">
-                  <Card.Body className="card-body-with-icon">
-                    <div>
-                      <Card.Title className="card-title">Oil Change</Card.Title>
-                      <Card.Text className="card-text">{oilChange}</Card.Text>
-                    </div>
-                    <FaOilCan className="icon me-1" />
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col>
-                <Card className="shadow-glow-blue">
-                  <Card.Body className="card-body-with-icon">
-                    <div>
-                      <Card.Title className="card-title">
-                        Current Mileage
-                      </Card.Title>
-                      <Card.Text className="card-text">
+                      <Card.Text className="placeholder-glow">
                         {vehicle.currentMileage}km
                       </Card.Text>
                     </div>
@@ -195,28 +265,14 @@ export default function ViewVehicle(props) {
                 </Card>
               </Col>
             </Row>
-            {/* <Row><h3>Details</h3></Row>
-        <Row xs={2} md={3} className="g-2">
-          
-          <Col>
-            <Card className="shadow-glow-blue">
-              <Card.Body className="card-body-with-icon">
-                <div>
-                  <Card.Title className="card-title">Fuel Type</Card.Title>
-                  <Card.Text className="card-text">{fuelType}</Card.Text>
-                </div>
-                <FaGasPump className="icon me-1" />
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row> */}
+
             <Row>
               <h3>Recent Activity</h3>
             </Row>
             <Row xs={1} md={1}>
               {maintenanceRecords.map((record) => (
                 <Col key={record.id}>
-                  <Card className="shadow-glow-blue">
+                  <Card className="shadow">
                     <Card.Body className="card-body-with-icon">
                       <div>
                         <Card.Title className="card-title">
@@ -239,7 +295,7 @@ export default function ViewVehicle(props) {
             </Row>
             <Row xs={2} md={3}>
               <Col>
-                <Card className="shadow-glow-blue">
+                <Card className="shadow">
                   <Card.Body className="card-body-with-icon">
                     <div>
                       <Card.Title className="card-title">
@@ -254,7 +310,7 @@ export default function ViewVehicle(props) {
                 </Card>
               </Col>
               <Col>
-                <Card className="shadow-glow-blue">
+                <Card className="shadow">
                   <Card.Body className="card-body-with-icon">
                     <div>
                       <Card.Title className="card-title">
@@ -269,7 +325,7 @@ export default function ViewVehicle(props) {
                 </Card>
               </Col>
               <Col>
-                <Card className="shadow-glow-blue">
+                <Card className="shadow">
                   <Card.Body className="card-body-with-icon">
                     <div>
                       <Card.Title className="card-title">

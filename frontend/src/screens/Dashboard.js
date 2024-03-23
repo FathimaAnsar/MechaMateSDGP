@@ -17,6 +17,7 @@ import CustomCarousel from "./components/CustomCarousel.js";
 // import LoadingScreen from "./components/LoadingScreen.js";
 // import corollaImage from "../images/vehicles/corolla-side.jpg";
 import DashboardCard from "./components/DashboardCard.js";
+import LoadingScreen from "./components/LoadingScreen.js";
 
 function Dashboard(props) {
   const navigate = useNavigate();
@@ -86,102 +87,109 @@ function Dashboard(props) {
   return (
     <>
       <Header app={props.app} />
-      <Container fluid style={{ padding: "5px 15px" }}>
-        <Row style={{ marginTop: "10px" }}>
-          <Col>
-            <h2 style={{ fontWeight: "500" }}>
-              {generateGreeting()}{" "}
-              {props.app.getUserProfile() == null
-                ? "<User>"
-                : props.app.getUserProfile().firstName}
-              !
-            </h2>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <div>
-              <CustomCarousel />
-            </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={12}>
-            <h3 id="dash-vehicle-heading">My Vehicles</h3>
-          </Col>
-          <Col md={12}>
-            <div
-              style={{
-                height: "100%", // Consider removing this
-                overflowY: "auto",
-              }}
-            >
-              {loading || vehicles == null ? (
+      {loading ? (
+        <LoadingScreen />
+      ) : (
+        <>
+          <Container fluid style={{ padding: "5px 15px" }}>
+            <Row style={{ marginTop: "10px" }}>
+              <Col>
+                <h2 style={{ fontWeight: "500" }}>
+                  {generateGreeting()}{" "}
+                  {props.app.getUserProfile() == null
+                    ? "<User>"
+                    : props.app.getUserProfile().firstName}
+                  !
+                </h2>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <div>
+                  <CustomCarousel />
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={12}>
+                <h3 id="dash-vehicle-heading">My Vehicles</h3>
+              </Col>
+              <Col md={12}>
                 <div
                   style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    width: "100%",
-                    height: "100px",
-                    alignItems: "center",
+                    height: "100%", // Consider removing this
+                    overflowY: "auto",
                   }}
                 >
-                  <Spinner animation="border" variant="secondary" />
+                  {loading || vehicles == null ? (
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        width: "100%",
+                        height: "100px",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Spinner animation="border" variant="secondary" />
+                    </div>
+                  ) : vehicles.length > 0 ? (
+                    <Row>
+                      {" "}
+                      {/* Add a Row here */}
+                      {vehicles.map((vehicle, index) => (
+                        <Col key={index} sm={12} md={6} xxl={4}>
+                          <div>
+                            <ClickableCard
+                              content={vehicle}
+                              onClick={handleCardClick}
+                              index={index}
+                            />
+                          </div>
+                        </Col>
+                      ))}
+                    </Row>
+                  ) : (
+                    <div style={{ width: "100%" }}>
+                      <p id="dash-vehicle-p1">
+                        You have not added any vehicles yet
+                      </p>
+                      <Button
+                        id="dash-add-vehi-btn"
+                        variant="dark"
+                        onClick={() => navigate("/" + Pages.AddVehiclesUI)}
+                      >
+                        Add a Vehicle
+                      </Button>
+                    </div>
+                  )}
                 </div>
-              ) : vehicles.length > 0 ? (
-                <Row>
-                  {" "}
-                  {/* Add a Row here */}
-                  {vehicles.map((vehicle, index) => (
-                    <Col key={index} sm={12} md={6} xxl={4}>
-                      <div>
-                        <ClickableCard
-                          content={vehicle}
-                          onClick={handleCardClick}
-                          index={index}
-                        />
-                      </div>
-                    </Col>
-                  ))}
-                </Row>
-              ) : (
-                <div style={{ width: "100%" }}>
-                  <p id="dash-vehicle-p1">
-                    You have not added any vehicles yet
-                  </p>
-                  <Button
-                    id="dash-add-vehi-btn"
-                    variant="dark"
-                    onClick={() => navigate("/" + Pages.AddVehiclesUI)}
-                  >
-                    Add a Vehicle
-                  </Button>
-                </div>
-              )}
-            </div>
-          </Col>
-        </Row>
-        <br />
+              </Col>
+            </Row>
+            <br />
 
-        <Row>
-          <Col md={12}>
-            <h3>Services</h3>
-          </Col>
+            <Row>
+              <Col md={12}>
+                <h3>Services</h3>
+              </Col>
 
-          {servicesList.map((option, index) => (
-            <Col key={index} xs={6} sm={6} md={4} lg={3}>
-              <div>
-                <DashboardCard
-                  content={option}
-                  onClick={() =>  navigate(option.path) }
-                />
-              </div>
-            </Col>
-          ))}
-        </Row>
+              {servicesList.map((option, index) => (
+                <Col key={index} xs={6} sm={6} md={4} lg={3}>
+                  <div>
+                    <DashboardCard
+                      content={option}
+                      onClick={() => navigate(option.path)}
+                    />
+                  </div>
+                </Col>
+              ))}
+            </Row>
 
-        <br />
-      </Container>
+            <br />
+          </Container>
+        </>
+
+      )}
     </>
   );
 }

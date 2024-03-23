@@ -97,15 +97,11 @@ function MyVehicles(props) {
       } else if (response.data) {
         const responseData = response.data;
         const message = responseData.message;
-        return responseData;
         clearInputFields();
       }
     } catch (error) {
       alert("Vehicle registration failed");
-
       console.error('Error registering vehicle:', error);
-
-
     }
   }
 

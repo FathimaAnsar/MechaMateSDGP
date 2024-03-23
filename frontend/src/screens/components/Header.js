@@ -49,12 +49,12 @@ function Header(props) {
     <>
       <Navbar
         expand="lg"
-        className="bg-body-tertiary"
+        className="bg-black"
         bg="dark"
         data-bs-theme="dark"
         sticky="top"
       >
-        <Container>
+        <Container >
           <Navbar.Brand>
             <Link to="/dashboard">
               <Image
@@ -117,7 +117,7 @@ function Header(props) {
                 navigate("/" + Pages.ParkingFinderUI);
               }}
             >
-             AutoMob Search
+              AutoMob Search
             </Button>
             <Button
               variant="light"

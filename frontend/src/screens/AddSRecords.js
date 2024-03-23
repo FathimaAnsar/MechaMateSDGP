@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from "./components/Header";
 import { Form, Button, Container } from 'react-bootstrap';
 import axios from 'axios';
 import { API_BASE_URL } from "../Common.js";
+import ConnectionManager from '../services/ConnectionManager.js';
+import LoadingScreen from './components/LoadingScreen.js';
 // import './styles/Form.css';
 
 function AddServiceRecordByServiceProvider(props) {
@@ -10,6 +12,29 @@ function AddServiceRecordByServiceProvider(props) {
   const [description, setDescription] = useState('');
   const [date, setDate] = useState(new Date());
   const [mileage, setMileage] = useState('');
+  const [vehicles, setVehicles] = useState([]);
+
+  const [loading, setLoading] = useState(true);
+
+  const connection = new ConnectionManager();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const fetchedVehicles = await connection.getVehicleList();
+        const vehicles = JSON.parse(fetchedVehicles);
+        setVehicles(vehicles);
+        setLoading(false);
+
+        console.log(vehicles)
+      } catch (error) {
+        console.error("Error fetching vehicles:", error);
+      } finally {
+
+      }
+    };
+    fetchData();
+  }, []);
 
   async function addSRecord(event) {
     event.preventDefault();
@@ -58,45 +83,66 @@ function AddServiceRecordByServiceProvider(props) {
       <Header app={props.app} />
 
 
-      <Container fluid='sm' className='g-4' style={{ maxWidth: '400px', marginTop: '20px' }}>
-        <h2>Add Service Records Manually</h2>
-        <Form>
-          <Form.Group controlId="services">
-            <Form.Label>Service Type:</Form.Label>
-            <Form.Control as="select">
-              <option value="WheelAlignment">Wheel Alignment</option>
-              <option value="EngineOilChange">Engine Oil Change</option>
-              <option value="BrakeFluidChange">Brake Fluid Change</option>
-              <option value="BrakeCaliperChange">Brake Caliper Change</option>
-              <option value="CoolantChange">Coolant Change</option>
-              <option value="TireChange">Tire Change</option>
-              <option value="PistonRingsChange">Piston Rings Change</option>
-              <option value="PistonChange">Piston Change</option>
-              <option value="DieselFilterChange">Diesel Filter Change</option>
-              <option value="VipersChange">Vipers Change</option>
-            </Form.Control>
-          </Form.Group>
 
-          <Form.Group controlId="description">
-            <Form.Label>Description:</Form.Label>
-            <Form.Control as="textarea" rows={4} />
-          </Form.Group>
+      {loading ? (
+        <LoadingScreen />
+      ) : (
+        <>
+          <Container fluid='sm' className='g-4' style={{ maxWidth: '400px', marginTop: '20px' }}>
+            <h2>Add Service Records Manually</h2>
+            {vehicles ? (
+              <Form>
+                <Form.Group controlId="services">
+                  <Form.Label>Vehicle:</Form.Label>
+                  <Form.Control as="select">
+                    {vehicles.map(vehicle => (
+                      <option key={vehicle.id} value={vehicle.id}>
+                        {vehicle.vehicleModel} - {vehicle.registrationNumber}
+                      </option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
 
-          <Form.Group controlId="date">
-            <Form.Label>Service Date:</Form.Label>
-            <Form.Control type="date" />
-          </Form.Group>
+                <Form.Group controlId="services">
+                  <Form.Label>Service Type:</Form.Label>
+                  <Form.Control as="select">
+                    <option value="WheelAlignment">Wheel Alignment</option>
+                    <option value="EngineOilChange">Engine Oil Change</option>
+                    <option value="BrakeFluidChange">Brake Fluid Change</option>
+                    <option value="BrakeCaliperChange">Brake Caliper Change</option>
+                    <option value="CoolantChange">Coolant Change</option>
+                    <option value="TireChange">Tire Change</option>
+                  </Form.Control>
+                </Form.Group>
 
-          <Form.Group controlId="mileage">
-            <Form.Label>Mileage:</Form.Label>
-            <Form.Control type="number" />
-          </Form.Group>
+                <Form.Group controlId="description">
+                  <Form.Label>Description:</Form.Label>
+                  <Form.Control as="textarea" rows={4} />
+                </Form.Group>
 
-          <Form.Group>
-            <Button variant="primary" onClick={addSRecord}>Submit</Button>
-          </Form.Group>
-        </Form>
-      </Container>
+                <Form.Group controlId="date">
+                  <Form.Label>Service Date:</Form.Label>
+                  <Form.Control type="date" />
+                </Form.Group>
+
+                <Form.Group controlId="mileage">
+                  <Form.Label>Mileage:</Form.Label>
+                  <Form.Control type="number" min={0} />
+                </Form.Group>
+
+                <Form.Group>
+                  <Button variant="primary" onClick={addSRecord}>Submit</Button>
+                </Form.Group>
+              </Form>
+            ) : (
+              'No vehicles found'
+            )}
+          </Container>
+        </>
+
+      )}
+
+
 
     </div>
 
