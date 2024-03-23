@@ -1,54 +1,64 @@
-import React, {useState, useEffect} from "react";
-import {
-    Container,
-    Row,
-    Col,
-    Card,
-    Button,
-    Form,
-} from "react-bootstrap";
+import React, {useState, useEffect, useRef} from "react";
+import { Container, Row, Col, Button, Form, Card } from "react-bootstrap";
 import ConnectionManager from "../services/ConnectionManager";
-import {Pages} from "../Pages";
 import Header from "./components/Header";
-import "./styles/ParkingFinder.css";
-import {useNavigate} from "react-router-dom";
 import CustomAlert from "./components/CustomAlert";
+import BounceLoader from "react-spinners/BounceLoader";
+import "./styles/ParkingFinder.css";
+import { useNavigate } from "react-router-dom";
+import {ClipLoader} from "react-spinners";
 
 function ParkingFinder(props) {
     const [currentLocation, setCurrentLocation] = useState(null);
     const [parkingSpaces, setParkingSpaces] = useState([]);
-    const [varCap, setVarCap] = useState("");
     const [loading, setLoading] = useState(false);
-    const [alertInfo, setAlertInfo] = useState({
-        show: false,
-        error: {heading: '', message: ''}
-    });
-
+    const [alertInfo, setAlertInfo] = useState({ show: false, error: { heading: '', message: '' } });
     const [selectedMapUri, setSelectedMapUri] = useState("");
     const [expandedInfo, setExpandedInfo] = useState({});
-
     const navigate = useNavigate();
-
+    const mapRef = useRef(null);
     useEffect(() => {
-        props.app.getCurrentLocation().then((location) => {
+        props.app.getCurrentLocation().then(location => {
             setCurrentLocation(location);
-        }).catch((exp) => {
+            setLoading(false);
+        }).catch(error => {
+            setLoading(false);
             setAlertInfo({
                 show: true,
-                error: {heading: 'location error', message: exp.message || "failed to get location information"}
+                error: {
+                    heading: 'Location Required',
+                    message: 'Please turn on location services to find parking spaces.'
+                }
             });
-            navigate("/" + Pages.DashboardUI)
         });
-    }, [props.app]);
+    }, [props.app, navigate]);
 
-    const handleCloseAlert = () => {
-        setAlertInfo({show: false, error: {heading: '', message: ''}});
-    };
+    const handleCloseAlert = () => setAlertInfo({ show: false, error: { heading: '', message: '' } });
+    if (loading) {
+        return (
+            <div className="sweet-loading d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+                <ClipLoader color="#007bff" loading={loading} size={150} />
+            </div>
+        );
+    }
 
     const fetchNearbyParking = async () => {
+        if (!currentLocation) {
+            setAlertInfo({
+                show: true,
+                error: {
+                    heading: 'Location Required',
+                    message: 'Location data is needed to fetch parking spaces.'
+                }
+            });
+            return;
+        }
+
         setLoading(true);
-        const limit = document.getElementById("limit").value;
-        const radius = document.getElementById("radius").value;
+        const limitSelect = document.getElementById("limit");
+        const radiusSelect = document.getElementById("radius");
+        const limit = limitSelect.options[limitSelect.selectedIndex].value;
+        const radius = radiusSelect.options[radiusSelect.selectedIndex].value;
 
         let connection = new ConnectionManager();
 
@@ -60,158 +70,174 @@ function ParkingFinder(props) {
                 limit
             );
             const response = JSON.parse(resp);
+            console.log(response)
             if (response.error) {
                 setAlertInfo({
                     show: true,
-                    error: {heading: 'Parking Error', message: `error occurred: ${response.message}`},
+                    error: { heading: 'Parking Error', message: response.message },
                 });
             } else {
-                setVarCap("parking spaces");
                 setParkingSpaces(response.places);
             }
         } catch (error) {
             setAlertInfo({
                 show: true,
-                error: {heading: 'service error', message: "Please check your Spring Boot service is running"}
+                error: { heading: 'Service Error', message: error.message || "Server error" }
             });
         } finally {
             setLoading(false);
         }
-    }
-
+    };
 
     const showOnMap = (location) => {
-        if (location && location.latitude && location.longitude) {
-            const mapsUrl = `https://maps.google.com/maps?q=${location.latitude},${location.longitude}&z=15&output=embed`;
-            setSelectedMapUri(mapsUrl);
-        } else {
+        if (!currentLocation || !location) {
             setAlertInfo({
                 show: true,
-                error: {heading: 'Map Error', message: "Invalid location data."},
+                error: {
+                    heading: 'Location Required',
+                    message: 'Location data is needed to show on the map.'
+                }
             });
+            return;
         }
+        setSelectedMapUri(`https://maps.google.com/maps?q=${location.latitude},${location.longitude}&z=15&output=embed`);
+        mapRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
+
+
     const getDirections = (endLocation) => {
-        if (currentLocation && endLocation) {
-            const directionsUrl = `https://www.google.com/maps/dir/?api=1&origin=${currentLocation.latitude},${currentLocation.longitude}&destination=${endLocation.latitude},${endLocation.longitude}&travelmode=driving`;
-            window.open(directionsUrl, "_blank");
-        } else {
+        if (!currentLocation || !endLocation) {
             setAlertInfo({
                 show: true,
-                error: {heading: 'Direction Error', message: "Location data for start or destination is missing."},
+                error: {
+                    heading: 'Location Data Missing',
+                    message: 'Both origin and destination locations are required for directions.'
+                }
             });
+            return;
         }
+        window.open(`https://www.google.com/maps/dir/?api=1&origin=${currentLocation.latitude},${currentLocation.longitude}&destination=${endLocation.latitude},${endLocation.longitude}&travelmode=driving`, "_blank");
     };
 
     const toggleDetails = (index) => {
-        setExpandedInfo((prevState) => ({
-            ...prevState,
-            [index]: !prevState[index],
-        }));
+        setExpandedInfo(prevState => ({ ...prevState, [index]: !prevState[index] }));
     };
+
     return (
         <>
-            <Header app={props.app}/>
+            <Header app={props.app} />
             <Container>
                 <Row className="mt-3">
-                    <Col>
-                        <h2 className="text-center mb-4">Finding a parking place!</h2>
-                        <h4 className="text-secondary text-center mb-3">You are here!</h4>
-                        <div className="map-container mb-4">
-                            <iframe
-                                title="map"
-                                src={
-                                    selectedMapUri ||
-                                    `https://maps.google.com/maps?q=${currentLocation ? currentLocation.latitude : ""},${currentLocation ? currentLocation.longitude : ""}&z=15&output=embed`
-                                }
-                                width="100%"
-                                height="300"
-                                frameBorder="0"
-                                style={{border: 0}}
-                                allowFullScreen
-                            ></iframe>
-                        </div>
+                    <Col className="text-center">
+                        <h2 className="mb-4">Finding a parking place!</h2>
+                        <h4 className="text-secondary mb-3">You are here!</h4>
+                        {loading ? (
+                            <div className="sweet-loading d-flex justify-content-center align-items-center" style={{ height: "300px" }}>
+                                <ClipLoader color="#007bff" size={150} />
+                            </div>
+                        ) : (
+                            <div className="map-container mb-4" ref={mapRef}>
+                                <iframe
+                                    title="map"
+                                    src={selectedMapUri || `https://maps.google.com/maps?q=${currentLocation ? `${currentLocation.latitude},${currentLocation.longitude}` : ''}&z=15&output=embed`}
+                                    width="100%"
+                                    height="300"
+                                    frameBorder="0"
+                                    style={{ border: 0 }}
+                                    allowFullScreen
+                                ></iframe>
+                            </div>
+                        )}
                     </Col>
                 </Row>
 
-                <Row className="my-3">
-                    <Col xs={12} md={6}>
-                        <Form.Group controlId="limit">
-                            <Form.Label>Number of Results</Form.Label>
-                            <Form.Control as="select" defaultValue="5">
-                                <option value="5">Show only 5 results</option>
-                                <option value="10">Show only 10 results</option>
-                                <option value="15">Show only 15 results</option>
-                                <option value="20">Show only 20 results</option>
-                            </Form.Control>
-                        </Form.Group>
-                    </Col>
-                    <Col xs={12} md={6}>
-                        <Form.Group controlId="radius">
-                            <Form.Label>Search Radius</Form.Label>
-                            <Form.Control as="select" defaultValue="500">
-                                <option value="500">Within 500 meters</option>
-                                <option value="1000">Within 1 kilometer</option>
-                                <option value="2000">Within 2 kilometers</option>
-                                <option value="5000">Within 5 kilometers</option>
-                                <option value="10000">Within 10 kilometers</option>
-                            </Form.Control>
-                        </Form.Group>
-                    </Col>
-                </Row>
+                {!loading && (
+                    <>
+                        <Row className="my-3">
+                            <Col xs={12} md={6}>
+                                <Form.Group controlId="limit">
+                                    <Form.Label>Number of Results</Form.Label>
+                                    <Form.Control as="select" defaultValue="5">
+                                        <option value="5">Show only 5 results</option>
+                                        <option value="10">Show only 10 results</option>
+                                        <option value="15">Show only 15 results</option>
+                                        <option value="20">Show only 20 results</option>
+                                    </Form.Control>
+                                </Form.Group>
+                            </Col>
+                            <Col xs={12} md={6}>
+                                <Form.Group controlId="radius">
+                                    <Form.Label>Search Radius</Form.Label>
+                                    <Form.Control as="select" defaultValue="500">
+                                        <option value="500">Within 500 meters</option>
+                                        <option value="1000">Within 1 kilometer</option>
+                                        <option value="2000">Within 2 kilometers</option>
+                                        <option value="5000">Within 5 kilometers</option>
+                                        <option value="10000">Within 10 kilometers</option>
+                                    </Form.Control>
+                                </Form.Group>
+                            </Col>
+                        </Row>
 
-                <Row className="my-3">
-                    <Col>
-                        <Button
-                            variant="primary"
-                            onClick={fetchNearbyParking}
-                            disabled={loading}
-                        >
-                            {loading ? "Loading..." : "Show Me Nearby Parking Spaces"}
-                        </Button>
-                    </Col>
-                </Row>
+                        <Row className="my-3">
+                            <Col>
+                                <Button
+                                    variant="primary"
+                                    onClick={fetchNearbyParking}
+                                    disabled={!currentLocation}
+                                >
+                                    Show Me Nearby Parking Spaces
+                                </Button>
+                            </Col>
+                        </Row>
 
-                <CustomAlert
-                    show={alertInfo.show}
-                    handleClose={handleCloseAlert}
-                    error={alertInfo.error}
-                />
+                        {alertInfo.show && (
+                            <CustomAlert
+                                show={alertInfo.show}
+                                handleClose={handleCloseAlert}
+                                error={alertInfo.error}
+                            />
+                        )}
 
-                <Row className="my-3">
-                    {parkingSpaces.map((parking, index) => (
-                        <Col key={index} sm={12} md={6} lg={4} className="mb-3">
-                            <Card>
-                                <Card.Body>
-                                    <Card.Title>{parking.displayName.text}</Card.Title>
-                                    {expandedInfo[index] && (
-                                        <div>
-                                            <Card.Text>Address: {parking.formattedAddress}</Card.Text>
-                                        </div>
-                                    )}
-                                    <Button
-                                        variant="primary"
-                                        onClick={() => toggleDetails(index)}
-                                    >
-                                        {expandedInfo[index] ? "Hide Details" : "Show Details"}
-                                    </Button>
-                                    <Button
-                                        variant="primary"
-                                        onClick={() => showOnMap(parking.location)}
-                                    >
-                                        View on Map
-                                    </Button>
-                                    <Button
-                                        variant="primary"
-                                        onClick={() => getDirections(parking.location)}
-                                    >
-                                        Get Directions
-                                    </Button>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    ))}
-                </Row>
+                        <Row className="my-3">
+                            {parkingSpaces.map((parking, index) => (
+                                <Col key={index} sm={12} md={6} lg={4} className="mb-3">
+                                    <Card>
+                                        <Card.Body>
+                                            <Card.Title>{parking.displayName.text}</Card.Title>
+                                            <div className={`address-details ${expandedInfo[index] ? 'show' : 'hide'}`}>
+                                                <Card.Text>{parking.formattedAddress}</Card.Text>
+                                            </div>
+                                            <div className="button-group">
+                                                <Button
+                                                    variant="outline-primary"
+                                                    onClick={() => toggleDetails(index)}
+                                                    className="mr-2"
+                                                >
+                                                    {expandedInfo[index] ? "Hide Details" : "Show Details"}
+                                                </Button>
+                                                <Button
+                                                    variant="outline-primary"
+                                                    onClick={() => showOnMap(parking.location)}
+                                                    className="mr-2"
+                                                >
+                                                    View on Map
+                                                </Button>
+                                                <Button
+                                                    variant="outline-primary"
+                                                    onClick={() => getDirections(parking.location)}
+                                                >
+                                                    Get Directions
+                                                </Button>
+                                            </div>
+                                        </Card.Body>
+                                    </Card>
+                                </Col>
+                            ))}
+
+                        </Row>
+                    </>
+                )}
             </Container>
         </>
     );
