@@ -1,16 +1,19 @@
 package com.mechamate.controller;
 
 import com.mechamate.common.ApiToken;
+import com.mechamate.common.Common;
 import com.mechamate.common.DeviceLocation;
 import com.mechamate.common.Validation;
 import com.mechamate.dto.ErrorDTO;
 import com.mechamate.entity.Maintenance;
+import com.mechamate.entity.QrLink;
 import com.mechamate.entity.UserProfile;
 import com.mechamate.entity.Vehicle;
 import com.mechamate.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +41,8 @@ public class FeatureController {
     @Autowired
     private APIManager apiManager;
 
+    @Value("${spring.config.server.address}")
+    private String hostname;
 
     @GetMapping("/get-features-list")
     public ResponseEntity<?> getFeaturesList(HttpServletRequest request, HttpServletResponse response) {
@@ -235,6 +240,41 @@ public class FeatureController {
     }
 
 
+    @GetMapping("/get-service-record-qr")
+    public ResponseEntity<?> getServiceRecordQR(HttpServletRequest request, HttpServletResponse response) {
+        Object obj = Validation.authenticate(request, response, sessionManager, lang);
+        if(!(obj instanceof UserProfile)) return (ResponseEntity<ErrorDTO>) (obj);
+        UserProfile userProfile = (UserProfile) obj;
+
+        String qrKey = Common.getSha256("QRKEY#>>(" + userProfile.getUsername() +
+                System.currentTimeMillis() + userProfile.getEmail() + ")<<#");
+        QrLink qrLink = new QrLink(qrKey, userProfile);
+
+        ResponseEntity<ErrorDTO> resp = profileManager.addQrLink(qrLink, userProfile);
+        if(resp != null) return resp;
+
+        Map<String, Object> responseObject = new HashMap<>();
+        responseObject.put("url", hostname + "/add-service-record?key=" + qrKey);
+        return new ResponseEntity<>(responseObject, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/check-service-record-qr")
+    public ResponseEntity<?> checkServiceRecordQR(@RequestParam(required = false) String key) {
+        if (key == null) key = "";
+        Map<String, Object> responseObject = new HashMap<>();
+        responseObject.put("exist", profileManager.isQrLinkExist(key));
+        return new ResponseEntity<>(responseObject, HttpStatus.OK);
+    }
+
+
+//    @GetMapping("/submit-service-record")
+//    public ResponseEntity<?> submitServiceRecord(HttpServletRequest request, HttpServletResponse response,
+//                                                 @RequestParam(required = false) String key) {
+//        if (key == null) key = "";
+//
+//        return new ResponseEntity<>(responseObject, HttpStatus.OK);
+//    }
 
 
     @GetMapping("/get-maintenance-prediction")
@@ -260,8 +300,6 @@ public class FeatureController {
         // 5. Find the difference between the last maintenance KMs against current KMs. (ie: (givenKMs - predictedKMs) )
         // 6. return the predicted output
 
-
-
         if(maintenanceType == null)
             return new ResponseEntity<>
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
@@ -274,22 +312,6 @@ public class FeatureController {
     }
 
 
-    @GetMapping("/get-service-record-qr")
-    public ResponseEntity<?> getPredictedOutput(HttpServletRequest request, HttpServletResponse response) {
-        Object obj = Validation.authenticate(request, response, sessionManager, lang);
-        if(!(obj instanceof UserProfile)) return (ResponseEntity<ErrorDTO>) (obj);
-        UserProfile userProfile = (UserProfile) obj;
-
-        Map<String, Object> responseObject = new HashMap<>();
-        responseObject.put("url", "https://mechamate.site/add-service-record?key=ab5ca5bfa28aeadc8791eb46daec17b52eaa6712fe4322ec96aef0bab31b6540");
-
-        //if(maintenanceType == null)
-            return new ResponseEntity<>
-                    (responseObject,
-                            HttpStatus.OK);
-
-//        return null;
-    }
 
 
 

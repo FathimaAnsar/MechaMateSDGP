@@ -66,9 +66,9 @@ function Dashboard(props) {
     props.app.changePage(page);
   };
 
-  const emergencyAssist = [
+  const servicesList = [
     { title: "Manage Documents", path: "/" + Pages.ManageDocumentsUI },
-    { title: "Breakdown Assistance", path: "/" + Pages.EmergencyAssistUI },
+    { title: "Breakdown Assistance", path: "/" + Pages.BreakdownAssistUI },
     { title: "AutoMob Search", path: "/" + Pages.AutoMobSearchUI },
     {
       title: "Track My Vehicle",
@@ -152,7 +152,7 @@ function Dashboard(props) {
                   <Button
                     id="dash-add-vehi-btn"
                     variant="dark"
-                    onClick={() => navigate("/" + Pages.MyVehiclesUI)}
+                    onClick={() => navigate("/" + Pages.AddVehiclesUI)}
                   >
                     Add a Vehicle
                   </Button>
@@ -168,12 +168,12 @@ function Dashboard(props) {
             <h3>Services</h3>
           </Col>
 
-          {emergencyAssist.map((option, index) => (
+          {servicesList.map((option, index) => (
             <Col key={index} xs={6} sm={6} md={4} lg={3}>
               <div>
                 <DashboardCard
                   content={option}
-                  onClick={() => navigate(option.path)}
+                  onClick={() =>  navigate(option.path) }
                 />
               </div>
             </Col>
@@ -181,178 +181,6 @@ function Dashboard(props) {
         </Row>
 
         <br />
-
-        <Accordion>
-          {/* 
-          <Accordion.Item eventKey="0">
-            <Accordion.Header style={{ fontWeight: "bold", fontSize: "20px" }}>
-              Predict Maintenance
-            </Accordion.Header>
-            <Accordion.Body>
-              <Row className="justify-content-center text-center">
-                <Col xs={12} md={8}>
-                  <Image
-                    style={{ width: "80%" }}
-                    src={corollaImage}
-                    alt="car"
-                  />
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad
-                  </p>
-                  <Button
-                    variant="primary"
-                    style={{ width: "80%" }}
-                    onClick={() => navigate("/" + Pages.PredictMaintenanceUI)}
-                  >
-                    Predictive Now
-                  </Button>
-                </Col>
-              </Row>
-            </Accordion.Body>
-          </Accordion.Item> 
-          <Accordion.Item eventKey="1">
-            <Accordion.Header style={{ fontWeight: "bold", fontSize: "20px" }}>
-              AutoMob Search
-            </Accordion.Header>
-            <Accordion.Body>
-              <Row className="justify-content-center text-center">
-                <Col xs={12} md={8}>
-                  <Image
-                    style={{ width: "80%" }}
-                    src={corollaImage}
-                    alt="car"
-                  />
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad
-                  </p>
-                  <Button
-                    variant="primary"
-                    style={{ width: "80%" }}
-                    onClick={() => navigate("/" + Pages.AutoMobSearchUI)}
-                  >
-                    Search Now
-                  </Button>
-                </Col>
-              </Row>
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="2">
-            <Accordion.Header style={{ fontWeight: "bold", fontSize: "20px" }}>
-              Emergency Assistance
-            </Accordion.Header>
-            <Accordion.Body>
-              <Row className="justify-content-center text-center">
-                <Col xs={12} md={8}>
-                  <Image
-                    style={{ width: "80%" }}
-                    src={corollaImage}
-                    alt="car"
-                  />
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad
-                  </p>
-                  <Button
-                    variant="primary"
-                    style={{ width: "80%" }}
-                    onClick={() => navigate("/" + Pages.EmergencyAssistUI)}
-                  >
-                    Need Assistance
-                  </Button>
-                </Col>
-              </Row>
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="3">
-            <Accordion.Header style={{ fontWeight: "bold", fontSize: "20px" }}>
-              Track My Vehicle
-            </Accordion.Header>
-            <Accordion.Body>
-              <Row className="justify-content-center text-center">
-                <Col xs={12} md={8}>
-                  <Image
-                    style={{ width: "80%" }}
-                    src={corollaImage}
-                    alt="car"
-                  />
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad
-                  </p>
-                  <Button
-                    variant="primary"
-                    style={{ width: "80%" }}
-                    onClick={() => navigate("/" + Pages.TrackVehicleUI)}
-                  >
-                    Search Now
-                  </Button>
-                </Col>
-              </Row>
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="4">
-            <Accordion.Header style={{ fontWeight: "bold", fontSize: "20px" }}>
-              Manage Vehicle Documents
-            </Accordion.Header>
-            <Accordion.Body>
-              <Row className="justify-content-center text-center">
-                <Col xs={12} md={8}>
-                  <Image
-                    style={{ width: "80%" }}
-                    src={corollaImage}
-                    alt="car"
-                  />
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad
-                  </p>
-                  <Button
-                    variant="primary"
-                    style={{ width: "80%" }}
-                    onClick={() => navigate("/" + Pages.ManageDocumentsUI)}
-                  >
-                    Manage Now
-                  </Button>
-                </Col>
-              </Row>
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="5">
-            <Accordion.Header style={{ fontWeight: "bold", fontSize: "20px" }}>
-              Parking Finder
-            </Accordion.Header>
-            <Accordion.Body>
-              <Row className="justify-content-center text-center">
-                <Col xs={12} md={8}>
-                  <Image
-                    style={{ width: "80%" }}
-                    src={corollaImage}
-                    alt="car"
-                  />
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad
-                  </p>
-                  <Button
-                    variant="primary"
-                    style={{ width: "80%" }}
-                    onClick={() => navigate("/" + Pages.ParkingFinderUI)}
-                  >
-                    Search Parking Now
-                  </Button>
-                </Col>
-              </Row>
-            </Accordion.Body>
-          </Accordion.Item>*/}
-        </Accordion>
       </Container>
     </>
   );

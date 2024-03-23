@@ -5,11 +5,13 @@ package com.mechamate.service;
 import com.mechamate.common.Common;
 import com.mechamate.common.Validation;
 import com.mechamate.dto.*;
+import com.mechamate.entity.QrLink;
 import com.mechamate.entity.ServiceRecord;
 import com.mechamate.entity.UserProfile;
 import com.mechamate.entity.Vehicle;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -209,7 +211,7 @@ public class ProfileManager {
                 false, lang.getLanguage(request.getSession()), lang);
         if(resp != null) return resp;
 
-        if(userProfile.getRecoveryKey().length() != 64) {
+        if(userProfile.getRecoveryKey().length() != 6) {
             userProfile.createRecoveryKey();
             if (!databaseAbstractLayer.updateUserProfile(userProfile)) {
                 return new ResponseEntity<>
@@ -606,5 +608,44 @@ public class ProfileManager {
 
         return null;
     }
+
+
+
+    public ResponseEntity<ErrorDTO> addQrLink(QrLink qrLink, UserProfile userProfile) {
+        if(databaseAbstractLayer.isQrLinkExists(qrLink.getQrKey())) databaseAbstractLayer.deleteQrLink(qrLink);
+        if(!databaseAbstractLayer.addQrLink(qrLink))
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorOperationFailed,
+                            lang.get("error.qrlink.add.failed", userProfile.getLanguage()),
+                            lang.get("error.qrlink.add.failed.help", userProfile.getLanguage())),
+                            HttpStatus.OK);
+
+        return null;
+    }
+
+
+    public boolean isQrLinkExist(String qrKey) {
+        if(qrKey.isEmpty()) return false;
+        return databaseAbstractLayer.isQrLinkExists(qrKey);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

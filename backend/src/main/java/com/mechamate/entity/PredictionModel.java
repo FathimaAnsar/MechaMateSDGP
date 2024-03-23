@@ -12,6 +12,10 @@ import java.util.List;
 @Document(collection = "PredictionModels")
 public class PredictionModel {
 
+    public enum modelType {
+        polynomial,
+        linear,
+    }
     // MongoDB ID field
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,21 +27,16 @@ public class PredictionModel {
     // Description of the prediction model
     private String description;
 
-    // Value of the slope parameter for the prediction model
-    private double mValue;
-
-    // Value of the intercept parameter for the prediction model
-    private double cValue;
+    private modelType modelType;
 
     // List of maintenance types applied by this prediction model
     private List<Maintenance.MaintenanceType> appliedMaintenanceList;
 
     // Constructor
-    public PredictionModel(String name, String description, double mValue, double cValue, List<Maintenance.MaintenanceType> appliedMaintenanceList) {
+    public PredictionModel(String name, String description, PredictionModel.modelType modelType,  List<Maintenance.MaintenanceType> appliedMaintenanceList) {
         this.name = name;
         this.description = description;
-        this.mValue = mValue;
-        this.cValue = cValue;
+        this.modelType = modelType;
         this.appliedMaintenanceList = appliedMaintenanceList;
     }
 
@@ -66,20 +65,12 @@ public class PredictionModel {
         this.description = description;
     }
 
-    public double getmValue() {
-        return mValue;
+    public PredictionModel.modelType getModelType() {
+        return modelType;
     }
 
-    public void setmValue(double mValue) {
-        this.mValue = mValue;
-    }
-
-    public double getcValue() {
-        return cValue;
-    }
-
-    public void setcValue(double cValue) {
-        this.cValue = cValue;
+    public void setModelType(PredictionModel.modelType modelType) {
+        this.modelType = modelType;
     }
 
     public List<Maintenance.MaintenanceType> getAppliedMaintenanceList() {

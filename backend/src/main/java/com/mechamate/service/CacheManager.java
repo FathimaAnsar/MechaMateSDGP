@@ -19,7 +19,7 @@ public class CacheManager {
     private final ConcurrentHashMap<String, PredictionModel> predictionModelCache = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, Token> tokenCache = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, TrackingInfo> trackingInfoCache = new ConcurrentHashMap<>();
-
+    private final ConcurrentHashMap<String, QrLink> qrLinkCache = new ConcurrentHashMap<>();
             /*
     USERPROFILE SECTION
         */
@@ -640,4 +640,95 @@ public class CacheManager {
         }
     }
 
+
+
+
+
+    public boolean isQrLinkExistInCache(String key){
+        boolean isExist = false;
+        if (key == null || key.trim().isEmpty()) {
+            return false;
+        }
+
+        try {
+            isExist = qrLinkCache.containsKey(key);
+        }catch (Exception e){}
+        return isExist;
+    }
+
+
+    public QrLink getFromQrLinkCache(String key) {
+        if (key == null || key.trim().isEmpty()) {
+            return null;
+        }
+        try {
+            QrLink qrLink = qrLinkCache.get(key);
+            if (qrLink == null) {
+                return null;
+            } else {
+                return qrLink;
+            }
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+
+    public void putInQrLinkCache(String key, QrLink qrLink) {
+        if (key == null || qrLink == null) {
+            return;
+        }
+
+        try {
+            qrLinkCache.put(key, qrLink);
+        } catch (Exception e) {
+        }
+    }
+
+
+    public void deleteFromQrLinkCache(String key) {
+        if (key == null) {
+            return;
+        }
+
+        try {
+            if (!qrLinkCache.containsKey(key)) {
+                return;
+            }
+            qrLinkCache.remove(key);
+        } catch (Exception e) {}
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -12,8 +12,12 @@ import ConnectionManager from "../services/ConnectionManager";
 import { Pages } from "../Pages";
 import Header from "./components/Header";
 import "./styles/ParkingFinder.css";
+import { useNavigate } from "react-router-dom";
 
 function BreakdownAssist(props) {
+
+  const navigate = useNavigate();
+
   const [currentLocation, setCurrentLocation] = useState(null);
   const [parkingSpaces, setParkingSpaces] = useState([]);
   const [varCap, setVarCap] = useState("");
@@ -30,7 +34,6 @@ function BreakdownAssist(props) {
       })
       .catch((exp) => {
         displayAlert(exp.message || "Failed to get location information");
-        props.app.changePage(Pages.DashboardUI);
       });
   }, [props.app]);
 
