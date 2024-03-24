@@ -15,14 +15,16 @@ public class ProfileDTO2 {
 
     // Language preference of the user
     private String language;
+    private boolean isServiceAccount;
 
     // Constructor for ProfileDTO2 class
-    public ProfileDTO2(String password, String telephone, String firstName, String lastName, String language) {
+    public ProfileDTO2(String password, String telephone, String firstName, String lastName, String language, boolean isServiceAccount) {
         this.password = password;
         this.telephone = telephone;
         this.firstName = firstName;
         this.lastName = lastName;
         this.language = language;
+        this.isServiceAccount = isServiceAccount;
     }
 
     // Getters and setters
@@ -64,6 +66,14 @@ public class ProfileDTO2 {
 
     public void setLanguage(String language) {
         this.language = language;
+    }
+
+    public boolean isServiceAccount() {
+        return isServiceAccount;
+    }
+
+    public void setServiceAccount(boolean serviceAccount) {
+        isServiceAccount = serviceAccount;
     }
 
 }

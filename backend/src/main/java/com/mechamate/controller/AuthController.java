@@ -37,6 +37,7 @@ public class AuthController {
                                     @RequestParam(required = false) String telephone,
                                     @RequestParam(required = false) String firstname,
                                     @RequestParam(required = false) String lastname,
+                                    @RequestParam(required = false) boolean isServiceAccount,
                                     @RequestParam(required = false) boolean agreedTOS) {
 
         Session session = sessionManager.getSession(request, response);
@@ -77,7 +78,7 @@ public class AuthController {
                                                             telephone.trim(),
                                                             Common.toTitleCase(firstname.trim().toLowerCase()),
                                                             Common.toTitleCase(lastname.trim().toLowerCase()),
-                                                            lang.getLanguage(request.getSession()), null);
+                                                            lang.getLanguage(request.getSession()), null, 0.0, 0.0, isServiceAccount);
 
         resp = profileManager.createUserProfile(request, userProfile);
         if(resp != null) return resp;

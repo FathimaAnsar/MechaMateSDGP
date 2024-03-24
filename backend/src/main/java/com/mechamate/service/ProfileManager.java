@@ -343,7 +343,7 @@ public class ProfileManager {
                 userProfile.getFirstname(),
                 userProfile.getLastname(),
                 userProfile.getLanguage(),
-                getVehicles(userProfile).size());
+                getVehicles(userProfile).size(), userProfile.isServiceAccount());
     }
 
     public DetailedProfileDTO getDetailedProfileInfo(UserProfile userProfile) {
