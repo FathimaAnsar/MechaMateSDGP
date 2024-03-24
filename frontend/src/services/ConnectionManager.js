@@ -12,7 +12,9 @@ class ConnectionManager {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: postParams,
         credentials: "include",
+
       });
+      console.log(`${API_BASE_URL + apiEndPoint}`);
       const data = await response.json();
       document.body.style.cursor = "default";
       return JSON.stringify(data);
