@@ -17,6 +17,8 @@ function MyVehicles(props) {
   const [regExpDate, setRegExpDate] = useState(new Date());
   const [insNo, setInsNo] = useState(null);
   const [insExpDate, setInsExpDate] = useState(new Date());
+  const [obd2DeviceID, setObd2DeviceID] = useState("");
+  const [hasOBDDevice,setHasOBDDevice] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false)
   const [error, setError] = useState({ message: "", heading: "" });
@@ -39,33 +41,31 @@ function MyVehicles(props) {
       vehicleModel: vehicleModel,
       insNo: insNo,
       insExpDate: insExpDate,
-      regExpDate: regExpDate
+      regExpDate: regExpDate,
+      obd2DeviceID: obd2DeviceID
     };
-
-  //   try {
-  //     const response = await axios.post(`${API_BASE_URL}/api/v1/general/add-vehicle`, requestBody, {
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       withCredentials: true // Use withCredentials instead of credentials
-  //     });
-  //     // Check if response is successful (status code 2xx)
-  //     if (response.data.error) {
-  //       setError({
-  //         message: response.data.help,
-  //         heading: response.data.message,
-  //       });
-  //       setShowAlert(true);
-  //
-  //     } else if (response.data) {
-  //       const responseData = response.data;
-  //       const message = responseData.message;
-  //       clearInputFields();
-  //     }
-  //   } catch (error) {
-  //     alert("Vehicle registration failed");
-  //     console.error('Error registering vehicle:', error);
-  //   }
+//http://localhost:8080/api/v1/general/add-vehicle
+    try {
+      const response = await axios.post("https://mechamate.site/api/v1/general/add-vehicle", requestBody, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        withCredentials: true 
+      });
+      // Check if response is successful (status code 2xx)
+      if (response.status >= 200 && response.status < 300) {
+        const responseData = response.data;
+        const message = responseData.message;
+        alert(`Registration Status: ${message}`);
+        // Clear input fields after successful registration
+        clearInputFields();
+    } else {
+        throw new Error('Failed to register vehicle'); // Throw an error if response status is not in the success range
+    }
+    } catch (error) {
+    alert("Vehicle Registration Failed");
+    console.error('Error registering vehicle:', error);
+    }
   }
 
   function clearInputFields() {
@@ -78,6 +78,7 @@ function MyVehicles(props) {
     setInsNo("");
     setInsExpDate("");
     setRegExpDate("");
+    setObd2DeviceID("");
   }
   return (
 
@@ -139,6 +140,43 @@ function MyVehicles(props) {
               <Form.Label>Vehicle Registration Expiration Date:</Form.Label>
               <DatePicker selected={regExpDate} onChange={(date) => setRegExpDate(date)} />
             </Form.Group>
+          </Row>
+
+          <Row className="mb-3" xs={1}>
+          <Form.Group as={Col} controlId="obd2DeviceOption">
+              <Form.Label>OBD Device</Form.Label>
+              <div>
+                <Form.Check
+                  type="radio"
+                  id="obdDeviceYes"
+                  label="I have OBD device"
+                  name="obdDeviceOption"
+                  checked={hasOBDDevice}
+                  onChange={() => setHasOBDDevice(true)}
+                />
+                <Form.Check
+                  type="radio"
+                  id="obdDeviceNo"
+                  label="I don't have OBD device"
+                  name="obdDeviceOption"
+                  checked={!hasOBDDevice}
+                  onChange={() => setHasOBDDevice(false)}
+                />
+              </div>
+            </Form.Group>
+            
+            <Form.Group as={Col} controlId="obd2DeviceID">
+              <Form.Label>OBD Device ID</Form.Label>
+              <Form.Control 
+                type="text" 
+                placeholder="1234567890" 
+                value={obd2DeviceID} 
+                onChange={(event) => setObd2DeviceID(event.target.value)}
+                disabled={!hasOBDDevice} // Disable the text box when hasOBDDevice is false
+              />
+            </Form.Group>
+
+            
           </Row>
 
           <Row className="mb-3" xs={1}>
