@@ -17,9 +17,10 @@ public class VehicleDTO {
     private Date insExpDate;
     private Date regExpDate;
     private long currentMileage;
+    private String obd2DeviceID;
     private List<ServiceRecordDTO> serviceRecords;
 
-    public VehicleDTO(String registrationNumber, Vehicle.VehicleType vehicleType, Vehicle.FuelType fuelType,String vehicleMake,String vehicleModel,String insNo,Date insExpDate,Date regExpDate, List<ServiceRecordDTO> serviceRecords, long currentMileage) {
+    public VehicleDTO(String registrationNumber, Vehicle.VehicleType vehicleType, Vehicle.FuelType fuelType, String vehicleMake, String vehicleModel, String insNo, Date insExpDate, Date regExpDate, List<ServiceRecordDTO> serviceRecords, long currentMileage, String obd2DeviceID) {
         this.registrationNumber = registrationNumber;
         this.vehicleType = vehicleType;
         this.fuelType = fuelType;
@@ -30,6 +31,7 @@ public class VehicleDTO {
         this.regExpDate = regExpDate;
         this.serviceRecords = serviceRecords;
         this.currentMileage = currentMileage;
+        this.obd2DeviceID= obd2DeviceID;
     }
 
     public String getRegistrationNumber() {
@@ -120,4 +122,11 @@ public class VehicleDTO {
         this.currentMileage = currentMileage;
     }
 
+    public String getObd2DeviceID() {
+        return obd2DeviceID;
+    }
+
+    public void setObd2DeviceID(String obd2DeviceID) {
+        this.obd2DeviceID = obd2DeviceID;
+    }
 }

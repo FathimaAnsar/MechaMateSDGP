@@ -17,6 +17,8 @@ function MyVehicles(props) {
   const [regExpDate, setRegExpDate] = useState(new Date());
   const [insNo, setInsNo] = useState(null);
   const [insExpDate, setInsExpDate] = useState(new Date());
+  const [obd2DeviceID, setObd2DeviceID] = useState("");
+  const [hasOBDDevice,setHasOBDDevice] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false)
   const [error, setError] = useState({ message: "", heading: "" });
@@ -39,7 +41,8 @@ function MyVehicles(props) {
       vehicleModel: vehicleModel,
       insNo: insNo,
       insExpDate: insExpDate,
-      regExpDate: regExpDate
+      regExpDate: regExpDate,
+      obd2DeviceID: obd2DeviceID
     };
 //http://localhost:8080/api/v1/general/add-vehicle
     try {
@@ -75,6 +78,7 @@ function MyVehicles(props) {
     setInsNo("");
     setInsExpDate("");
     setRegExpDate("");
+    setObd2DeviceID("");
   }
   return (
 
@@ -135,6 +139,41 @@ function MyVehicles(props) {
             <Form.Group as={Col} controlId="vred">
               <Form.Label>Vehicle Registration Expiration Date:</Form.Label>
               <DatePicker selected={regExpDate} onChange={(date) => setRegExpDate(date)} />
+            </Form.Group>
+          </Row>
+
+          <Row className="mb-3" xs={1}>
+            <Form.Group as={Col} controlId="obd2DeviceID">
+              <Form.Label>OBD Device ID</Form.Label>
+              <Form.Control 
+                type="text" 
+                placeholder="1234567890" 
+                value={obd2DeviceID} 
+                onChange={(event) => setObd2DeviceID(event.target.value)}
+                disabled={!hasOBDDevice} // Disable the text box when hasOBDDevice is false
+              />
+            </Form.Group>
+
+            <Form.Group as={Col} controlId="obd2DeviceOption">
+              <Form.Label>OBD Device</Form.Label>
+              <div>
+                <Form.Check
+                  type="radio"
+                  id="obdDeviceYes"
+                  label="I have OBD device"
+                  name="obdDeviceOption"
+                  checked={hasOBDDevice}
+                  onChange={() => setHasOBDDevice(true)}
+                />
+                <Form.Check
+                  type="radio"
+                  id="obdDeviceNo"
+                  label="I don't have OBD device"
+                  name="obdDeviceOption"
+                  checked={!hasOBDDevice}
+                  onChange={() => setHasOBDDevice(false)}
+                />
+              </div>
             </Form.Group>
           </Row>
 
