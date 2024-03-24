@@ -20,7 +20,7 @@ function MyVehicles(props) {
   const [obd2DeviceID, setObd2DeviceID] = useState("");
   const [hasOBDDevice,setHasOBDDevice] = useState("");
   const [showAlert, setShowAlert] = useState(false);
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false)
+  const [currentMileage, setCurrentMileage] = useState("");
   const [error, setError] = useState({ message: "", heading: "" });
 
   const [alertInfo, setAlertInfo] = useState({ show: false, error: { heading: '', message: '' } });
@@ -42,7 +42,9 @@ function MyVehicles(props) {
       insNo: insNo,
       insExpDate: insExpDate,
       regExpDate: regExpDate,
-      obd2DeviceID: obd2DeviceID
+      obd2DeviceID: obd2DeviceID,
+      currentMileage: currentMileage
+
     };
 
     let connection = new ConnectionManager();
@@ -85,6 +87,7 @@ function MyVehicles(props) {
     setInsExpDate("");
     setRegExpDate("");
     setObd2DeviceID("");
+    setCurrentMileage("");
   }
   return (
 
@@ -195,6 +198,11 @@ function MyVehicles(props) {
               <Form.Label>Vehicle Insurance Expiration Date:</Form.Label>
               <DatePicker selected={insExpDate} onChange={(date) => setInsExpDate(date)} />
             </Form.Group>
+            <Form.Group as={Col} controlId="currentMileage">
+              <Form.Label>Current Mileage</Form.Label>
+              <Form.Control type="text" placeholder="50000Km" value={currentMileage} onChange={(event) => setCurrentMileage(event.target.value)} />
+            </Form.Group>
+            
           </Row>
 
           <Row>
