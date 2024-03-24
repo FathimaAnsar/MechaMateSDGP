@@ -117,14 +117,6 @@ function Header(props) {
                 navigate("/" + Pages.ParkingFinderUI);
               }}
             >
-              AutoMob Search
-            </Button>
-            <Button
-              variant="light"
-              onClick={() => {
-                navigate("/" + Pages.AutoMobSearchUI);
-              }}
-            >
               Parking Finder
             </Button>
             <Button
@@ -149,7 +141,7 @@ function Header(props) {
                 navigate("/" + Pages.AutoMobSearchUI);
               }}
             >
-              Find Mechanic
+              Find Service Station
             </Button>
             <Button
               variant="light"
