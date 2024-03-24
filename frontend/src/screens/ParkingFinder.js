@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import CustomAlert from "./components/CustomAlert";
 import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
+import "./styles/ParkingFinder.css";
 
 function ParkingFinder(props) {
     const [currentLocation, setCurrentLocation] = useState(null);
@@ -135,21 +136,22 @@ function ParkingFinder(props) {
             <Container>
                 <Row className="mt-3">
                     <Col className="text-center">
-                        <h2 className="mb-4">Finding a parking place!</h2>
-                        <h4 className="text-secondary mb-3">{locationHeaderText}</h4>
+                        <h2 id="pf-page-title" className="mb-4">Finding a parking place!</h2>
+                        <h4 id="location-header" className="text-secondary mb-3">{locationHeaderText}</h4>
                         {loading ? (
-                            <div className="sweet-loading d-flex justify-content-center align-items-center" style={{ height: "300px" }}>
-                                <ClipLoader color="#007bff" size={150} />
+                            <div id="sweet-loading" className="d-flex justify-content-center align-items-center"
+                                 style={{height: "300px"}}>
+                                <ClipLoader color="#007bff" size={150}/>
                             </div>
                         ) : (
-                            <div className="map-container mb-4" ref={mapRef}>
+                            <div id="pf-map-container" className="mb-4" ref={mapRef}>
                                 <iframe
                                     title="map"
                                     src={selectedMapUri || `https://maps.google.com/maps?q=${currentLocation ? `${currentLocation.latitude},${currentLocation.longitude}` : ''}&z=15&output=embed`}
                                     width="100%"
                                     height="300"
                                     frameBorder="0"
-                                    style={{ border: 0 }}
+                                    style={{border: 0}}
                                     allowFullScreen
                                 ></iframe>
                             </div>
@@ -211,10 +213,10 @@ function ParkingFinder(props) {
                                     <Card>
                                         <Card.Body>
                                             <Card.Title>{parking.displayName.text}</Card.Title>
-                                            <div className={`address-details ${expandedInfo[index] ? 'show' : 'hide'}`}>
+                                            <div id={`address-details ${expandedInfo[index] ? 'show' : 'hide'}`}>
                                                 <Card.Text>{parking.formattedAddress}</Card.Text>
                                             </div>
-                                            <div className="button-group">
+                                            <div id="pf-button-group">
                                                 <Button
                                                     variant="outline-primary"
                                                     onClick={() => toggleDetails(index)}
