@@ -1,19 +1,20 @@
-import { API_BASE_URL } from "../Common.js";
 import CustomAlert from "../screens/components/CustomAlert.js";
 
 class ConnectionManager {
-  constructor() { }
+
+
+  constructor() {
+    this.EndpointHost = "https://mechamate.site";
+  }
 
   async postParamRequest(apiEndPoint, postParams) {
     document.body.style.cursor = "wait";
     try {
-      console.log(`${API_BASE_URL + apiEndPoint}`);
-      const response = await fetch("https://mechamate.site" + apiEndPoint, {
+      const response = await fetch((this.EndpointHost + apiEndPoint), {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: postParams,
         credentials: "include",
-
       });
       const data = await response.json();
       document.body.style.cursor = "default";
@@ -33,7 +34,7 @@ class ConnectionManager {
   async postJsonRequest(apiEndPoint, jsonObject) {
     document.body.style.cursor = "wait";
     try {
-      const response = await fetch(`${API_BASE_URL + apiEndPoint}`, {
+      const response = await fetch((this.EndpointHost + apiEndPoint), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: jsonObject,
@@ -51,11 +52,10 @@ class ConnectionManager {
     document.body.style.cursor = "wait";
     try {
       const response = await fetch(
-        `${"https://mechamate.site" +
+          (this.EndpointHost +
         (urlEncodedData == null
           ? apiEndPoint
-          : apiEndPoint + "?" + urlEncodedData)
-        }`,
+          : apiEndPoint + "?" + urlEncodedData)),
         {
           method: "GET",
           credentials: "include",
