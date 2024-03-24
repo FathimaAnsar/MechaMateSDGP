@@ -186,6 +186,9 @@ public class SuperUserController {
         if (predictionModelDTO.getModelId() == null || predictionModelDTO.getModelId().isEmpty()) predictionModelDTO.setModelId("");
         if (predictionModelDTO.getName() == null || predictionModelDTO.getName().isEmpty()) predictionModelDTO.setName("<No name>");
         if (predictionModelDTO.getDescription() == null || predictionModelDTO.getDescription().isEmpty()) predictionModelDTO.setDescription("<No description>");
+        if (predictionModelDTO.getModelType() == null) predictionModelDTO.setModelType(PredictionModel.modelType.linear);
+        if (predictionModelDTO.getParamType() == null) predictionModelDTO.setParamType(PredictionModel.ParameterType.RPM);
+
         try {
             if (predictionModelDTO.getAppliedMaintenanceList() == null || predictionModelDTO.getAppliedMaintenanceList().isEmpty())
                 predictionModelDTO.setAppliedMaintenanceList(new ArrayList<>());
@@ -201,7 +204,7 @@ public class SuperUserController {
 
         PredictionModel predictionModel = predictiveMaintenance.getTrainedPredictionModel(datasetFileName,
                 predictionModelDTO.getName(), predictionModelDTO.getDescription(), predictionModelDTO.getModelType(),
-                predictionModelDTO.getAppliedMaintenanceList());
+                predictionModelDTO.getAppliedMaintenanceList(), predictionModelDTO.getParamType());
 
 
         try {

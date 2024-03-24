@@ -53,18 +53,18 @@ public class PdM {
 
     public PredictionModel getTrainedPredictionModel(String csvFileName, String name, String description,
                                                      PredictionModel.modelType modelType,
-                                                     List<Maintenance.MaintenanceType> appliedMaintenanceList) {
+                                                     List<Maintenance.MaintenanceType> appliedMaintenanceList, PredictionModel.ParameterType paramType) {
 
         PredictionModel predictionModel = null;
 
         if (modelType == PredictionModel.modelType.linear){
             Double[] trainedData = trainLinearModel(csvFileName);
             predictionModel = new LinearRegressionModel(name, description, modelType,  trainedData[0], trainedData[1],
-                                    appliedMaintenanceList);
+                                    appliedMaintenanceList, paramType);
         } else if (modelType == PredictionModel.modelType.polynomial) {
             Double[] trainedData = trainPolynomialmodel(csvFileName);
             predictionModel = new PolynomialRegressionModel(name, description, modelType, trainedData[0], trainedData[1],
-                    trainedData[2], appliedMaintenanceList);
+                    trainedData[2], appliedMaintenanceList, paramType);
         } else {
             logger.error("Failed to train model");
         }

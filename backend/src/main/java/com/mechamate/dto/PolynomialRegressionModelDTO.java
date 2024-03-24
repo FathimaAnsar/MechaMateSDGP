@@ -12,9 +12,9 @@ public class PolynomialRegressionModelDTO extends PredictionModelDTO{
 
 
     public PolynomialRegressionModelDTO(String modelId, String name, String description, PredictionModel.modelType modelType,
-                                         Double aValue, Double bValue, Double cValue,
-                                        List<Maintenance.MaintenanceType> appliedMaintenanceList) {
-        super(modelId, name, description, modelType, appliedMaintenanceList);
+                                        Double aValue, Double bValue, Double cValue,
+                                        List<Maintenance.MaintenanceType> appliedMaintenanceList, PredictionModel.ParameterType paramType) {
+        super(modelId, name, description, modelType, appliedMaintenanceList, paramType);
         this.aValue = aValue;
         this.bValue = bValue;
         this.cValue = cValue;

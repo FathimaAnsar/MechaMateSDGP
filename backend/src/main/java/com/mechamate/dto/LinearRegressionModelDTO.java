@@ -10,8 +10,8 @@ public class LinearRegressionModelDTO extends PredictionModelDTO{
     private double cValue;
 
     public LinearRegressionModelDTO(String modelId, String name, String description, PredictionModel.modelType modelType,
-                                    double mValue, double cValue, List<Maintenance.MaintenanceType> appliedMaintenanceList) {
-        super(modelId, name, description, modelType, appliedMaintenanceList);
+                                    double mValue, double cValue, List<Maintenance.MaintenanceType> appliedMaintenanceList, PredictionModel.ParameterType paramType) {
+        super(modelId, name, description, modelType, appliedMaintenanceList, paramType);
         this.mValue = mValue;
         this.cValue = cValue;
     }

@@ -161,7 +161,7 @@ public class SuperUserActionManager {
                             model.getModelType(),
                             linearModel.getmValue(),
                             linearModel.getcValue(),
-                            model.getAppliedMaintenanceList());
+                            model.getAppliedMaintenanceList(), model.getParamType());
                 } else if (model instanceof PolynomialRegressionModel) {
                     PolynomialRegressionModel polynomialModel = (PolynomialRegressionModel) model;
                     m = new PolynomialRegressionModelDTO(model.get_id().toHexString(), model.getName(),
@@ -170,7 +170,7 @@ public class SuperUserActionManager {
                             polynomialModel.getAValue(),
                             polynomialModel.getBValue(),
                             polynomialModel.getCValue(),
-                            model.getAppliedMaintenanceList());
+                            model.getAppliedMaintenanceList(), model.getParamType());
                 }
                 if (m != null) {
                     predictionModelDTOS.add(m);

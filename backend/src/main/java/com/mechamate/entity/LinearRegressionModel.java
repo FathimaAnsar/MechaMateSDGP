@@ -9,8 +9,8 @@ public class LinearRegressionModel extends PredictionModel {
     private double cValue;
 
     public LinearRegressionModel(String name, String description, PredictionModel.modelType modelType, double mValue,
-                                 double cValue, List<Maintenance.MaintenanceType> appliedMaintenanceList) {
-        super(name, description, modelType, appliedMaintenanceList);
+                                 double cValue, List<Maintenance.MaintenanceType> appliedMaintenanceList, ParameterType paramType) {
+        super(name, description, modelType, appliedMaintenanceList, paramType);
         this.mValue = mValue;
         this.cValue = cValue;
     }

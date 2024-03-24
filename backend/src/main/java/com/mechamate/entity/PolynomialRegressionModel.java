@@ -11,8 +11,8 @@ public class PolynomialRegressionModel extends PredictionModel {
     // Constructor
     public PolynomialRegressionModel(String name, String description, PredictionModel.modelType modelType,
                                      Double aValue, Double bValue, Double cValue,
-                                     List<Maintenance.MaintenanceType> appliedMaintenanceList) {
-        super(name, description, modelType, appliedMaintenanceList);
+                                     List<Maintenance.MaintenanceType> appliedMaintenanceList, PredictionModel.ParameterType paramType) {
+        super(name, description, modelType, appliedMaintenanceList, paramType);
         this.aValue = aValue;
         this.bValue = bValue;
         this.cValue = cValue;
