@@ -128,25 +128,7 @@ class ConnectionManager {
   }
 
   async getPrediction(vehicleRegNo) {
-    console.log(vehicleRegNo);
-
-    const predictionData = [
-      { type: "TireChange" },
-      { type: "WheelAlignment" },
-      { type: "EngineOilChange" },
-      { type: "BrakeFluidChange" },
-      { type: "BrakeCaliperChange" },
-      { type: "CoolantChange" }
-
-    ];
-
-
-    predictionData.forEach(maintenance => {
-      maintenance.ActualKMs = Math.floor(Math.random() * 1001);
-      maintenance.PredictedKMs = Math.floor(Math.random() * 1001);
-    });
-
-    return predictionData;
+    return await this.getRequest("/api/v1/features/get-maintenance-prediction?vehicleRegNo=" + vehicleRegNo);
   }
 
 
