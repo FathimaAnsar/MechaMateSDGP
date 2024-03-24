@@ -221,20 +221,42 @@ public class PdM {
                     continue;
                 }
 
-                double totalWeight = 0; TrackingInfo prevTrackInfo = null;
+                double totalPredicted = 0; TrackingInfo prevTrackInfo = null;
+                double prevMileage =  serviceMileage;
 
+                int modelCount = 0;
+                for(PredictionModel pModel : predictionModels) {
+                    for (TrackingInfo tInfo : trackInfo) {
+                        if (tInfo.getDateTime() < serviceDTO.getAddedDate()) continue;
+                        double a = 0, b = 0, c = 0, m = 0, x = 0, y = 0;
+                        if(pModel.getParamType() == PredictionModel.ParameterType.EngineTemp) x = tInfo.getEnginTemp();
+                        else if(pModel.getParamType() == PredictionModel.ParameterType.Vibration) x = tInfo.getVibration();
+                        else if(pModel.getParamType() == PredictionModel.ParameterType.DrivingPattern) x = tInfo.getDrivingPattern();
+                        else if(pModel.getParamType() == PredictionModel.ParameterType.RPM) x = tInfo.getEngineRPM();
+                        else if(pModel.getParamType() == PredictionModel.ParameterType.HourOfTheDay) x = tInfo.getHourOfDay();
+                        else
+                            continue;
 
-                for(TrackingInfo tInfo : trackInfo) {
+                        if(pModel instanceof LinearRegressionModel) {
+                            m = ((LinearRegressionModel) pModel).getmValue();
+                            c = ((LinearRegressionModel) pModel).getcValue();
+                            y = (m * x) + c;
+                        } else if(pModel instanceof PolynomialRegressionModel) {
+                            a = ((PolynomialRegressionModel) pModel).getAValue();
+                            b = ((PolynomialRegressionModel) pModel).getBValue();
+                            c = ((PolynomialRegressionModel) pModel).getCValue();
+                            y = (a * (x * x)) + (b * x) + c;
+                        }
 
-
-
-
-
+                        double calcKMs = (tInfo.getMileage() - prevMileage);
+                        totalPredicted += (calcKMs * y);
+                        modelCount++;
+                    }
                 }
 
-
-
-
+                totalPredicted = totalPredicted / modelCount;
+                predictionDTOS.add(new PredictionDTO(mType, PredictionDTO.PredictionStatus.Predicted,
+                        actualKMsRemaining, (long) totalPredicted, (totalPredicted <= 0)));
             }
         }
 

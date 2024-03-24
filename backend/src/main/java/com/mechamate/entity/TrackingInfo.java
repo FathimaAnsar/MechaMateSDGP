@@ -14,15 +14,17 @@ public class TrackingInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private ObjectId _id;
     private String vehicleRegNo;
-    private String mileage;
+    private long mileage;
     private double enginTemp;
     private double vibration;
     private double longitude;
     private double latitude;
     private double engineRPM;
+    private double drivingPattern;
+    private double hourOfDay;
     private long dateTime;
 
-    public TrackingInfo(String vehicleRegNo, String mileage, double enginTemp, double vibration, double longitude, double latitude, double engineRPM, long dateTime) {
+    public TrackingInfo(String vehicleRegNo, long mileage, double enginTemp, double vibration, double longitude, double latitude, double engineRPM, long dateTime) {
         this.vehicleRegNo = vehicleRegNo;
         this.mileage = mileage;
         this.enginTemp = enginTemp;
@@ -49,11 +51,11 @@ public class TrackingInfo {
         this.vehicleRegNo = vehicleRegNo;
     }
 
-    public String getMileage() {
+    public long getMileage() {
         return mileage;
     }
 
-    public void setMileage(String mileage) {
+    public void setMileage(long mileage) {
         this.mileage = mileage;
     }
 
@@ -95,6 +97,22 @@ public class TrackingInfo {
 
     public void setEngineRPM(double engineRPM) {
         this.engineRPM = engineRPM;
+    }
+
+    public double getDrivingPattern() {
+        return drivingPattern;
+    }
+
+    public void setDrivingPattern(double drivingPattern) {
+        this.drivingPattern = drivingPattern;
+    }
+
+    public double getHourOfDay() {
+        return hourOfDay;
+    }
+
+    public void setHourOfDay(double hourOfDay) {
+        this.hourOfDay = hourOfDay;
     }
 
     public long getDateTime() {

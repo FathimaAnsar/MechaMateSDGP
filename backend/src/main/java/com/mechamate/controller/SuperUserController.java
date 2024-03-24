@@ -262,7 +262,7 @@ public class SuperUserController {
 
         if (predictionModelDTO.getModelId() == null || predictionModelDTO.getModelId().isEmpty()) predictionModelDTO.setModelId("");
 
-        PredictionModel predictionModel = new PredictionModel("", "", null, null);
+        PredictionModel predictionModel = new PredictionModel("", "", null, null, PredictionModel.ParameterType.RPM);
 
         try {
             predictionModel.set_id(new ObjectId(predictionModelDTO.getModelId()));

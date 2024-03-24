@@ -5,10 +5,13 @@ import com.mechamate.common.Common;
 import com.mechamate.common.DeviceLocation;
 import com.mechamate.common.Validation;
 import com.mechamate.dto.ErrorDTO;
+import com.mechamate.dto.PredictionDTO;
+import com.mechamate.dto.VehicleDTO;
 import com.mechamate.entity.Maintenance;
 import com.mechamate.entity.QrLink;
 import com.mechamate.entity.UserProfile;
 import com.mechamate.entity.Vehicle;
+import com.mechamate.features.PdM;
 import com.mechamate.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,9 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/v1/features")
@@ -40,6 +41,9 @@ public class FeatureController {
 
     @Autowired
     private APIManager apiManager;
+
+    @Autowired
+    private PdM pdM;
 
     @Value("${spring.config.server.address}")
     private String hostname;
@@ -277,7 +281,6 @@ public class FeatureController {
 //    }
 
 
-
     @GetMapping("/get-maintenance-prediction")
     public ResponseEntity<?> getPredictedOutput(HttpServletRequest request, HttpServletResponse response,
                                                      @RequestParam(required = false) String vehicleRegNo) {
@@ -290,27 +293,26 @@ public class FeatureController {
                 lang, request.getSession());
         if(resp != null) return resp;
 
+        List<VehicleDTO> vehicles = profileManager.getVehicleDTOs(userProfile);
+        if(vehicles.isEmpty())
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
+                            lang.get("error.no.vehicles.found", userProfile.getLanguage()),
+                            lang.get("error.no.vehicles.found.help", userProfile.getLanguage())),
+                            HttpStatus.OK);
 
-//        responseObject.put("exist", profileManager.isQrLinkExist(key));
-
-
-        // 1. Filter service records of vehicle by maintenance
-        // 2. Filter prediction models by maintenance
-        // 3. Collect tracking data by vehicle reg no
-        // 4. Loop through tracking data and calculate the predicted output recursively using trained prediction models
-        // 5. Find the difference between the last maintenance KMs against current KMs. (ie: (givenKMs - predictedKMs) )
-        // 6. return the predicted output
-
-//        if(maintenanceType == null)
-//            return new ResponseEntity<>
-//                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
-//                            lang.get("error.mtype.is.missing", userProfile.getLanguage()),
-//                            lang.get("error.mtype.is.missing.help", userProfile.getLanguage())),
-//                            HttpStatus.OK);
-//
-//
-        return null;
+        List<PredictionDTO> pDTO = new ArrayList<>();
+        return new ResponseEntity<>(
+                pdM.getPredictions(pDTO, userProfile, vehicles), HttpStatus.OK);
     }
+
+
+
+
+
+
+
+
 
 
 
