@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+import React, { useState } from 'react';
+import './public/ServiceRecord.css';
+import Header from "./components/Header.js";
+
+function ServiceRecordForm(props) {
+    const [serviceCounter, setServiceCounter] = useState(2);
+    const [serviceFields, setServiceFields] = useState([]);
+=======
 import React, { useState, useEffect } from 'react';
 import Header from "./components/Header";
 import { Form, Button, Container } from 'react-bootstrap';
@@ -13,6 +22,7 @@ function AddServiceRecordByServiceProvider(props) {
     const [date, setDate] = useState(new Date());
     const [mileage, setMileage] = useState('');
     const [vehicles, setVehicles] = useState([]);
+>>>>>>> d2229889b3b6ec9e84b521eb2e6260131a114bb7
 
     const [loading, setLoading] = useState(true);
 
@@ -80,7 +90,16 @@ function AddServiceRecordByServiceProvider(props) {
 
     return (
         <div>
+<<<<<<< HEAD
+          <Header app={props.app} />
+            <h1>Vehicle Service Information Form</h1>
+            
+            <form>
+                <label htmlFor="registrationNumber">Registration Number:</label>
+                <input type="text" id="registrationNumber" name="registrationNumber" required />
+=======
             <Header app={props.app} />
+>>>>>>> d2229889b3b6ec9e84b521eb2e6260131a114bb7
 
 
 
