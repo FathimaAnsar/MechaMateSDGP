@@ -4,17 +4,13 @@ import com.mechamate.common.ApiToken;
 import com.mechamate.common.Common;
 import com.mechamate.common.DeviceLocation;
 import com.mechamate.common.Validation;
-import com.mechamate.dto.ErrorDTO;
-import com.mechamate.dto.PredictionDTO;
-import com.mechamate.dto.VehicleDTO;
-import com.mechamate.entity.Maintenance;
-import com.mechamate.entity.QrLink;
-import com.mechamate.entity.UserProfile;
-import com.mechamate.entity.Vehicle;
+import com.mechamate.dto.*;
+import com.mechamate.entity.*;
 import com.mechamate.features.PdM;
 import com.mechamate.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -185,12 +181,6 @@ public class FeatureController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-//    @GetMapping("/maps-api-url")
-//    public ResponseEntity<String> getGoogleMapsApiUrl() {
-//        String mapsApiUrl = apiManager.googleMapJs();
-//        return ResponseEntity.ok(mapsApiUrl);
-//    }
-
 
     @GetMapping("/get-device-location")
     public ResponseEntity<?> getDeviceLocation(HttpServletRequest request, HttpServletResponse response,
@@ -212,25 +202,20 @@ public class FeatureController {
                             lang.get("error.token.error.help", userProfile.getLanguage())),
                             HttpStatus.OK);
 
-//
-//        Vehicle vehicle = profileManager.getVehicle(vehicleRegNo);
-//        if(vehicle == null)
-//            return new ResponseEntity<>
-//                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
-//                            lang.get("error.vehicle.doesnt.exist", userProfile.getLanguage()),
-//                            lang.get("error.vehicle.doesnt.exist.help", userProfile.getLanguage())),
-//                            HttpStatus.OK);
-//
-//        if(!userProfile.get_id().toHexString().equals(vehicle.getOwner().toHexString()))
-//            return new ResponseEntity<>
-//                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorUnauthorized,
-//                            lang.get("error.no.permission", userProfile.getLanguage()),
-//                            lang.get("error.no.permission.help", userProfile.getLanguage())),
-//                            HttpStatus.OK);
+        Vehicle vehicle = profileManager.getVehicle(vehicleRegNo);
+        if(vehicle == null)
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
+                            lang.get("error.vehicle.doesnt.exist", userProfile.getLanguage()),
+                            lang.get("error.vehicle.doesnt.exist.help", userProfile.getLanguage())),
+                            HttpStatus.OK);
 
-
-        Vehicle vehicle = new Vehicle("abc-1234", Vehicle.VehicleType.Bus, Vehicle.FuelType.Unknown, "","","",new Date(),new Date(), null, 0);
-        vehicle.setObd2DeviceID("863850060019373"); // for testing, remove this when testings are done
+        if(!userProfile.get_id().toHexString().equals(vehicle.getOwner().toHexString()))
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorUnauthorized,
+                            lang.get("error.no.permission", userProfile.getLanguage()),
+                            lang.get("error.no.permission.help", userProfile.getLanguage())),
+                            HttpStatus.OK);
 
         if(vehicle.getObd2DeviceID().isEmpty())
             return new ResponseEntity<>
@@ -245,16 +230,37 @@ public class FeatureController {
 
 
     @GetMapping("/get-service-record-qr")
-    public ResponseEntity<?> getServiceRecordQR(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<?> getServiceRecordQR(HttpServletRequest request, HttpServletResponse response,
+                                                @RequestParam(required = false) String vehicleRegNo) {
         Object obj = Validation.authenticate(request, response, sessionManager, lang);
         if(!(obj instanceof UserProfile)) return (ResponseEntity<ErrorDTO>) (obj);
         UserProfile userProfile = (UserProfile) obj;
 
+        if (vehicleRegNo == null) vehicleRegNo ="";
+        ResponseEntity<ErrorDTO> resp = Validation.validateVehicleRegNo(vehicleRegNo.trim().toUpperCase(),
+                lang, request.getSession());
+        if(resp != null) return resp;
+
+        Vehicle vehicle = profileManager.getVehicle(vehicleRegNo);
+        if(vehicle == null)
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
+                            lang.get("error.vehicle.doesnt.exist", userProfile.getLanguage()),
+                            lang.get("error.vehicle.doesnt.exist.help", userProfile.getLanguage())),
+                            HttpStatus.OK);
+
+        if(!userProfile.get_id().toHexString().equals(vehicle.getOwner().toHexString()))
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorUnauthorized,
+                            lang.get("error.no.permission", userProfile.getLanguage()),
+                            lang.get("error.no.permission.help", userProfile.getLanguage())),
+                            HttpStatus.OK);
+
         String qrKey = Common.getSha256("QRKEY#>>(" + userProfile.getUsername() +
                 System.currentTimeMillis() + userProfile.getEmail() + ")<<#");
-        QrLink qrLink = new QrLink(qrKey, userProfile);
+        QrLink qrLink = new QrLink(qrKey, vehicle);
 
-        ResponseEntity<ErrorDTO> resp = profileManager.addQrLink(qrLink, userProfile);
+        resp = profileManager.addQrLink(qrLink, userProfile);
         if(resp != null) return resp;
 
         Map<String, Object> responseObject = new HashMap<>();
@@ -272,13 +278,67 @@ public class FeatureController {
     }
 
 
-//    @GetMapping("/submit-service-record")
-//    public ResponseEntity<?> submitServiceRecord(HttpServletRequest request, HttpServletResponse response,
-//                                                 @RequestParam(required = false) String key) {
-//        if (key == null) key = "";
-//
-//        return new ResponseEntity<>(responseObject, HttpStatus.OK);
-//    }
+    @GetMapping("/submit-service-record-by-service-provider")
+    public ResponseEntity<?> submitServiceRecord(HttpServletRequest request, HttpServletResponse response,
+                                                 @RequestBody(required = false) ServiceRecordDTO serviceRecordDTO,
+                                                 @RequestParam(required = false) String key) {
+
+        if (key == null) key = "";
+        if(!profileManager.isQrLinkExist(key))
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
+                            lang.get("error.invalid.link", "default"),
+                            lang.get("error.invalid.link.help", "default")),
+                            HttpStatus.OK);
+
+
+        QrLink qrLink = profileManager.getQrLink(key);
+        if(qrLink == null || qrLink.getVehicle() == null)
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
+                            lang.get("error.invalid.link", "default"),
+                            lang.get("error.invalid.link.help", "default")),
+                            HttpStatus.OK);
+
+        if(serviceRecordDTO == null)
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
+                            lang.get("error.srecord.notfound", "default"),
+                            lang.get("error.srecord.notfound.help", "default")),
+                            HttpStatus.OK);
+
+        if (serviceRecordDTO.getServiceRecordId() == null) serviceRecordDTO.setServiceRecordId("");
+        if (serviceRecordDTO.getServices() == null) serviceRecordDTO.setServices(new ArrayList<>());
+        if (serviceRecordDTO.getDescription() == null) serviceRecordDTO.setDescription("");
+        if (serviceRecordDTO.getDate() == null) serviceRecordDTO.setDate(new Date());
+        if (serviceRecordDTO.getMileage() < 0) serviceRecordDTO.setMileage(0);
+
+        ServiceRecord serviceRecord = new ServiceRecord(qrLink.getVehicle().getRegNo().trim().toUpperCase(), serviceRecordDTO.getDescription(),
+                serviceRecordDTO.getDate(), serviceRecordDTO.getMileage(), serviceRecordDTO.getServices());
+
+        try {
+            serviceRecord.set_id(new ObjectId(serviceRecordDTO.getServiceRecordId()));
+        } catch(Exception e) {}
+
+        if(!serviceRecord.getServices().isEmpty()) {
+            List<ServiceDTO> svcDTOs = serviceRecord.getServices();
+            for (ServiceDTO svDTO : svcDTOs) {
+                try {
+                    svDTO.setAddedDate(System.currentTimeMillis());
+                } catch (Exception e) {}
+            }
+        }
+
+        ResponseEntity<ErrorDTO> resp = profileManager.addServiceRecordByProvider(serviceRecord);
+        if(resp != null) return resp;
+
+        return new ResponseEntity<>
+                (new SuccessDTO(SuccessDTO.SuccessStatus.OperationSucceeded,
+                        lang.get("success.added.svcrec.succeeded", "default"),
+                        lang.get("success.added.svcrec.succeeded.info", "default")),
+                        HttpStatus.OK);
+
+    }
 
 
     @GetMapping("/get-maintenance-prediction")
@@ -304,11 +364,6 @@ public class FeatureController {
         List<PredictionDTO> pDTO = new ArrayList<>();
         return pdM.getPredictions(pDTO, userProfile, vehicles);
     }
-
-
-
-
-
 
 
 

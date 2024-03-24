@@ -124,6 +124,25 @@ public class AuthController {
 
 
 
+    @GetMapping("/resend-otp")
+    public ResponseEntity<?> activate(HttpServletRequest request, HttpServletResponse response) {
+        Session session = sessionManager.getSession(request, response);
+        ResponseEntity<ErrorDTO> resp = Validation.notSignedIn(session, lang, request.getSession());
+        if(resp != null) return resp;
+
+        UserProfile userProfile = session.getUserProfile();
+        resp = profileManager.resendOTP(request, userProfile);
+        if(resp != null) return resp;
+
+        return new ResponseEntity<>
+                (new SuccessDTO(SuccessDTO.SuccessStatus.OperationSucceeded,
+                        lang.get("success.resend.otp.succeeded", userProfile.getLanguage()),
+                        lang.get("success.resend.otp.succeeded.info", userProfile.getLanguage())),
+                        HttpStatus.OK);
+
+    }
+
+
 
     @PostMapping("/signin")
     public ResponseEntity<?> signin(HttpServletRequest request, HttpServletResponse response,

@@ -14,11 +14,11 @@ public class QrLink {
     private ObjectId _id;
     private String qrKey;
     @DBRef
-    private UserProfile userProfile;
+    private Vehicle vehicle;
 
-    public QrLink(String qrKey, UserProfile userProfile) {
+    public QrLink(String qrKey, Vehicle vehicle) {
         this.qrKey = qrKey;
-        this.userProfile = userProfile;
+        this.vehicle = vehicle;
     }
 
     public ObjectId get_id() {
@@ -37,12 +37,12 @@ public class QrLink {
         this.qrKey = qrKey;
     }
 
-    public UserProfile getUserProfile() {
-        return userProfile;
+    public Vehicle getVehicle() {
+        return vehicle;
     }
 
-    public void setUserProfile(UserProfile userProfile) {
-        this.userProfile = userProfile;
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
     
 }
