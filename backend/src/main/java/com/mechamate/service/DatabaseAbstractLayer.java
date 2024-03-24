@@ -591,8 +591,10 @@ public class DatabaseAbstractLayer {
                         v.getInsExpDate(),
                         v.getRegExpDate(),
                         getServiceRecordDTOs(v.getRegNo()),
+
                         /*new ArrayList<>(),*/
-                        v.getCurrentMileage());
+                        v.getCurrentMileage(),
+                        v.getObd2DeviceID());
                 vehicleDTOS.add(vDTO);
             }
 
