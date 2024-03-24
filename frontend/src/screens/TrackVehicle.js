@@ -4,7 +4,7 @@ import ConnectionManager from "../services/ConnectionManager";
 import Header from "./components/Header";
 import CustomAlert from "./components/CustomAlert";
 import { ClipLoader } from "react-spinners";
-import "./styles/TrackVehicle.css";
+// import "./styles/TrackVehicle.css";
 
 function TrackVehicle(props) {
     const [vehicles, setVehicles] = useState([]);
