@@ -78,7 +78,7 @@ public class AuthController {
                                                             telephone.trim(),
                                                             Common.toTitleCase(firstname.trim().toLowerCase()),
                                                             Common.toTitleCase(lastname.trim().toLowerCase()),
-                                                            lang.getLanguage(request.getSession()), null, 0.0, 0.0, isServiceAccount);
+                                                            lang.getLanguage(request.getSession()), null, 0.0, 0.0, isServiceAccount, false);
 
         resp = profileManager.createUserProfile(request, userProfile);
         if(resp != null) return resp;

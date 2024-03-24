@@ -24,10 +24,15 @@ public class ProfileDTO {
 
     // Number of vehicles associated with the user
     private long vehicleCount;
+    private double longitude;
+    private double latitude;
     private boolean isServiceAccount;
+    private boolean isAvailable;
 
     // Constructor for ProfileDTO class
-    public ProfileDTO(String userId, String username, String email, String telephone, String firstName, String lastName, String language, long vehicleCount, boolean isServiceAccount) {
+    public ProfileDTO(String userId, String username, String email, String telephone, String firstName, String lastName, String language, long vehicleCount,
+                      double longitude, double latitude, boolean isServiceAccount, boolean isAvailable) {
+
         this.userId = userId;
         this.username = username;
         this.email = email;
@@ -36,7 +41,10 @@ public class ProfileDTO {
         this.lastName = lastName;
         this.language = language;
         this.vehicleCount = vehicleCount;
+        this.longitude = longitude;
+        this.latitude = latitude;
         this.isServiceAccount = isServiceAccount;
+        this.isAvailable = isAvailable;
     }
 
     // Getters and setters
@@ -104,6 +112,22 @@ public class ProfileDTO {
         this.vehicleCount = vehicleCount;
     }
 
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
     public boolean isServiceAccount() {
         return isServiceAccount;
     }
@@ -111,4 +135,13 @@ public class ProfileDTO {
     public void setServiceAccount(boolean serviceAccount) {
         isServiceAccount = serviceAccount;
     }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+
 }

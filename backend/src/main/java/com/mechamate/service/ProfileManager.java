@@ -334,6 +334,11 @@ public class ProfileManager {
         return databaseAbstractLayer.isRecoveryKeyExists(key) ? databaseAbstractLayer.getUserProfileByRecoveryKey(key) : null;
     }
 
+    public List<UserProfile> getAllServiceAccounts() {
+        return databaseAbstractLayer.getServiceAccounts();
+    }
+
+
     public ProfileDTO getProfileInfo(UserProfile userProfile) {
         return new ProfileDTO(
                 userProfile.get_id().toHexString(),
@@ -343,7 +348,11 @@ public class ProfileManager {
                 userProfile.getFirstname(),
                 userProfile.getLastname(),
                 userProfile.getLanguage(),
-                getVehicles(userProfile).size(), userProfile.isServiceAccount());
+                getVehicles(userProfile).size(),
+                userProfile.getLongitude(),
+                userProfile.getLatitude(),
+                userProfile.isServiceAccount(),
+                userProfile.isAvailable());
     }
 
     public DetailedProfileDTO getDetailedProfileInfo(UserProfile userProfile) {

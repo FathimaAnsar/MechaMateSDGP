@@ -15,16 +15,23 @@ public class ProfileDTO2 {
 
     // Language preference of the user
     private String language;
+    private double longitude;
+    private double latitude;
     private boolean isServiceAccount;
+    private boolean isAvailable;
 
     // Constructor for ProfileDTO2 class
-    public ProfileDTO2(String password, String telephone, String firstName, String lastName, String language, boolean isServiceAccount) {
+    public ProfileDTO2(String password, String telephone, String firstName, String lastName, String language,
+                       double longitude, double latitude, boolean isServiceAccount, boolean isAvailable) {
         this.password = password;
         this.telephone = telephone;
         this.firstName = firstName;
         this.lastName = lastName;
         this.language = language;
+        this.longitude = longitude;
+        this.latitude = latitude;
         this.isServiceAccount = isServiceAccount;
+        this.isAvailable = isAvailable;
     }
 
     // Getters and setters
@@ -68,6 +75,22 @@ public class ProfileDTO2 {
         this.language = language;
     }
 
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
     public boolean isServiceAccount() {
         return isServiceAccount;
     }
@@ -76,4 +99,11 @@ public class ProfileDTO2 {
         isServiceAccount = serviceAccount;
     }
 
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
 }

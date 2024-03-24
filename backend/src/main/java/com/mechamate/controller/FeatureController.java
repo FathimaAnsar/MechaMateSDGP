@@ -10,6 +10,7 @@ import com.mechamate.features.PdM;
 import com.mechamate.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.catalina.User;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -143,6 +144,79 @@ public class FeatureController {
                 apiManager.getNearbySparePartShops(lat, lng, radius, limit), HttpStatus.OK);
     }
 
+
+
+
+    @GetMapping("/set-availability")
+    public ResponseEntity<?> setAvailability(HttpServletRequest request, HttpServletResponse response,
+                                              @RequestParam(required = false) Double lat,
+                                              @RequestParam(required = false) Double lng,
+                                              @RequestParam(required = false) boolean isAvailable) {
+        Object obj = Validation.authenticate(request, response, sessionManager, lang);
+        if(!(obj instanceof UserProfile)) return (ResponseEntity<ErrorDTO>) (obj);
+        UserProfile userProfile = (UserProfile) obj;
+
+        if(lat == null) lat = 0.0;
+        if(lng == null) lng = 0.0;
+
+        if(!userProfile.isServiceAccount())
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
+                            lang.get("error.not.a.service.acc", userProfile.getLanguage()),
+                            lang.get("error.not.a.service.acc.help", userProfile.getLanguage())),
+                            HttpStatus.OK);
+
+        userProfile.setAvailable(isAvailable);
+        userProfile.setLongitude(lng);
+        userProfile.setLatitude(lat);
+        ResponseEntity<ErrorDTO> resp = profileManager.updateUserProfile(userProfile);
+        if(resp != null) return resp;
+
+        return new ResponseEntity<>
+                (new SuccessDTO(SuccessDTO.SuccessStatus.OperationSucceeded,
+                        lang.get("success.avail.set.succeeded", userProfile.getLanguage()),
+                        lang.get("success.avail.set.succeeded.info", userProfile.getLanguage())),
+                        HttpStatus.OK);
+    }
+
+    public double calculateDistanceInMeters(double lat1, double lon1, double lat2, double lon2) {
+        double dLat  = Math.toRadians((lat2 - lat1));
+        double dLong = Math.toRadians((lon2 - lon1));
+        lat1 = Math.toRadians(lat1);
+        lat2 = Math.toRadians(lat2);
+        double a = haversine(dLat) + Math.cos(lat1) * Math.cos(lat2) * haversine(dLong);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return 6371 * c * 1000; // 6371 = EARTH_RADIUS in KMs
+    }
+    private double haversine(double val) {
+        return Math.pow(Math.sin(val / 2), 2);
+    }
+
+    @GetMapping("/get-service-providers-list")
+    public ResponseEntity<?> getServiceProviders(HttpServletRequest request, HttpServletResponse response,
+                                              @RequestParam(required = false) Double lat,
+                                              @RequestParam(required = false) Double lng,
+                                              @RequestParam(required = false) Double radius,
+                                              @RequestParam(required = false) Integer limit) {
+        Object obj = Validation.authenticate(request, response, sessionManager, lang);
+        if(!(obj instanceof UserProfile)) return (ResponseEntity<ErrorDTO>) (obj);
+        UserProfile userProfile = (UserProfile) obj;
+
+        if(lat == null) lat = 0.0;
+        if(lng == null) lng = 0.0;
+        if(radius == null) radius = 0.0;
+        if(limit == null) limit = 0;
+
+        List<UserProfile> userProfiles = profileManager.getAllServiceAccounts();
+        List<ProfileDTO> filteredList = new ArrayList<>();
+        if(userProfiles.isEmpty()) return new ResponseEntity<>(filteredList, HttpStatus.OK);
+
+        for(UserProfile usr : userProfiles) {
+            double calcRadius = calculateDistanceInMeters(lat, lng, usr.getLatitude(), usr.getLongitude());
+            if(calcRadius < radius) filteredList.add(profileManager.getProfileInfo(usr));
+        }
+        return new ResponseEntity<>(filteredList, HttpStatus.OK);
+    }
 
 
     @GetMapping("/get-nearby-parking")

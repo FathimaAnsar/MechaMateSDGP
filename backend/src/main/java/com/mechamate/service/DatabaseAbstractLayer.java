@@ -270,6 +270,21 @@ public class DatabaseAbstractLayer {
         }
     }
 
+
+    public List<UserProfile> getServiceAccounts() {
+        try {
+            List<UserProfile> userProfiles = userProfileRepo.findByServiceAccount(true);
+            if (userProfiles != null && !userProfiles.isEmpty()) {
+                return userProfiles;
+            } else {
+                return new ArrayList<UserProfile>();
+            }
+        } catch (Exception e) {
+            return new ArrayList<UserProfile>();
+        }
+    }
+
+
     /*
     SESSION SECTION
     */

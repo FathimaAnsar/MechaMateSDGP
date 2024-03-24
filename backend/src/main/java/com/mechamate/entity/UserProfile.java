@@ -79,11 +79,12 @@ public class UserProfile {
     private double longitude;
     private double latitude;
     private boolean isServiceAccount;
+    private boolean isAvailable;
 
 
     // Constructor
     public UserProfile(Status status, String username, String password, String email, String telephone, String firstname, String lastname, String language, Subscription subscription,
-                       double longitude, double latitude, boolean isServiceAccount) {
+                       double longitude, double latitude, boolean isServiceAccount, boolean isAvailable) {
         this.status = status;
         this.username = username;
         this.password = password;
@@ -101,6 +102,7 @@ public class UserProfile {
         this.longitude = longitude;
         this.latitude = latitude;
         this.isServiceAccount = isServiceAccount;
+        this.isAvailable = isAvailable;
     }
 
     // Getters and setters
@@ -273,6 +275,14 @@ public class UserProfile {
 
     public void setServiceAccount(boolean serviceAccount) {
         isServiceAccount = serviceAccount;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
     }
 
 }
