@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './public/ServiceRecord.css';
+import Header from "./components/Header.js";
 
-function ServiceRecordForm() {
+function ServiceRecordForm(props) {
     const [serviceCounter, setServiceCounter] = useState(2);
     const [serviceFields, setServiceFields] = useState([]);
 
@@ -55,6 +56,7 @@ function ServiceRecordForm() {
 
     return (
         <div>
+          <Header app={props.app} />
             <h1>Vehicle Service Information Form</h1>
             
             <form>
