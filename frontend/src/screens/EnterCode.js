@@ -107,7 +107,7 @@ function EnterCode(props) {
   };
 
   const handleSignout = () => {
-    buttonLoading(true);
+    setButtonLoading(true);
     props.app.clearSessionCache();
     const connection = new ConnectionManager();
     connection.signout().then((resp) => {
@@ -167,7 +167,8 @@ function EnterCode(props) {
             <Button id="resend-otp-btn" variant="dark">
               Resend OTP
             </Button>{"        "}
-            <Button id="resend-otp-btn" variant="warning" onClick={handleSignout}>
+            <Button id="resend-otp-btn" variant="warning" onClick={handleSignout}
+              style={{ width: '100px' }}>
               {buttonLoading ? (
                 <Spinner
                   as="span"
