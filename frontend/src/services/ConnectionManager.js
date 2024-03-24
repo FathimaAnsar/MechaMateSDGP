@@ -1,10 +1,10 @@
 import CustomAlert from "../screens/components/CustomAlert.js";
-
 class ConnectionManager {
 
 
   constructor() {
     this.EndpointHost = "https://mechamate.site";
+    // this.EndpointHost = "http://localhost:8080";
   }
 
   async postParamRequest(apiEndPoint, postParams) {

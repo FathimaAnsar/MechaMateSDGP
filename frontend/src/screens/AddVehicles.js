@@ -7,7 +7,6 @@ import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import CustomAlert from "./components/CustomAlert.js";
 
 import axios from 'axios';
-import { API_BASE_URL } from "../Common.js";
 
 function MyVehicles(props) {
   const [vehicleType, setVehicleType] = useState('Car');
@@ -43,30 +42,30 @@ function MyVehicles(props) {
       regExpDate: regExpDate
     };
 
-    try {
-      const response = await axios.post(`${API_BASE_URL}/api/v1/general/add-vehicle`, requestBody, {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        withCredentials: true // Use withCredentials instead of credentials
-      });
-      // Check if response is successful (status code 2xx)
-      if (response.data.error) {
-        setError({
-          message: response.data.help,
-          heading: response.data.message,
-        });
-        setShowAlert(true);
-
-      } else if (response.data) {
-        const responseData = response.data;
-        const message = responseData.message;
-        clearInputFields();
-      }
-    } catch (error) {
-      alert("Vehicle registration failed");
-      console.error('Error registering vehicle:', error);
-    }
+  //   try {
+  //     const response = await axios.post(`${API_BASE_URL}/api/v1/general/add-vehicle`, requestBody, {
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       withCredentials: true // Use withCredentials instead of credentials
+  //     });
+  //     // Check if response is successful (status code 2xx)
+  //     if (response.data.error) {
+  //       setError({
+  //         message: response.data.help,
+  //         heading: response.data.message,
+  //       });
+  //       setShowAlert(true);
+  //
+  //     } else if (response.data) {
+  //       const responseData = response.data;
+  //       const message = responseData.message;
+  //       clearInputFields();
+  //     }
+  //   } catch (error) {
+  //     alert("Vehicle registration failed");
+  //     console.error('Error registering vehicle:', error);
+  //   }
   }
 
   function clearInputFields() {

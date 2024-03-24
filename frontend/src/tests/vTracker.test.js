@@ -1,6 +1,5 @@
 const { Builder, By, Key, until } = require('selenium-webdriver');
 const assert = require('assert');
-const { API_BASE_URL } = require('../Common.js'); // Adjust the path accordingly
 
 (async function example() {
     let driver = await new Builder().forBrowser('chrome').build();
