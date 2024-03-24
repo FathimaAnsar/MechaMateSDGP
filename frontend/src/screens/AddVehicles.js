@@ -143,18 +143,7 @@ function MyVehicles(props) {
           </Row>
 
           <Row className="mb-3" xs={1}>
-            <Form.Group as={Col} controlId="obd2DeviceID">
-              <Form.Label>OBD Device ID</Form.Label>
-              <Form.Control 
-                type="text" 
-                placeholder="1234567890" 
-                value={obd2DeviceID} 
-                onChange={(event) => setObd2DeviceID(event.target.value)}
-                disabled={!hasOBDDevice} // Disable the text box when hasOBDDevice is false
-              />
-            </Form.Group>
-
-            <Form.Group as={Col} controlId="obd2DeviceOption">
+          <Form.Group as={Col} controlId="obd2DeviceOption">
               <Form.Label>OBD Device</Form.Label>
               <div>
                 <Form.Check
@@ -175,6 +164,19 @@ function MyVehicles(props) {
                 />
               </div>
             </Form.Group>
+            
+            <Form.Group as={Col} controlId="obd2DeviceID">
+              <Form.Label>OBD Device ID</Form.Label>
+              <Form.Control 
+                type="text" 
+                placeholder="1234567890" 
+                value={obd2DeviceID} 
+                onChange={(event) => setObd2DeviceID(event.target.value)}
+                disabled={!hasOBDDevice} // Disable the text box when hasOBDDevice is false
+              />
+            </Form.Group>
+
+            
           </Row>
 
           <Row className="mb-3" xs={1}>
