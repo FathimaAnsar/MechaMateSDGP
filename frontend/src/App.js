@@ -40,29 +40,29 @@ function App() {
   const { theme } = useContext(ThemeContext);
   main.currentPage = window.location.pathname.length > 1 ? window.location.pathname.substring(1) : Pages.GetStartedUI;
   if (!main.getUserProfile()) {
-    if ((main.currentPage != Pages.GetStartedUI && main.currentPage != Pages.SignInUI  && main.currentPage != Pages.ForgotPasswordUI && main.currentPage != Pages.EnterCodeUI) || window.location.pathname.length < 2) {
+    if ((main.currentPage != Pages.GetStartedUI && main.currentPage != Pages.SignInUI && main.currentPage != Pages.ForgotPasswordUI && main.currentPage != Pages.EnterCodeUI) || window.location.pathname.length < 2) {
       if (main.isFirstRunDone()) {
         if (main.isAppLoaded()) alert("Please sign in to continue!");
         main.currentPage = Pages.SignInUI;
         window.location.href = "/" + main.currentPage;
-        return(<></>);
+        return (<></>);
       } else {
         main.currentPage = Pages.GetStartedUI;
         window.location.href = "/" + main.currentPage;
-        return(<></>);
+        return (<></>);
       }
     }
   } else {
     if (main.currentPage === Pages.GetStartedUI) {
       main.currentPage = Pages.DashboardUI;
       window.location.href = "/" + main.currentPage;
-      return(<></>);
-  } else if (main.currentPage === Pages.SignInUI) {
+      return (<></>);
+    } else if (main.currentPage === Pages.SignInUI) {
       //
     }
   }
 
-  
+
   if (!main.isAppLoaded()) main.setAppLoaded(true);
 
   return (
