@@ -32,16 +32,11 @@ function AboutUs(props) {
                 <h1></h1>
                 <div class="person-info">
                   <h4>Gihan Jayawickrama</h4>
-                  <h5>FINANCIAL CONSULTANT</h5>
+                  <h5>DevOps</h5>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum.
+                  As a DevOps engineer involved in the development of the mechamate web application,
+                   my role revolves around ensuring seamless collaboration between development
+                    and operations teams to streamline the deployment and management processes. 
                   </p>
                 </div>
               </div>
@@ -57,16 +52,11 @@ function AboutUs(props) {
                 <h1></h1>
                 <div class="person-info">
                   <h4>fathima Ansar</h4>
-                  <h5>Web designer</h5>
+                  <h5>Web designer UI/UX</h5>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum.
+                  As a UI/UX designer involved in the development of the Mechamate web application,
+                   my role centers around crafting intuitive and visually appealing user interfaces 
+                   while ensuring a seamless user experience.
                   </p>
                 </div>
               </div>
@@ -83,16 +73,11 @@ function AboutUs(props) {
                 <div class="person-info">
                   <h4>Chamath Jayasanka</h4>
 
-                  <h5>Project manager</h5>
+                  <h5>Programmer</h5>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum.
+                  As a programmer involved in the development of the Mechamate web application,
+                   my role focuses on writing clean, efficient, and maintainable code to implement
+                    the application's functionality.
                   </p>
                 </div>
               </div>
@@ -108,16 +93,11 @@ function AboutUs(props) {
                 <h1></h1>
                 <div class="person-info">
                   <h4>Radeesh Mayadunne</h4>
-                  <h5>Tech lead</h5>
+                  <h5>System Architect</h5>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum.
+                  As a System Architect involved in the development of the Mechamate web application,
+                   my role is to design the overall architecture and infrastructure of the system to
+                    meet the functional and non-functional requirements.
                   </p>
                 </div>
               </div>
@@ -133,16 +113,11 @@ function AboutUs(props) {
                 <h1></h1>
                 <div class="person-info">
                   <h4>Hansila Kodagoda</h4>
-                  <h5>Network Administrator</h5>
+                  <h5>web Administrator</h5>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum.
+                  As a Web Administrator involved in the development of the Mechamate web application,
+                   my role is to manage and maintain the infrastructure and server environment that 
+                   hosts the application. 
                   </p>
                 </div>
               </div>
