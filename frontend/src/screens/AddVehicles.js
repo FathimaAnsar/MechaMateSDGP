@@ -8,9 +8,6 @@ import CustomAlert from "./components/CustomAlert.js";
 
 import axios from 'axios';
 import { API_BASE_URL } from "../Common.js";
-//import ConnectionManager from "../services/ConnectionManager";
-
-
 
 function MyVehicles(props) {
   const [vehicleType, setVehicleType] = useState('Car');
@@ -21,7 +18,6 @@ function MyVehicles(props) {
   const [regExpDate, setRegExpDate] = useState(new Date());
   const [insNo, setInsNo] = useState(null);
   const [insExpDate, setInsExpDate] = useState(new Date());
-
   const [showAlert, setShowAlert] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false)
   const [error, setError] = useState({ message: "", heading: "" });
@@ -31,39 +27,7 @@ function MyVehicles(props) {
   const handleClose = () => {
     setShowAlert(false);
   };
-  // const connection = new ConnectionManager();
-  // async function addVehicle(event) {
-  //   event.preventDefault();
 
-  //   const requestBody = {
-  //     registrationNumber: registrationNumber,
-  //     vehicleType: vehicleType,
-  //     fuelType: fuelType,
-  //     vehicleMake: vehicleMake,
-  //     vehicleModel: vehicleModel,
-  //     insNo: insNo,
-  //     insExpDate: insExpDate,
-  //     regExpDate: regExpDate
-  //   };
-
-  //   try {
-  //     const response = await connection.addVehicle(requestBody);
-
-  //     // Check if response is successful (status code 2xx)
-  //     if (response) {
-  //       alert(`Vehicle Registration Successful: ${JSON.stringify(response)}`);
-  //       // Clear input fields after successful registration
-  //       clearInputFields();
-  //       return response; // Returning data might be useful if you need it elsewhere
-  //     } else {
-  //       throw new Error('Failed to register vehicle'); // Throw an error if response is null
-  //     }
-  //   } catch (error) {
-  //     alert("Vehicle registration failed:");
-  //     console.error('Error registering vehicle:', error);
-  //   }
-  // }
-  //----------------------------------------------------------------
 
   async function addVehicle(event) {
     event.preventDefault();
