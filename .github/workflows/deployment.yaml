@@ -2,8 +2,8 @@ name: Deploy to Google App Engine
 on:
   push:
     branches:
-     - main
-#       - release
+#     - main
+       - release
   workflow_dispatch:
 
 jobs:
@@ -75,7 +75,6 @@ jobs:
           cp index.html terms.html
           cp index.html dashboard.html
           ls
-
       - name: Build with Maven
         run: |
           pwd
