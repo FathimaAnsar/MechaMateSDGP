@@ -1,25 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import React, { useState, useEffect } from 'react';
 import Header from "./components/Header";
 import { Form, Button, Container } from 'react-bootstrap';
@@ -65,29 +43,29 @@ function AddServiceRecordByServiceProvider(props) {
             date: date,
             mileage: mileage
         };
-
-        // try {
-        //     const response = await axios.post(`${API_BASE_URL}/api/v1/general/add-service-record`, requestBody, {
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         },
-        //         withCredentials: true // Use withCredentials instead of credentials
-        //     });
-        //     // Check if response is successful (status code 2xx)
-        //     if (response.status >= 200 && response.status < 300) {
-        //         const responseData = response.data;
-        //         const message = responseData.message;
-        //         alert(`Service Record Status: ${message}`);
-        //         // Clear input fields after successful addition
-        //         clearInputFields();
-        //         return responseData; // Returning data might be useful if you need it elsewhere
-        //     } else {
-        //         throw new Error('Failed to add service record'); // Throw an error if response status is not in the success range
-        //     }
-        // } catch (err) {
-        //     console.error('Error adding service record:', err);
-        //     alert("Failed to Add Service Record");
-        // }
+        //http://localhost:8080/api/v1/general/add-service-record
+        try {
+            const response = await axios.post("https://mechamate.site/api/v1/general/add-service-record", requestBody, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                withCredentials: true // Use withCredentials instead of credentials
+            });
+            // Check if response is successful (status code 2xx)
+            if (response.status >= 200 && response.status < 300) {
+                const responseData = response.data;
+                const message = responseData.message;
+                alert(`Service Record Status: ${message}`);
+                // Clear input fields after successful addition
+                clearInputFields();
+                return responseData; // Returning data might be useful if you need it elsewhere
+            } else {
+                throw new Error('Failed to add service record'); // Throw an error if response status is not in the success range
+            }
+        } catch (err) {
+            console.error('Error adding service record:', err);
+            alert("Failed to Add Service Record");
+        }
     }
 
     function clearInputFields() {

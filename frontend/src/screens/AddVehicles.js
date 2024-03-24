@@ -41,31 +41,28 @@ function MyVehicles(props) {
       insExpDate: insExpDate,
       regExpDate: regExpDate
     };
-
-  //   try {
-  //     const response = await axios.post(`${API_BASE_URL}/api/v1/general/add-vehicle`, requestBody, {
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       withCredentials: true // Use withCredentials instead of credentials
-  //     });
-  //     // Check if response is successful (status code 2xx)
-  //     if (response.data.error) {
-  //       setError({
-  //         message: response.data.help,
-  //         heading: response.data.message,
-  //       });
-  //       setShowAlert(true);
-  //
-  //     } else if (response.data) {
-  //       const responseData = response.data;
-  //       const message = responseData.message;
-  //       clearInputFields();
-  //     }
-  //   } catch (error) {
-  //     alert("Vehicle registration failed");
-  //     console.error('Error registering vehicle:', error);
-  //   }
+//http://localhost:8080/api/v1/general/add-vehicle
+    try {
+      const response = await axios.post("https://mechamate.site/api/v1/general/add-vehicle", requestBody, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        withCredentials: true 
+      });
+      // Check if response is successful (status code 2xx)
+      if (response.status >= 200 && response.status < 300) {
+        const responseData = response.data;
+        const message = responseData.message;
+        alert(`Registration Status: ${message}`);
+        // Clear input fields after successful registration
+        clearInputFields();
+    } else {
+        throw new Error('Failed to register vehicle'); // Throw an error if response status is not in the success range
+    }
+    } catch (error) {
+    alert("Vehicle Registration Failed");
+    console.error('Error registering vehicle:', error);
+    }
   }
 
   function clearInputFields() {
