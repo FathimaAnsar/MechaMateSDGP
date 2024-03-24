@@ -15,7 +15,6 @@ import PredictMaintenance from "./screens/PredictMaintenance.js";
 import ShowPredictions from "./screens/ShowPredictions.js";
 import TrackVehicle from "./screens/TrackVehicle.js";
 import AutoMobSearch from "./screens/AutoMobSearch.js";
-import EmergencyAssist from "./screens/EmergencyAssist.js";
 import BreakdownAssist from "./screens/BreakdownAssist.js";
 import CookiesPolicy from "./screens/TOS/CookiesPolicy.js";
 import PrivacyPolicy from "./screens/TOS/PrivacyPolicy.js";
@@ -109,10 +108,6 @@ function App() {
         <Route
           path={Pages.AutoMobSearchUI}
           element={<AutoMobSearch app={main} />}
-        />
-        <Route
-          path={Pages.EmergencyAssistUI}
-          element={<EmergencyAssist app={main} />}
         />
         <Route
           path={Pages.BreakdownAssistUI}

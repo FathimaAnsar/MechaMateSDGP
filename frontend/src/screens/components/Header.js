@@ -138,14 +138,6 @@ function Header(props) {
             <Button
               variant="light"
               onClick={() => {
-                navigate("/" + Pages.EmergencyAssistUI);
-              }}
-            >
-              Emergency Assistance
-            </Button>
-            <Button
-              variant="light"
-              onClick={() => {
                 navigate("/" + Pages.TrackVehicleUI);
               }}
             >
