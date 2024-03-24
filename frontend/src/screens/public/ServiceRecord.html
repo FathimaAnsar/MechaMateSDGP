@@ -1,63 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Add Service Records Manually by service provider</title>
-<link rel="stylesheet" href="ServiceRecord.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Service Information Form</title>
+    <link rel="stylesheet" href="ServiceRecord.css">
+    
 </head>
+
 <body>
+    <h1>Vehicle Service Information Form</h1>
+    <form>
+        <label for="registrationNumber">Registration Number:</label>
+        <input type="text" id="registrationNumber" name="registrationNumber" required>
 
-<div class="container">
-  <h2>Add Service Records Manually by service provider</h2>
-  <form>
-    <div class="form-group">
-      <label for="services">Service Type:</label>
-      <select id="services">
-        <option value="WheelAlignment">Wheel Alignment</option>
-        <option value="EngineOilChange">Engine Oil Change</option>
-        <option value="BrakeFluidChange">Brake Fluid Change</option>
-        <option value="BrakeCaliperChange">Brake Caliper Change</option>
-        <option value="CoolantChange">Coolant Change</option>
-        <option value="TireChange">Tire Change</option>
-        <option value="PistonRingsChange">Piston Rings Change</option>
-        <option value="PistonChange">Piston Change</option>
-        
-      </select>
-    </div>
+        <label for="vehicleType">Vehicle Type:</label>
+        <select id="vehicleType" name="vehicleType" required>
+            <option value="Car">Car</option>
+            <option value="Truck">Truck</option>
+            <option value="Motorcycle">Motorcycle</option>
+        </select>
 
-    <div class="form-group">
-      <label for="description">Description:</label>
-      <textarea id="description" rows="4"></textarea>
-    </div>
+        <label for="fuelType">Fuel Type:</label>
+        <select id="fuelType" name="fuelType" required>
+            <option value="Petrol">Petrol</option>
+            <option value="Diesel">Diesel</option>
+            <option value="Electric">Electric</option>
+        </select>
 
-    <div class="form-group">
-      <label for="date">Service Date:</label>
-      <input type="date" id="date">
-    </div>
+        <label for="vehicleMake">Vehicle Make:</label>
+        <input type="text" id="vehicleMake" name="vehicleMake" required>
 
-    <div class="form-group">
-      <label for="mileage">Mileage:</label>
-      <input type="number" id="mileage">
-    </div>
+        <label for="vehicleModel">Vehicle Model:</label>
+        <input type="text" id="vehicleModel" name="vehicleModel" required>
 
-    <button class="primary-btn" onclick="addSRecord()">Submit</button>
-    <button class="secondary-btn" onclick="goBack()">Go Back</button>
-  </form>
-</div>
+        <label for="insNo">Insurance Number:</label>
+        <input type="text" id="insNo" name="insNo" required>
 
-<script>
-  function addSRecord() {
-    
-    console.log('Service record added');
-  }
+        <label for="insExpDate">Insurance Expiry Date:</label>
+        <input type="date" id="insExpDate" name="insExpDate" required>
 
-  function goBack() {
-    
-    console.log('Go back');
-  }
-</script>
+        <label for="regExpDate">Registration Expiry Date:</label>
+        <input type="date" id="regExpDate" name="regExpDate" required>
 
+        <label for="currentMileage">Current Mileage:</label>
+        <input type="number" id="currentMileage" name="currentMileage" required>
+
+        <fieldset>
+            <legend>Service Records:</legend>
+            <div class="service-record">
+                <label for="serviceRecordId">Service Record ID:</label>
+                <input type="text" id="serviceRecordId" name="serviceRecordId" required>
+
+                <label for="serviceDescription">Description:</label>
+                <input type="text" id="serviceDescription" name="serviceDescription" required>
+
+                <label for="serviceDate">Date:</label>
+                <input type="date" id="serviceDate" name="serviceDate" required>
+
+                <label for="serviceMileage">Mileage:</label>
+                <input type="number" id="serviceMileage" name="serviceMileage" required>
+
+                <div class="services">
+                    <fieldset>
+                        <legend>Tasks:</legend>
+                        
+                    </fieldset>
+                </div>
+
+                <!-- Container for dynamic service fields -->
+                <div class="service-fields"></div>
+                <!-- Add button for adding more services -->
+                <button type="button" class="add-service" onclick="addService()">+ Add Serviced Task</button>
+            </div>
+        </fieldset>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        let serviceCounter = 2; // Start from 2 since we already have service fields for 1
+
+        function addService() {
+            const serviceFields = document.querySelector('.service-fields');
+            const serviceTemplate = `
+                <div class="service">
+                    <label for="serviceDescription${serviceCounter}">Description:</label>
+                    <input type="text" id="serviceDescription${serviceCounter}" name="serviceDescription${serviceCounter}" required>
+                    
+                    <label for="appliedMaintenanceId${serviceCounter}">Applied Maintenance ID:</label>
+                    <input type="text" id="appliedMaintenanceId${serviceCounter}" name="appliedMaintenanceId${serviceCounter}" required>
+                    
+                    <label for="nextServiceInKMs${serviceCounter}">Next Service in KMs:</label>
+                    <input type="number" id="nextServiceInKMs${serviceCounter}" name="nextServiceInKMs${serviceCounter}" required>
+                    
+                    <label for="serviceQuality${serviceCounter}">Service Quality:</label>
+                    <select id="serviceQuality${serviceCounter}" name="serviceQuality${serviceCounter}" required>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                    
+                    <span id="remove-service-btn" onclick="removeServiceField(this)">Remove</span>
+                </div>
+            `;
+            serviceFields.insertAdjacentHTML('beforeend', serviceTemplate);
+            serviceCounter++;
+        }
+
+        function removeServiceField(element) {
+            const serviceToRemove = element.parentElement;
+            serviceToRemove.remove();
+        }
+    </script>
 </body>
+
 </html>

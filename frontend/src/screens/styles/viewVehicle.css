@@ -6,32 +6,28 @@
 
 .card-title {
   font-size: 14px;
+  font-weight: 700;
 }
 
 .card-text {
   font-size: 12px;
 }
 
-.shadow-glow-blue {
-
-  border-radius: 13px;
-  box-shadow: 0 0 6px 0 rgba(3, 30, 70, 0.2);
-}
-
 .shadow-glow-warning {
   border-radius: 13px;
-  box-shadow: 0 0 6px 0 rgba(255, 140, 0, 0.5);
+  box-shadow: 0 0px 11px rgba(255, 140, 0, 0.8);
+  box-shadow: inset 0px -3px rgba(255, 140, 0, .7);
 
 }
 
 .shadow-glow-success {
   border-radius: 13px;
-  box-shadow: 0 0 6px 0 rgba(0, 255, 0, 0.5);
+  box-shadow: inset 0px -3px rgba(34, 199, 34, 0.7);
 }
 
 .shadow-glow-danger {
   border-radius: 13px;
-  box-shadow: 0 0 6px 0 rgba(255, 0, 0, 0.5);
+  box-shadow: inset 0px -3px rgba(255, 0, 0, 0.8);
 }
 
 

@@ -2,17 +2,14 @@ import React, { useState } from 'react';
 import Header from "./components/Header";
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
-
 function Settings(props) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [language, setLanguage] = useState('english');
   const [newPassword, setNewPassword] = useState('');
-  const [confirmUsername, setConfirmUsername] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const userProfile = props.app.getUserProfile();
-
 
   const handleFirstNameChange = (event) => {
     setFirstName(event.target.value);
@@ -25,32 +22,27 @@ function Settings(props) {
   const handleLanguageChange = (event) => {
     setLanguage(event.target.value);
   };
-  const handleConfirmUsername = (event) => {
-    setConfirmUsername(event.target.value);
-  }
 
   const handleNewPasswordChange = (event) => {
     setNewPassword(event.target.value);
   };
+
   const handleConfirmPassword = (event) => {
     setConfirmPassword(event.target.value);
+  };
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
     if (newPassword !== confirmPassword) {
       alert("Passwords do not match");
       return;
     }
-
-  
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
     // Logic to handle form submission (update settings)
   };
 
   return (
     <div className='text-centered'>
       <Header app={props.app} />
-
       <Container fluid='sm' style={{ maxWidth: '400px' }}>
         <div className="settings-container">
           <h2>Settings</h2>
@@ -65,7 +57,6 @@ function Settings(props) {
                 <Form.Control type="text" value={lastName} placeholder={userProfile.lastName} onChange={handleLastNameChange} />
               </Form.Group>
             </Row>
-
             <Row className="mb-3" xs={1} md={2} lg={2}>
               <Form.Group as={Col} controlId="newPassword">
                 <Form.Label>New Password:</Form.Label>
@@ -80,7 +71,7 @@ function Settings(props) {
               <Form.Group as={Col} controlId="language">
                 <Form.Label>Language:</Form.Label>
                 <Form.Select
-                  value={userProfile.language !== 'default' ? userProfile.language : 'english'}
+                  value={language}
                   onChange={handleLanguageChange}
                 >
                   <option value="english">English</option>
@@ -89,7 +80,6 @@ function Settings(props) {
                 </Form.Select>
               </Form.Group>
             </Row>
-
             <Row className="mb-3">
               <Col>
                 <Button type="submit">Save Changes</Button>
@@ -97,12 +87,9 @@ function Settings(props) {
             </Row>
           </Form>
         </div>
-      </Container >
-
-    </div >
+      </Container>
+    </div>
   );
-}
 }
 
 export default Settings;
-
