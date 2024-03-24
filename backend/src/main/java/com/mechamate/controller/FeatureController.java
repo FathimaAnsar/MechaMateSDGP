@@ -302,8 +302,7 @@ public class FeatureController {
                             HttpStatus.OK);
 
         List<PredictionDTO> pDTO = new ArrayList<>();
-        return new ResponseEntity<>(
-                pdM.getPredictions(pDTO, userProfile, vehicles), HttpStatus.OK);
+        return pdM.getPredictions(pDTO, userProfile, vehicles);
     }
 
 
