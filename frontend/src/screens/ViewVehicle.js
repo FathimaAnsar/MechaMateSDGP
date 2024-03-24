@@ -48,7 +48,8 @@ export default function ViewVehicle(props) {
     BrakeFluidChange: FaExclamationTriangle,
     BrakeCaliperChange: FaTools,
     CoolantChange: FaTint,
-    TireChange: FaCar
+    TireChange: FaCar,
+    PistonChange: FaCogs
   };
 
   const maintenanceTypes = {
@@ -59,9 +60,6 @@ export default function ViewVehicle(props) {
     CoolantChange: "Coolant Change",
     TireChange: "Tire Change"
   };
-
-  console.log(maintenanceTypes);
-
 
 
   const fetchStoredVehicleList = async () => {
@@ -85,9 +83,11 @@ export default function ViewVehicle(props) {
   const fetchPrediction = async () => {
     try {
       const data = await connection.getPrediction(vehicle.registrationNumber);
-      setMaintenanceData(data);
+      const response = JSON.parse(data);
 
-      console.log(data)
+
+      setMaintenanceData(response);
+
     } catch (error) {
       console.error("Error fetching maintenance prediction:", error);
     }
@@ -180,17 +180,17 @@ export default function ViewVehicle(props) {
 
               {maintenanceData.map((maintenance, index) => {
                 // Determine the icon component based on the maintenance type
-                const IconComponent = maintenanceIcons[maintenance.type];
+                const IconComponent = maintenanceIcons[maintenance.maintenanceType];
 
                 // Determine the class name for the label glow effect based on the predicted value
                 let shadowGlowClass;
-                if (maintenance.PredictedKMs == null) {
+                if (maintenance.predictedKMs == null) {
                   shadowGlowClass = 'shadow';
 
                 }
-                else if (maintenance.PredictedKMs < 100) {
+                else if (maintenance.predictedKMs < 100) {
                   shadowGlowClass = 'shadow-glow-danger';
-                } else if (maintenance.PredictedKMs < 500) {
+                } else if (maintenance.predictedKMs < 500) {
                   shadowGlowClass = 'shadow-glow-warning';
                 } else {
                   shadowGlowClass = 'shadow-glow-success';
@@ -202,11 +202,11 @@ export default function ViewVehicle(props) {
                       <Card.Body className="card-body-with-icon">
                         <div>
                           <Card.Title className="card-title">
-                            {maintenanceTypes[maintenance.type]}
+                            {maintenanceTypes[maintenance.maintenanceType]}
                           </Card.Title>
                           <Card.Text className="card-text">
-                            {/* Predicted: {maintenance.PredictedKMs}km <br /> */}
-                            Actual: {maintenance.ActualKMs}km
+                            {/* Predicted: {maintenance.predictedKMs}km <br /> */}
+                            Actual: {maintenance.actualKMs}km
                           </Card.Text>
                           {/* <Card.Text className="card-text">
                             
@@ -215,7 +215,7 @@ export default function ViewVehicle(props) {
                         {/* Render the icon */}
                         <div>
                           <IconComponent className="icon me-1" />
-                          {" "}{maintenance.PredictedKMs}km
+                          {" "}{maintenance.predictedKMs}km
                         </div>
 
                       </Card.Body>
