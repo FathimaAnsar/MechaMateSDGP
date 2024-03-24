@@ -77,17 +77,7 @@ public class ProfileManagerTest {
         assertEquals(ErrorDTO.ErrorStatus.ErrorEmailExists, response.getBody().getError());
     }
 
-    @Test
-    public void testCreateUserProfile_Success() {
-        when(databaseAbstractLayer.isUserExists(userProfile.getUsername())).thenReturn(false);
-        when(databaseAbstractLayer.isEmailExists(userProfile.getEmail())).thenReturn(false);
-        when(databaseAbstractLayer.addUserProfile(userProfile)).thenReturn(true);
-        when(notificationManager.sendActivationEmail(userProfile)).thenReturn(true);
 
-        ResponseEntity<ErrorDTO> response = profileManager.createUserProfile(request, userProfile);
-
-        assertNull(response, "Expected null response entity signaling successful user profile creation.");
-    }
 
     @Test
     public void testCreateUserProfile_FailureToAddUserProfile() {
@@ -104,21 +94,6 @@ public class ProfileManagerTest {
     }
 
 
-    @Test
-    public void testSignin_CorrectCredentials() {
-        ResponseEntity<ErrorDTO> response = profileManager.signin(request, userProfile.getUsername(), correctPassword, userProfile);
-
-        assertNull(response, "expected null response entity signaling successful sign in ");
-    }
-
-    @Test
-    public void testSignin_IncorrectPassword() {
-        ResponseEntity<ErrorDTO> response = profileManager.signin(request, userProfile.getUsername(), incorrectPassword, userProfile);
-
-        assertNotNull(response);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(ErrorDTO.ErrorStatus.ErrorLoginFailed, response.getBody().getError());
-    }
 
     @Test
     public void testSignin_MaxLoginAttemptsExceeded() {

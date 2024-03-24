@@ -5,18 +5,24 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import logo from "../images/logo-black.png";
 import Modal from "react-bootstrap/Modal";
+
+import { Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import CustomAlert from "./components/CustomAlert.js";
 import LoadingScreen from "./components/LoadingScreen.js";
 
 
+
 function EnterCode(props) {
+  const connection = new ConnectionManager();
+  const [buttonLoading, setButtonLoading] = useState(false);
+
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
-  const[mainModelShow, setMainModelShow] = useState(true)
-  
+  const [mainModelShow, setMainModelShow] = useState(true)
+
   const [showAlert, setShowAlert] = useState(false);
   const [error, setError] = useState({ message: "", heading: "" });
 
@@ -41,21 +47,21 @@ function EnterCode(props) {
 
         if (userProfile.error) {
           if (userProfile.error === "ErrorPendingActivation") {
-            //
+
           } else if (userProfile.error === "ErrorNotSignedIn") {
-            props.app.changePage(Pages.SignInUI);
+            navigate("/" + Pages.SignInUI);
           } else {
             alert(userProfile.message + "\n" + userProfile.help);
           }
         } else {
-          props.app.changePage(Pages.DashboardUI);
+          navigate("/" + Pages.DashboardUI);
         }
       });
-    } catch (exp) {}
+    } catch (exp) { }
   }, []);
 
   const onOtpSubmit = async (otp) => {
-     setLoading(true);
+    setLoading(true);
     // Call the activation logic here using the OTP
     try {
       let connection = new ConnectionManager();
@@ -87,7 +93,7 @@ function EnterCode(props) {
 
         if (userProfile.error) {
           alert(userProfile.message + "\n" + userProfile.help);
-          props.app.changePage(Pages.SignInUI);
+          navigate("/" + Pages.SignInUI);
         } else {
           props.app.setUserProfile(userProfile);
         }
@@ -97,11 +103,35 @@ function EnterCode(props) {
     } catch (error) {
       console.error("Error:", error);
     }
-     setLoading(false);
+    setLoading(false);
   };
+
+  const handleSignout = () => {
+    setButtonLoading(true);
+    props.app.clearSessionCache();
+    const connection = new ConnectionManager();
+    connection.signout().then((resp) => {
+      const response = JSON.parse(resp);
+
+      if (!response) {
+        alert("Please check your springboot localhost is running");
+        navigate("/" + Pages.SignInUI);
+        return;
+      }
+
+      if (response.error) {
+        // navigate("/" + Pages.SignInUI);
+      } else if (response.status) {
+        navigate("/" + Pages.SignInUI);
+      } else {
+        alert("Error: Unknown");
+      }
+    });
+  };
+
   return (
     <>
-    {loading && <LoadingScreen />}
+      {loading && <LoadingScreen />}
       <Container fluid>
         <Modal
           size="md"
@@ -136,6 +166,20 @@ function EnterCode(props) {
 
             <Button id="resend-otp-btn" variant="dark">
               Resend OTP
+            </Button>{"        "}
+            <Button id="resend-otp-btn" variant="warning" onClick={handleSignout}
+              style={{ width: '100px' }}>
+              {buttonLoading ? (
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+              ) : (
+                <>Sign Out</>
+              )}
             </Button>
           </Card.Body>
           <Card.Footer
@@ -148,11 +192,11 @@ function EnterCode(props) {
             <div id="entercode-copyright">MechaMate © 2024</div>
           </Card.Footer>
         </Modal>
-        
+
         <CustomAlert show={show} handleClose={handleModalClose} error={{
           heading: "Account activated",
           message: "Welcome to MechaMate! Now you can use MechaMate features",
-        }} variant="success"/>
+        }} variant="success" />
 
 
         <CustomAlert show={showAlert} handleClose={handleClose} error={error} />
@@ -161,7 +205,7 @@ function EnterCode(props) {
   );
 }
 
-const OtpInput = ({ length = 6, onOtpSubmit = () => {} }) => {
+const OtpInput = ({ length = 6, onOtpSubmit = () => { } }) => {
   const [otp, setOtp] = useState(new Array(length).fill(""));
   const inputRefs = useRef([]);
 

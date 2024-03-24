@@ -239,7 +239,7 @@ public class PdM {
                         else if(pModel.getParamType() == PredictionModel.ParameterType.HourOfTheDay) x = tInfo.getHourOfDay();
                         else
                             continue;
-                        
+
                         if(pModel instanceof LinearRegressionModel) {
                             m = ((LinearRegressionModel) pModel).getmValue();
                             c = ((LinearRegressionModel) pModel).getcValue();

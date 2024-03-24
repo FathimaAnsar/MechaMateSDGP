@@ -1,13 +1,15 @@
-import { API_BASE_URL } from "../Common.js";
 import CustomAlert from "../screens/components/CustomAlert.js";
-
 class ConnectionManager {
-  constructor() { }
+
+  constructor() {
+    this.EndpointHost = "http://localhost:8080";
+//    this.EndpointHost = "https://mechamate.site";
+  }
 
   async postParamRequest(apiEndPoint, postParams) {
     document.body.style.cursor = "wait";
     try {
-      const response = await fetch(`${API_BASE_URL + apiEndPoint}`, {
+      const response = await fetch((this.EndpointHost + apiEndPoint), {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: postParams,
@@ -31,10 +33,10 @@ class ConnectionManager {
   async postJsonRequest(apiEndPoint, jsonObject) {
     document.body.style.cursor = "wait";
     try {
-      const response = await fetch(`${API_BASE_URL + apiEndPoint}`, {
+      const response = await fetch((this.EndpointHost + apiEndPoint), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: jsonObject,
+        body: JSON.stringify(jsonObject),
         credentials: "include",
       });
       const data = await response.json();
@@ -49,11 +51,10 @@ class ConnectionManager {
     document.body.style.cursor = "wait";
     try {
       const response = await fetch(
-        `${API_BASE_URL +
-        (urlEncodedData == null
-          ? apiEndPoint
-          : apiEndPoint + "?" + urlEncodedData)
-        }`,
+        (this.EndpointHost +
+          (urlEncodedData == null
+            ? apiEndPoint
+            : apiEndPoint + "?" + urlEncodedData)),
         {
           method: "GET",
           credentials: "include",
@@ -94,6 +95,9 @@ class ConnectionManager {
     return await this.postParamRequest("/api/v1/auth/signup", urlEncodedData);
   }
   async addVehicle(vehicle) {
+
+console.log(vehicle);
+
     return await this.postJsonRequest("/api/v1/general/add-vehicle", vehicle);
   }
 
@@ -167,6 +171,19 @@ class ConnectionManager {
     return await this.getRequest(
       "/api/v1/features/get-service-record-qr");
   }
+  async getNearbyPoliceStations(lat, lng, radius, limit) {
+    return await this.getRequest(
+      "/api/v1/features/get-nearby-police-stations?lat=" +
+      lat +
+      "&lng=" +
+      lng +
+      "&radius=" +
+      radius +
+      "&limit=" +
+      limit
+    );
+  }
+
 
 }
 

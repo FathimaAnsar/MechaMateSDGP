@@ -58,8 +58,24 @@ jobs:
           pwd
           npm install
           npm run buildToServer
-          
 
+      - name: Mapping Paths
+        run: |
+          pwd    
+          cd backend/src/main/resources/static
+          pwd
+          cp index.html get-started.html
+          cp index.html signin.html
+          cp index.html signup.html
+          cp index.html enter-code.html
+          cp index.html forgot-password.html
+          cp index.html reset-password.html
+          cp index.html privacy-policy.html
+          cp index.html cookies-policy.html
+          cp index.html terms.html
+          cp index.html dashboard.html
+          cp index.html parking-finder.html
+          ls
       - name: Build with Maven
         run: |
           pwd

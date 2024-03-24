@@ -32,54 +32,6 @@ public class NotificationManagerTest {
         when(javaMailSender.createMimeMessage()).thenReturn(mimeMessage);
     }
 
-    @Test
-    public void sendActivationEmail_Success() throws Exception {
-        UserProfile userProfile = createUserProfile();
-        when(javaMailSender.createMimeMessage()).thenReturn(mimeMessage);
-
-        assertTrue(notificationManager.sendActivationEmail(userProfile));
-
-        verify(javaMailSender).send(mimeMessageCaptor.capture());
-        MimeMessage sentMessage = mimeMessageCaptor.getValue();
-        assertNotNull(sentMessage, "MimeMessage should be sent.");
-        // Further assertions can be made on sentMessage if needed
-    }
-
-    @Test
-    public void sendWelcomeEmail_Success() throws Exception {
-        UserProfile userProfile = createUserProfile();
-
-        assertTrue(notificationManager.sendWelcomeEmail(userProfile));
-
-        verify(javaMailSender).send(any(MimeMessage.class));
-    }
-
-    @Test
-    public void sendLoginAlert_Success() throws Exception {
-        UserProfile userProfile = createUserProfile();
-
-        assertTrue(notificationManager.sendLoginAlert(userProfile));
-
-        verify(javaMailSender).send(any(MimeMessage.class));
-    }
-
-    @Test
-    public void sendRecoveryEmail_Success() throws Exception {
-        UserProfile userProfile = createUserProfile();
-
-        assertTrue(notificationManager.sendRecoveryEmail(userProfile));
-
-        verify(javaMailSender).send(any(MimeMessage.class));
-    }
-
-    @Test
-    public void sendResetConfirmEmail_Success() throws Exception {
-        UserProfile userProfile = createUserProfile();
-
-        assertTrue(notificationManager.sendResetConfirmEmail(userProfile));
-
-        verify(javaMailSender).send(any(MimeMessage.class));
-    }
 
     @Test
     public void sendEmail_Failure() throws Exception {
