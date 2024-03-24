@@ -37,7 +37,7 @@ function QrPage(props) {
         <h2 className="qr-topic">Scan to Open and Add Service Details</h2>
         <p className="qr-instruction">Scan this QR code to open the service record form.</p>
       </div>
-      <div className="qr-container">
+      <div className="qr-container shadow">
         <QRCode value={state.qrurl} size={200} />
       </div>
     </div>

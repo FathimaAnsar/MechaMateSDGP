@@ -2,7 +2,7 @@ import CustomAlert from "../screens/components/CustomAlert.js";
 class ConnectionManager {
 
   constructor() {
-    this.EndpointHost = "https://mechamate.site";
+    this.EndpointHost = "http://localhost:8080";
   }
 
   async postParamRequest(apiEndPoint, postParams) {
@@ -50,10 +50,10 @@ class ConnectionManager {
     document.body.style.cursor = "wait";
     try {
       const response = await fetch(
-          (this.EndpointHost +
-        (urlEncodedData == null
-          ? apiEndPoint
-          : apiEndPoint + "?" + urlEncodedData)),
+        (this.EndpointHost +
+          (urlEncodedData == null
+            ? apiEndPoint
+            : apiEndPoint + "?" + urlEncodedData)),
         {
           method: "GET",
           credentials: "include",
@@ -169,14 +169,14 @@ class ConnectionManager {
   }
   async getNearbyPoliceStations(lat, lng, radius, limit) {
     return await this.getRequest(
-        "/api/v1/features/get-nearby-police-stations?lat=" +
-        lat +
-        "&lng=" +
-        lng +
-        "&radius=" +
-        radius +
-        "&limit=" +
-        limit
+      "/api/v1/features/get-nearby-police-stations?lat=" +
+      lat +
+      "&lng=" +
+      lng +
+      "&radius=" +
+      radius +
+      "&limit=" +
+      limit
     );
   }
 
