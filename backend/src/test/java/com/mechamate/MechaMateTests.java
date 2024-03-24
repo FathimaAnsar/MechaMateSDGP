@@ -8,6 +8,6 @@ class MechaMateTests {
 
     @Test
     void contextLoads() {
-        // This test will simply verify if the Spring application context loads successfully.
+        // This test will simply verify if the MechaMate Spring application context loads successfully.
     }
 }
