@@ -167,6 +167,19 @@ class ConnectionManager {
     return await this.getRequest(
       "/api/v1/features/get-service-record-qr");
   }
+  async getNearbyPoliceStations(lat, lng, radius, limit) {
+    return await this.getRequest(
+        "/api/v1/features/get-nearby-police-stations?lat=" +
+        lat +
+        "&lng=" +
+        lng +
+        "&radius=" +
+        radius +
+        "&limit=" +
+        limit
+    );
+  }
+
 
 }
 
