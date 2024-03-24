@@ -7,14 +7,14 @@ class ConnectionManager {
   async postParamRequest(apiEndPoint, postParams) {
     document.body.style.cursor = "wait";
     try {
-      const response = await fetch(`${API_BASE_URL + apiEndPoint}`, {
+      console.log(`${API_BASE_URL + apiEndPoint}`);
+      const response = await fetch("https://mechamate.site" + apiEndPoint, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: postParams,
         credentials: "include",
 
       });
-      console.log(`${API_BASE_URL + apiEndPoint}`);
       const data = await response.json();
       document.body.style.cursor = "default";
       return JSON.stringify(data);
@@ -51,7 +51,7 @@ class ConnectionManager {
     document.body.style.cursor = "wait";
     try {
       const response = await fetch(
-        `${API_BASE_URL +
+        `${"https://mechamate.site" +
         (urlEncodedData == null
           ? apiEndPoint
           : apiEndPoint + "?" + urlEncodedData)
