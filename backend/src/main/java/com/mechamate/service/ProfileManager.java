@@ -133,7 +133,7 @@ public class ProfileManager {
                             HttpStatus.OK);
         }
 
-//        notificationManager.sendWelcomeEmail(userProfile);
+        notificationManager.sendWelcomeEmail(userProfile);
 
         return null;
     }
@@ -188,7 +188,7 @@ public class ProfileManager {
                             HttpStatus.OK);
         }
 
-//        notificationManager.sendLoginAlert(userProfile);
+        notificationManager.sendLoginAlert(userProfile);
 
         return null;
     }

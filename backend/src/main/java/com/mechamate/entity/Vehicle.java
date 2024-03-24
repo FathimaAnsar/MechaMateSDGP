@@ -18,7 +18,7 @@ public class Vehicle {
         Car,
         Van,
         Bus,
-        Lorry,
+        Truck,
         Motorcycle,
         SUV
     }
