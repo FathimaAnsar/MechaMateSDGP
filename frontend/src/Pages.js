@@ -1,46 +1,37 @@
 export const Pages = {
-  GetStartedUI: "get-started", //
+  GetStartedUI: "get-started.html", //
+  SignInUI: "signin.html", //
+  SignUpUI: "signup.html", //
+  EnterCodeUI: "enter-code.html", //
+  ForgotPasswordUI: "forgot-password.html", //
+  ResetPasswordUI: "reset-password.html", //
+  PrivacyPolicyUI: "privacy-policy.html",
+  CookiesPolicyUI: "coockies-policy.html",
+  TermsUI: "terms.html",
+  DashboardUI: "dashboard.html", //
 
-  SignInUI: "signin", //
-  SignUpUI: "signup", //
 
-  EnterCodeUI: "enter-code", //
 
-  ForgotPasswordUI: "forgot-password", //
-  ResetPasswordUI: "reset-password", //
 
-  DashboardUI: "dashboard", //
+  SettingsUI: "settings.html", //
+  NotificationsUI: "notifications.html", //
+  AboutUsUI: "about-us.html", //
+  AddVehiclesUI: "add-vehicles.html", //
+  PredictMaintenanceUI: "predict-maintenance.html", //
+  ShowPredictionsUI: "show-predictions.html", //
+  TrackVehicleUI: "track-vehicle.html", //
+  AutoMobSearchUI: "automob-search.html",
+  AutoMobDetailsUI: "automob-details.html",
+  BreakdownAssistUI: "breakdown-assistance.html",
+  EmergencyAssistUI: "emergency-assistance.html",
+  ManageDocumentsUI: "documents.html",
+  AddSRecordManualUI: "add-record.html",
+  QrUI: "qr-ui.html",
+  AddRecordBySPUI: "add-record-sp.html",
+  ShowRecordReqUI: "show-record-request.html",
+  ParkingFinderUI: "parking-finder.html",
+  ParkingInfoUI: "parking-info.html",
+  ViewVehicle: "view-vehicle.html",
 
-  SettingsUI: "settings", //
 
-  NotificationsUI: "notifications", //
-
-  AboutUsUI: "about-us", //
-
-  AddVehiclesUI: "add-vehicles", //
-
-  PredictMaintenanceUI: "predict-maintenance", //
-  ShowPredictionsUI: "show-predictions", //
-
-  TrackVehicleUI: "track-vehicle", //
-
-  AutoMobSearchUI: "automob-search",
-  AutoMobDetailsUI: "automob-details",
-
-  BreakdownAssistUI: "breakdown-assistance",
-  EmergencyAssistUI: "emergency-assistance",
-
-  ManageDocumentsUI: "documents",
-  AddSRecordManualUI: "add-record",
-  QrUI: "qr-ui",
-  AddRecordBySPUI: "add-record-sp",
-  ShowRecordReqUI: "show-record-request",
-
-  ParkingFinderUI: "parking-finder",
-  ParkingInfoUI: "parking-info",
-  ViewVehicle: "view-vehicle",
-
-  PrivacyPolicyUI: "privacy-policy",
-  CookiesPolicyUI: "coockies-policy",
-  TermsUI: "terms",
 };
