@@ -22,10 +22,7 @@ function ManageDocuments(props) {
     if (response.error) {
       alert("Error: " + response.message);      
     } else if (response.url) {
-
       alert("Error: " + response.url);      
-
-
       navigate("/" + Pages.QrUI, { state: { qrurl: response.url } });
     } else {
       alert("Error: Unknown");

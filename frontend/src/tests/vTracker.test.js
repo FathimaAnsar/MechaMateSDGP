@@ -1,11 +1,14 @@
 const { Builder, By, Key, until } = require('selenium-webdriver');
 const assert = require('assert');
 
+const BaseURL = "https://mechamate.site";
+
+
 (async function example() {
     let driver = await new Builder().forBrowser('chrome').build();
     try {
         // Navigate to the TrackMyVehicle page
-        await driver.get(API_BASE_URL + '/track-vehicle');
+        await driver.get(BaseURL + '/track-vehicle');
 
         // Wait for the page to load
         await driver.wait(until.elementLocated(By.xpath('//h2[contains(text(), "Theft Tracking System")]')), 10000);

@@ -1,12 +1,14 @@
 const { Builder, By, Key, until } = require('selenium-webdriver');
 
+const BaseURL = "https://mechamate.site";
+
 async function clickGetStartedButton() {
     // Initialize the WebDriver
     let driver = await new Builder().forBrowser('chrome').build();
 
     try {
         // Navigate to the webpage
-        await driver.get('http://localhost:3000/get-started');
+        await driver.get(BaseURL + '/get-started');
 
         // Find the "Get Started" button by its text
         const getStartedButton = await driver.findElement(By.xpath("//button[contains(text(), 'Get Started')]"));

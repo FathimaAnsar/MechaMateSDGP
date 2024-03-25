@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Form, Button, Col } from 'react-bootstrap';
 
+const BaseURL = "https://mechamate.site";
+
 function PaymentForm() {
     const [orderDetails, setOrderDetails] = useState({
         orderId: 'ItemNo12345',
@@ -16,7 +18,7 @@ function PaymentForm() {
         country: 'Sri Lanka',
     });
 
-    const backendUrl = 'https://mechamate-413916.el.r.appspot.com/api/v1/super/process-payment';
+    const backendUrl = BaseURL + '/api/v1/super/process-payment';
 
     const handleSubmit = async (event) => {
         event.preventDefault();

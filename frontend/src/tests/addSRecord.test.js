@@ -1,12 +1,15 @@
 const { Builder, By, Key, until } = require('selenium-webdriver');
 
+const BaseURL = "https://mechamate.site";
+
+
 async function testAddServiceRecord() {
     // Create a new instance of the WebDriver
     let driver = await new Builder().forBrowser('chrome').build();
 
     try {
         // Navigate to the page
-        await driver.get('URL_OF_YOUR_REACT_APP');
+        await driver.get(BaseURL);
 
         // Fill in the form fields
         await driver.findElement(By.id('services')).sendKeys('EngineOilChange');

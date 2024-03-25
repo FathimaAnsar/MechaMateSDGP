@@ -1,12 +1,14 @@
 const {  Builder, By } = require('selenium-webdriver');
 const webdriver = require('./webdriver');
 
+const BaseURL = "https://mechamate.site";
+
 // Define the test function
 async function signInTest() {
     let driver = await new Builder().forBrowser('chrome').build();
     try {
         // Navigate to the sign-in page
-        await webdriver.get('http://localhost:3000/signin');
+        await webdriver.get(BaseURL + '/signin');
 
         // Find the sign-in input fields and submit button
         const usernameInput = await webdriver.findElement(By.id('username'));

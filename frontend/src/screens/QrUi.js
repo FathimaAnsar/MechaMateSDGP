@@ -1,23 +1,4 @@
 
-// import React from 'react';
-// import QRCode from 'qrcode.react'; 
-// import { useLocation } from "react-router-dom";
-
-// function QrPage() {
-  
-//   const {state} = useLocation();
-//   return (
-//     <div>
-//       <h2>QR Code</h2>
-//       <QRCode value={state.qrurl} />
-//     </div>
-//   );
-// }
-
-// export default QrPage;
-
-
-
 
 import Header from "./components/Header";
 import React from 'react';
@@ -29,7 +10,6 @@ function QrPage(props) {
   const { state } = useLocation();
 
   return (
-    
     <>
     <Header app ={props.app}/>
     <div className="qr-page-container">

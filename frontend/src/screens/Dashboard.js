@@ -38,7 +38,6 @@ function Dashboard(props) {
     try {
       const resp = await connection.getVehicleList();
       const vehicles = JSON.parse(resp);
-      // console.log(vehicles)
       props.app.setVehicleList(vehicles);
       return vehicles;
     } catch (error) {

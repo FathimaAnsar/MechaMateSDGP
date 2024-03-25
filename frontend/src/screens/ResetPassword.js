@@ -3,10 +3,12 @@ import React from "react";
 
 function ReplaceMe(props) {
 
-    const handleGoBack = () => {props.app.goBack();} 
+    const handleGoBack = () => {
+        return;
+    } 
 
     const handleClick = () => {
-   //     props.app.changePage(Pages.SignInUI); 
+        return;
     } 
 
     return(

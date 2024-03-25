@@ -21,15 +21,12 @@ import PrivacyPolicy from "./screens/TOS/PrivacyPolicy.js";
 import Terms from "./screens/TOS/Terms.js";
 import ManageDocuments from "./screens/ManageDocuments.js";
 import AddSRecords from "./screens/AddSRecords.js";
-//import AddServiceRecordByQR from "./screens/AddServiceRecordByQR.js";
-//import AddServiceRecordByServiceProvider from "./screens/AddServiceRecordByServiceProvider.js";
-//import ShowServiceRecordRequest from "./screens/ShowServiceRecordRequest.js";
 import ParkingFinder from "./screens/ParkingFinder.js";
 import ThemeContext from "./screens/components/ThemeContext.js";
 import ViewVehicle from "./screens/ViewVehicle.js";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
-import PaymentSuccess from "./screens/PaymentSuccess";
-import PaymentCancelled from "./screens/PaymentCancelled";
+//import PaymentSuccess from "./screens/PaymentSuccess";
+//import PaymentCancelled from "./screens/PaymentCancelled";
 import "./styles/App.css";
 import QrPage from "./screens/QrUi.js";
 import EmergencyAssist from "./screens/EmergencyAssist";
@@ -135,7 +132,6 @@ function App() {
         <Route path={Pages.PrivacyPolicyUI} element={<PrivacyPolicy />} />
         <Route path={Pages.CookiesPolicyUI} element={<CookiesPolicy />} />
         <Route path={Pages.TermsUI} element={<Terms />} />
-        {/*these two for testing payhere*/}
         <Route path="*" element={<Dashboard app={main} />} />
       </Routes>
     </div>

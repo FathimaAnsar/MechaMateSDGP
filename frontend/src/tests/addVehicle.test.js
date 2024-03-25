@@ -1,12 +1,14 @@
 const { Builder, By, Key, until } = require('selenium-webdriver');
 
+const BaseURL = "https://mechamate.site";
+
 async function myVehiclesTest() {
     // Create a new instance of the WebDriver
     let driver = await new Builder().forBrowser('chrome').build();
 
     try {
         // Navigate to the MyVehicles page
-        await driver.get('http://localhost:3000/add-vehicles');
+        await driver.get(BaseURL + '/add-vehicles');
 
         // Find the input fields and enter values
         await driver.findElement(By.css('input[type="text"][placeholder="Toyota"]')).sendKeys('Toyota');

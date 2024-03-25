@@ -17,17 +17,7 @@ function Terms() {
             <Card.Header as="h5">Terms</Card.Header>
             <Card.Body>
               <Card.Text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                euismod ultrices nunc, nec sollicitudin arcu sodales et.
-                Phasellus euismod libero at est placerat, euismod elementum
-                augue hendrerit. Proin commodo leo vel ligula elementum, et
-                mattis purus fringilla. Duis convallis ligula in leo
-                sollicitudin, ut facilisis urna euismod. Cras vel ullamcorper
-                est, id fringilla nunc. Proin tempus bibendum feugiat. Cras
-                ullamcorper magna in massa feugiat, nec mattis justo
-                scelerisque. Aenean commodo velit nec erat tempor posuere. Ut
-                convallis ut neque in sollicitudin. Mauris viverra auctor
-                mauris, nec rhoncus orci varius nec.
+              By using our software, you agree to these terms and conditions. You may only use the software for lawful purposes and agree not to modify or exploit it. Our software and its content are protected by intellectual property laws. We may terminate or suspend access for any violation. We reserve the right to change these terms with notice. If you continue to use the software after changes, you accept the new terms. If you have questions, contact us.
               </Card.Text>
             </Card.Body>
           </Card>

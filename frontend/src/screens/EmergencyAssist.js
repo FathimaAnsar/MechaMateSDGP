@@ -101,11 +101,12 @@ function EmergencyAssist(props) {
         }
     };
     const contactHospital = () => {
-        const hospitalWithPhone = hospitals.find(hospital => hospital.phone);
-        console.log(hospitalWithPhone)
+        const hospitalWithPhone = hospitals.find(hospital =>
+            hospital.nationalPhoneNumber || hospital.internationalPhoneNumber
+        );
         if (hospitalWithPhone) {
-            console.log(hospitalWithPhone)
-            window.location.href = `tel:${hospitalWithPhone.nationalPhoneNumber}`;
+            const phoneNumber = hospitalWithPhone.nationalPhoneNumber || hospitalWithPhone.internationalPhoneNumber;
+            window.location.href = `tel:${phoneNumber}`;
         } else {
             setAlertInfo({
                 show: true,

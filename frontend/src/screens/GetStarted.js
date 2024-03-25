@@ -14,8 +14,6 @@ function GetStarted() {
     navigate("/" + page);
   };
 
-  // const handleClick222 = () => { props.app.changePage(props.app.currentPage); } //test
-
   useEffect((e) => {
     //  props.lang.loadLanguage(true);
   });

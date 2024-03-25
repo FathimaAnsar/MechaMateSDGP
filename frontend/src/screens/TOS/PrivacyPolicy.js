@@ -17,17 +17,7 @@ function PrivacyPolicy() {
             <Card.Header as="h5">Privacy Policy</Card.Header>
             <Card.Body>
               <Card.Text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                euismod ultrices nunc, nec sollicitudin arcu sodales et.
-                Phasellus euismod libero at est placerat, euismod elementum
-                augue hendrerit. Proin commodo leo vel ligula elementum, et
-                mattis purus fringilla. Duis convallis ligula in leo
-                sollicitudin, ut facilisis urna euismod. Cras vel ullamcorper
-                est, id fringilla nunc. Proin tempus bibendum feugiat. Cras
-                ullamcorper magna in massa feugiat, nec mattis justo
-                scelerisque. Aenean commodo velit nec erat tempor posuere. Ut
-                convallis ut neque in sollicitudin. Mauris viverra auctor
-                mauris, nec rhoncus orci varius nec.
+              Our privacy policy outlines how we handle your personal information when you use our software. We collect and use personal information, such as your name and email address, solely to improve our services and do not share it with third parties. We also collect Log Data, including your IP address and browser information, to enhance your experience. Cookies may be used for this purpose, and you can choose to accept or reject them. While we strive to protect your information, we cannot guarantee absolute security. Our software may contain links to third-party sites, and we are not responsible for their content or practices. We may update our privacy policy periodically, and any changes will be posted here. If you have any questions, please contact us.
               </Card.Text>
             </Card.Body>
           </Card>
