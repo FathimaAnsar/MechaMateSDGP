@@ -20,11 +20,11 @@ public class TrackingInfo {
     private double longitude;
     private double latitude;
     private double engineRPM;
-    private double drivingPattern;
-    private double hourOfDay;
+    private long drivingPattern;
+    private long hourOfDay;
     private long dateTime;
 
-    public TrackingInfo(String vehicleRegNo, long mileage, double enginTemp, double vibration, double longitude, double latitude, double engineRPM, long dateTime) {
+    public TrackingInfo(String vehicleRegNo, long mileage, double enginTemp, double vibration, double longitude, double latitude, double engineRPM, long dateTime, long hourOfDay, long drivingPattern) {
         this.vehicleRegNo = vehicleRegNo;
         this.mileage = mileage;
         this.enginTemp = enginTemp;
@@ -33,6 +33,8 @@ public class TrackingInfo {
         this.latitude = latitude;
         this.engineRPM = engineRPM;
         this.dateTime = dateTime;
+        this.hourOfDay = hourOfDay;
+        this.drivingPattern = drivingPattern;
     }
 
     public ObjectId get_id() {
@@ -99,19 +101,19 @@ public class TrackingInfo {
         this.engineRPM = engineRPM;
     }
 
-    public double getDrivingPattern() {
+    public long getDrivingPattern() {
         return drivingPattern;
     }
 
-    public void setDrivingPattern(double drivingPattern) {
+    public void setDrivingPattern(long drivingPattern) {
         this.drivingPattern = drivingPattern;
     }
 
-    public double getHourOfDay() {
+    public long getHourOfDay() {
         return hourOfDay;
     }
 
-    public void setHourOfDay(double hourOfDay) {
+    public void setHourOfDay(long hourOfDay) {
         this.hourOfDay = hourOfDay;
     }
 

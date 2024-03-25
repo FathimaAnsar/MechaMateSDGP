@@ -301,3 +301,10 @@
     border-radius: 10px;
 
 }
+
+#dropdown-signup-modal {
+    font-weight: 400;
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 10px;
+}

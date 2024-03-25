@@ -76,9 +76,15 @@ public class UserProfile {
     // Reference to the subscription associated with the user
     @DBRef
     private Subscription subscription;
+    private double longitude;
+    private double latitude;
+    private boolean isServiceAccount;
+    private boolean isAvailable;
+
 
     // Constructor
-    public UserProfile(Status status, String username, String password, String email, String telephone, String firstname, String lastname, String language, Subscription subscription) {
+    public UserProfile(Status status, String username, String password, String email, String telephone, String firstname, String lastname, String language, Subscription subscription,
+                       double longitude, double latitude, boolean isServiceAccount, boolean isAvailable) {
         this.status = status;
         this.username = username;
         this.password = password;
@@ -93,8 +99,11 @@ public class UserProfile {
         this.recoveryKey = "";
         this.superUser = false;
         this.subscription = subscription;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.isServiceAccount = isServiceAccount;
+        this.isAvailable = isAvailable;
     }
-
 
     // Getters and setters
     public ObjectId get_id() {
@@ -242,6 +251,40 @@ public class UserProfile {
     public void setSubscription(Subscription subscription) {
         this.subscription = subscription;
     }
+
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public boolean isServiceAccount() {
+        return isServiceAccount;
+    }
+
+    public void setServiceAccount(boolean serviceAccount) {
+        isServiceAccount = serviceAccount;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+
 }
 
 

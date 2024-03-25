@@ -4,17 +4,14 @@ import com.mechamate.common.ApiToken;
 import com.mechamate.common.Common;
 import com.mechamate.common.DeviceLocation;
 import com.mechamate.common.Validation;
-import com.mechamate.dto.ErrorDTO;
-import com.mechamate.dto.PredictionDTO;
-import com.mechamate.dto.VehicleDTO;
-import com.mechamate.entity.Maintenance;
-import com.mechamate.entity.QrLink;
-import com.mechamate.entity.UserProfile;
-import com.mechamate.entity.Vehicle;
+import com.mechamate.dto.*;
+import com.mechamate.entity.*;
 import com.mechamate.features.PdM;
 import com.mechamate.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.catalina.User;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -149,6 +146,79 @@ public class FeatureController {
 
 
 
+
+    @GetMapping("/set-availability")
+    public ResponseEntity<?> setAvailability(HttpServletRequest request, HttpServletResponse response,
+                                              @RequestParam(required = false) Double lat,
+                                              @RequestParam(required = false) Double lng,
+                                              @RequestParam(required = false) boolean isAvailable) {
+        Object obj = Validation.authenticate(request, response, sessionManager, lang);
+        if(!(obj instanceof UserProfile)) return (ResponseEntity<ErrorDTO>) (obj);
+        UserProfile userProfile = (UserProfile) obj;
+
+        if(lat == null) lat = 0.0;
+        if(lng == null) lng = 0.0;
+
+        if(!userProfile.isServiceAccount())
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
+                            lang.get("error.not.a.service.acc", userProfile.getLanguage()),
+                            lang.get("error.not.a.service.acc.help", userProfile.getLanguage())),
+                            HttpStatus.OK);
+
+        userProfile.setAvailable(isAvailable);
+        userProfile.setLongitude(lng);
+        userProfile.setLatitude(lat);
+        ResponseEntity<ErrorDTO> resp = profileManager.updateUserProfile(userProfile);
+        if(resp != null) return resp;
+
+        return new ResponseEntity<>
+                (new SuccessDTO(SuccessDTO.SuccessStatus.OperationSucceeded,
+                        lang.get("success.avail.set.succeeded", userProfile.getLanguage()),
+                        lang.get("success.avail.set.succeeded.info", userProfile.getLanguage())),
+                        HttpStatus.OK);
+    }
+
+    public double calculateDistanceInMeters(double lat1, double lon1, double lat2, double lon2) {
+        double dLat  = Math.toRadians((lat2 - lat1));
+        double dLong = Math.toRadians((lon2 - lon1));
+        lat1 = Math.toRadians(lat1);
+        lat2 = Math.toRadians(lat2);
+        double a = haversine(dLat) + Math.cos(lat1) * Math.cos(lat2) * haversine(dLong);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return 6371 * c * 1000; // 6371 = EARTH_RADIUS in KMs
+    }
+    private double haversine(double val) {
+        return Math.pow(Math.sin(val / 2), 2);
+    }
+
+    @GetMapping("/get-service-providers-list")
+    public ResponseEntity<?> getServiceProviders(HttpServletRequest request, HttpServletResponse response,
+                                              @RequestParam(required = false) Double lat,
+                                              @RequestParam(required = false) Double lng,
+                                              @RequestParam(required = false) Double radius,
+                                              @RequestParam(required = false) Integer limit) {
+        Object obj = Validation.authenticate(request, response, sessionManager, lang);
+        if(!(obj instanceof UserProfile)) return (ResponseEntity<ErrorDTO>) (obj);
+        UserProfile userProfile = (UserProfile) obj;
+
+        if(lat == null) lat = 0.0;
+        if(lng == null) lng = 0.0;
+        if(radius == null) radius = 0.0;
+        if(limit == null) limit = 0;
+
+        List<UserProfile> userProfiles = profileManager.getAllServiceAccounts();
+        List<ProfileDTO> filteredList = new ArrayList<>();
+        if(userProfiles.isEmpty()) return new ResponseEntity<>(filteredList, HttpStatus.OK);
+
+        for(UserProfile usr : userProfiles) {
+            double calcRadius = calculateDistanceInMeters(lat, lng, usr.getLatitude(), usr.getLongitude());
+            if(calcRadius < radius) filteredList.add(profileManager.getProfileInfo(usr));
+        }
+        return new ResponseEntity<>(filteredList, HttpStatus.OK);
+    }
+
+
     @GetMapping("/get-nearby-parking")
     public ResponseEntity<?> getNearbyParking(HttpServletRequest request, HttpServletResponse response,
                                                      @RequestParam(required = false) Double lat,
@@ -185,12 +255,6 @@ public class FeatureController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-//    @GetMapping("/maps-api-url")
-//    public ResponseEntity<String> getGoogleMapsApiUrl() {
-//        String mapsApiUrl = apiManager.googleMapJs();
-//        return ResponseEntity.ok(mapsApiUrl);
-//    }
-
 
     @GetMapping("/get-device-location")
     public ResponseEntity<?> getDeviceLocation(HttpServletRequest request, HttpServletResponse response,
@@ -212,25 +276,20 @@ public class FeatureController {
                             lang.get("error.token.error.help", userProfile.getLanguage())),
                             HttpStatus.OK);
 
-//
-//        Vehicle vehicle = profileManager.getVehicle(vehicleRegNo);
-//        if(vehicle == null)
-//            return new ResponseEntity<>
-//                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
-//                            lang.get("error.vehicle.doesnt.exist", userProfile.getLanguage()),
-//                            lang.get("error.vehicle.doesnt.exist.help", userProfile.getLanguage())),
-//                            HttpStatus.OK);
-//
-//        if(!userProfile.get_id().toHexString().equals(vehicle.getOwner().toHexString()))
-//            return new ResponseEntity<>
-//                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorUnauthorized,
-//                            lang.get("error.no.permission", userProfile.getLanguage()),
-//                            lang.get("error.no.permission.help", userProfile.getLanguage())),
-//                            HttpStatus.OK);
+        Vehicle vehicle = profileManager.getVehicle(vehicleRegNo);
+        if(vehicle == null)
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
+                            lang.get("error.vehicle.doesnt.exist", userProfile.getLanguage()),
+                            lang.get("error.vehicle.doesnt.exist.help", userProfile.getLanguage())),
+                            HttpStatus.OK);
 
-
-        Vehicle vehicle = new Vehicle("abc-1234", Vehicle.VehicleType.Bus, Vehicle.FuelType.Unknown, "","","",new Date(),new Date(), null, 0);
-        vehicle.setObd2DeviceID("863850060019373"); // for testing, remove this when testings are done
+        if(!userProfile.get_id().toHexString().equals(vehicle.getOwner().toHexString()))
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorUnauthorized,
+                            lang.get("error.no.permission", userProfile.getLanguage()),
+                            lang.get("error.no.permission.help", userProfile.getLanguage())),
+                            HttpStatus.OK);
 
         if(vehicle.getObd2DeviceID().isEmpty())
             return new ResponseEntity<>
@@ -245,16 +304,37 @@ public class FeatureController {
 
 
     @GetMapping("/get-service-record-qr")
-    public ResponseEntity<?> getServiceRecordQR(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<?> getServiceRecordQR(HttpServletRequest request, HttpServletResponse response,
+                                                @RequestParam(required = false) String vehicleRegNo) {
         Object obj = Validation.authenticate(request, response, sessionManager, lang);
         if(!(obj instanceof UserProfile)) return (ResponseEntity<ErrorDTO>) (obj);
         UserProfile userProfile = (UserProfile) obj;
 
+        if (vehicleRegNo == null) vehicleRegNo ="";
+        ResponseEntity<ErrorDTO> resp = Validation.validateVehicleRegNo(vehicleRegNo.trim().toUpperCase(),
+                lang, request.getSession());
+        if(resp != null) return resp;
+
+        Vehicle vehicle = profileManager.getVehicle(vehicleRegNo);
+        if(vehicle == null)
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
+                            lang.get("error.vehicle.doesnt.exist", userProfile.getLanguage()),
+                            lang.get("error.vehicle.doesnt.exist.help", userProfile.getLanguage())),
+                            HttpStatus.OK);
+
+        if(!userProfile.get_id().toHexString().equals(vehicle.getOwner().toHexString()))
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorUnauthorized,
+                            lang.get("error.no.permission", userProfile.getLanguage()),
+                            lang.get("error.no.permission.help", userProfile.getLanguage())),
+                            HttpStatus.OK);
+
         String qrKey = Common.getSha256("QRKEY#>>(" + userProfile.getUsername() +
                 System.currentTimeMillis() + userProfile.getEmail() + ")<<#");
-        QrLink qrLink = new QrLink(qrKey, userProfile);
+        QrLink qrLink = new QrLink(qrKey, vehicle);
 
-        ResponseEntity<ErrorDTO> resp = profileManager.addQrLink(qrLink, userProfile);
+        resp = profileManager.addQrLink(qrLink, userProfile);
         if(resp != null) return resp;
 
         Map<String, Object> responseObject = new HashMap<>();
@@ -272,13 +352,67 @@ public class FeatureController {
     }
 
 
-//    @GetMapping("/submit-service-record")
-//    public ResponseEntity<?> submitServiceRecord(HttpServletRequest request, HttpServletResponse response,
-//                                                 @RequestParam(required = false) String key) {
-//        if (key == null) key = "";
-//
-//        return new ResponseEntity<>(responseObject, HttpStatus.OK);
-//    }
+    @GetMapping("/submit-service-record-by-service-provider")
+    public ResponseEntity<?> submitServiceRecord(HttpServletRequest request, HttpServletResponse response,
+                                                 @RequestBody(required = false) ServiceRecordDTO serviceRecordDTO,
+                                                 @RequestParam(required = false) String key) {
+
+        if (key == null) key = "";
+        if(!profileManager.isQrLinkExist(key))
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
+                            lang.get("error.invalid.link", "default"),
+                            lang.get("error.invalid.link.help", "default")),
+                            HttpStatus.OK);
+
+
+        QrLink qrLink = profileManager.getQrLink(key);
+        if(qrLink == null || qrLink.getVehicle() == null)
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
+                            lang.get("error.invalid.link", "default"),
+                            lang.get("error.invalid.link.help", "default")),
+                            HttpStatus.OK);
+
+        if(serviceRecordDTO == null)
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
+                            lang.get("error.srecord.notfound", "default"),
+                            lang.get("error.srecord.notfound.help", "default")),
+                            HttpStatus.OK);
+
+        if (serviceRecordDTO.getServiceRecordId() == null) serviceRecordDTO.setServiceRecordId("");
+        if (serviceRecordDTO.getServices() == null) serviceRecordDTO.setServices(new ArrayList<>());
+        if (serviceRecordDTO.getDescription() == null) serviceRecordDTO.setDescription("");
+        if (serviceRecordDTO.getDate() == null) serviceRecordDTO.setDate(new Date());
+        if (serviceRecordDTO.getMileage() < 0) serviceRecordDTO.setMileage(0);
+
+        ServiceRecord serviceRecord = new ServiceRecord(qrLink.getVehicle().getRegNo().trim().toUpperCase(), serviceRecordDTO.getDescription(),
+                serviceRecordDTO.getDate(), serviceRecordDTO.getMileage(), serviceRecordDTO.getServices());
+
+        try {
+            serviceRecord.set_id(new ObjectId(serviceRecordDTO.getServiceRecordId()));
+        } catch(Exception e) {}
+
+        if(!serviceRecord.getServices().isEmpty()) {
+            List<ServiceDTO> svcDTOs = serviceRecord.getServices();
+            for (ServiceDTO svDTO : svcDTOs) {
+                try {
+                    svDTO.setAddedDate(System.currentTimeMillis());
+                } catch (Exception e) {}
+            }
+        }
+
+        ResponseEntity<ErrorDTO> resp = profileManager.addServiceRecordByProvider(serviceRecord);
+        if(resp != null) return resp;
+
+        return new ResponseEntity<>
+                (new SuccessDTO(SuccessDTO.SuccessStatus.OperationSucceeded,
+                        lang.get("success.added.svcrec.succeeded", "default"),
+                        lang.get("success.added.svcrec.succeeded.info", "default")),
+                        HttpStatus.OK);
+
+    }
 
 
     @GetMapping("/get-maintenance-prediction")
@@ -304,11 +438,6 @@ public class FeatureController {
         List<PredictionDTO> pDTO = new ArrayList<>();
         return pdM.getPredictions(pDTO, userProfile, vehicles);
     }
-
-
-
-
-
 
 
 

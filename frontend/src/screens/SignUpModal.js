@@ -30,13 +30,13 @@ function SignUpModal(props) {
         values.firstName,
         values.lastName,
         values.telephone,
-        values.terms
+        values.terms,
+        values.userType
       );
 
       const response = JSON.parse(resp);
 
       if (!response) {
-        alert("Please check your springboot localhost is running");
         return;
       }
 
@@ -109,6 +109,7 @@ function SignUpModal(props) {
       ),
 
     terms: yup.boolean().oneOf([true], "Terms must be accepted").required(),
+    userType: yup.boolean().required(),
   });
 
   return (
@@ -118,7 +119,7 @@ function SignUpModal(props) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
       scrollable="true"
-      // fullscreen='md-down'
+    // fullscreen='md-down'
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-center">
@@ -139,6 +140,7 @@ function SignUpModal(props) {
             email: "",
             telephone: "",
             terms: false,
+            userType: false
           }}
         >
           {({
@@ -189,7 +191,7 @@ function SignUpModal(props) {
                   <InputGroup>
                     <InputGroup.Text
                       id="inputGroupPrepend"
-                      style={{ borderRadius: "10px 0 0 10px", height: 'auto'}}
+                      style={{ borderRadius: "10px 0 0 10px", height: 'auto' }}
                     >
                       @
                     </InputGroup.Text>
@@ -218,7 +220,6 @@ function SignUpModal(props) {
                   controlId="validationFormikPassword"
                   hasValidation
                 >
-                  {/* <Form.Label id="signup-password">Password</Form.Label> */}
                   <Form.Control
                     type="password"
                     name="password"
@@ -238,9 +239,7 @@ function SignUpModal(props) {
                   controlId="validationFormikConfirmPassword"
                   hasValidation
                 >
-                  {/* <Form.Label id="signup-confpassword">
-                    Confirm password
-                  </Form.Label> */}
+
                   <Form.Control
                     type="password"
                     name="confirmpassword"
@@ -260,11 +259,10 @@ function SignUpModal(props) {
               <Row className="mb-3 g-3">
                 <Form.Group
                   as={Col}
-                  sm="6"
+                  sm="12"
                   controlId="validationFormikEmail"
                   hasValidation
                 >
-                  {/* <Form.Label id="signup-email">Email</Form.Label> */}
                   <Form.Control
                     type="email"
                     name="email"
@@ -278,13 +276,14 @@ function SignUpModal(props) {
                     {errors.email}
                   </Form.Control.Feedback>
                 </Form.Group>
+              </Row>
+              <Row>
                 <Form.Group
                   as={Col}
                   sm="6"
                   controlId="validationFormikTelephone"
                   hasValidation
                 >
-                  {/* <Form.Label id="signup-telephone">Telephone</Form.Label> */}
                   <Form.Control
                     type="text"
                     name="telephone"
@@ -298,21 +297,42 @@ function SignUpModal(props) {
                     {errors.telephone}
                   </Form.Control.Feedback>
                 </Form.Group>
+                <Form.Group as={Col}
+                  sm="6" >
+                  <Form.Select
+                    id="dropdown-signup-modal"
+                    required
+                    name="userType"
+                    onChange={handleChange}
+                    isValid={touched.userType && !errors.userType}
+                    isInvalid={touched.userType && errors.userType}
+                    defaultValue={false}
+                  >
+                    <option value={false}>User</option>
+                    <option value={true}>Service Provider</option>
+                  </Form.Select>
+                  <Form.Control.Feedback type="invalid">
+                    {errors.userType}
+                  </Form.Control.Feedback>
+                </Form.Group>
               </Row>
-              <Form.Group className="mb-3 g-3">
-                <Form.Check
-                  required
-                  name="terms"
-                  label="Agree to terms and conditions"
-                  onChange={handleChange}
-                  id="validationFormikTerms"
-                  isValid={touched.terms && !errors.terms}
-                  isInvalid={touched.terms && errors.terms}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {errors.terms}
-                </Form.Control.Feedback>
-              </Form.Group>
+              <Row>
+                <Form.Group as={Col}
+                  sm="12" className="mb-3 g-3">
+                  <Form.Check
+                    required
+                    name="terms"
+                    label="Agree to terms and conditions"
+                    onChange={handleChange}
+                    id="validationFormikTerms"
+                    isValid={touched.terms && !errors.terms}
+                    isInvalid={touched.terms && errors.terms}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.terms}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Row>
 
               <div
                 className=".sign-in-terms"
@@ -373,8 +393,8 @@ function SignUpModal(props) {
             </Form>
           )}
         </Formik>
-      </Modal.Body>
-    </Modal>
+      </Modal.Body >
+    </Modal >
   );
 }
 

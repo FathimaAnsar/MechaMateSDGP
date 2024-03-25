@@ -43,8 +43,7 @@ public class DeviceDetails {
     }
 
     public void setMileage(long mileage) {
-        this.mileage = (System.currentTimeMillis()/1000000); // this is only for testing. remove this line when testings are done
-        if(mileage >= 0) { this.mileage = mileage; return; }
+        this.mileage = mileage;
     }
 
     public double getEnginTemp() {

@@ -139,6 +139,32 @@ public class ProfileManager {
     }
 
 
+    public ResponseEntity<ErrorDTO> resendOTP(HttpServletRequest request, UserProfile userProfile) {
+        ResponseEntity<ErrorDTO> resp = Validation.profileOperationAllowed(userProfile, true, false,
+                lang.get("error.invalid.account.activate.help", lang.getLanguage(request.getSession())),
+                false, lang.getLanguage(request.getSession()), lang);
+        if(resp != null) return resp;
+
+        if (userProfile.getStatus() != UserProfile.Status.StatusPendingActivation) {
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
+                            lang.get("error.user.not.pending.activation", userProfile.getLanguage()),
+                            lang.get("error.user.not.pending.activation.help", userProfile.getLanguage())),
+                            HttpStatus.OK);
+        }
+
+        if(!notificationManager.sendActivationEmail(userProfile)) {
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.InternalError,
+                            lang.get("error.internal.send.actemail.failed", userProfile.getLanguage()),
+                            lang.get("error.internal.send.actemail.failed.help", userProfile.getLanguage())),
+                            HttpStatus.OK);
+        }
+
+        return null;
+    }
+
+
 
 //Handles user sign-in process.
     public ResponseEntity<ErrorDTO> signin(HttpServletRequest request, String username, String password,
@@ -308,6 +334,11 @@ public class ProfileManager {
         return databaseAbstractLayer.isRecoveryKeyExists(key) ? databaseAbstractLayer.getUserProfileByRecoveryKey(key) : null;
     }
 
+    public List<UserProfile> getAllServiceAccounts() {
+        return databaseAbstractLayer.getServiceAccounts();
+    }
+
+
     public ProfileDTO getProfileInfo(UserProfile userProfile) {
         return new ProfileDTO(
                 userProfile.get_id().toHexString(),
@@ -317,7 +348,11 @@ public class ProfileManager {
                 userProfile.getFirstname(),
                 userProfile.getLastname(),
                 userProfile.getLanguage(),
-                getVehicles(userProfile).size());
+                getVehicles(userProfile).size(),
+                userProfile.getLongitude(),
+                userProfile.getLatitude(),
+                userProfile.isServiceAccount(),
+                userProfile.isAvailable());
     }
 
     public DetailedProfileDTO getDetailedProfileInfo(UserProfile userProfile) {
@@ -479,7 +514,9 @@ public class ProfileManager {
         if(!serviceRecord.getServices().isEmpty()) {
             List<ServiceDTO> svcDTOs = serviceRecord.getServices();
             for(ServiceDTO svDTO : svcDTOs) {
-                svDTO.setAddedDate(System.currentTimeMillis());
+                try {
+                    svDTO.setAddedDate(System.currentTimeMillis());
+                } catch (Exception e) {}
             }
         }
 
@@ -488,6 +525,45 @@ public class ProfileManager {
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorOperationFailed,
                             lang.get("error.srecord.add.failed", userProfile.getLanguage()),
                             lang.get("error.srecord.add.failed.help", userProfile.getLanguage())),
+                            HttpStatus.OK);
+
+        return null;
+    }
+
+
+
+    public ResponseEntity<ErrorDTO> addServiceRecordByProvider(ServiceRecord serviceRecord) {
+
+        Vehicle vehicle = getVehicle(serviceRecord.getVehicleRegNo());
+        if(vehicle == null)
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
+                            lang.get("error.vehicle.notfound", "default"),
+                            lang.get("error.vehicle.notfound.help", "default")),
+                            HttpStatus.OK);
+
+        if(serviceRecord.get_id() != null && databaseAbstractLayer.isServiceRecordExists(serviceRecord.get_id())) {
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
+                            lang.get("error.srecord.exists", "default"),
+                            lang.get("error.srecord.exists.help", "default")),
+                            HttpStatus.OK);
+        }
+
+        if(!serviceRecord.getServices().isEmpty()) {
+            List<ServiceDTO> svcDTOs = serviceRecord.getServices();
+            for(ServiceDTO svDTO : svcDTOs) {
+                try {
+                    svDTO.setAddedDate(System.currentTimeMillis());
+                } catch (Exception e) {}
+            }
+        }
+
+        if(!databaseAbstractLayer.addServiceRecord(serviceRecord))
+            return new ResponseEntity<>
+                    (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorOperationFailed,
+                            lang.get("error.srecord.add.failed", "default"),
+                            lang.get("error.srecord.add.failed.help", "default")),
                             HttpStatus.OK);
 
         return null;
@@ -617,7 +693,6 @@ public class ProfileManager {
     }
 
 
-
     public ResponseEntity<ErrorDTO> addQrLink(QrLink qrLink, UserProfile userProfile) {
         if(databaseAbstractLayer.isQrLinkExists(qrLink.getQrKey())) databaseAbstractLayer.deleteQrLink(qrLink);
         if(!databaseAbstractLayer.addQrLink(qrLink))
@@ -630,28 +705,18 @@ public class ProfileManager {
         return null;
     }
 
-
     public boolean isQrLinkExist(String qrKey) {
         if(qrKey.isEmpty()) return false;
         return databaseAbstractLayer.isQrLinkExists(qrKey);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public QrLink getQrLink(String key) {
+        try {
+            if(!databaseAbstractLayer.isQrLinkExists(key)) return null;
+            return databaseAbstractLayer.getQrLink(key);
+        } catch (Exception e) {}
+        return null;
+    }
 
 
 

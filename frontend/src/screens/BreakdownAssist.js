@@ -1,64 +1,53 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Container, Row, Col, Button, Form, Card } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Button,
+  Form,
+  Alert,
+} from "react-bootstrap";
+import { FaUser, FaStar } from 'react-icons/fa';
 import ConnectionManager from "../services/ConnectionManager";
+import { Pages } from "../Pages";
 import Header from "./components/Header";
-import CustomAlert from "./components/CustomAlert";
 import { useNavigate } from "react-router-dom";
-import { ClipLoader } from "react-spinners";
-import "./styles/ParkingFinder.css";
 
 function BreakdownAssist(props) {
+
+  const navigate = useNavigate();
+
+  const [selectedCard, setSelectedCard] = useState(null);
   const [currentLocation, setCurrentLocation] = useState(null);
+
   const [parkingSpaces, setParkingSpaces] = useState([]);
+  const [varCap, setVarCap] = useState("");
   const [loading, setLoading] = useState(false);
-  const [alertInfo, setAlertInfo] = useState({ show: false, error: { heading: '', message: '' } });
+  const [alertInfo, setAlertInfo] = useState({ show: false, message: "" });
   const [selectedMapUri, setSelectedMapUri] = useState("");
   const [expandedInfo, setExpandedInfo] = useState({});
-  const navigate = useNavigate();
-  const mapRef = useRef(null);
-  const [locationHeaderText, setLocationHeaderText] = useState("You are here!");
-  useEffect(() => {
-    props.app.getCurrentLocation().then(location => {
-      setCurrentLocation(location);
-      setLoading(false);
-    }).catch(error => {
-      setLoading(false);
-      setAlertInfo({
-        show: true,
-        error: {
-          heading: 'Location Required',
-          message: 'Please turn on location services to find parking spaces.'
-        }
-      });
-    });
-  }, [props.app, navigate]);
 
-  const handleCloseAlert = () => setAlertInfo({ show: false, error: { heading: '', message: '' } });
-  if (loading) {
-    return (
-      <div className="sweet-loading d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
-        <ClipLoader color="#007bff" loading={loading} size={150} />
-      </div>
-    );
-  }
+  useEffect(() => {
+    props.app
+      .getCurrentLocation()
+      .then((location) => {
+        setCurrentLocation(location);
+      })
+      .catch((exp) => {
+        displayAlert(exp.message || "Failed to get location information");
+      });
+  }, [props.app]);
+
+  const displayAlert = (message) => {
+    setAlertInfo({ show: true, message });
+    setTimeout(() => setAlertInfo({ show: false, message: "" }), 5000);
+  };
 
   const fetchNearbyParking = async () => {
-    if (!currentLocation) {
-      setAlertInfo({
-        show: true,
-        error: {
-          heading: 'Location Required',
-          message: 'Location data is needed to fetch parking spaces.'
-        }
-      });
-      return;
-    }
-
     setLoading(true);
-    const limitSelect = document.getElementById("limit");
-    const radiusSelect = document.getElementById("radius");
-    const limit = limitSelect.options[limitSelect.selectedIndex].value;
-    const radius = radiusSelect.options[radiusSelect.selectedIndex].value;
+    const limit = document.getElementById("limit").value;
+    const radius = document.getElementById("radius").value;
 
     let connection = new ConnectionManager();
 
@@ -70,186 +59,193 @@ function BreakdownAssist(props) {
         limit
       );
       const response = JSON.parse(resp);
-      console.log(response)
+      console.log(response);
+
       if (response.error) {
-        setAlertInfo({
-          show: true,
-          error: { heading: 'Parking Error', message: response.message },
-        });
+        displayAlert(`Error occurred: ${response.message}`);
       } else {
+        setVarCap("Parking Spaces");
         setParkingSpaces(response.places);
       }
     } catch (error) {
-      setAlertInfo({
-        show: true,
-        error: { heading: 'Service Error', message: error.message || "Server error" }
-      });
+      displayAlert("Please check your Spring Boot service is running");
     } finally {
       setLoading(false);
     }
-    setLocationHeaderText("You are here!");
   };
-
-  const showOnMap = (location, isCurrentLocation = false) => {
-    if (!currentLocation || !location) {
-      setAlertInfo({
-        show: true,
-        error: {
-          heading: 'Location Required',
-          message: 'Location data is needed to show on the map.'
-        }
-      });
-      return;
-    }
-    setSelectedMapUri(`https://maps.google.com/maps?q=${location.latitude},${location.longitude}&z=15&output=embed`);
-    mapRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-    if (isCurrentLocation) {
-      setLocationHeaderText("You are here!");
+  const showOnMap = (location) => {
+    if (location && location.latitude && location.longitude) {
+      const mapsUrl = `https://maps.google.com/maps?q=${location.latitude},${location.longitude}&z=15&output=embed`;
+      setSelectedMapUri(mapsUrl);
     } else {
-      setLocationHeaderText("Your destination is here!");
+      displayAlert("Invalid location data.");
     }
   };
 
-
-  const getDirections = (endLocation) => {
-    if (!currentLocation || !endLocation) {
-      setAlertInfo({
-        show: true,
-        error: {
-          heading: 'Location Data Missing',
-          message: 'Both origin and destination locations are required for directions.'
-        }
-      });
-      return;
-    }
-    window.open(`https://www.google.com/maps/dir/?api=1&origin=${currentLocation.latitude},${currentLocation.longitude}&destination=${endLocation.latitude},${endLocation.longitude}&travelmode=driving`, "_blank");
+  const handleCardClick = (card) => {
+    setSelectedCard(card);
+    // Set the current location when a card is clicked
+    setCurrentLocation({
+      latitude: card.latitude,
+      longitude: card.longitude
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
 
   const toggleDetails = (index) => {
-    setExpandedInfo(prevState => ({ ...prevState, [index]: !prevState[index] }));
+    setExpandedInfo((prevState) => ({
+      ...prevState,
+      [index]: !prevState[index],
+    }));
   };
+
+  const cardsData = [
+    {
+      id: 1,
+      title: 'John Silva',
+      subtitle: '1',
+      text: 'Experienced mechanic specializing in engine repairs and diagnostics.',
+      latitude: 6.9044,
+      longitude: 79.8540
+    },
+    {
+      id: 2,
+      title: 'Emily Perera',
+      subtitle: '2',
+      text: 'Skilled technician with expertise in electrical systems and brake repairs.',
+      latitude: 6.9000,
+      longitude: 79.8535
+    },
+    {
+      id: 3,
+      title: 'Michael Fernando',
+      subtitle: '3',
+      text: 'Leading a specialized workshop and a team of engineers focused on automotive engineering.',
+      latitude: 6.9050,
+      longitude: 79.8580
+    },
+    {
+      id: 4,
+      title: 'Daniel Hill',
+      subtitle: '4',
+      text: 'Providing consultancy for the required infrastructure for special projects.',
+      latitude: 6.9040,
+      longitude: 79.8520
+    },
+    {
+      id: 5,
+      title: 'Sophia Woods',
+      subtitle: '5',
+      text: 'Offering expertise in road transport route optimization.',
+      latitude: 6.9035,
+      longitude: 79.8535
+    }
+  ];
+
+
+
 
   return (
     <>
-      <Header app={props.app} />
-      <Container>
-        <Row className="mt-3">
-          <Col className="text-center">
-            <h2 id="pf-page-title" className="mb-4">Breakdown Assistance</h2>
-            <h4 id="location-header" className="text-secondary mb-3">{locationHeaderText}</h4>
-            {loading ? (
-              <div id="sweet-loading" className="d-flex justify-content-center align-items-center"
-                style={{ height: "300px" }}>
-                <ClipLoader color="#007bff" size={150} />
+      <Header />
+      <Container id="top"
+        style={{
+          width: "100vw",
+          zIndex: 0,
+          margin: 0,
+          padding: 0,
+
+        }}
+        fluid
+      >
+        <iframe
+          title="map"
+          src={
+            selectedMapUri ||
+            `https://maps.google.com/maps?q=${currentLocation ? currentLocation.latitude : ""
+            },${currentLocation ? currentLocation.longitude : ""
+            }&z=15&output=embed`
+          }
+          style={{
+            // border: 0,
+            width: "100%",
+            height: "80vh",
+          }}
+        ></iframe>
+
+        <div className="shadow"
+          style={{
+            backgroundColor: 'white',
+            bottom: '0',
+            zIndex: '999',
+            width: '100%',
+            borderRadius: '40px 40px 0 0',
+            position: 'relative',
+            marginTop: '-150px',
+            boxShadow: '0px -10px 10px rgba(0, 0, 0, 0.5)',
+            display: 'flex',
+            paddingTop: '15px',
+
+          }}>
+
+
+          <Container>
+            <Row className="text-center">
+              <div>
+                Choose a mechanic
               </div>
-            ) : (
-              <div id="pf-map-container" className="mb-4" ref={mapRef}>
-                <iframe
-                  title="map"
-                  src={selectedMapUri || `https://maps.google.com/maps?q=${currentLocation ? `${currentLocation.latitude},${currentLocation.longitude}` : ''}&z=15&output=embed`}
-                  width="100%"
-                  height="300"
-                  frameBorder="0"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                ></iframe>
-              </div>
-            )}
-          </Col>
-        </Row>
-
-        {!loading && (
-          <>
-            <Row className="my-3">
-              <Col xs={12} md={6}>
-                <Form.Group controlId="limit">
-                  <Form.Label>Number of Results</Form.Label>
-                  <Form.Control as="select" defaultValue="5">
-                    <option value="5">Show only 5 results</option>
-                    <option value="10">Show only 10 results</option>
-                    <option value="15">Show only 15 results</option>
-                    <option value="20">Show only 20 results</option>
-                  </Form.Control>
-                </Form.Group>
-              </Col>
-              <Col xs={12} md={6}>
-                <Form.Group controlId="radius">
-                  <Form.Label>Search Radius</Form.Label>
-                  <Form.Control as="select" defaultValue="500">
-                    <option value="500">Within 500 meters</option>
-                    <option value="1000">Within 1 kilometer</option>
-                    <option value="2000">Within 2 kilometers</option>
-                    <option value="5000">Within 5 kilometers</option>
-                    <option value="10000">Within 10 kilometers</option>
-                  </Form.Control>
-                </Form.Group>
-              </Col>
             </Row>
+            <hr />
+            <Row className="text-center g-3">
 
-            <Row className="my-3">
-              <Col>
-                <Button
-                  variant="primary"
-                  onClick={fetchNearbyParking}
-                  disabled={!currentLocation}
-                >
-                  Show Me Nearby Parking Spaces
-                </Button>
-              </Col>
-            </Row>
-
-            {alertInfo.show && (
-              <CustomAlert
-                show={alertInfo.show}
-                handleClose={handleCloseAlert}
-                error={alertInfo.error}
-              />
-            )}
-
-            <Row className="my-3">
-              {parkingSpaces.map((parking, index) => (
-                <Col key={index} sm={12} md={6} lg={4} className="mb-3">
-                  <Card>
+              {selectedCard && (
+                <>
+                  <Card className="shadow g-4" style={{ borderRadius: '20px', border: '3px solid black', padding: '10px 0', position: 'relative' }}>
+                    <div style={{ position: 'absolute', top: '10px', right: '10px', display: 'flex', alignItems: 'center' }}>
+                      <span style={{ marginRight: '5px' }}>4.5</span>
+                      <FaStar size={15} color="outline" />
+                    </div>
                     <Card.Body>
-                      <Card.Title>{parking.displayName.text}</Card.Title>
-                      <div id={`address-details ${expandedInfo[index] ? 'show' : 'hide'}`}>
-                        <Card.Text>{parking.formattedAddress}</Card.Text>
-                      </div>
-                      <div id="pf-button-group">
-                        <Button
-                          variant="outline-primary"
-                          onClick={() => toggleDetails(index)}
-                          className="mr-2"
-                        >
-                          {expandedInfo[index] ? "Hide Details" : "Show Details"}
-                        </Button>
-                        <Button
-                          variant="outline-primary"
-                          onClick={() => showOnMap(parking.location)}
-                          className="mr-2"
-                        >
-                          View on Map
-                        </Button>
-                        <Button
-                          variant="outline-primary"
-                          onClick={() => getDirections(parking.location)}
-                        >
-                          Get Directions
-                        </Button>
-                      </div>
+                      <Card.Title>
+                        <FaUser size={24} className="mr-2" />
+                      </Card.Title>
+                      <Card.Title className="mb-2">{selectedCard.title}</Card.Title>
+                      <Card.Text>
+                        {selectedCard.text}
+                      </Card.Text>
                     </Card.Body>
                   </Card>
-                </Col>
-              ))}
+                </>
+              )}
 
             </Row>
-          </>
-        )}
-      </Container>
+            <Row className="text-center g-2">
+              <Row className="text-center g-2">
+                {cardsData.map(card => (
+                  <Card
+                    key={card.id}
+                    className="shadow"
+                    style={{ borderRadius: '20px', padding: '10px 0', position: 'relative', cursor: 'pointer' }}
+                    href="top"
+                    onClick={() => handleCardClick(card)}
+                  >
+                    <div style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)' }}>
+                      <FaUser size={18} />
+                    </div>
+                    <Card.Body className="text-left">
+                      <Card.Title>{card.title}</Card.Title>
+                      <Card.Text>{card.text}</Card.Text>
+                    </Card.Body>
+                  </Card>
+                ))}
+              </Row>
+            </Row>
+          </Container>
+        </div >
+      </Container >
     </>
   );
-
 }
 
 export default BreakdownAssist;
