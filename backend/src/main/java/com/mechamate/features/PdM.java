@@ -31,9 +31,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-
-
-
 @Service
 public class PdM {
 
@@ -138,28 +135,6 @@ public class PdM {
     public double predict(double m, double c, double x) {
         return m * x + c;
     }
-
-    public ArrayList<ServiceRecord> getServiceRecordsFiltered(Maintenance.MaintenanceType maintenanceType,
-                                                       String vehicleRegNo) {
-        return null;
-    }
-
-    public ArrayList<PredictionModel> getFilteredPredictionModels(Maintenance.MaintenanceType maintenanceType) {
-        return null;
-    }
-
-    public ArrayList<TrackingInfo> collectTrackingData(Maintenance.MaintenanceType maintenanceType) {
-        return null;
-    }
-
-    public double processPrediction(ArrayList<PredictionModel> predictionModels,
-                                               ArrayList<TrackingInfo> trackingInfos,
-                                               ArrayList<ServiceRecord> serviceRecords) {
-
-
-        return 0.0;
-    }
-
 
 
     public ResponseEntity<?> getPredictions(List<PredictionDTO> predictionDTOS, UserProfile userProfile,
@@ -269,17 +244,6 @@ public class PdM {
 
         return new ResponseEntity<>(predictionDTOS, HttpStatus.OK);
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 

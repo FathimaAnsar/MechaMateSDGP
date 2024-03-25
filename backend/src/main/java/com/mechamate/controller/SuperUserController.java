@@ -47,9 +47,10 @@ public class SuperUserController {
     private PdM predictiveMaintenance;
     private final String merchantId = "1226081";
     private final String merchantSecret = "MzA4ODI0OTY4NTM2NzgzNTA0ODUxMDM0ODQ3MDk0MTgyNzA1NzU3NQ==";
-    private final String returnUrl = "https://mechamate-413916.el.r.appspot.com/";
-    private final String cancelUrl = "https://mechamate-413916.el.r.appspot.com/";
-    private final String notifyUrl = "https://mechamate-413916.el.r.appspot.com/";
+    private final String returnUrl = "https://mechamate.site/";
+    private final String cancelUrl = "https://mechamate.site/";
+    private final String notifyUrl = "https://mechamate.site/";
+
 
     @PostMapping("/add-maintenance")
     public ResponseEntity<?> addMaintenance(HttpServletRequest request, HttpServletResponse response,

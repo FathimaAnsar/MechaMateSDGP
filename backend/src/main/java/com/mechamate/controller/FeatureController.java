@@ -45,6 +45,7 @@ public class FeatureController {
     @Value("${spring.config.server.address}")
     private String hostname;
 
+    /*
     @GetMapping("/get-features-list")
     public ResponseEntity<?> getFeaturesList(HttpServletRequest request, HttpServletResponse response) {
         Object obj = Validation.authenticate(request, response, sessionManager, lang);
@@ -60,6 +61,9 @@ public class FeatureController {
     public ResponseEntity<?> getFeature() {
         return null;
     }
+    */
+
+
 
     @GetMapping("/get-nearby-service-stations")
     public ResponseEntity<?> getNearbyServiceStations(HttpServletRequest request, HttpServletResponse response,
@@ -438,11 +442,6 @@ public class FeatureController {
         List<PredictionDTO> pDTO = new ArrayList<>();
         return pdM.getPredictions(pDTO, userProfile, vehicleDTO);
     }
-
-
-
-
-
 
 
 

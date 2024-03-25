@@ -10,15 +10,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class GlobalExpHandler {
-
-//    @Autowired
-//    LanguageManager lang;
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<ErrorDTO> runtimeExpHandler(Exception ignore) {
-//        return new ResponseEntity<>
-//                (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
-//                        lang.get("error.api.notfound", "default"),
-//                        lang.get("error.api.notfound.help", "default")),
-//                        HttpStatus.NOT_IMPLEMENTED);
-//    }
+    @Autowired
+    LanguageManager lang;
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorDTO> runtimeExpHandler(Exception ignore) {
+        return new ResponseEntity<>
+                (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
+                        lang.get("error.api.notfound", "default"),
+                        lang.get("error.api.notfound.help", "default")),
+                        HttpStatus.NOT_IMPLEMENTED);
+    }
 }
