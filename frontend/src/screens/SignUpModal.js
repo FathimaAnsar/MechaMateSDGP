@@ -47,16 +47,18 @@ function SignUpModal(props) {
           setErrors({ email: "Email is already in use" });
         }
       } else if (response.status) {
+        console.log(response.status)
         props.app.setFirstRunDone(true);
         navigate("/" + Pages.EnterCodeUI);
         props.onHide();
       } else {
         if (response.message == "Failed to send activation email") {
           navigate("/" + Pages.EnterCodeUI);
-          props.onHide();
+
         }
       }
-      props.app.setFirstRunDone(true);
+
+
 
       const uProf = await connection.getUserProfile();
       const userProfile = JSON.parse(uProf);

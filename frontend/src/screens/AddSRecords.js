@@ -1,12 +1,12 @@
-
-
-// import './public/ServiceRecord.css';
 import React, { useState, useEffect } from 'react';
 import Header from "./components/Header";
 import { Form, Button, Container, Card } from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
+
 
 import ConnectionManager from '../services/ConnectionManager.js';
 import LoadingScreen from './components/LoadingScreen.js';
+import {Pages} from '../Pages.js'
 
 
 function AddServiceRecordByServiceProvider(props) {
@@ -19,11 +19,13 @@ function AddServiceRecordByServiceProvider(props) {
     const [mileage, setMileage] = useState('');
     const [vehicles, setVehicles] = useState([]);
 
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     async function addSRecord(event) {}
 
     let connection = new ConnectionManager();
+    const navigate = useNavigate();
+
 
 
     useEffect(() => {
@@ -33,8 +35,6 @@ function AddServiceRecordByServiceProvider(props) {
                 const vehicles = JSON.parse(fetchedVehicles);
                 setVehicles(vehicles);
                 setLoading(false);
-
-                console.log(vehicles)
             } catch (error) {
                 console.error("Error fetching vehicles:", error);
             } finally {
@@ -50,7 +50,7 @@ function AddServiceRecordByServiceProvider(props) {
             description: '',
             appliedMaintenanceId: '',
             nextServiceInKMs: '',
-            serviceQuality: 'High' // default value
+            serviceQuality: 'High' 
         };
         setServiceFields([...serviceFields, newServiceField]);
         setServiceCounter(serviceCounter + 1);
@@ -62,68 +62,44 @@ function AddServiceRecordByServiceProvider(props) {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        
-        // Collect form data
-        const formData = new FormData(event.target);
-        const serviceRecordData = {};
-        formData.forEach((value, key) => {
-            serviceRecordData[key] = value;
-        });
 
-        console.log(formData);
-        console.log(serviceRecordData);
+        try {
+            const formData = {
+                vehicle: document.getElementById('services').value,
+                description: document.getElementById('description').value,
+                date: document.getElementById('date').value,
+                mileage: document.getElementById('mileage').value,
+                services: serviceFields.map(field => ({
+                    appliedMaintenanceId: document.getElementById(`serviceType${field.id}`).value,
+                    description: document.getElementById(`serviceDescription${field.id}`).value,
+                    nextServiceInKMs: document.getElementById(`nextServiceInKMs${field.id}`).value,
+                    quality: document.getElementById(`serviceQuality${field.id}`).value
+                }))
+            };
+            console.log(formData.vehicle.split(' ')[0])
+            const resp = await connection.addServiceRecord(formData, formData.vehicle.split(' ')[0] );
+            const response = JSON.parse(resp);
 
-  
+            console.log(response);
 
-    try {
-        const resp = await connection.addServiceRecord(formData);
-        const response = JSON.parse(resp);
-
-        console.log(response)
-
-        if (response.error) {
+            if (response.error) {
+                setAlertInfo({
+                    show: true,
+                    error: { heading: 'Error', message: response.message },
+                });
+            } else {
+                navigate("/" + Pages.DashboardUI)
+            }
+        } catch (error) {
             setAlertInfo({
                 show: true,
-                error: { heading: 'Error', message: response.message },
+                error: { heading: 'Error adding service record', message: error.message || "Server error" }
             });
-        } else {
-          const message = response.message;
-          alert(`Status: ${message}`);  
+        } finally {
+            setLoading(false);
         }
-    } catch (error) {
-        setAlertInfo({
-            show: true,
-            error: { heading: 'Error adding service record', message: error.message || "Server error" }
-        });
-    } finally {
-//        setLoading(false);
-    }
-
-
-/*
-        // Send HTTP POST request to the server endpoint
-        try {
-            const response = await fetch('your-server-endpoint-url', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(serviceRecordData),
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to submit form data.');
-            }
-
-            // Handle success response
-            console.log('Form data submitted successfully.');
-        } catch (error) {
-            // Handle error
-            console.error('Error submitting form data:', error.message);
-        }
-*/
-
     };
+
 
     return (
         <div className='g-4'>
@@ -142,13 +118,11 @@ function AddServiceRecordByServiceProvider(props) {
                                             <Form.Control as="select">
                                                 {vehicles.map(vehicle => (
                                                     <option key={vehicle.id} value={vehicle.id}>
-                                                        {vehicle.vehicleModel} - {vehicle.registrationNumber}
+                                                        {vehicle.registrationNumber} {vehicle.vehicleModel} 
                                                     </option>
                                                 ))}
                                             </Form.Control>
                                         </Form.Group>
-
-                                        
 
                                         <Form.Group controlId="description">
                                             <Form.Label>Description:</Form.Label>
@@ -166,13 +140,12 @@ function AddServiceRecordByServiceProvider(props) {
                                         </Form.Group>
 
                                         <fieldset>
-                                            <hr/>
+                                            <hr />
                                             <legend>Services</legend>
                                             <div className="service-record">
                                                 {serviceFields.map(field => (
-                                                        <div key={field.id} className="g-2 service" >
-{console.log(field.id)}
-                                                        <Form.Group controlId="services">
+                                                    <div key={field.id} className="g-2 service">
+                                                        <Form.Group controlId={`serviceType${field.id}`}>
                                                             <Form.Label>Service Type:</Form.Label>
                                                             <Form.Control as="select">
                                                                 <option value="WheelAlignment">Wheel Alignment</option>
@@ -187,14 +160,10 @@ function AddServiceRecordByServiceProvider(props) {
                                                             <Form.Label>Description:</Form.Label>
                                                             <Form.Control type="text" name={`serviceDescription${field.id}`} required />
                                                         </Form.Group>
-
-                                                        
-
                                                         <Form.Group controlId={`nextServiceInKMs${field.id}`}>
                                                             <Form.Label>Next Service in KMs:</Form.Label>
                                                             <Form.Control type="number" name={`nextServiceInKMs${field.id}`} required />
                                                         </Form.Group>
-
                                                         <Form.Group controlId={`serviceQuality${field.id}`}>
                                                             <Form.Label>Service Quality:</Form.Label>
                                                             <Form.Control as="select" defaultValue="High" required>
@@ -204,17 +173,19 @@ function AddServiceRecordByServiceProvider(props) {
                                                             </Form.Control>
                                                         </Form.Group>
                                                         <br />
-                                                        <Button variant='dark' type="button" id="remove-service-btn" onClick={() => removeServiceField(field.id)}>Remove</Button><br /> <br />
+                                                        <Button variant='dark' type="button" id="remove-service-btn" onClick={() => removeServiceField(field.id)}>Remove</Button>
+                                                        <br /><br />
                                                     </div>
                                                 ))}
-                                                
                                             </div>
                                         </fieldset>
 
-                                        <Button type="button" id="add-btn" onClick={addService}>+ Add Serviced Task</Button><br /><br />
-                                        
-                                        <Button variant="success" type="submit" id="btn" className="submit-button">Submit</Button>
+                                        <Button type="button" id="add-btn" onClick={addService}>+ Add Serviced Task</Button>
+                                        <br /><br />
+
+                                        <Button variant="success" type="submit" id="btn" className="submit-button" onClick={handleSubmit}>Submit</Button>
                                     </Form>
+
 
                             ) : (
                                 'No vehicles found'
