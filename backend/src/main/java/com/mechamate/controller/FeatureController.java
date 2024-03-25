@@ -427,8 +427,8 @@ public class FeatureController {
                 lang, request.getSession());
         if(resp != null) return resp;
 
-        List<VehicleDTO> vehicles = profileManager.getVehicleDTOs(userProfile);
-        if(vehicles.isEmpty())
+        VehicleDTO vehicleDTO = profileManager.getVehicleDTO(vehicleRegNo);
+        if(vehicleDTO == null)
             return new ResponseEntity<>
                     (new ErrorDTO(ErrorDTO.ErrorStatus.ErrorInvalidRequest,
                             lang.get("error.no.vehicles.found", userProfile.getLanguage()),
@@ -436,7 +436,7 @@ public class FeatureController {
                             HttpStatus.OK);
 
         List<PredictionDTO> pDTO = new ArrayList<>();
-        return pdM.getPredictions(pDTO, userProfile, vehicles);
+        return pdM.getPredictions(pDTO, userProfile, vehicleDTO);
     }
 
 

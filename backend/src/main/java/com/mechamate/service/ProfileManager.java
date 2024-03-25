@@ -386,6 +386,9 @@ public class ProfileManager {
         return databaseAbstractLayer.isVehicleExists(regNo) ? databaseAbstractLayer.getVehicle(regNo) : null;
     }
 
+    public VehicleDTO getVehicleDTO(String regNo) {
+        return databaseAbstractLayer.isVehicleExists(regNo) ? databaseAbstractLayer.getVehicleDTOEx(regNo) : null;
+    }
 
     public ResponseEntity<ErrorDTO> addVehicle(Vehicle vehicle, UserProfile userProfile) {
         if(databaseAbstractLayer.isVehicleExists(vehicle.getRegNo()))

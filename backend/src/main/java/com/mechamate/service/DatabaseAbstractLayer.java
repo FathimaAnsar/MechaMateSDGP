@@ -624,8 +624,6 @@ public class DatabaseAbstractLayer {
                         v.getInsExpDate(),
                         v.getRegExpDate(),
                         getServiceRecordDTOs(v.getRegNo()),
-
-                        /*new ArrayList<>(),*/
                         v.getCurrentMileage(),
                         v.getObd2DeviceID());
                 vehicleDTOS.add(vDTO);
@@ -636,6 +634,27 @@ public class DatabaseAbstractLayer {
             logger.error("retrieve vehicle dtos failed", e);
         }
         return vehicleDTOS;
+    }
+
+
+    public VehicleDTO getVehicleDTOEx(String vehicleRegNo) {
+        try {
+            Vehicle vehicle = getVehicle(vehicleRegNo);
+            if (vehicle == null) return null;
+            return new VehicleDTO(
+                    vehicle.getRegNo(),
+                    vehicle.getVehicleType(),
+                    vehicle.getFuelType(),
+                    vehicle.getVehicleMake(),
+                    vehicle.getVehicleModel(),
+                    vehicle.getInsNo(),
+                    vehicle.getInsExpDate(),
+                    vehicle.getRegExpDate(),
+                    getServiceRecordDTOs(vehicle.getRegNo()),
+                    vehicle.getCurrentMileage(),
+                    vehicle.getObd2DeviceID());
+        } catch (Exception e) {}
+        return null;
     }
 
 
