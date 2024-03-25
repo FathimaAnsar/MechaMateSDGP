@@ -6,9 +6,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import CustomAlert from "./components/CustomAlert.js";
 import ConnectionManager from "../services/ConnectionManager";
+import { useNavigate } from 'react-router-dom';
+import { Pages } from "../Pages.js";
 
 
 function MyVehicles(props) {
+
+  const navigate = useNavigate();
+
   const [vehicleType, setVehicleType] = useState('Car');
   const [fuelType, setFuelType] = useState(null);
   const [vehicleMake, setVehicleMake] = useState(null);
@@ -62,9 +67,10 @@ function MyVehicles(props) {
             });
         } else {
           const message = response.message;
-          alert(`Registration Status: ${message}`);  
+          alert(`Registration Status: ${message}`); 
           clearInputFields();
-          }
+          navigate("/" + Pages.DashboardUI);
+        }
     } catch (error) {
         setAlertInfo({
             show: true,
