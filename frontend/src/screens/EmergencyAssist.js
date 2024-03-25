@@ -102,8 +102,10 @@ function EmergencyAssist(props) {
     };
     const contactHospital = () => {
         const hospitalWithPhone = hospitals.find(hospital => hospital.phone);
+        console.log(hospitalWithPhone)
         if (hospitalWithPhone) {
-            window.location.href = `tel:${hospitalWithPhone.phone}`;
+            console.log(hospitalWithPhone)
+            window.location.href = `tel:${hospitalWithPhone.nationalPhoneNumber}`;
         } else {
             setAlertInfo({
                 show: true,
@@ -127,7 +129,7 @@ function EmergencyAssist(props) {
             <Container id="tmvContainer">
                 <Row id="tmvTitleRow" className="mt-3">
                     <Col id="tmvTitleCol" className="text-center">
-                        <h2 id="tmvTitle">Track My Vehicle</h2>
+                        <h2 id="tmvTitle">Emergency Assistance</h2>
                         <Form.Group controlId="vehicleSelect">
                             <Form.Label>Select Your Vehicle</Form.Label>
                             <Form.Select
