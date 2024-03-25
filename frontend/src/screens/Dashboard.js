@@ -13,9 +13,6 @@ import ConnectionManager from "../services/ConnectionManager.js";
 import Header from "./components/Header.js";
 import ClickableCard from "./components/ClickableCard.js";
 import CustomCarousel from "./components/CustomCarousel.js";
-// import ViewVehicle from "./ViewVehicle.js";
-// import LoadingScreen from "./components/LoadingScreen.js";
-// import corollaImage from "../images/vehicles/corolla-side.jpg";
 import DashboardCard from "./components/DashboardCard.js";
 import LoadingScreen from "./components/LoadingScreen.js";
 
@@ -63,9 +60,6 @@ function Dashboard(props) {
     navigate(`/${Pages.ViewVehicle}?vehicle=${index}`);
   };
 
-  const handleClick = (page) => {
-    props.app.changePage(page);
-  };
 
   const servicesList = [
     { title: "Manage Documents", path: "/" + Pages.ManageDocumentsUI },

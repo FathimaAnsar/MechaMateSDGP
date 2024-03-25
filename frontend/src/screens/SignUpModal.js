@@ -51,10 +51,12 @@ function SignUpModal(props) {
         navigate("/" + Pages.EnterCodeUI);
         props.onHide();
       } else {
-        console.log(response.error);
+        if (response.message == "Failed to send activation email") {
+          navigate("/" + Pages.EnterCodeUI);
+          props.onHide();
+        }
       }
       props.app.setFirstRunDone(true);
-      console.log("Success: " + response.message + "\n" + response.info);
 
       const uProf = await connection.getUserProfile();
       const userProfile = JSON.parse(uProf);

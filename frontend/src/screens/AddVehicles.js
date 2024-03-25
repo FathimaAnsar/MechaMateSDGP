@@ -152,7 +152,7 @@ function MyVehicles(props) {
           </Row>
 
           <Row className="mb-3" xs={1}>
-          <Form.Group as={Col} controlId="obd2DeviceOption">
+            <Form.Group as={Col} controlId="obd2DeviceOption">
               <Form.Label>OBD Device</Form.Label>
               <div>
                 <Form.Check
@@ -173,19 +173,19 @@ function MyVehicles(props) {
                 />
               </div>
             </Form.Group>
-            
+
             <Form.Group as={Col} controlId="obd2DeviceID">
               <Form.Label>OBD Device ID</Form.Label>
-              <Form.Control 
-                type="text" 
-                placeholder="1234567890" 
-                value={obd2DeviceID} 
+              <Form.Control
+                type="text"
+                placeholder="1234567890"
+                value={obd2DeviceID}
                 onChange={(event) => setObd2DeviceID(event.target.value)}
                 disabled={!hasOBDDevice} // Disable the text box when hasOBDDevice is false
               />
             </Form.Group>
 
-            
+
           </Row>
 
           <Row className="mb-3" xs={1}>
@@ -254,7 +254,7 @@ function MyVehicles(props) {
   const [insNo, setInsNo] = useState(null);
   const [insExpDate, setInsExpDate] = useState(new Date());
   const [obd2DeviceID, setObd2DeviceID] = useState("");
-  const [hasOBDDevice,setHasOBDDevice] = useState("");
+  const [hasOBDDevice, setHasOBDDevice] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false)
   const [error, setError] = useState({ message: "", heading: "" });
@@ -280,13 +280,13 @@ function MyVehicles(props) {
       regExpDate: regExpDate,
       obd2DeviceID: obd2DeviceID
     };
-//http://localhost:8080/api/v1/general/add-vehicle
+    //http://localhost:8080/api/v1/general/add-vehicle
     try {
       const response = await axios.post("https://mechamate.site/api/v1/general/add-vehicle", requestBody, {
         headers: {
           'Content-Type': 'application/json'
         },
-        withCredentials: true 
+        withCredentials: true
       });
       // Check if response is successful (status code 2xx)
       if (response.status >= 200 && response.status < 300) {
@@ -295,12 +295,12 @@ function MyVehicles(props) {
         alert(`Registration Status: ${message}`);
         // Clear input fields after successful registration
         clearInputFields();
-    } else {
+      } else {
         throw new Error('Failed to register vehicle'); // Throw an error if response status is not in the success range
-    }
+      }
     } catch (error) {
-    alert("Vehicle Registration Failed");
-    console.error('Error registering vehicle:', error);
+      alert("Vehicle Registration Failed");
+      console.error('Error registering vehicle:', error);
     }
   }
 

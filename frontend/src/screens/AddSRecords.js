@@ -1,14 +1,49 @@
 
-import React, { useState } from 'react';
-import './public/ServiceRecord.css';
-import ConnectionManager from "../services/ConnectionManager";
+
+// import './public/ServiceRecord.css';
+import React, { useState, useEffect } from 'react';
+import Header from "./components/Header";
+import { Form, Button, Container, Card } from 'react-bootstrap';
+
+import ConnectionManager from '../services/ConnectionManager.js';
+import LoadingScreen from './components/LoadingScreen.js';
 
 
-function ServiceRecordForm() {
+function AddServiceRecordByServiceProvider(props) {
     const [serviceCounter, setServiceCounter] = useState(2);
     const [serviceFields, setServiceFields] = useState([]);
     const [alertInfo, setAlertInfo] = useState({ show: false, error: { heading: '', message: '' } });
+    const [services, setServices] = useState('');
+    const [description, setDescription] = useState('');
+    const [date, setDate] = useState(new Date());
+    const [mileage, setMileage] = useState('');
+    const [vehicles, setVehicles] = useState([]);
 
+    const [loading, setLoading] = useState(false);
+
+    async function addSRecord(event) {}
+
+    let connection = new ConnectionManager();
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const fetchedVehicles = await connection.getVehicleList();
+                const vehicles = JSON.parse(fetchedVehicles);
+                setVehicles(vehicles);
+                setLoading(false);
+
+                console.log(vehicles)
+            } catch (error) {
+                console.error("Error fetching vehicles:", error);
+            } finally {
+
+            }
+        };
+        fetchData();
+    }, []);
+    
     const addService = () => {
         const newServiceField = {
             id: serviceCounter,
@@ -38,8 +73,7 @@ function ServiceRecordForm() {
         console.log(formData);
         console.log(serviceRecordData);
 
-        
-    let connection = new ConnectionManager();
+  
 
     try {
         const resp = await connection.addServiceRecord(formData);
@@ -92,91 +126,118 @@ function ServiceRecordForm() {
     };
 
     return (
-        <div>
-            <h1>Vehicle Service Information Form</h1>
+        <div className='g-4'>
+            <div>
+                <Header app={props.app} />
+                {loading ? (
+                    <LoadingScreen />
+                ) : (
+                    <>
+                        <Container fluid='sm' className='g-4' style={{ maxWidth: '400px', marginTop: '20px' }}>
+                            <h2>Add Service Record</h2>
+                            {vehicles ? (
+                                    <Form className='g-4'>
+                                        <Form.Group controlId="services">
+                                            <Form.Label>Vehicle:</Form.Label>
+                                            <Form.Control as="select">
+                                                {vehicles.map(vehicle => (
+                                                    <option key={vehicle.id} value={vehicle.id}>
+                                                        {vehicle.vehicleModel} - {vehicle.registrationNumber}
+                                                    </option>
+                                                ))}
+                                            </Form.Control>
+                                        </Form.Group>
+
+                                        
+
+                                        <Form.Group controlId="description">
+                                            <Form.Label>Description:</Form.Label>
+                                            <Form.Control as="textarea" rows={4} />
+                                        </Form.Group>
+
+                                        <Form.Group controlId="date">
+                                            <Form.Label>Service Date:</Form.Label>
+                                            <Form.Control type="date" />
+                                        </Form.Group>
+
+                                        <Form.Group controlId="mileage">
+                                            <Form.Label>Mileage:</Form.Label>
+                                            <Form.Control type="number" min={0} />
+                                        </Form.Group>
+
+                                        <fieldset>
+                                            <hr/>
+                                            <legend>Services</legend>
+                                            <div className="service-record">
+                                                {serviceFields.map(field => (
+                                                        <div key={field.id} className="g-2 service" >
+{console.log(field.id)}
+                                                        <Form.Group controlId="services">
+                                                            <Form.Label>Service Type:</Form.Label>
+                                                            <Form.Control as="select">
+                                                                <option value="WheelAlignment">Wheel Alignment</option>
+                                                                <option value="EngineOilChange">Engine Oil Change</option>
+                                                                <option value="BrakeFluidChange">Brake Fluid Change</option>
+                                                                <option value="BrakeCaliperChange">Brake Caliper Change</option>
+                                                                <option value="CoolantChange">Coolant Change</option>
+                                                                <option value="TireChange">Tire Change</option>
+                                                            </Form.Control>
+                                                        </Form.Group>
+                                                        <Form.Group controlId={`serviceDescription${field.id}`}>
+                                                            <Form.Label>Description:</Form.Label>
+                                                            <Form.Control type="text" name={`serviceDescription${field.id}`} required />
+                                                        </Form.Group>
+
+                                                        
+
+                                                        <Form.Group controlId={`nextServiceInKMs${field.id}`}>
+                                                            <Form.Label>Next Service in KMs:</Form.Label>
+                                                            <Form.Control type="number" name={`nextServiceInKMs${field.id}`} required />
+                                                        </Form.Group>
+
+                                                        <Form.Group controlId={`serviceQuality${field.id}`}>
+                                                            <Form.Label>Service Quality:</Form.Label>
+                                                            <Form.Control as="select" defaultValue="High" required>
+                                                                <option value="High">High</option>
+                                                                <option value="Medium">Medium</option>
+                                                                <option value="Low">Low</option>
+                                                            </Form.Control>
+                                                        </Form.Group>
+                                                        <br />
+                                                        <Button variant='dark' type="button" id="remove-service-btn" onClick={() => removeServiceField(field.id)}>Remove</Button><br /> <br />
+                                                    </div>
+                                                ))}
+                                                
+                                            </div>
+                                        </fieldset>
+
+                                        <Button type="button" id="add-btn" onClick={addService}>+ Add Serviced Task</Button><br /><br />
+                                        
+                                        <Button variant="success" type="submit" id="btn" className="submit-button">Submit</Button>
+                                    </Form>
+
+                            ) : (
+                                'No vehicles found'
+                            )}
+                        </Container>
+                    </>
+
+                )}
+
+
+
+            </div>
+            
             
             <form>
-                <label htmlFor="registrationNumber">Registration Number:</label>
-                <input type="text" id="registrationNumber" name="registrationNumber" required />
-
-                <label htmlFor="vehicleType">Vehicle Type:</label>
-                <select id="vehicleType" name="vehicleType" required>
-                    <option value="Car">Car</option>
-                    <option value="Truck">Truck</option>
-                    <option value="Motorcycle">Motorcycle</option>
-                </select>
-
-                <label htmlFor="fuelType">Fuel Type:</label>
-                <select id="fuelType" name="fuelType" required>
-                    <option value="Petrol">Petrol</option>
-                    <option value="Diesel">Diesel</option>
-                    <option value="Electric">Electric</option>
-                </select>
-
-                <label htmlFor="vehicleMake">Vehicle Make:</label>
-                <input type="text" id="vehicleMake" name="vehicleMake" required />
-
-                <label htmlFor="vehicleModel">Vehicle Model:</label>
-                <input type="text" id="vehicleModel" name="vehicleModel" required />
-
-                <label htmlFor="insNo">Insurance Number:</label>
-                <input type="text" id="insNo" name="insNo" required />
-
-                <label htmlFor="insExpDate">Insurance Expiry Date:</label>
-                <input type="date" id="insExpDate" name="insExpDate" required />
-
-                <label htmlFor="regExpDate">Registration Expiry Date:</label>
-                <input type="date" id="regExpDate" name="regExpDate" required />
-
-                <label htmlFor="currentMileage">Current Mileage:</label>
-                <input type="number" id="currentMileage" name="currentMileage" required />
                 
-                <fieldset>
-                    <legend>Service Records:</legend>
-                    <div className="service-record">
-                        {serviceFields.map(field => (
-                            <div key={field.id} className="service">
-                                <label htmlFor={`serviceDescription${field.id}`}>Description:</label>
-                                <input type="text" id={`serviceDescription${field.id}`} name={`serviceDescription${field.id}`} required />
-
-                                <label htmlFor={`appliedMaintenanceId${field.id}`}>Applied Maintenance ID:</label>
-                                <select id={`serviceType${field.id}`} name={`serviceType${field.id}`} defaultValue="none" required>
-                                    <option value="WheelAlignment">Wheel Alignment</option>
-                                    <option value="EngineOilChange">Engine Oil Change</option>
-                                    <option value="BrakeFluidChange">Brake Fluid Change</option>
-                                    <option value="BrakeCaliperChange">Brake Caliper Change</option>
-                                    <option value="CoolantChange">Coolant Change</option>
-                                    <option value="TireChange">Tire Change</option>
-                                    <option value="PistonChange">Piston Change</option>
-                                </select>
-                                
-
-                                <label htmlFor={`nextServiceInKMs${field.id}`}>Next Service in KMs:</label>
-                                <input type="number" id={`nextServiceInKMs${field.id}`} name={`nextServiceInKMs${field.id}`} required />
-
-                                <label htmlFor={`serviceQuality${field.id}`}>Service Quality:</label>
-                                <select id={`serviceQuality${field.id}`} name={`serviceQuality${field.id}`} defaultValue="High" required>
-                                    <option value="High">High</option>
-                                    <option value="Medium">Medium</option>
-                                    <option value="Low">Low</option>
-                                </select>
-
-                                
-
-                                <button type="button" id="remove-service-btn"  onClick={() => removeServiceField(field.id)}>Remove</button>
-                            </div>
-                        ))}
-                    </div>
-                </fieldset>
-
-                <button type="button" id="add-btn"  onClick={addService}>+ Add Serviced Task</button>
-                <button type="submit" id="btn"  className="submit-button">Submit</button>
+                
             </form>
         </div>
     );
 }
 
-export default ServiceRecordForm;
+export default AddServiceRecordByServiceProvider;
 
 
 
