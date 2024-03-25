@@ -32,6 +32,7 @@ import PaymentSuccess from "./screens/PaymentSuccess";
 import PaymentCancelled from "./screens/PaymentCancelled";
 import "./styles/App.css";
 import QrPage from "./screens/QrUi.js";
+import EmergencyAssist from "./screens/EmergencyAssist";
 
 // main.reset();
 
@@ -124,6 +125,10 @@ function App() {
         <Route
           path={Pages.ParkingFinderUI}
           element={<ParkingFinder app={main} />}
+        />
+        <Route
+            path={Pages.EmergencyAssistUI}
+            element={<EmergencyAssist app={main} />}
         />
         <Route path={Pages.QrUI} element={<QrPage app={main} />} />
         <Route path={Pages.ViewVehicle} element={<ViewVehicle app={main} />} />
