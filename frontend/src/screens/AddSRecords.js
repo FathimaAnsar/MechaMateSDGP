@@ -1,10 +1,13 @@
 
 import React, { useState } from 'react';
 import './public/ServiceRecord.css';
+import ConnectionManager from "../services/ConnectionManager";
+
 
 function ServiceRecordForm() {
     const [serviceCounter, setServiceCounter] = useState(2);
     const [serviceFields, setServiceFields] = useState([]);
+    const [alertInfo, setAlertInfo] = useState({ show: false, error: { heading: '', message: '' } });
 
     const addService = () => {
         const newServiceField = {
@@ -32,6 +35,38 @@ function ServiceRecordForm() {
             serviceRecordData[key] = value;
         });
 
+        console.log(formData);
+        console.log(serviceRecordData);
+
+        
+    let connection = new ConnectionManager();
+
+    try {
+        const resp = await connection.addServiceRecord(formData);
+        const response = JSON.parse(resp);
+
+        console.log(response)
+
+        if (response.error) {
+            setAlertInfo({
+                show: true,
+                error: { heading: 'Error', message: response.message },
+            });
+        } else {
+          const message = response.message;
+          alert(`Status: ${message}`);  
+        }
+    } catch (error) {
+        setAlertInfo({
+            show: true,
+            error: { heading: 'Error adding service record', message: error.message || "Server error" }
+        });
+    } finally {
+//        setLoading(false);
+    }
+
+
+/*
         // Send HTTP POST request to the server endpoint
         try {
             const response = await fetch('your-server-endpoint-url', {
@@ -52,6 +87,8 @@ function ServiceRecordForm() {
             // Handle error
             console.error('Error submitting form data:', error.message);
         }
+*/
+
     };
 
     return (

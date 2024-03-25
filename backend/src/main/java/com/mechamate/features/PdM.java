@@ -163,7 +163,7 @@ public class PdM {
 
 
     public ResponseEntity<?> getPredictions(List<PredictionDTO> predictionDTOS, UserProfile userProfile,
-                                            List<VehicleDTO> vehicles) {
+                                            VehicleDTO vehicleDTO) {
 
         List<Maintenance.MaintenanceType> maintenanceTypes = new ArrayList<>();
 
@@ -175,8 +175,8 @@ public class PdM {
         maintenanceTypes.add(Maintenance.MaintenanceType.BrakeFluidChange);
         maintenanceTypes.add(Maintenance.MaintenanceType.WheelAlignment);
 
-        for (VehicleDTO v : vehicles) {
-            List<ServiceRecordDTO> serviceRecordDTOS = v.getServiceRecords();
+        //for (VehicleDTO v : vehicles) {
+            List<ServiceRecordDTO> serviceRecordDTOS = vehicleDTO.getServiceRecords();
             for(Maintenance.MaintenanceType mType : maintenanceTypes) {
                 if(serviceRecordDTOS.isEmpty()) {
                     predictionDTOS.add(new PredictionDTO(mType, PredictionDTO.PredictionStatus.ServiceInfoNotFound,
@@ -205,7 +205,7 @@ public class PdM {
                 }
 
                 long currentMileage = 0;
-                List<TrackingInfo> trackInfo = databaseAbstractLayer.getTrackingInfo(v.getRegistrationNumber());
+                List<TrackingInfo> trackInfo = databaseAbstractLayer.getTrackingInfo(vehicleDTO.getRegistrationNumber());
                 for (TrackingInfo tInfo : trackInfo) {
                     if(currentMileage < tInfo.getMileage()) currentMileage = tInfo.getMileage();
                 }
@@ -265,7 +265,7 @@ public class PdM {
                 predictionDTOS.add(new PredictionDTO(mType, PredictionDTO.PredictionStatus.Predicted,
                         actualKMsRemaining, (long) totalPredicted, (totalPredicted <= 0)));
             }
-        }
+       // }
 
         return new ResponseEntity<>(predictionDTOS, HttpStatus.OK);
     }

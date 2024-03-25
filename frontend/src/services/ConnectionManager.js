@@ -82,7 +82,8 @@ class ConnectionManager {
     firstName,
     lastName,
     telephone,
-    agreedTOS
+    agreedTOS,
+    userType
   ) {
     const urlEncodedData = new URLSearchParams();
     urlEncodedData.append("username", username);
@@ -92,13 +93,16 @@ class ConnectionManager {
     urlEncodedData.append("lastname", lastName);
     urlEncodedData.append("telephone", telephone);
     urlEncodedData.append("agreedTOS", agreedTOS);
+    urlEncodedData.append("isServiceAccount", userType);
     return await this.postParamRequest("/api/v1/auth/signup", urlEncodedData);
   }
+
   async addVehicle(vehicle) {
-
-console.log(vehicle);
-
     return await this.postJsonRequest("/api/v1/general/add-vehicle", vehicle);
+  }
+
+  async addServiceRecord(serviceRecord, vehicleRegNo) {
+    return await this.postJsonRequest(("/api/v1/general/add-service-record?vehicleRegNo=" + vehicleRegNo), serviceRecord);
   }
 
   async activate(code) {
