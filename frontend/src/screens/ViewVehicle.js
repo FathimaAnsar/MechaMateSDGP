@@ -84,8 +84,6 @@ export default function ViewVehicle(props) {
     try {
       const data = await connection.getPrediction(vehicle.registrationNumber);
       const response = JSON.parse(data);
-
-
       setMaintenanceData(response);
 
     } catch (error) {
