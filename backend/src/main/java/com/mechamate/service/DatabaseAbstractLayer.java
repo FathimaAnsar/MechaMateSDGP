@@ -270,6 +270,21 @@ public class DatabaseAbstractLayer {
         }
     }
 
+
+    public List<UserProfile> getServiceAccounts() {
+        try {
+            List<UserProfile> userProfiles = userProfileRepo.findByServiceAccount(true);
+            if (userProfiles != null && !userProfiles.isEmpty()) {
+                return userProfiles;
+            } else {
+                return new ArrayList<UserProfile>();
+            }
+        } catch (Exception e) {
+            return new ArrayList<UserProfile>();
+        }
+    }
+
+
     /*
     SESSION SECTION
     */
@@ -539,6 +554,24 @@ public class DatabaseAbstractLayer {
             return new ArrayList<>();
         }
     }
+
+    public List<Vehicle> getAllVehicles() {
+        logger.info("retrieving vehicles");
+        try {
+            List<Vehicle> vehicles = vehicleRepo.findAll();
+            if (vehicles == null || vehicles.isEmpty()) {
+                logger.info("no vehicles found");
+                return new ArrayList<>();
+            }
+
+            logger.info("vehicles retrieved");
+            return vehicles;
+        } catch (Exception e) {
+            logger.error("retrieve vehicles failed", e);
+            return new ArrayList<>();
+        }
+    }
+
 
     public Vehicle getVehicle(String regNo) {
         logger.info("retrieving vehicle");
@@ -1173,11 +1206,6 @@ public class DatabaseAbstractLayer {
 
         if (trackingInfo == null) {
             logger.warn("tracking info is null not added");
-            return false;
-        }
-
-        if (trackingInfo.getVehicleRegNo() != null && isTrackingInfoExists(trackingInfo.getVehicleRegNo())) {
-            logger.warn("tracking info already exists for the vehicle not added");
             return false;
         }
 

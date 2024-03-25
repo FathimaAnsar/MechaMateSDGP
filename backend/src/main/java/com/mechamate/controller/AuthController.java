@@ -37,6 +37,7 @@ public class AuthController {
                                     @RequestParam(required = false) String telephone,
                                     @RequestParam(required = false) String firstname,
                                     @RequestParam(required = false) String lastname,
+                                    @RequestParam(required = false) boolean isServiceAccount,
                                     @RequestParam(required = false) boolean agreedTOS) {
 
         Session session = sessionManager.getSession(request, response);
@@ -77,7 +78,7 @@ public class AuthController {
                                                             telephone.trim(),
                                                             Common.toTitleCase(firstname.trim().toLowerCase()),
                                                             Common.toTitleCase(lastname.trim().toLowerCase()),
-                                                            lang.getLanguage(request.getSession()), null);
+                                                            lang.getLanguage(request.getSession()), null, 0.0, 0.0, isServiceAccount, false);
 
         resp = profileManager.createUserProfile(request, userProfile);
         if(resp != null) return resp;
@@ -122,6 +123,25 @@ public class AuthController {
 
     }
 
+
+
+    @GetMapping("/resend-otp")
+    public ResponseEntity<?> activate(HttpServletRequest request, HttpServletResponse response) {
+        Session session = sessionManager.getSession(request, response);
+        ResponseEntity<ErrorDTO> resp = Validation.notSignedIn(session, lang, request.getSession());
+        if(resp != null) return resp;
+
+        UserProfile userProfile = session.getUserProfile();
+        resp = profileManager.resendOTP(request, userProfile);
+        if(resp != null) return resp;
+
+        return new ResponseEntity<>
+                (new SuccessDTO(SuccessDTO.SuccessStatus.OperationSucceeded,
+                        lang.get("success.resend.otp.succeeded", userProfile.getLanguage()),
+                        lang.get("success.resend.otp.succeeded.info", userProfile.getLanguage())),
+                        HttpStatus.OK);
+
+    }
 
 
 

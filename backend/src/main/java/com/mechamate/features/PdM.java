@@ -175,14 +175,11 @@ public class PdM {
         maintenanceTypes.add(Maintenance.MaintenanceType.BrakeFluidChange);
         maintenanceTypes.add(Maintenance.MaintenanceType.WheelAlignment);
 
-
-        long currentMileage = 10000;
-
         for (VehicleDTO v : vehicles) {
             List<ServiceRecordDTO> serviceRecordDTOS = v.getServiceRecords();
             for(Maintenance.MaintenanceType mType : maintenanceTypes) {
                 if(serviceRecordDTOS.isEmpty()) {
-                    predictionDTOS.add(new PredictionDTO(mType, PredictionDTO.PredictionStatus.InfoNotFound,
+                    predictionDTOS.add(new PredictionDTO(mType, PredictionDTO.PredictionStatus.ServiceInfoNotFound,
                             0, 0, false));
                     continue;
                 }
@@ -200,30 +197,35 @@ public class PdM {
                         }
                     }
                 }
+
                 if(serviceDTO == null) {
-                    predictionDTOS.add(new PredictionDTO(mType, PredictionDTO.PredictionStatus.InfoNotFound,
+                    predictionDTOS.add(new PredictionDTO(mType, PredictionDTO.PredictionStatus.ServiceInfoNotFound,
                             0, 0, false));
                     continue;
                 }
 
-                long actualKMsRemaining = (serviceDTO.getNextServiceInKMs() - (currentMileage - serviceMileage));
+                long currentMileage = 0;
+                List<TrackingInfo> trackInfo = databaseAbstractLayer.getTrackingInfo(v.getRegistrationNumber());
+                for (TrackingInfo tInfo : trackInfo) {
+                    if(currentMileage < tInfo.getMileage()) currentMileage = tInfo.getMileage();
+                }
+
+                if(trackInfo.isEmpty()) {
+                    predictionDTOS.add(new PredictionDTO(mType, PredictionDTO.PredictionStatus.TrackingInfoNotFound,
+                            0, 0, false));
+                    continue;
+                }
+
+                long actualKMsRemaining = (serviceMileage + serviceDTO.getNextServiceInKMs()) - currentMileage;
 
                 List<PredictionModel> predictionModels = databaseAbstractLayer.getPredictionModelListByMaintenance(mType);
                 if(predictionModels.isEmpty()) {
                     predictionDTOS.add(new PredictionDTO(mType, PredictionDTO.PredictionStatus.Actual,
-                            actualKMsRemaining, actualKMsRemaining, false));
+                            actualKMsRemaining, actualKMsRemaining, (actualKMsRemaining <= 0)));
                     continue;
                 }
 
-                List<TrackingInfo> trackInfo = databaseAbstractLayer.getTrackingInfo(v.getRegistrationNumber());
-                if(trackInfo.isEmpty()) {
-                    predictionDTOS.add(new PredictionDTO(mType, PredictionDTO.PredictionStatus.Actual,
-                            actualKMsRemaining, actualKMsRemaining, false));
-                    continue;
-                }
-
-                double totalPredicted = 0; TrackingInfo prevTrackInfo = null;
-                double prevMileage =  serviceMileage;
+                double totalPredicted = 0; double prevMileage = serviceMileage;
 
                 int modelCount = 0;
                 for(PredictionModel pModel : predictionModels) {
@@ -250,12 +252,16 @@ public class PdM {
                         }
 
                         double calcKMs = (tInfo.getMileage() - prevMileage);
+                        prevMileage = tInfo.getMileage();
                         totalPredicted += (calcKMs * y);
-                        modelCount++;
                     }
+                    modelCount++;
                 }
 
                 totalPredicted = totalPredicted / modelCount;
+                totalPredicted = serviceMileage + totalPredicted;
+                totalPredicted = (serviceMileage + serviceDTO.getNextServiceInKMs()) - totalPredicted;
+
                 predictionDTOS.add(new PredictionDTO(mType, PredictionDTO.PredictionStatus.Predicted,
                         actualKMsRemaining, (long) totalPredicted, (totalPredicted <= 0)));
             }

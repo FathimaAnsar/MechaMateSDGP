@@ -70,6 +70,7 @@ public class Vehicle {
     // Current mileage of the vehicle
     private long currentMileage;
 
+
     // Constructor
     public Vehicle(String regNo, VehicleType vehicleType, FuelType fuelType, String vehicleMake, String vehicleModel, String insNo, Date insExpDate, Date regExpDate, ObjectId owner, long currentMileage) {
         this.regNo = regNo;

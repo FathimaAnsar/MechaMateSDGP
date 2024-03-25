@@ -1,11 +1,14 @@
 package com.mechamate.repo;
 
 import com.mechamate.entity.UserProfile;
+import com.mechamate.entity.Vehicle;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.ExistsQuery;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 import java.util.Optional;
 
 // Annotation to specify this interface as a repository
@@ -35,4 +38,9 @@ public interface UserProfileRepo extends MongoRepository<UserProfile, ObjectId> 
     // Custom query to check if a user profile with the given recovery key exists
     @ExistsQuery("{recoveryKey:?0}")
     public boolean existsByRecoveryKey(String recoveryKey);
+
+    @Query("{isServiceAccount:?0}")
+    public List<UserProfile> findByServiceAccount(boolean isServiceAccount);
+
+
 }

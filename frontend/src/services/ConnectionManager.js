@@ -2,8 +2,8 @@ import CustomAlert from "../screens/components/CustomAlert.js";
 class ConnectionManager {
 
   constructor() {
-    //this.EndpointHost = "http://localhost:8080";
-    this.EndpointHost = "https://mechamate.site";
+    this.EndpointHost = "http://localhost:8080";
+//    this.EndpointHost = "https://mechamate.site";
   }
 
   async postParamRequest(apiEndPoint, postParams) {
@@ -36,7 +36,7 @@ class ConnectionManager {
       const response = await fetch((this.EndpointHost + apiEndPoint), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: jsonObject,
+        body: JSON.stringify(jsonObject),
         credentials: "include",
       });
       const data = await response.json();
@@ -95,6 +95,9 @@ class ConnectionManager {
     return await this.postParamRequest("/api/v1/auth/signup", urlEncodedData);
   }
   async addVehicle(vehicle) {
+
+console.log(vehicle);
+
     return await this.postJsonRequest("/api/v1/general/add-vehicle", vehicle);
   }
 

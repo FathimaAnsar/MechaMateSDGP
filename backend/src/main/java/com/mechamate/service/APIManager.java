@@ -28,6 +28,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.TreeMap;
 
 @Service
@@ -456,7 +457,8 @@ public class APIManager {
 
 
 
-    public DeviceDetails getDeviceDetails(ApiToken apiToken, String imei) {
+    public DeviceDetails getDeviceDetails(ApiToken apiToken, Vehicle vehicle) {
+        String imei = vehicle.getObd2DeviceID();
         logger.info("enter to the getDeviceDetails");
         Map<String,String> params = new HashMap<>();
         params.put("access_token", apiToken.getAccessToken());
@@ -479,19 +481,61 @@ public class APIManager {
                     JSONObject json = (JSONObject) parser.parse(ret);
                     JSONObject result = (JSONObject) json.get("result");
                     if(result != null) {
-                        deviceDetails.setStatus(result.get("status").toString());
-                        deviceDetails.setImei(result.get("imei").toString());
-                        deviceDetails.setVehicleIcon(result.get("vehicleIcon").toString());
+                        deviceDetails.setDateTime(System.currentTimeMillis());
 
                         try {
-                            deviceDetails.setVehicleIcon(result.get("mileage").toString());
-                        } catch (Exception e) {
+                            deviceDetails.setStatus(result.get("status").toString());
+                        } catch (Exception e) {}
 
+                        try {
+                            deviceDetails.setImei(result.get("imei").toString());
+                        } catch (Exception e) {}
+
+                        try {
+                            deviceDetails.setVehicleIcon(result.get("vehicleIcon").toString());
+                        } catch (Exception e) {}
+
+                        try {
+                            deviceDetails.setMileage(Long.parseLong(result.get("mileage").toString()));
+                        } catch (Exception e) {
+                             deviceDetails.setMileage(vehicle.getCurrentMileage() + getQAValues(10, 50)); // test
                         }
 
+                        try {
+                            deviceDetails.setDrivingPattern(Long.parseLong(result.get("drivingPattern").toString()));
+                        } catch (Exception e) {
+                            deviceDetails.setDrivingPattern(getQAValues(0, 10)); // test
+                        }
 
+                        try {
+                            deviceDetails.setEngineRPM(Long.parseLong(result.get("engineRPM").toString()));
+                        } catch (Exception e) {
+                            deviceDetails.setEngineRPM(getQAValues(700, 5000)); // test
+                        }
 
+                        try {
+                            deviceDetails.setEnginTemp(Long.parseLong(result.get("engineTemp").toString()));
+                        } catch (Exception e) {
+                            deviceDetails.setEnginTemp(getQAValues(70, 120)); // test
+                        }
 
+                        try {
+                            deviceDetails.setVibration(Long.parseLong(result.get("vibration").toString()));
+                        } catch (Exception e) {
+                            deviceDetails.setVibration(getQAValues(175, 350)); // test
+                        }
+
+                        try {
+                            deviceDetails.setLongitude(Double.parseDouble(result.get("longitude").toString()));
+                        } catch (Exception e) {
+                            deviceDetails.setLongitude(getQAValues(79.79528, 81.84198));
+                        }
+
+                        try {
+                            deviceDetails.setLatitude(Double.parseDouble(result.get("latitude").toString()));
+                        } catch (Exception e) {
+                            deviceDetails.setLatitude(getQAValues(5.94851, 9.81667));
+                        }
                     }
                 }
             } catch (Exception e) {
@@ -679,4 +723,13 @@ public class APIManager {
         return true;
     }
 
+
+    public long getQAValues(int min, int max) {
+        Random random = new Random();
+        return random.nextLong((max - min) + 1) + min;
+    }
+    public double getQAValues(double min, double max) {
+        Random random = new Random();
+        return random.nextDouble((max - min) + 1) + min;
+    }
 }

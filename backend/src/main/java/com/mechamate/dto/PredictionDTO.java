@@ -7,7 +7,8 @@ public class PredictionDTO {
     public enum PredictionStatus {
         Predicted,
         Actual,
-        InfoNotFound
+        ServiceInfoNotFound,
+        TrackingInfoNotFound
     }
 
     private Maintenance.MaintenanceType maintenanceType;
