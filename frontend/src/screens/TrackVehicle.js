@@ -225,9 +225,12 @@ function TrackVehicle(props) {
                                             <Accordion.Body>
                                                 <p>Address: {station.formattedAddress || 'Address not available'}</p>
                                                 <p>Phone: {
-                                                    station.nationalPhoneNumber || 'Phone number not available'
+                                                    station.nationalPhoneNumber
+                                                        ? <a href={`tel:${station.nationalPhoneNumber}`}>{station.nationalPhoneNumber}</a>
+                                                        : 'Phone number not available'
                                                 }</p>
                                             </Accordion.Body>
+
                                         </Accordion.Item>
                                     ))
                                 ) : (
@@ -238,8 +241,6 @@ function TrackVehicle(props) {
                     </>
                 )}
             </Container>
-
-
             {alertInfo.show && (
                 <CustomAlert
                     show={alertInfo.show}
