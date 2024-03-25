@@ -53,6 +53,9 @@ function EmergencyAssist(props) {
             const response = await connection.getVehicleLocation(selectedVehicleRegNo);
             if (!response) throw new Error("Received no data");
             const vehicleLocationData = JSON.parse(response);
+
+            console.log(vehicleLocationData);
+
             if (!vehicleLocationData.vehicleRegNo) throw new Error("Vehicle data is incomplete.");
             setVehicleInfo(vehicleLocationData);
 

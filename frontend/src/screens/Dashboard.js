@@ -71,7 +71,7 @@ function Dashboard(props) {
     },
 
     { title: "Parking Finder", path: "/" + Pages.ParkingFinderUI },
-    { title: "Accident Assistance", path: "/" + Pages.AccidentAssistUi },
+    { title: "Accident Assistance", path: "/" + Pages.EmergencyAssistUI },
   ];
 
   const handleOptionClick = () => {

@@ -2,8 +2,8 @@ import CustomAlert from "../screens/components/CustomAlert.js";
 class ConnectionManager {
 
   constructor() {
-    // this.EndpointHost = "http://localhost:8080";
-   this.EndpointHost = "https://mechamate.site";
+     this.EndpointHost = "http://localhost:8080";
+   //this.EndpointHost = "https://mechamate.site";
   }
 
   async postParamRequest(apiEndPoint, postParams) {
@@ -171,9 +171,10 @@ class ConnectionManager {
     );
   }
 
-  async getRequestForQR() {
+  async getRequestForQR(vehicleRegNo) {
     return await this.getRequest(
-      "/api/v1/features/get-service-record-qr");
+      "/api/v1/features/get-service-record-qr?vehicleRegNo=" + vehicleRegNo);
+
   }
   async getNearbyPoliceStations(lat, lng, radius, limit) {
     return await this.getRequest(

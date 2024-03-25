@@ -59,6 +59,7 @@ public class GeneralController {
         if (vehicleDTO.getRegistrationNumber() == null) vehicleDTO.setRegistrationNumber("");
         if (vehicleDTO.getVehicleType() == null) vehicleDTO.setVehicleType(Vehicle.VehicleType.Unknown);
         if(vehicleDTO.getFuelType() == null) vehicleDTO.setFuelType(Vehicle.FuelType.Unknown);
+        if(vehicleDTO.getObd2DeviceID() == null) vehicleDTO.setObd2DeviceID("");
 
         ResponseEntity<ErrorDTO> resp = Validation.validateVehicleRegNo(vehicleDTO.getRegistrationNumber().trim().toUpperCase(),
                                                 lang, request.getSession());
@@ -106,6 +107,7 @@ public class GeneralController {
         if (vehicleDTO.getRegistrationNumber() == null) vehicleDTO.setRegistrationNumber("");
         if (vehicleDTO.getVehicleType() == null) vehicleDTO.setVehicleType(Vehicle.VehicleType.Unknown);
         if(vehicleDTO.getFuelType() == null) vehicleDTO.setFuelType(Vehicle.FuelType.Unknown);
+        if(vehicleDTO.getObd2DeviceID() == null) vehicleDTO.setObd2DeviceID("");
 
         ResponseEntity<ErrorDTO> resp = Validation.validateVehicleRegNo(vehicleDTO.getRegistrationNumber().trim().toUpperCase(),
                 lang, request.getSession());

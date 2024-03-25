@@ -3,14 +3,19 @@ import { Container, Row, Col, Button, Form, Card, Alert } from 'react-bootstrap'
 import { Pages } from "../Pages.js";
 import ConnectionManager from '../services/ConnectionManager';
 import Header from "./components/Header";
+import { useNavigate } from 'react-router-dom';
+
 
 function AutoMobSearch(props) {
+    const navigate = useNavigate();
+
     const [currentLocation, setCurrentLocation] = useState(null);
     const [autoShops, setAutoShops] = useState([]);
     const [varCap, setVarCap] = useState("");
     const [selectedMapUri, setSelectedMapUri] = useState("");
     const [error, setError] = useState("");
     const [expandedInfo, setExpandedInfo] = useState({});
+
 
     useEffect(() => {
         props.app.getCurrentLocation().then(location => {
